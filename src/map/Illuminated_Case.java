@@ -1,5 +1,5 @@
 package map;
 
-public class Illuminated_Case {
+public class Illuminated_Case extends abstr_Case {
 
 }

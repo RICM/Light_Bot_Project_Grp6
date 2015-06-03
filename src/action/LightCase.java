@@ -1,5 +1,5 @@
 package action;
 
-public class LightCase {
+public class LightCase implements int_Action{
 
 }

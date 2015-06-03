@@ -1,5 +1,5 @@
 package action;
 
-public class Jump {
+public class Jump implements int_Action{
 
 }

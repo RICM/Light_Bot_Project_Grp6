@@ -1,5 +1,5 @@
 package action;
 
-public class TurnRIght {
+public class TurnRIght implements int_Action{
 
 }

@@ -1,5 +1,5 @@
 package action;
 
-public class MoveForward {
+public class MoveForward implements int_Action{
 
 }
