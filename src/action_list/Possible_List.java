@@ -1,5 +1,5 @@
 package action_list;
 
-public abstract class Possible_List {
+public class Possible_List implements int_Action_List{
 
 }
