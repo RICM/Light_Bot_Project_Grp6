@@ -14,3 +14,8 @@
 - pointeurs (téléporteurs placés par un smartbot)
 - conditions (couleurs)
 - fonctions (P1, P2)
+- threads (partage et dépendences de ressources)
+
+### Todo :
+
+- prototype : terrain, robot, action simple (avancer par ex)
