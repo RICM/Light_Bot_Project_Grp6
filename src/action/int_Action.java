@@ -7,9 +7,11 @@ import robot.*;
 public interface int_Action {
 	
 	//
-	public void execute (Robot r) throws MouvementEx;
+	public static void execute (Robot r) throws MouvementEx{};
 	
 	//
-	public boolean isPossible(Robot r,abstr_Case c);
+	public static boolean isPossible(Robot r,abstr_Case c){
+		return false;
+	};
 	
 }
