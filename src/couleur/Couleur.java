@@ -1,4 +1,4 @@
-package Couleur;
+package couleur;
 
 public enum Couleur {
 	BLEU,

@@ -1,5 +1,5 @@
 package map;
-import Couleur.*;
+import couleur.*;
 
 public class Painted_Case extends abstr_Case {
 

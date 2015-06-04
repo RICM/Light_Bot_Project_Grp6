@@ -1,23 +1,27 @@
 package action;
 import map.*;
 import robot.*;
+import game.Partie;
+import exception.MouvementEx;
 
 
 
 public class MoveForward implements int_Action{
 	
-	public void execute(Robot r){
+	public void execute(Robot r) throws MouvementEx{
 		abstr_Case c_prime;
 		Coordonnees pos = r.getCurrent_Case().get_coordonnees();
 		switch (r.getOrientation()) {  
-	      
-        case  TOP : c_prime = Partie.PARTIE.get_world().liste_terrain[pos.get_n()].getCase(pos.get_x(),pos.get_y()-1);
-        case  BOT : c_prime = Partie.PARTIE.get_world().liste_terrain[pos.get_n()].getCase(pos.get_x(),pos.get_y()+1);;
-        case  LEFT : c_prime = Partie.PARTIE.get_world().liste_terrain[pos.get_n()].getCase(pos.get_x()-1,pos.get_y());
-        case  RIGHT : c_prime = Partie.PARTIE.get_world().liste_terrain[pos.get_n()].getCase(pos.get_x()+1,pos.get_y());
-        default :  break;
+	    	case  TOP :
+	    		c_prime = Partie.PARTIE.get_world().get_terrain(pos.get_n()).get_case(pos.get_x(),pos.get_y()-1);
+	    	case  BOT :
+	    		c_prime = Partie.PARTIE.get_world().get_terrain(pos.get_n()).get_case(pos.get_x(),pos.get_y()+1);;
+	    	case  LEFT :
+	    		c_prime = Partie.PARTIE.get_world().get_terrain(pos.get_n()).get_case(pos.get_x()-1,pos.get_y());
+	    	case  RIGHT :
+	    		c_prime = Partie.PARTIE.get_world().get_terrain(pos.get_n()).get_case(pos.get_x()+1,pos.get_y());
 		if (! this.isPossible(r,c_prime)){
-			throw (new Exception("impossible d'avancer"));
+			throw (new MouvementEx("impossible d'avancer"));
 		} else {
 			r.setCurrent_Case(c_prime);
 		}}

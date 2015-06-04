@@ -1,5 +1,5 @@
 package map;
-import Couleur.*;
+import couleur.*;
 
 public abstract class abstr_Case {
 	public int hauteur;

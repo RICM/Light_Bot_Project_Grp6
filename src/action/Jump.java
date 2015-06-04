@@ -10,6 +10,11 @@ public class Jump implements int_Action{
 		
 	}
 
+	public boolean isPossible(Robot r) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 	public boolean isPossible(Robot r, abstr_Case c) {
 		// TODO Auto-generated method stub
 		return false;

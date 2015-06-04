@@ -1,5 +1,5 @@
 package map;
-import Couleur.*;
+import couleur.*;
 
 public class Normal_Case extends abstr_Case {
 	
