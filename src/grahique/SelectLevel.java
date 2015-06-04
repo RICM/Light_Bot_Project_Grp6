@@ -3,6 +3,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -22,17 +23,20 @@ public class SelectLevel extends JDialog implements ActionListener{
 	private final JButton [] tabJbutton = new JButton [3];
 	private final JButton btnRetour;
 	private final JPanel panSouth;
+	private final Menu2 frame;
 
 
 	/**
 	 * Create the dialog.
 	 */
-	public SelectLevel() {
+	public SelectLevel(Menu2 fenetre) {
+		this.frame=fenetre;
 		this.contentPanel = new JPanel();
 		this.setBounds(100, 100, 1200, 700);
 		this.getContentPane().setLayout(new BorderLayout());
 		this.contentPanel.setLayout(new FlowLayout());
 		this.contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		this.setResizable(false);
 		this.setModal(true);
 
 		this.panNorth = new JPanel();
@@ -51,6 +55,7 @@ public class SelectLevel extends JDialog implements ActionListener{
 		this.panCenter.setLayout(null);
 
 		this.labLevel = new JLabel("Basics");
+		labLevel.setFont(new Font("Serif", Font.PLAIN, 25));
 		this.labLevel.setBounds(this.getSize().width/2,0,182,34);
 
 		this.panNorth.add(this.labLevel);
@@ -64,6 +69,7 @@ public class SelectLevel extends JDialog implements ActionListener{
 			this.tabJbutton[i] = new JButton(""+(i+1));
 			this.tabJbutton[i].setBounds(x, y, 100, 100);
 			this.tabJbutton[i].setBackground(new Color(255, 255, 255));
+			this.tabJbutton[i].addActionListener(this);
 			this.panCenter.add(this.tabJbutton[i]);
 
 			//placement des images
@@ -96,6 +102,12 @@ public class SelectLevel extends JDialog implements ActionListener{
 		if(e.getSource()==this.btnRetour){
 			this.dispose();
 		}
+
+		if(e.getSource()==tabJbutton[0]){
+			this.dispose();
+			Jeu game = new Jeu(this.frame);
+		}
+
 	}
 
 }
