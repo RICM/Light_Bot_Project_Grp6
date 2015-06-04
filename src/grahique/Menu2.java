@@ -11,18 +11,23 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 
 public class Menu2 extends JFrame implements ActionListener{
 
+	//Panel
 	private final JPanel contentPane;
 	private final JPanel panNorth;
 	private final JPanel panCenter;
+	private JPanel panSouth;
+	
 	private final JButton btnFullScreen;
-	private final JLabel imageMenu;
 	private final JButton btnJouer;
+	
+	private final JLabel imageMenu;
 
 	/**
 	 * Create the frame.
@@ -31,6 +36,7 @@ public class Menu2 extends JFrame implements ActionListener{
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setTitle("Lightbot");
 		this.setBounds(100, 100, 1200, 700);
+		this.setMinimumSize(new Dimension(1000,700));
 		this.contentPane = new JPanel();
 		this.contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		this.contentPane.setLayout(new BorderLayout(5, 5));
@@ -38,19 +44,24 @@ public class Menu2 extends JFrame implements ActionListener{
 
 
 		this.panNorth = new JPanel();
-		this.panNorth.setPreferredSize(new Dimension(1200, 50));
+		this.panNorth.setPreferredSize(new Dimension(this.getSize().width, this.getSize().height/6));
 		this.panNorth.setBackground(new Color(255, 255, 255));
 		this.panNorth.setLayout(null);
 
 
 		this.panCenter = new JPanel();
-		this.panCenter.setPreferredSize(new Dimension(800, 400));
+		this.panCenter.setPreferredSize(new Dimension(this.getSize().width, this.getSize().height/3));
 		this.panCenter.setBackground(new Color(255, 255, 255));
 		this.panCenter.setLayout(null);
+		
+		this.panSouth = new JPanel();
+		this.panSouth.setPreferredSize(new Dimension(this.getSize().width, this.getSize().height/6));
+		this.panSouth.setBackground(new Color(255, 255, 255));
+		this.panSouth.setLayout(null);
 
-		this.btnFullScreen = new JButton("Plein écran");
+		this.btnFullScreen = new JButton("Plein Ã©cran");
 		this.btnFullScreen.setBackground(new Color(255, 255, 255));
-		this.btnFullScreen.setBounds(15, 16, 109, 29);
+		this.btnFullScreen.setBounds(this.getSize().width/2, 16, 109, 29);
 		this.btnFullScreen.addActionListener(this);
 
 		ImageIcon icon = new ImageIcon("light_bot.jpg");
@@ -71,6 +82,7 @@ public class Menu2 extends JFrame implements ActionListener{
 
 		this.contentPane.add(this.panNorth,BorderLayout.NORTH);
 		this.contentPane.add(this.panCenter, BorderLayout.CENTER);
+		contentPane.add(panSouth,BorderLayout.SOUTH);
 
 
 		this.setContentPane(this.contentPane);
