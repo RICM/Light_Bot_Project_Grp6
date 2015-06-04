@@ -10,6 +10,7 @@ public class Left implements int_Action{
 		
 	}
 
+
 	public boolean isPossible(Robot r, abstr_Case c) {
 		// TODO Auto-generated method stub
 		return false;

@@ -1,6 +1,6 @@
 package map;
 
-import Couleur.*;
+import couleur.*;
 
 public class Illuminated_Case extends abstr_Case {
 	

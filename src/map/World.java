@@ -6,6 +6,13 @@ public class World {
 	private Terrain[] liste_terrain;
 	private Robot[]   liste_robot;
 	
+	public Terrain get_terrain(int n){
+		return liste_terrain[n];
+	}
+	
+	public Robot get_robot(int n){
+		return liste_robot[n];
+	}
 	
 	Terrain[] get_liste_terrain(){
 		return  liste_terrain;

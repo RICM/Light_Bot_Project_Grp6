@@ -15,4 +15,5 @@ public class LightCase implements int_Action{
 		return false;
 	}
 
+
 }
