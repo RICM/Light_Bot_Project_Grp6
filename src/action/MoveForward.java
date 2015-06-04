@@ -8,7 +8,7 @@ import exception.MouvementEx;
 
 public class MoveForward implements int_Action{
 	
-	public void execute(Robot r) throws MouvementEx{
+	public static void execute(Robot r) throws MouvementEx{
 		abstr_Case c_prime;
 		Coordonnees pos = r.getCurrent_Case().get_coordonnees();
 		switch (r.getOrientation()) {  
@@ -20,7 +20,7 @@ public class MoveForward implements int_Action{
 	    		c_prime = Partie.PARTIE.get_world().get_terrain(pos.get_n()).get_case(pos.get_x()-1,pos.get_y());
 	    	case  RIGHT :
 	    		c_prime = Partie.PARTIE.get_world().get_terrain(pos.get_n()).get_case(pos.get_x()+1,pos.get_y());
-		if (! this.isPossible(r,c_prime)){
+		if (! isPossible(r,c_prime)){
 			throw (new MouvementEx("impossible d'avancer"));
 		} else {
 			r.setCurrent_Case(c_prime);
@@ -28,7 +28,7 @@ public class MoveForward implements int_Action{
 		
 	}
 	
-	public boolean isPossible(Robot r, abstr_Case c){
+	public static boolean isPossible(Robot r, abstr_Case c){
 		return (r.getCurrent_Case().get_hauteur() == c.get_hauteur());
 
 	}

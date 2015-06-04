@@ -5,17 +5,12 @@ import robot.Robot;
 
 public class Jump implements int_Action{
 
-	public void execute(Robot r) {
+	public static void execute(Robot r) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public boolean isPossible(Robot r) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	public boolean isPossible(Robot r, abstr_Case c) {
+	public static boolean isPossible(Robot r, abstr_Case c) {
 		// TODO Auto-generated method stub
 		return false;
 	}
