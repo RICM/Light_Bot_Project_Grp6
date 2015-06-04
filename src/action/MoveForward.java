@@ -1,5 +1,4 @@
 package action;
-import action.int_Action;
 import map.*;
 import robot.*;
 
@@ -21,7 +20,7 @@ public class MoveForward implements int_Action{
 			throw (new Exception("impossible d'avancer"));
 		} else {
 			r.setCurrent_Case(c_prime);
-		}
+		}}
 		
 	}
 	
