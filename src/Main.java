@@ -3,7 +3,6 @@ import grahique.Menu2;
 import java.awt.EventQueue;
 
 
-
 public class Main {
 
 	public static void main (String[] args){
@@ -21,5 +20,6 @@ public class Main {
 			}
 		});
 		/**LOL**/
+		/**test adrien**/
 	}
 }
