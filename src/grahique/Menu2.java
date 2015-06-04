@@ -59,7 +59,7 @@ public class Menu2 extends JFrame implements ActionListener{
 		this.panSouth.setBackground(new Color(255, 255, 255));
 		this.panSouth.setLayout(null);
 
-		this.btnFullScreen = new JButton("Plein écran");
+		this.btnFullScreen = new JButton("Plein Ã©cran");
 		this.btnFullScreen.setBackground(new Color(255, 255, 255));
 		this.btnFullScreen.setBounds(this.getSize().width/2, 16, 109, 29);
 		this.btnFullScreen.addActionListener(this);
