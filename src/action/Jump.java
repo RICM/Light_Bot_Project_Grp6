@@ -4,8 +4,16 @@ import map.*;
 import robot.Robot;
 
 public class Jump implements int_Action{
+	
+	public static Jump jump(){
+		return new Jump();
+	}
+	
+	private Jump(){
+		
+	}
 
-	public static void execute(Robot r) throws MouvementEx {
+	public void execute(Robot r) throws MouvementEx {
 		
 		abstr_Case c_prime = null;
 		Coordonnees pos = r.getCurrent_Case().get_coordonnees();
@@ -29,8 +37,9 @@ public class Jump implements int_Action{
 	}
 	// true == on peut sauter et avancer
 	//false == on saute sur place
-	public static boolean isPossible(Robot r, abstr_Case c) {
-		return ((r.getCurrent_Case().get_hauteur()+1 == c.get_hauteur()) || (c.get_hauteur() < r.getCurrent_Case().get_hauteur()));
+	public boolean isPossible(Robot r, abstr_Case c) {
+		return ((r.getCurrent_Case().get_hauteur()+1 == c.get_hauteur()) 
+				|| (c.get_hauteur() < r.getCurrent_Case().get_hauteur()));
 	}
 
 }

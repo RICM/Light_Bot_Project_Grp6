@@ -6,7 +6,15 @@ import robot.Robot;
 
 public class TurnRIght implements int_Action{
 
-	public static void execute(Robot r) {
+	public static TurnRIght turn_right(){
+		return new TurnRIght();
+	}
+	
+	private TurnRIght(){
+		
+	}
+	
+	public void execute(Robot r) {
 		switch (r.getOrientation()) {  
     		case  TOP :
     			r.setOrientation(Orientation.orientation.RIGHT);
@@ -23,7 +31,7 @@ public class TurnRIght implements int_Action{
 		}
 	}
 
-	public static boolean isPossible(Robot r, abstr_Case c) {
+	public boolean isPossible(Robot r, abstr_Case c) {
 		return true;
 	}
 

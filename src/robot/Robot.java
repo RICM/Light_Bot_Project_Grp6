@@ -1,32 +1,33 @@
 package robot;
-import action.int_Action;
+import action.*;
+import action_list.*;
 import map.abstr_Case;
 
-import java.util.LinkedList;
+import exception.MouvementEx;
 
 public class Robot {
 	
-	private LinkedList<int_Action> allowed_actions;
-	private LinkedList<int_Action> user_actions;
+	private Possible_List allowed_actions;
+	private Sequence_List user_actions;
 	private abstr_Case current_case;
 	private Orientation.orientation current_orientation;
 	
-	public Robot(){
-	
+	public Robot(abstr_Case initCase, Possible_List allowed_actions){
+		current_orientation = Orientation.orientation.TOP;
+		this.allowed_actions = allowed_actions;
+		current_case = initCase;
 	}
 	
-	public void run(){
-		for(int i = 0; i < user_actions.size(); i++){
-			//user_actions.get(i).execute(this);
-		}
+	public void run() throws MouvementEx{
+		user_actions.execute(this);
 	}
 	
 	public void add_Action_Allowed_Actions(int_Action act){
-		allowed_actions.add(act);
+		allowed_actions.addActionToList(act);
 	}
 	
 	public void add_Action_User_Actions(int_Action act){
-		user_actions.add(act);
+		user_actions.addActionToList(act);
 	}
 	
 	public abstr_Case getCurrent_Case(){
