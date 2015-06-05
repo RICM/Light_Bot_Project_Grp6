@@ -11,4 +11,8 @@ public class Terrain {
 	public abstr_Case get_case (int x, int y){
 		return terrain[x][y];
 	}
+	
+	public abstr_Case[][] get_terrain(){
+		return this.terrain;
+	}
 }

@@ -9,7 +9,17 @@ public abstract class abstr_Case {
 	public Couleur get_couleur(){
 		return this.couleur;
 	}
+	public void set_couleur(Couleur color){
+			this.couleur = color;
+	}
 	
+	public void set_hauteur(int haut){
+		this.hauteur = haut;
+	}
+	
+	public void set_coordonnees(Coordonnees coordo){
+		this.coordonnees = coordo;
+	}
 	public int get_hauteur(){
 		return this.hauteur;
 	}
