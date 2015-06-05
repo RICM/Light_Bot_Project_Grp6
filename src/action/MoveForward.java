@@ -1,7 +1,6 @@
 package action;
 import map.*;
 import robot.*;
-import game.Partie;
 import exception.MouvementEx;
 
 
