@@ -4,13 +4,21 @@ import map.abstr_Case;
 import robot.Robot;
 
 public class Jump implements int_Action{
+	
+	public Jump jump(){
+		return new Jump();
+	}
+	
+	private Jump(){
+		
+	}
 
-	public static void execute(Robot r) {
+	public void execute(Robot r) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public static boolean isPossible(Robot r, abstr_Case c) {
+	public boolean isPossible(Robot r, abstr_Case c) {
 		// TODO Auto-generated method stub
 		return false;
 	}

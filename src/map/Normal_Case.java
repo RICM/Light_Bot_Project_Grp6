@@ -1,12 +1,11 @@
 package map;
-import couleur.*;
+import couleur.Couleur;
 
 public class Normal_Case extends abstr_Case {
 	
-	public Normal_Case(int h, Couleur color, Coordonnees cordo){
-		this.couleur = color;
+	public Normal_Case(int h, Coordonnees cordo){
+		this.couleur = Couleur.GRIS;
 		this.coordonnees = cordo;
 		this.hauteur = h;
 	}
-
 }

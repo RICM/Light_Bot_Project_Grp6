@@ -4,13 +4,21 @@ import map.abstr_Case;
 import robot.Robot;
 
 public class LightCase implements int_Action{
+	
+	public LightCase light_case(){
+		return new LightCase();
+	}
+	
+	private LightCase(){
+		
+	}
 
-	public static void execute(Robot r) {
+	public void execute(Robot r) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public static boolean isPossible(Robot r, abstr_Case c) {
+	public boolean isPossible(Robot r, abstr_Case c) {
 		// TODO Auto-generated method stub
 		return false;
 	}
