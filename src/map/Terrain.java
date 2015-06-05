@@ -16,4 +16,7 @@ public class Terrain {
 		return terrain[x][y];
 	}
 	
+	public abstr_Case[][] get_terrain(){
+		return this.terrain;
+	}
 }
