@@ -7,10 +7,6 @@ import exception.MouvementEx;
 
 public class MoveForward implements int_Action{
 	
-<<<<<<< HEAD
-	public static void execute(Robot r) throws MouvementEx{
-		abstr_Case c_prime = null;
-=======
 	public static MoveForward move_forward(){
 		return new MoveForward();
 	}
@@ -20,8 +16,7 @@ public class MoveForward implements int_Action{
 	}
 	
 	public void execute(Robot r) throws MouvementEx{
-		abstr_Case c_prime;
->>>>>>> origin/master
+		abstr_Case c_prime = null;
 		Coordonnees pos = r.getCurrent_Case().get_coordonnees();
 		
 		switch (r.getOrientation()) {  

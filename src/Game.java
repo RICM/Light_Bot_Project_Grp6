@@ -3,7 +3,7 @@ import map.Coordonnees;
 import map.Normal_Case;
 import map.World;
 import map.abstr_Case;
-import action_list.Possible_List;
+import action_list.*;
 
 import java.awt.EventQueue;
 import java.util.LinkedList;
@@ -40,7 +40,7 @@ public class Game {
 		});**/
 		
 		/** Définition du terrain **/
-		Terrain terrain_test = new Terrain();
+		Terrain terrain_test = new Terrain(4,4);
 		abstr_Case initRob;
 		for (int i = 0; i < 4; i++){
 			for (int j = 0; i < 4; i++){
@@ -58,16 +58,22 @@ public class Game {
 		list.addActionToList(MoveForward.move_forward());
 		list.addActionToList(Jump.jump());
 		
-		
+		Sequence_List list2 = new Sequence_List();
+		list2.addActionToList(MoveForward.move_forward());
+		list2.addActionToList(MoveForward.move_forward());
 		/** Définition du robot **/
 		
 		Robot robert = new Robot(initRob, list);
-		Robot roblist[] = new Robot[0];
+		System.out.println("Position initiale : ");
+		robert.printPosition();
+		Robot roblist[] = new Robot[1];
 		roblist[0] = robert;
-		Terrain terrlist[] = new Terrain[0];
+		Terrain terrlist[] = new Terrain[1];
 		terrlist[0] = terrain_test;
 		try{
 			robert.run();
+			System.out.println("Position finale : ");
+			robert.printPosition();
 		}catch(MouvementEx e){
 			System.out.println(e.getMessage());	
 		}
