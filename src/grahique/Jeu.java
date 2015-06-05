@@ -3,6 +3,12 @@ package grahique;
 import java.io.IOException;
 import java.nio.file.Paths;
 
+import map.Empty_Case;
+import map.Normal_Case;
+import map.Terrain;
+import map.World;
+import map.abstr_Case;
+
 import org.jsfml.graphics.RenderWindow;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
@@ -23,7 +29,14 @@ public class Jeu {
 	public Sprite monSpritePerso = new Sprite();
 	public static int x = 200;
 	public static int y = 50;
+	private int level;
 	private final Menu2 frame;
+	private World w = World.currentWorld;
+	private Terrain t = w.get_terrain(level);
+	private abstr_Case[][] cases = t.get_terrain();
+	private int width_case = 80;
+	private int height_case = 50;
+	private static final int NB_MAX_CASE = 10;
 
 	public static void processEvent(){
 		app.setKeyRepeatEnabled(false);
@@ -59,11 +72,16 @@ public class Jeu {
 			maTextureBackground.loadFromFile(Paths.get("background.jpg"));
 			monSpriteBackground.setTexture(maTextureBackground);
 			app.draw(monSpriteBackground);
-			for(int i=0;i<10;i++){
-				for(int j=0; j<10;j++){
-					maTexture.loadFromFile(Paths.get("square.png"));
+			for(int i=0;i<cases.length;i++){
+				for(int j=0; j<cases[i].length;j++){
+					if(cases[i][j] instanceof Normal_Case){
+						maTexture.loadFromFile(Paths.get("square.png"));
+					}
+					else if(cases[i][j] instanceof Empty_Case){
+						maTexture.loadFromFile(Paths.get("square_vide.png"));
+					}
 					monSprite.setTexture(maTexture);
-					monSprite.setPosition(80+75*j, 80+45*i);
+					monSprite.setPosition(80+(width_case-5)*(j+((NB_MAX_CASE-4)/2)), 80+(height_case-5)*(i+((NB_MAX_CASE-4)/2)));
 					app.draw(monSprite);
 				}
 			}
@@ -86,8 +104,9 @@ public class Jeu {
 		} // on charge la texture qui se trouve dans notre dossier assets
 	}
 
-	public Jeu(Menu2 fenetre){
+	public Jeu(Menu2 fenetre, int lvl){
 		this.frame=fenetre;
+		this.level = lvl+1;
 		this.frame.setVisible(false);
 		while(app.isOpen()){
 			processEvent();
