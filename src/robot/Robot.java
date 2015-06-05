@@ -3,7 +3,7 @@ import action.*;
 import action_list.*;
 import map.abstr_Case;
 
-import java.util.LinkedList;
+import exception.MouvementEx;
 
 public class Robot {
 	
@@ -18,8 +18,8 @@ public class Robot {
 		current_case = initCase;
 	}
 	
-	public void run(){
-		user_actions.execute();
+	public void run() throws MouvementEx{
+		user_actions.execute(this);
 	}
 	
 	public void add_Action_Allowed_Actions(int_Action act){
@@ -27,7 +27,7 @@ public class Robot {
 	}
 	
 	public void add_Action_User_Actions(int_Action act){
-		user_actions.add(act);
+		user_actions.addActionToList(act);
 	}
 	
 	public abstr_Case getCurrent_Case(){

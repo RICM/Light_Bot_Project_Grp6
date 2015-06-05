@@ -5,7 +5,7 @@ import robot.Robot;
 
 public class LightCase implements int_Action{
 	
-	public LightCase light_case(){
+	public static LightCase light_case(){
 		return new LightCase();
 	}
 	

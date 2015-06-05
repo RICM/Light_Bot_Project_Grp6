@@ -5,7 +5,7 @@ import robot.Robot;
 
 public class Jump implements int_Action{
 	
-	public Jump jump(){
+	public static Jump jump(){
 		return new Jump();
 	}
 	
