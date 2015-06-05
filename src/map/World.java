@@ -3,6 +3,12 @@ import map.Terrain;
 import robot.Robot;;
 
 public class World {
+	
+	private World(){ 
+	}
+	
+	public static World currentWorld = new World();
+	
 	private Terrain[] liste_terrain;
 	private Robot[]   liste_robot;
 	

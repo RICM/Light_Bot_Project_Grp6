@@ -3,7 +3,6 @@ package grahique;
 import java.io.IOException;
 import java.nio.file.Paths;
 
-import org.jsfml.graphics.Color;
 import org.jsfml.graphics.RenderWindow;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
@@ -15,16 +14,19 @@ import org.jsfml.window.event.Event.Type;
 
 public class Jeu {
 
-	public static RenderWindow app = new RenderWindow(new VideoMode(1200, 600),"Lightbot");
+	public static RenderWindow app = new RenderWindow(new VideoMode(1200, 700),"Lightbot");
 	public Texture maTexture = new Texture();
 	public Sprite monSprite = new Sprite();
+	public Texture maTextureBackground = new Texture();
+	public Sprite monSpriteBackground = new Sprite();
 	public Texture maTexturePerso = new Texture();
-	public static Sprite monSpritePerso = new Sprite();
-	public static int x = 300;
-	public static int y = 100;
+	public Sprite monSpritePerso = new Sprite();
+	public static int x = 200;
+	public static int y = 50;
 	private final Menu2 frame;
 
 	public static void processEvent(){
+		app.setKeyRepeatEnabled(false);
 		for(Event e : app.pollEvents()){
 			if(e.type == Type.CLOSED){
 				app.close();
@@ -54,11 +56,14 @@ public class Jeu {
 
 	public void drawGrille(){
 		try {
-			for(int i=0;i<6;i++){
-				for(int j=0; j<6;j++){
-					maTexture.loadFromFile(Paths.get("square.jpg"));
+			maTextureBackground.loadFromFile(Paths.get("background.jpg"));
+			monSpriteBackground.setTexture(maTextureBackground);
+			app.draw(monSpriteBackground);
+			for(int i=0;i<10;i++){
+				for(int j=0; j<10;j++){
+					maTexture.loadFromFile(Paths.get("square.png"));
 					monSprite.setTexture(maTexture);
-					monSprite.setPosition(300+100*j, 100+50*i);
+					monSprite.setPosition(80+75*j, 80+45*i);
 					app.draw(monSprite);
 				}
 			}
@@ -70,7 +75,6 @@ public class Jeu {
 
 	public void drawPerso(){
 		try {
-
 			maTexturePerso.loadFromFile(Paths.get("perso.gif"));
 			monSpritePerso.setTexture(maTexturePerso);
 			monSpritePerso.setPosition(x+40*3, y+25*4);
@@ -86,7 +90,6 @@ public class Jeu {
 		this.frame=fenetre;
 		this.frame.setVisible(false);
 		while(app.isOpen()){
-			app.clear(Color.CYAN);
 			processEvent();
 			drawGrille();
 			drawPerso();
@@ -94,5 +97,6 @@ public class Jeu {
 			//System.out.println(Mouse.getPosition().x + " " + Mouse.getPosition().y);
 		}
 	}
+
 
 }
