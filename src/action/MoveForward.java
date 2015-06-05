@@ -53,6 +53,7 @@ public class MoveForward implements int_Action{
 			throw (new MouvementEx("impossible d'avancer"));
 		} else {
 			r.setCurrent_Case(c_prime);
+			World.currentWorld.basic_print_world();
 		}
 		
 	}

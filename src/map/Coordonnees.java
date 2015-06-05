@@ -11,6 +11,12 @@ public class Coordonnees {
 		this.n = identificateur;
 	}
 	
+	public boolean equals(Coordonnees toTest){
+		return (this.x == toTest.get_x() &&
+				this.y == toTest.get_y() &&
+				this.n == toTest.get_n());	 
+	}
+	
 	public void set_x(int coordx){
 		this.x = coordx;
 	}
