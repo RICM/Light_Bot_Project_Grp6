@@ -2,6 +2,7 @@ package action;
 import map.*;
 import robot.*;
 import exception.MouvementEx;
+import exception.UnreachableCase;
 
 
 
@@ -15,7 +16,7 @@ public class MoveForward implements int_Action{
 		
 	}
 	
-	public void execute(Robot r) throws MouvementEx{
+	public void execute(Robot r) throws MouvementEx, UnreachableCase{
 		abstr_Case c_prime = null;
 		int i,j;
 		Coordonnees pos = r.getCurrent_Case().get_coordonnees();

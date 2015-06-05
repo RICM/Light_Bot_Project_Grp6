@@ -1,6 +1,7 @@
 package action_list;
 
 import java.util.LinkedList;
+import exception.UnreachableCase;
 
 import robot.Robot;
 import action.int_Action;
@@ -27,7 +28,7 @@ public class Possible_List implements int_Action_List{
 		return this.allowed_actions.contains(act);
 	}
 	
-	public void execute (Robot r) throws MouvementEx{
+	public void execute (Robot r) throws MouvementEx, UnreachableCase{
 		int size = allowed_actions.size();
 		for (int i = 0 ; i < size ; i++ ){
 			int_Action act;
