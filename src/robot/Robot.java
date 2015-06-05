@@ -7,15 +7,15 @@ import exception.MouvementEx;
 
 public class Robot {
 	
-	private Possible_List allowed_actions;
-	private Sequence_List user_actions;
+	private Possible_List allowed_actions = new Possible_List();
+	private Sequence_List user_actions = new Sequence_List();
 	private abstr_Case current_case;
 	private Orientation.orientation current_orientation;
 	
 	public Robot(abstr_Case initCase, Possible_List allowed_actions){
 		current_orientation = Orientation.orientation.TOP;
 		this.allowed_actions = allowed_actions;
-		current_case = initCase;
+		current_case = new initCase.getClass();
 	}
 	
 	public void run() throws MouvementEx{
@@ -46,6 +46,10 @@ public class Robot {
 		current_orientation = or;
 	}
 	
+	public void printPosition(){
+		System.out.println("position x : "+current_case.get_coordonnees().get_x());
+		System.out.println("position y : "+current_case.get_coordonnees().get_y());
+	}
 	
 	
 	
