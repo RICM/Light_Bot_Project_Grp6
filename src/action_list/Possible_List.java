@@ -8,7 +8,7 @@ import exception.MouvementEx;
 
 public class Possible_List implements int_Action_List{
 	
-	private LinkedList<int_Action> allowed_actions;
+	private LinkedList<int_Action> allowed_actions = new LinkedList<int_Action>();
 	
 	public void addActionToList(int_Action act){
 		allowed_actions.add(act);

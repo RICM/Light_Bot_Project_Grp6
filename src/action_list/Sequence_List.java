@@ -8,7 +8,7 @@ import exception.MouvementEx;
 
 public class Sequence_List implements int_Action_List {
 
-private LinkedList<int_Action> actions_list_seq;
+private LinkedList<int_Action> actions_list_seq = new LinkedList<int_Action>();
 	
 	public void addActionToList(int_Action act){
 		actions_list_seq.add(act);
