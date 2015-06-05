@@ -4,6 +4,7 @@ import action_list.*;
 import map.abstr_Case;
 
 import exception.MouvementEx;
+import exception.ActionEx;
 
 public class Robot {
 	
@@ -15,7 +16,7 @@ public class Robot {
 	public Robot(abstr_Case initCase, Possible_List allowed_actions){
 		current_orientation = Orientation.orientation.TOP;
 		this.allowed_actions = allowed_actions;
-		current_case = new initCase.getClass();
+		current_case = initCase;
 	}
 	
 	public void run() throws MouvementEx{
@@ -26,8 +27,13 @@ public class Robot {
 		allowed_actions.addActionToList(act);
 	}
 	
-	public void add_Action_User_Actions(int_Action act){
-		user_actions.addActionToList(act);
+	public void add_Action_User_Actions(int_Action act) throws ActionEx {
+		if (allowed_actions.isPresent(act)){
+			user_actions.addActionToList(act);
+		}
+		else{
+			throw new ActionEx("Action non autorisée");
+		}
 	}
 	
 	public abstr_Case getCurrent_Case(){

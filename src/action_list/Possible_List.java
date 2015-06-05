@@ -18,6 +18,10 @@ public class Possible_List implements int_Action_List{
 		allowed_actions.remove(act);
 	}
 	
+	public boolean isPresent(int_Action act){
+		return this.allowed_actions.contains(act);
+	}
+	
 	public void execute (Robot r) throws MouvementEx{
 		int size = allowed_actions.size();
 		for (int i = 0 ; i < size ; i++ ){

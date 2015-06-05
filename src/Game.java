@@ -12,6 +12,7 @@ import robot.Robot;
 import action.*;
 import map.Terrain;
 import exception.MouvementEx;
+import exception.ActionEx;
 
 
 public class Game {
@@ -43,10 +44,11 @@ public class Game {
 		Terrain terrain_test = new Terrain(4,4);
 		abstr_Case initRob;
 		for (int i = 0; i < 4; i++){
-			for (int j = 0; i < 4; i++){
+			for (int j = 0; j < 4; j++){
 				Coordonnees cord = new Coordonnees(i,j, i+j);
-				Normal_Case carré = new Normal_Case(0,cord);
-				terrain_test.add_case(i, j, carré);
+				Normal_Case carre = new Normal_Case(0,cord);
+				System.out.println(carre.coordonnees.get_x());
+				terrain_test.add_case(i, j, carre);
 			}	
 		}
 		initRob = terrain_test.get_case(3, 3);
@@ -58,12 +60,16 @@ public class Game {
 		list.addActionToList(MoveForward.move_forward());
 		list.addActionToList(Jump.jump());
 		
-		Sequence_List list2 = new Sequence_List();
-		list2.addActionToList(MoveForward.move_forward());
-		list2.addActionToList(MoveForward.move_forward());
 		/** Définition du robot **/
 		
 		Robot robert = new Robot(initRob, list);
+		try{
+			robert.add_Action_User_Actions(MoveForward.move_forward());
+			robert.add_Action_User_Actions(MoveForward.move_forward());
+			robert.add_Action_User_Actions(MoveForward.move_forward());
+		}catch (ActionEx e){
+			System.out.println(e.getMessage());
+		}
 		System.out.println("Position initiale : ");
 		robert.printPosition();
 		Robot roblist[] = new Robot[1];
