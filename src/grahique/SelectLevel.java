@@ -97,6 +97,7 @@ public class SelectLevel extends JDialog implements ActionListener{
 	}
 
 
+	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource()==this.btnRetour){
@@ -105,7 +106,7 @@ public class SelectLevel extends JDialog implements ActionListener{
 
 		if(e.getSource()==tabJbutton[0]){
 			this.dispose();
-			Jeu game = new Jeu(this.frame);
+			Jeu game = new Jeu(this.frame,0);
 		}
 
 	}
