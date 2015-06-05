@@ -8,15 +8,15 @@ import exception.ActionEx;
 
 public class Robot {
 	
-	private Possible_List allowed_actions = new Possible_List();
+	private Possible_List allowed_actions;
 	private Sequence_List user_actions = new Sequence_List();
 	private abstr_Case current_case;
 	private Orientation.orientation current_orientation;
 	
-	public Robot(abstr_Case initCase, Possible_List allowed_actions){
-		current_orientation = Orientation.orientation.TOP;
-		this.allowed_actions = allowed_actions;
+	public Robot(abstr_Case initCase, Possible_List Dallowed_actions){
+		current_orientation = Orientation.orientation.LEFT;
 		current_case = initCase;
+		allowed_actions = Dallowed_actions;
 	}
 	
 	public void run() throws MouvementEx{
@@ -27,12 +27,19 @@ public class Robot {
 		allowed_actions.addActionToList(act);
 	}
 	
-	public void add_Action_User_Actions(int_Action act) throws ActionEx {
-		if (allowed_actions.isPresent(act)){
-			user_actions.addActionToList(act);
+	public void add_Action_User_Actions(int_Action act) throws ActionEx{
+		boolean added = false;
+		//System.out.println("trying to add : "+act.getClass().getCanonicalName());
+		String str = act.getClass().getCanonicalName();
+		for(int i =0; i<allowed_actions.size(); i++){
+			if(str.equals(allowed_actions.get_name(i))){
+				user_actions.addActionToList(act);
+				added = true;
+				break;
+			}
 		}
-		else{
-			throw new ActionEx("Action non autorisée");
+		if(!added){
+			throw new ActionEx("impossible d'ajouter");
 		}
 	}
 	
@@ -57,9 +64,11 @@ public class Robot {
 		System.out.println("position y : "+current_case.get_coordonnees().get_y());
 	}
 	
+	public Possible_List get_possibles(){
+		return this.allowed_actions;
+	}
 	
-	
-	
-	
-
+	public void print_allowed_act(){
+		System.out.println(allowed_actions.toString());
+	}
 }

@@ -11,7 +11,12 @@ public class Possible_List implements int_Action_List{
 	private LinkedList<int_Action> allowed_actions = new LinkedList<int_Action>();
 	
 	public void addActionToList(int_Action act){
+		//System.out.println("trying to add : "+act.getClass().getCanonicalName());
 		allowed_actions.add(act);
+		if (allowed_actions.contains(act)){
+			//System.out.println("added !");
+			//System.out.println(toString());
+		}
 	}
 	
 	public void removeActionFromList(int_Action act){
@@ -30,5 +35,20 @@ public class Possible_List implements int_Action_List{
 			act.execute(r);
 		}
 	}
-
+	
+	public int_Action pickAction (int index){
+		int_Action ax = allowed_actions.get(index);
+		allowed_actions.remove(index);
+		return ax;
+	}
+	
+	public String toString(){
+		return allowed_actions.toString();
+	}
+	public int size(){
+		return allowed_actions.size();
+	}
+	public String get_name(int i){
+		return allowed_actions.get(i).getClass().getCanonicalName();
+	}
 }
