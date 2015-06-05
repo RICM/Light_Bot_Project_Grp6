@@ -1,6 +1,7 @@
 package action_list;
 
 import java.util.LinkedList;
+import exception.UnreachableCase;
 
 import robot.Robot;
 import action.int_Action;
@@ -18,7 +19,7 @@ private LinkedList<int_Action> actions_list_seq = new LinkedList<int_Action>();
 		actions_list_seq.remove(act);
 	}
 	
-	public void execute (Robot r) throws MouvementEx{
+	public void execute (Robot r) throws MouvementEx,UnreachableCase{
 		int size = actions_list_seq.size();
 		for (int i = 0 ; i < size ; i++ ){
 			int_Action act;

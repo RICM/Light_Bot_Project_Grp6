@@ -24,4 +24,4 @@ public class Activate implements int_Action{
 		return (c instanceof Teleporter_Case || c instanceof Painted_Case);
 	}
 }
-}
+

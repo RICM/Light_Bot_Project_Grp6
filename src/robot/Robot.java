@@ -1,5 +1,6 @@
 package robot;
 import couleur.Couleur;
+import exception.UnreachableCase;
 import action.*;
 import action_list.*;
 import map.abstr_Case;
@@ -20,7 +21,7 @@ public class Robot {
 		allowed_actions = Dallowed_actions;
 	}
 	
-	public void run() throws MouvementEx{
+	public void run() throws MouvementEx, UnreachableCase{
 		user_actions.execute(this);
 	}
 	

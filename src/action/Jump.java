@@ -1,5 +1,6 @@
 package action;
 import exception.MouvementEx;
+import exception.UnreachableCase;
 import map.*;
 import robot.Robot;
 
@@ -13,7 +14,7 @@ public class Jump implements int_Action{
 		
 	}
 
-	public void execute(Robot r) throws MouvementEx {
+	public void execute(Robot r) throws MouvementEx,UnreachableCase {
 		
 		abstr_Case c_prime = null;
 		Coordonnees pos = r.getCurrent_Case().get_coordonnees();
