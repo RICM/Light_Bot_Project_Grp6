@@ -9,6 +9,8 @@ import robot.Robot;
 import action.Jump;
 import action.LightCase;
 import action.MoveForward;
+import action.TurnLeft;
+import action.TurnRIght;
 import action_list.Possible_List;
 import exception.ActionEx;
 import exception.MouvementEx;
@@ -35,17 +37,18 @@ public class Game {
 		/** Ajouts des actions de base **/
 		list.addActionToList(MoveForward.move_forward());
 		list.addActionToList(Jump.jump());
+		list.addActionToList(TurnRIght.turn_right());
 		//System.out.println("Liste permise : ");
 		//System.out.println(list.toString());
 
-		/** Définition du robot **/
+		/** Définition du world **/
 
 
 		/** Définition du terrain **/
-		Terrain terrain_test = new Terrain(4,4);
+		Terrain terrain_test = new Terrain(7,6);
 		abstr_Case initRob;
-		for (int i = 0; i < 4; i++){
-			for (int j = 0; j < 4; j++){
+		for (int i = 0; i < 7; i++){
+			for (int j = 0; j < 6; j++){
 				Coordonnees cord = new Coordonnees(i,j,0);
 				Normal_Case carre = new Normal_Case(0,cord);
 				terrain_test.add_case(i, j, carre);
@@ -54,12 +57,20 @@ public class Game {
 		try {
 			initRob = terrain_test.get_case(3, 3);
 			Robot robert = new Robot(initRob, list);
+			Robot robotlist[] = new Robot[1];
+			Terrain terrainlist[] = new Terrain[1];
+			robotlist[0] = robert;
+			terrainlist[0] = terrain_test;
+			World.currentWorld.set_liste_terrain(terrainlist);
+			World.currentWorld.set_liste_robot(robotlist);
+			World.currentWorld.currentWorld.basic_print_world();
 			//robert.print_allowed_act();
 			try{
 				robert.add_Action_User_Actions(MoveForward.move_forward());
+				robert.add_Action_User_Actions(TurnRIght.turn_right());
+
 				robert.add_Action_User_Actions(MoveForward.move_forward());
-				robert.add_Action_User_Actions(MoveForward.move_forward());
-				robert.add_Action_User_Actions(MoveForward.move_forward());
+				
 				System.out.println("Position initiale : ");
 				robert.printPosition();
 				Robot roblist[] = new Robot[1];

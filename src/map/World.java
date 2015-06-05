@@ -34,4 +34,10 @@ public class World {
 	public void set_liste_robot(Robot[] new_liste){
 		liste_robot = new_liste;
 	}
+	
+	public void basic_print_world(){
+		for (int i = 0; i < liste_terrain.length; i++){
+			liste_terrain[i].print_basic_terrain(liste_robot);
+		}
+	}
 }
