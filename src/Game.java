@@ -85,7 +85,7 @@ public class Game {
 		
 		
 		
-		/*EventQueue.invokeLater(new Runnable() {
+		EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
 				try {
@@ -96,6 +96,6 @@ public class Game {
 					e.printStackTrace();
 				}
 			}
-		});*/
+		});
 	}
 }

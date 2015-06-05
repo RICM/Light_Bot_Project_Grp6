@@ -18,6 +18,8 @@ import org.jsfml.window.VideoMode;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.Event.Type;
 
+import robot.Robot;
+
 public class Jeu {
 
 	public static RenderWindow app = new RenderWindow(new VideoMode(1200, 700),"Lightbot");
@@ -27,11 +29,11 @@ public class Jeu {
 	public Sprite monSpriteBackground = new Sprite();
 	public Texture maTexturePerso = new Texture();
 	public Sprite monSpritePerso = new Sprite();
-	public static int x = 200;
-	public static int y = 50;
 	private int level;
 	private final Menu2 frame;
+	
 	private World w = World.currentWorld;
+	private Robot r = w.get_robot(0);
 	private Terrain t = w.get_terrain(level);
 	private abstr_Case[][] cases = t.get_terrain();
 	private int width_case = 80;
@@ -46,20 +48,16 @@ public class Jeu {
 			}
 
 			if (Keyboard.isKeyPressed(Key.LEFT)){
-				if(x>200)
-					x -= 100;
+
 			}
 			if (Keyboard.isKeyPressed(Key.RIGHT)){
-				if(x<700)
-					x += 100;
+
 			}
 			if (Keyboard.isKeyPressed(Key.UP)){
-				if(y>0)
-					y -= 50;
+
 			}
 			if (Keyboard.isKeyPressed(Key.DOWN)){
-				if(y<250)
-					y += 50;
+
 			}
 
 
@@ -93,9 +91,11 @@ public class Jeu {
 
 	public void drawPerso(){
 		try {
+			int x = r.getCurrent_Case().get_coordonnees().get_x();
+			int y = r.getCurrent_Case().get_coordonnees().get_y();
 			maTexturePerso.loadFromFile(Paths.get("perso.gif"));
 			monSpritePerso.setTexture(maTexturePerso);
-			monSpritePerso.setPosition(x+40*3, y+25*4);
+			monSpritePerso.setPosition(80+ width_case*(x+((NB_MAX_CASE-cases.length)/2)), 80+ height_case*(y+((NB_MAX_CASE-cases[x].length)/2)));
 			app.draw(monSpritePerso);
 
 
