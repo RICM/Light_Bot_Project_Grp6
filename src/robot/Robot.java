@@ -1,8 +1,8 @@
 package robot;
+import couleur.Couleur;
 import action.*;
 import action_list.*;
 import map.abstr_Case;
-
 import exception.MouvementEx;
 import exception.ActionEx;
 
@@ -12,6 +12,7 @@ public class Robot {
 	private Sequence_List user_actions = new Sequence_List();
 	private abstr_Case current_case;
 	private Orientation.orientation current_orientation;
+	private Couleur color;
 	
 	public Robot(abstr_Case initCase, Possible_List Dallowed_actions){
 		current_orientation = Orientation.orientation.LEFT;
@@ -59,6 +60,12 @@ public class Robot {
 		current_orientation = or;
 	}
 	
+	public Couleur get_couleur(){
+		return this.color;
+	}
+	public void set_couleur(Couleur new_color){
+		this.color = new_color;
+	}
 	public void printPosition(){
 		System.out.println("position x : "+current_case.get_coordonnees().get_x());
 		System.out.println("position y : "+current_case.get_coordonnees().get_y());
