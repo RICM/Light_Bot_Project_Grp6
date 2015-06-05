@@ -26,5 +26,10 @@ private LinkedList<int_Action> actions_list_seq = new LinkedList<int_Action>();
 			act.execute(r);
 		}
 	}
+
+	@Override
+	public boolean isPresent(int_Action act) {
+		return this.actions_list_seq.contains(act);
+	}
 	
 }

@@ -13,6 +13,7 @@ public class Terrain {
 	}
 	
 	public abstr_Case get_case (int x, int y){
+		//System.out.println(x+" , "+y);
 		return terrain[x][y];
 	}
 	

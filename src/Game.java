@@ -33,9 +33,8 @@ public class Game {
 		abstr_Case initRob;
 		for (int i = 0; i < 4; i++){
 			for (int j = 0; j < 4; j++){
-				Coordonnees cord = new Coordonnees(i,j, i+j);
+				Coordonnees cord = new Coordonnees(i,j,0);
 				Normal_Case carre = new Normal_Case(0,cord);
-				System.out.println(carre.coordonnees.get_x());
 				terrain_test.add_case(i, j, carre);
 			}
 		}
@@ -45,20 +44,21 @@ public class Game {
 		Possible_List list = new Possible_List();
 		/** Ajouts des actions de base **/
 		list.addActionToList(MoveForward.move_forward());
-		list.addActionToList(MoveForward.move_forward());
 		list.addActionToList(Jump.jump());
+		//System.out.println("Liste permise : ");
+		//System.out.println(list.toString());
 
 		/** Définition du robot **/
 
 		Robot robert = new Robot(initRob, list);
+		//robert.print_allowed_act();
 		try{
 			robert.add_Action_User_Actions(MoveForward.move_forward());
 			robert.add_Action_User_Actions(MoveForward.move_forward());
-			robert.add_Action_User_Actions(MoveForward.move_forward());
-		}catch (ActionEx e){
-			System.out.println(e.getMessage());
+		}catch (ActionEx ex){
+			System.out.println(ex.getMessage());
 		}
-		System.out.println("Position initiale : ");
+			System.out.println("Position initiale : ");
 		robert.printPosition();
 		Robot roblist[] = new Robot[1];
 		roblist[0] = robert;
@@ -73,7 +73,7 @@ public class Game {
 		}catch(MouvementEx e){
 			System.out.println(e.getMessage());
 		}
-		EventQueue.invokeLater(new Runnable() {
+		/*EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
 				try {
@@ -84,6 +84,6 @@ public class Game {
 					e.printStackTrace();
 				}
 			}
-		});
+		});*/
 	}
 }
