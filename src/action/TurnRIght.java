@@ -6,7 +6,7 @@ import robot.Robot;
 
 public class TurnRIght implements int_Action{
 
-	public TurnRIght turn_right(){
+	public static TurnRIght turn_right(){
 		return new TurnRIght();
 	}
 	

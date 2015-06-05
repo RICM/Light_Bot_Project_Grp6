@@ -7,7 +7,7 @@ import exception.MouvementEx;
 
 public class MoveForward implements int_Action{
 	
-	public MoveForward move_forward(){
+	public static MoveForward move_forward(){
 		return new MoveForward();
 	}
 	

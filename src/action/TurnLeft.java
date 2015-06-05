@@ -6,7 +6,7 @@ import robot.Robot;
 
 public class TurnLeft implements int_Action{
 	
-	public TurnLeft turn_left(){
+	public static TurnLeft turn_left(){
 		return new TurnLeft();
 	}
 	
