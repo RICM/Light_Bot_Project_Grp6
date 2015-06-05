@@ -63,7 +63,7 @@ public class Game {
 			terrainlist[0] = terrain_test;
 			World.currentWorld.set_liste_terrain(terrainlist);
 			World.currentWorld.set_liste_robot(robotlist);
-			World.currentWorld.currentWorld.basic_print_world();
+			World.currentWorld.basic_print_world();
 			//robert.print_allowed_act();
 			try{
 				robert.add_Action_User_Actions(MoveForward.move_forward());
