@@ -15,7 +15,7 @@ public class Activate implements int_Action{
 		else{
 			r.set_couleur(cprime.get_couleur());
 		}
-		throw (new MouvementEx("impossible d'allumer"));
+		throw (new MouvementEx("impossible à utiliser"));
 		}
 	}
 
