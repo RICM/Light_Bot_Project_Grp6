@@ -1,5 +1,6 @@
 package action;
 
+import map.World;
 import map.abstr_Case;
 import robot.Orientation;
 import robot.Robot;
@@ -29,6 +30,7 @@ public class TurnRIght implements int_Action{
     			r.setOrientation(Orientation.orientation.BOT);
     			break;
 		}
+		World.currentWorld.basic_print_world();
 	}
 
 	public boolean isPossible(Robot r, abstr_Case c) {

@@ -1,5 +1,6 @@
 package map;
 
+import robot.Orientation;
 import robot.Robot;
 import exception.UnreachableCase;
 
@@ -27,6 +28,11 @@ public class Terrain {
 	
 	public void print_basic_terrain(Robot[] robotList){
 		for (int i = 0; i < terrain.length; i++){
+			String horizontal_separator = " ";
+			for (int y = 0; y < terrain[i].length; y++){
+				horizontal_separator = horizontal_separator + "________________";
+			}
+			System.out.println(horizontal_separator);
 			for (int y = 0; y < terrain[i].length; y++){
 				boolean caserobot = false;
 				for (int j = 0; j < robotList.length; j++){
@@ -34,14 +40,37 @@ public class Terrain {
 						caserobot = true;
 					}
 				}
-				if (!caserobot){
-					System.out.print("\tO\t");
-				}else{
-					System.out.print("\tX\t");
+				if (y == 0){
+					System.out.print("|");
 				}
+				if (!caserobot){
+					System.out.print("\t\t");
+				}else{
+					switch (robotList[0].getOrientation()){
+					case TOP : 
+						System.out.print("\t^");
+						break;
+					case RIGHT :
+						System.out.print("\t>");
+						break;
+					case LEFT:
+						System.out.print("\t<");
+						break;
+					case BOT:
+						System.out.print("\tv");
+						break;
+					}
+					System.out.print("ROBERT\t");
+				}
+				System.out.print("|");
 			}
 			System.out.println("");
 		}
+		String horizontal_separator = " ";
+		for (int a = 0; a < terrain[terrain.length-1].length; a++){
+			horizontal_separator = horizontal_separator + "________________";
+		}
+		System.out.println(horizontal_separator);
 	}
 	
 	public abstr_Case[][] get_terrain(){

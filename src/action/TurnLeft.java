@@ -1,5 +1,6 @@
 package action;
 
+import map.World;
 import map.abstr_Case;
 import robot.Orientation;
 import robot.Robot;
@@ -29,6 +30,7 @@ public class TurnLeft implements int_Action{
     			r.setOrientation(Orientation.orientation.TOP);
     			break;
 		}
+		World.currentWorld.basic_print_world();
 	}
 
 

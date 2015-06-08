@@ -82,8 +82,8 @@ public class Game {
 
 				robert.add_Action_User_Actions(MoveForward.move_forward());
 				robert.add_Action_User_Actions(Activate.activate());
-				System.out.println("Position initiale : ");
-				robert.printPosition();
+				//System.out.println("Position initiale : ");
+				//robert.printPosition();
 				Robot roblist[] = new Robot[1];
 				roblist[0] = robert;
 				Terrain terrlist[] = new Terrain[1];
@@ -92,8 +92,8 @@ public class Game {
 				World.currentWorld.set_liste_terrain(terrlist);
 				try{
 					robert.run();
-					System.out.println("Position finale : ");
-					robert.printPosition();
+					//System.out.println("Position finale : ");
+					//robert.printPosition();
 				}catch(MouvementEx e){
 					System.out.println(e.getMessage());
 				}
