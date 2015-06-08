@@ -7,12 +7,18 @@ import robot.Robot;
 
 public class Jump implements int_Action{
 	
+	private Couleur color;
 	public static Jump jump(){
 		return new Jump();
 	}
-	
+	public static Jump jump(Couleur col){
+		return new Jump(col);
+	}
+	private Jump(Couleur col){
+		this.color = col;
+	}
 	private Jump(){
-		
+		this.color = Couleur.GRIS;
 	}
 
 	public void execute(Robot r) throws MouvementEx,UnreachableCase {
@@ -40,8 +46,9 @@ public class Jump implements int_Action{
 	// true == on peut sauter et avancer
 	//false == on saute sur place
 	public boolean isPossible(Robot r, abstr_Case c) {
-		return ((r.get_couleur()==c.get_couleur() || c.get_couleur()==Couleur.GRIS) && (r.getCurrent_Case().get_hauteur()+1 == c.get_hauteur()) 
-				|| (c.get_hauteur() < r.getCurrent_Case().get_hauteur()));
+		return ((r.get_couleur()==color || color == Couleur.GRIS) 
+				&& (r.getCurrent_Case().get_hauteur()+1 == c.get_hauteur()) 
+					|| (c.get_hauteur() < r.getCurrent_Case().get_hauteur()));
 	}
 
 }
