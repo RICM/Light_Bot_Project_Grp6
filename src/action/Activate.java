@@ -5,13 +5,18 @@ import map.*;
 import robot.Robot;
 
 public class Activate implements int_Action{
-
+	private Couleur color;
 	public static Activate activate(){
 		return new Activate();
 	}
-	
+	public static Activate activate(Couleur color){
+		return new Activate(color);
+	}
 	private Activate(){
-		
+		this.color = Couleur.GRIS;
+	}
+	private Activate(Couleur col){
+		this.color = col;
 	}
 	@Override
 	public void execute(Robot r) throws MouvementEx {
@@ -31,8 +36,10 @@ public class Activate implements int_Action{
 
 	@Override
 	public boolean isPossible(Robot r, abstr_Case c) {
-		return ((c.getClass().getCanonicalName().equals("map.Teleporter_Case")&& (c.get_couleur()==r.get_couleur()||
-				c.get_couleur()==Couleur.GRIS) || c.getClass().getCanonicalName().equals("map.Painted_Case")));
+		return (((c.getClass().getCanonicalName().equals("map.Teleporter_Case")&&
+					(color==r.get_couleur()||
+						color==Couleur.GRIS)) 
+				|| c.getClass().getCanonicalName().equals("map.Painted_Case")));
 	}
 }
 

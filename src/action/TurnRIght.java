@@ -1,17 +1,24 @@
 package action;
 
+import couleur.Couleur;
 import map.abstr_Case;
 import robot.Orientation;
 import robot.Robot;
 
 public class TurnRIght implements int_Action{
-
+	
+	private Couleur color;
 	public static TurnRIght turn_right(){
 		return new TurnRIght();
 	}
-	
+	public static TurnRIght turn_right(Couleur col){
+		return new TurnRIght(col);
+	}
 	private TurnRIght(){
-		
+		this.color = Couleur.GRIS;
+	}
+	private TurnRIght(Couleur col){
+		this.color = col;
 	}
 	
 	public void execute(Robot r) {
@@ -32,7 +39,7 @@ public class TurnRIght implements int_Action{
 	}
 
 	public boolean isPossible(Robot r, abstr_Case c) {
-		return true;
+		return (color == Couleur.GRIS || r.get_couleur() == color);
 	}
 
 }

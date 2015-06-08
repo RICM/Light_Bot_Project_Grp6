@@ -1,19 +1,26 @@
 package action;
 
+import couleur.Couleur;
 import map.abstr_Case;
 import robot.Orientation;
 import robot.Robot;
 
 public class TurnLeft implements int_Action{
 	
+	private Couleur color;
 	public static TurnLeft turn_left(){
 		return new TurnLeft();
 	}
-	
-	private TurnLeft(){
-		
+	public static TurnLeft turn_left(Couleur col){
+		return new TurnLeft(col);
 	}
-
+	private TurnLeft(){
+		this.color = Couleur.GRIS;
+	}
+	private TurnLeft(Couleur col){
+		this.color = col;
+	}
+	
 	public void execute(Robot r) {
 		switch (r.getOrientation()) {  
     		case  TOP :
@@ -33,7 +40,7 @@ public class TurnLeft implements int_Action{
 
 
 	public boolean isPossible(Robot r, abstr_Case c) {
-		return true;
+		return (color == Couleur.GRIS || r.get_couleur() == color);
 	}
 
 }

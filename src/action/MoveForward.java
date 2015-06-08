@@ -9,12 +9,18 @@ import exception.UnreachableCase;
 
 public class MoveForward implements int_Action{
 	
+	private Couleur color;
 	public static MoveForward move_forward(){
 		return new MoveForward();
 	}
-	
+	public static MoveForward move_forward(Couleur col){
+		return new MoveForward(col);
+	}
 	private MoveForward(){
-		
+		this.color = Couleur.GRIS;
+	}
+	private MoveForward(Couleur col){
+		this.color = Couleur.GRIS;
 	}
 	
 	public void execute(Robot r) throws MouvementEx, UnreachableCase{
@@ -60,6 +66,7 @@ public class MoveForward implements int_Action{
 	}
 	
 	public boolean isPossible(Robot r, abstr_Case c){
-		return ((c.get_couleur() == Couleur.GRIS || c.get_couleur() == r.get_couleur()) && (r.getCurrent_Case().get_hauteur() == c.get_hauteur()));
+		return ((color == Couleur.GRIS || color == r.get_couleur()) 
+				&& (r.getCurrent_Case().get_hauteur() == c.get_hauteur()));
 	}
 }
