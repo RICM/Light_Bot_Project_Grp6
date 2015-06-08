@@ -7,9 +7,9 @@ public class Illuminated_Case extends abstr_Case {
 	private boolean active;
 	
 	public Illuminated_Case(int h, Couleur color, Coordonnees cordo){
-		this.hauteur = h;
-		this.couleur = color;
-		this.coordonnees = cordo;
+		this.set_couleur(color);
+		this.set_coordonnees(cordo);
+		this.set_hauteur(h);
 		this.active = false;
 	}
 	

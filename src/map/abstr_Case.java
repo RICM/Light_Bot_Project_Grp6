@@ -2,9 +2,9 @@ package map;
 import couleur.*;
 
 public abstract class abstr_Case {
-	public int hauteur;
-	public Couleur couleur;
-	public Coordonnees coordonnees;
+	private int hauteur;
+	private Couleur couleur;
+	private Coordonnees coordonnees;
 	
 	public Couleur get_couleur(){
 		return this.couleur;

@@ -1,4 +1,5 @@
 package action;
+import couleur.Couleur;
 import exception.MouvementEx;
 import exception.UnreachableCase;
 import map.*;
@@ -39,7 +40,7 @@ public class Jump implements int_Action{
 	// true == on peut sauter et avancer
 	//false == on saute sur place
 	public boolean isPossible(Robot r, abstr_Case c) {
-		return ((r.getCurrent_Case().get_hauteur()+1 == c.get_hauteur()) 
+		return ((r.get_couleur()==c.get_couleur() || c.get_couleur()==Couleur.GRIS) && (r.getCurrent_Case().get_hauteur()+1 == c.get_hauteur()) 
 				|| (c.get_hauteur() < r.getCurrent_Case().get_hauteur()));
 	}
 

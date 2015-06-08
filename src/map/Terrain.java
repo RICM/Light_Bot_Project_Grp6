@@ -30,7 +30,7 @@ public class Terrain {
 			for (int y = 0; y < terrain[i].length; y++){
 				boolean caserobot = false;
 				for (int j = 0; j < robotList.length; j++){
-					if (robotList[j].getCurrent_Case().coordonnees.equals(terrain[i][y].coordonnees)){
+					if (robotList[j].getCurrent_Case().get_coordonnees().equals(terrain[i][y].get_coordonnees())){
 						caserobot = true;
 					}
 				}

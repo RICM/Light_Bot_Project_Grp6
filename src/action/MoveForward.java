@@ -1,4 +1,5 @@
 package action;
+import couleur.Couleur;
 import map.*;
 import robot.*;
 import exception.MouvementEx;
@@ -59,7 +60,6 @@ public class MoveForward implements int_Action{
 	}
 	
 	public boolean isPossible(Robot r, abstr_Case c){
-		return (r.getCurrent_Case().get_hauteur() == c.get_hauteur());
-
+		return ((c.get_couleur() == Couleur.GRIS || c.get_couleur() == r.get_couleur()) && (r.getCurrent_Case().get_hauteur() == c.get_hauteur()));
 	}
 }
