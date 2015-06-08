@@ -112,19 +112,21 @@ public class Game {
 		} catch (UnreachableCase e1) {
 			System.out.println(e1.getMessage());
 		}
+		
+		Jeu game = new Jeu(0);
 
 
 
 
-		EventQueue.invokeLater(new Runnable() {
+		/*EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
 				try {
 					Jeu game = new Jeu(0);
-				} catch (Exception e) {
+				} catch (Exception e) {				NOT WORKING ON MACOSX
 					e.printStackTrace();
 				}
 			}
-		});
+		});*/
 	}
 }
