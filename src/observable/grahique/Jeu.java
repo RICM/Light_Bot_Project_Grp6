@@ -1,4 +1,4 @@
-package observable.grahique;
+
 
 import java.awt.Frame;
 import java.io.IOException;
@@ -9,29 +9,31 @@ import java.util.Iterator;
 
 import javax.swing.JOptionPane;
 
-import observable.action.TurnLeft;
-import observable.action.TurnRIght;
-import observable.couleur.Couleur;
-import observable.map.Empty_Case;
-import observable.map.Normal_Case;
-import observable.map.Painted_Case;
-import observable.map.Terrain;
-import observable.map.World;
-import observable.map.abstr_Case;
-import observable.robot.Orientation;
-import observable.robot.Robot;
+import map.Empty_Case;
+import map.Normal_Case;
+import map.Painted_Case;
+import map.Terrain;
+import map.World;
+import map.abstr_Case;
 
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.RenderWindow;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
 import org.jsfml.system.Vector2i;
+import org.jsfml.window.Keyboard;
+import org.jsfml.window.Keyboard.Key;
 import org.jsfml.window.Mouse;
 import org.jsfml.window.VideoMode;
 import org.jsfml.window.WindowStyle;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.Event.Type;
 
+import robot.Orientation;
+import robot.Robot;
+import action.TurnLeft;
+import action.TurnRIght;
+import couleur.Couleur;
 import exception.ActionEx;
 
 public class Jeu {
@@ -61,6 +63,19 @@ public class Jeu {
 		for(Event e : app.pollEvents()){
 			if(e.type == Type.CLOSED){
 				app.close();
+			}
+
+			if (Keyboard.isKeyPressed(Key.LEFT)){
+				r.setOrientation(Orientation.orientation.LEFT);
+			}
+			if (Keyboard.isKeyPressed(Key.RIGHT)){
+				r.setOrientation(Orientation.orientation.RIGHT);
+			}
+			if (Keyboard.isKeyPressed(Key.UP)){
+				r.setOrientation(Orientation.orientation.TOP);
+			}
+			if (Keyboard.isKeyPressed(Key.DOWN)){
+				r.setOrientation(Orientation.orientation.BOT);
 			}
 
 			if (e.type == Event.Type.MOUSE_BUTTON_PRESSED) {
