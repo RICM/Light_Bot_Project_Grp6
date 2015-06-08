@@ -7,20 +7,20 @@ import exception.UnreachableCase;
 public class Terrain {
 
 	public Terrain(int x, int y){
-		this.terrain = new abstr_Case[x][y];
+		this.terrain = new abstr_Case[y][x];
 	}
 	
 	private abstr_Case[][] terrain;
 	
 	public void add_case(int x, int y, abstr_Case c){
-		terrain[x][y] = c;
+		terrain[y][x] = c;
 	}
 	
 	public abstr_Case get_case (int x, int y) throws UnreachableCase{
 		//System.out.println(x+" , "+y);
-		if (x >= 0 && x < terrain.length){
-			if (y >= 0 && y < terrain[x].length){
-				return terrain[x][y];
+		if (y >= 0 && y < terrain.length){
+			if (x >= 0 && x < terrain[x].length){
+				return terrain[y][x];
 			}
 		}
 		throw new UnreachableCase("Case is unreachable");

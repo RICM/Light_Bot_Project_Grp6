@@ -32,28 +32,29 @@ public class MoveForward implements int_Action{
 	    	case  TOP :
 	    		i = pos.get_x();
 	    		j = pos.get_y()-1;
-	    		//System.out.println("prochaine pos : "+i+" , "+j);
-	    		c_prime = World.currentWorld.get_terrain(pos.get_n()).get_case(pos.get_x(),pos.get_y()-1);
+	    		System.out.println("prochaine pos : "+i+" , "+j);
 	    		break;
 	    	case  BOT :
 	    		i = pos.get_x();
 	    		j = pos.get_y()+1;
-	    		//System.out.println("prochaine pos : "+i+" , "+j);
-	    		c_prime = World.currentWorld.get_terrain(pos.get_n()).get_case(pos.get_x(),pos.get_y()+1);
+	    		System.out.println("prochaine pos : "+i+" , "+j);
 	    		break;
 	    	case  LEFT :
 	    		i = pos.get_x()-1;
 	    		j = pos.get_y();	    		
-	    		//System.out.println("prochaine pos : "+i+" , "+j);
-	    		c_prime = World.currentWorld.get_terrain(pos.get_n()).get_case(pos.get_x()-1,pos.get_y());
+	    		System.out.println("prochaine pos : "+i+" , "+j);
 	    		break;
 	    	case  RIGHT :
 	    		i = pos.get_x()+1;
 	    		j = pos.get_y();
-	    		//System.out.println("prochaine pos : "+i+" , "+j);
-	    		c_prime = World.currentWorld.get_terrain(pos.get_n()).get_case(pos.get_x()+1,pos.get_y());
+	    		System.out.println("prochaine pos : "+i+" , "+j);
+	    		break;
+	    	default :
+	    		i = pos.get_x();
+	    		j = pos.get_y();
 	    		break;
 		}
+		c_prime = World.currentWorld.get_terrain(pos.get_n()).get_case(i,j);
 		
 		if (! isPossible(r,c_prime)){
 			//System.out.println("impossible d'avancer bitch");
