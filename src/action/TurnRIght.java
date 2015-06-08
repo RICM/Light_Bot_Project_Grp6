@@ -41,7 +41,7 @@ public class TurnRIght implements int_Action{
 	}
 
 	public boolean isPossible(Robot r, abstr_Case c) {
-		return (color == Couleur.GRIS || r.get_couleur() == color);
+		return (color.equals(Couleur.GRIS) || r.get_couleur().equals(color));
 	}
 
 }

@@ -12,6 +12,7 @@ import action.Activate;
 import action.Jump;
 import action.LightCase;
 import action.MoveForward;
+import action.TurnLeft;
 import action.TurnRIght;
 import action_list.Possible_List;
 import couleur.Couleur;
@@ -43,6 +44,7 @@ public class Game {
 		list.addActionToList(TurnRIght.turn_right());
 		list.addActionToList(Activate.activate());
 		list.addActionToList(LightCase.light_case());
+		list.addActionToList(TurnLeft.turn_left());
 		//System.out.println("Liste permise : ");
 		//System.out.println(list.toString());
 
@@ -56,10 +58,10 @@ public class Game {
 		for (int i = 0; i < 7; i++){
 			for (int j = 0; j < 6; j++){
 				Couleur color = Couleur.GRIS;
-				if(i+j%3 == 0){
+				if((i+j)%3 == 0){
 					color = Couleur.JAUNE;
 				}
-				else if (i+j%3==1){
+				else if ((i+j)%3==1){
 					color = Couleur.BLEU;
 				}
 				Coordonnees cord = new Coordonnees(i,j,0);
@@ -86,10 +88,16 @@ public class Game {
 			World.currentWorld.basic_print_world();
 			//robert.print_allowed_act();
 			try{
+				robert.add_Action_User_Actions(Activate.activate());
+				robert.add_Action_User_Actions(MoveForward.move_forward(Couleur.JAUNE));
+				robert.add_Action_User_Actions(TurnRIght.turn_right());
+				robert.add_Action_User_Actions(Activate.activate());
+				robert.add_Action_User_Actions(MoveForward.move_forward());
 				robert.add_Action_User_Actions(MoveForward.move_forward());
 				robert.add_Action_User_Actions(TurnRIght.turn_right());
-
 				robert.add_Action_User_Actions(MoveForward.move_forward());
+				robert.add_Action_User_Actions(Activate.activate());
+				robert.add_Action_User_Actions(TurnLeft.turn_left(Couleur.JAUNE));
 				robert.add_Action_User_Actions(Activate.activate());
 				//System.out.println("Position initiale : ");
 				//robert.printPosition();

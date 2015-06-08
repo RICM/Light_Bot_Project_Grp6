@@ -45,13 +45,28 @@ public class Terrain {
 					System.out.print("|");
 				}
 				if (!caserobot){
-					System.out.print("\t\t");
-					//if(terrain[j][i].get_couleur()==Couleur.BLEU){
-						//System.out.print("B");
-					//}
-					//else if(terrain[j][i].get_couleur()==Couleur.JAUNE){
-						//System.out.print("\tJ");
-					//}
+					System.out.print("\t");
+					switch (terrain[i][y].getClass().getCanonicalName()){
+						case "map.Painted_Case":
+							System.out.print("P");
+							break;
+						case "map.Normal_Case":
+							System.out.print("N");
+							break;
+						case "map.Illuminated_Case":
+							System.out.print("I");
+							break;
+						case "map.Teleporter_Case":
+							System.out.print("T");
+							break;
+					}
+					if(terrain[i][y].get_couleur()==Couleur.BLEU){
+						System.out.print("B");
+					}
+					else if(terrain[i][y].get_couleur()==Couleur.JAUNE){
+						System.out.print("J");
+					}
+					System.out.print("\t");
 					
 				}else{
 					switch (robotList[0].getOrientation()){

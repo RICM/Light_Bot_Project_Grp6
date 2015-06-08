@@ -46,7 +46,7 @@ public class Jump implements int_Action{
 	// true == on peut sauter et avancer
 	//false == on saute sur place
 	public boolean isPossible(Robot r, abstr_Case c) {
-		return ((r.get_couleur()==color || color == Couleur.GRIS) 
+		return ((r.get_couleur().equals(color) || Couleur.GRIS.equals(color)) 
 				&& (r.getCurrent_Case().get_hauteur()+1 == c.get_hauteur()) 
 					|| (c.get_hauteur() < r.getCurrent_Case().get_hauteur()));
 	}

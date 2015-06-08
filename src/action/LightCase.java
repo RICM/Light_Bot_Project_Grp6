@@ -36,7 +36,7 @@ public class LightCase implements int_Action{
 
 	public boolean isPossible(Robot r, abstr_Case c) {
 		return ((c.getClass().getCanonicalName() == "map.Illuminated_Case") 
-				&& (color ==Couleur.GRIS || color==r.get_couleur()));
+				&& (color.equals(Couleur.GRIS) || color.equals(r.get_couleur())));
 	}
 
 }

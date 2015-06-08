@@ -2,6 +2,7 @@ package action;
 
 import map.World;
 import couleur.Couleur;
+import exception.MouvementEx;
 import map.abstr_Case;
 import robot.Orientation;
 import robot.Robot;
@@ -22,7 +23,8 @@ public class TurnLeft implements int_Action{
 		this.color = col;
 	}
 	
-	public void execute(Robot r) {
+	public void execute(Robot r) throws MouvementEx {
+		if(isPossible(r,r.getCurrent_Case())){
 		switch (r.getOrientation()) {  
     		case  TOP :
     			r.setOrientation(Orientation.orientation.LEFT);
@@ -37,12 +39,17 @@ public class TurnLeft implements int_Action{
     			r.setOrientation(Orientation.orientation.TOP);
     			break;
 		}
+		}
+		else{
+			throw (new MouvementEx("impossible de tourner"));
+		}
 		World.currentWorld.basic_print_world();
+		System.out.println("Couleur de l'action : "+color.toString());
 	}
 
 
 	public boolean isPossible(Robot r, abstr_Case c) {
-		return (color == Couleur.GRIS || r.get_couleur() == color);
+		return (Couleur.GRIS.equals(color) || r.get_couleur().equals(color));
 	}
 
 }
