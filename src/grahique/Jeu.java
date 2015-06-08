@@ -18,6 +18,7 @@ import org.jsfml.window.VideoMode;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.Event.Type;
 
+import robot.Orientation;
 import robot.Robot;
 
 public class Jeu {
@@ -29,11 +30,12 @@ public class Jeu {
 	public Sprite monSpriteBackground = new Sprite();
 	public Texture maTexturePerso = new Texture();
 	public Sprite monSpritePerso = new Sprite();
+	public Texture maTextureBouton = new Texture();
+	public Sprite monSpriteBouton = new Sprite();
 	private int level;
-	private final Menu2 frame;
-	
-	private World w = World.currentWorld;
-	private Robot r = w.get_robot(0);
+
+	private static World w = World.currentWorld;
+	private static Robot r = w.get_robot(0);
 	private Terrain t = w.get_terrain(level);
 	private abstr_Case[][] cases = t.get_terrain();
 	private int width_case = 80;
@@ -48,16 +50,16 @@ public class Jeu {
 			}
 
 			if (Keyboard.isKeyPressed(Key.LEFT)){
-
+				r.setOrientation(Orientation.orientation.LEFT);
 			}
 			if (Keyboard.isKeyPressed(Key.RIGHT)){
-
+				r.setOrientation(Orientation.orientation.RIGHT);
 			}
 			if (Keyboard.isKeyPressed(Key.UP)){
-
+				r.setOrientation(Orientation.orientation.TOP);
 			}
 			if (Keyboard.isKeyPressed(Key.DOWN)){
-
+				r.setOrientation(Orientation.orientation.BOT);
 			}
 
 
@@ -79,7 +81,7 @@ public class Jeu {
 						maTexture.loadFromFile(Paths.get("square_vide.png"));
 					}
 					monSprite.setTexture(maTexture);
-					monSprite.setPosition(80+(width_case-5)*(j+((NB_MAX_CASE-4)/2)), 80+(height_case-5)*(i+((NB_MAX_CASE-4)/2)));
+					monSprite.setPosition(80+(width_case-5)*(j+((NB_MAX_CASE-cases[i].length)/2)), 80+(height_case-5)*(i+((NB_MAX_CASE-cases.length)/2)));
 					app.draw(monSprite);
 				}
 			}
@@ -93,9 +95,17 @@ public class Jeu {
 		try {
 			int x = r.getCurrent_Case().get_coordonnees().get_x();
 			int y = r.getCurrent_Case().get_coordonnees().get_y();
-			maTexturePerso.loadFromFile(Paths.get("perso.gif"));
+			if(r.getOrientation() == Orientation.orientation.BOT)
+				maTexturePerso.loadFromFile(Paths.get("gif/images_fixes/2.png"));
+			else if(r.getOrientation() == Orientation.orientation.LEFT)
+				maTexturePerso.loadFromFile(Paths.get("gif/images_fixes/13.png"));
+			else if(r.getOrientation() == Orientation.orientation.RIGHT)
+				maTexturePerso.loadFromFile(Paths.get("gif/images_fixes/5.png"));
+			else if(r.getOrientation() == Orientation.orientation.TOP)
+				maTexturePerso.loadFromFile(Paths.get("gif/images_fixes/9.png"));
+
 			monSpritePerso.setTexture(maTexturePerso);
-			monSpritePerso.setPosition(80+ width_case*(x+((NB_MAX_CASE-cases.length)/2)), 80+ height_case*(y+((NB_MAX_CASE-cases[x].length)/2)));
+			monSpritePerso.setPosition(80+25+(width_case-5)*(y+((NB_MAX_CASE-cases[x].length)/2)), 80+5+(height_case-5)*(x+((NB_MAX_CASE-cases.length)/2)));
 			app.draw(monSpritePerso);
 
 
@@ -103,15 +113,25 @@ public class Jeu {
 			e.printStackTrace();
 		} // on charge la texture qui se trouve dans notre dossier assets
 	}
+	public void draw_bouton(){
+		try {
+			maTextureBouton.loadFromFile(Paths.get("bouton/rota_gauche.png"));
+			monSpriteBouton.setTexture(maTextureBouton);
+			monSpriteBouton.setPosition(100,550);
+			app.draw(monSpriteBouton);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
-	public Jeu(Menu2 fenetre, int lvl){
-		this.frame=fenetre;
+	public Jeu(int lvl){
 		this.level = lvl+1;
-		this.frame.setVisible(false);
 		while(app.isOpen()){
 			processEvent();
 			drawGrille();
 			drawPerso();
+			draw_bouton();
 			app.display();
 			//System.out.println(Mouse.getPosition().x + " " + Mouse.getPosition().y);
 		}
