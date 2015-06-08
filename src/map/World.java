@@ -40,4 +40,8 @@ public class World {
 			liste_terrain[i].print_basic_terrain(liste_robot);
 		}
 	}
+	
+	public int number_robots(){
+		return liste_robot.length;
+	}
 }

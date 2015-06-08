@@ -45,6 +45,10 @@ public class Robot {
 		}
 	}
 	
+	public void remove_Action_User_Actions(int_Action act){
+		user_actions.removeActionFromList(act);
+	}
+	
 	public abstr_Case getCurrent_Case(){
 		return current_case;
 	}

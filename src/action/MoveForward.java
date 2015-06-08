@@ -20,7 +20,7 @@ public class MoveForward implements int_Action{
 		this.color = Couleur.GRIS;
 	}
 	private MoveForward(Couleur col){
-		this.color = Couleur.GRIS;
+		this.color = col;
 	}
 	
 	public void execute(Robot r) throws MouvementEx, UnreachableCase{
@@ -55,7 +55,7 @@ public class MoveForward implements int_Action{
 	    		break;
 		}
 		c_prime = World.currentWorld.get_terrain(pos.get_n()).get_case(i,j);
-		
+		System.out.println("couleur de l'action : "+color.toString());
 		if (! isPossible(r,c_prime)){
 			//System.out.println("impossible d'avancer bitch");
 			throw (new MouvementEx("impossible d'avancer"));
@@ -67,7 +67,7 @@ public class MoveForward implements int_Action{
 	}
 	
 	public boolean isPossible(Robot r, abstr_Case c){
-		return ((color == Couleur.GRIS || color == r.get_couleur()) 
+		return ((color.equals(Couleur.GRIS) || color.equals(r.get_couleur())) 
 				&& (r.getCurrent_Case().get_hauteur() == c.get_hauteur()));
 	}
 }
