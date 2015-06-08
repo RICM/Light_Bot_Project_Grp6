@@ -31,7 +31,8 @@ public class Activate implements int_Action{
 
 	@Override
 	public boolean isPossible(Robot r, abstr_Case c) {
-		return ((c.getClass().getCanonicalName().equals("map.Teleporter_Case")&& (c.get_couleur()==r.get_couleur()||c.get_couleur()==Couleur.GRIS) || c.getClass().getCanonicalName().equals("map.Painted_Case"));
+		return ((c.getClass().getCanonicalName().equals("map.Teleporter_Case")&& (c.get_couleur()==r.get_couleur()||
+				c.get_couleur()==Couleur.GRIS) || c.getClass().getCanonicalName().equals("map.Painted_Case")));
 	}
 }
 

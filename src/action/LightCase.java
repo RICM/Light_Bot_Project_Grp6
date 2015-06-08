@@ -1,5 +1,6 @@
 package action;
 
+import couleur.Couleur;
 import exception.MouvementEx;
 import map.*;
 import robot.Robot;
@@ -27,12 +28,7 @@ public class LightCase implements int_Action{
 	}
 
 	public boolean isPossible(Robot r, abstr_Case c) {
-		if(c instanceof Illuminated_Case){
-			return true;
-		}
-		else{
-			return false;
-		}
+		return ((c.getClass().getCanonicalName() == "map.Illuminated_Case") && (c.get_couleur() ==Couleur.GRIS || c.get_couleur()==r.get_couleur()));
 	}
 
 }
