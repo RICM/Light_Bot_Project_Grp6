@@ -1,5 +1,5 @@
 package observable.map;
-import observable.couleur.*;
+import couleur.*;
 
 public class Painted_Case extends abstr_Case {
 

@@ -1,7 +1,13 @@
 package observable.map;
-import observable.robot.Robot;
+import java.util.ArrayList;
 
-public class World {
+import observable.int_Observable;
+import observable.robot.Robot;
+import observer.int_Observer;
+
+public class World implements int_Observable {
+	
+	private ArrayList<int_Observer> listObserver = new ArrayList<int_Observer>(); 
 
 	private World(){
 	}
@@ -25,6 +31,7 @@ public class World {
 
 	public void set_liste_terrain(Terrain[] new_liste){
 		liste_terrain = new_liste;
+		notifyObserver();
 	}
 
 	Robot[] get_liste_robot(){
@@ -33,6 +40,7 @@ public class World {
 
 	public void set_liste_robot(Robot[] new_liste){
 		liste_robot = new_liste;
+		notifyObserver();
 	}
 	
 	public void basic_print_world(){
@@ -43,5 +51,20 @@ public class World {
 	
 	public int number_robots(){
 		return liste_robot.length;
+	}
+	
+	@Override
+	public void addObserver(int_Observer obs) {
+		this.listObserver.add(obs);
+	}
+	@Override
+	public void removeObserver() {
+		listObserver = new ArrayList<int_Observer>();
+		
+	}
+	@Override
+	public void notifyObserver() {
+		for(int_Observer obs : listObserver)
+		      obs.update(this);
 	}
 }

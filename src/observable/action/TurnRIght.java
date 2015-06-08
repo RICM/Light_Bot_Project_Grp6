@@ -1,12 +1,18 @@
 package observable.action;
 
-import observable.couleur.Couleur;
+import java.util.ArrayList;
+
+import couleur.Couleur;
+import observable.int_Observable;
 import observable.map.World;
 import observable.map.abstr_Case;
 import observable.robot.Orientation;
 import observable.robot.Robot;
+import observer.int_Observer;
 
-public class TurnRIght implements int_Action{
+public class TurnRIght implements int_Action, int_Observable{
+	
+	private ArrayList<int_Observer> listObserver = new ArrayList<int_Observer>(); 
 	
 	private Couleur color;
 	public static TurnRIght turn_right(){
@@ -42,6 +48,21 @@ public class TurnRIght implements int_Action{
 
 	public boolean isPossible(Robot r, abstr_Case c) {
 		return (color.equals(Couleur.GRIS) || r.get_couleur().equals(color));
+	}
+	
+	@Override
+	public void addObserver(int_Observer obs) {
+		this.listObserver.add(obs);
+	}
+	@Override
+	public void removeObserver() {
+		listObserver = new ArrayList<int_Observer>();
+		
+	}
+	@Override
+	public void notifyObserver() {
+		for(int_Observer obs : listObserver)
+		      obs.update(this);
 	}
 
 }

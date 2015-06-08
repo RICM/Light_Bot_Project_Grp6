@@ -1,15 +1,20 @@
 package observable.action_list;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
+import observable.int_Observable;
 import observable.action.int_Action;
 import observable.robot.Robot;
+import observer.int_Observer;
 import exception.UnreachableCase;
 import exception.MouvementEx;
 
-public class Possible_List implements int_Action_List{
+public class Possible_List implements int_Action_List, int_Observable{
 	
 	private LinkedList<int_Action> allowed_actions = new LinkedList<int_Action>();
+	
+	private ArrayList<int_Observer> listObserver = new ArrayList<int_Observer>(); 
 	
 	public void addActionToList(int_Action act){
 		//System.out.println("trying to add : "+act.getClass().getCanonicalName());
@@ -18,10 +23,12 @@ public class Possible_List implements int_Action_List{
 			//System.out.println("added !");
 			//System.out.println(toString());
 		}
+		notifyObserver();
 	}
 	
 	public void removeActionFromList(int_Action act){
 		allowed_actions.remove(act);
+		notifyObserver();
 	}
 	
 	public boolean isPresent(int_Action act){
@@ -40,6 +47,7 @@ public class Possible_List implements int_Action_List{
 	public int_Action pickAction (int index){
 		int_Action ax = allowed_actions.get(index);
 		allowed_actions.remove(index);
+		notifyObserver();
 		return ax;
 	}
 	
@@ -55,5 +63,20 @@ public class Possible_List implements int_Action_List{
 	
 	public LinkedList<int_Action> get(){
 		return this.allowed_actions;
+	}
+	
+	@Override
+	public void addObserver(int_Observer obs) {
+		this.listObserver.add(obs);
+	}
+	@Override
+	public void removeObserver() {
+		listObserver = new ArrayList<int_Observer>();
+		
+	}
+	@Override
+	public void notifyObserver() {
+		for(int_Observer obs : listObserver)
+		      obs.update(this);
 	}
 }

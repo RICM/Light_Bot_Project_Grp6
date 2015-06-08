@@ -1,20 +1,28 @@
 package observable.map;
 
-import observable.couleur.Couleur;
+import java.util.ArrayList;
+
+import couleur.Couleur;
 import observable.robot.Orientation;
 import observable.robot.Robot;
 import exception.UnreachableCase;
+import observable.int_Observable;
+import observer.int_Observer;
 
-public class Terrain {
+public class Terrain implements int_Observable{
 
+	private ArrayList<int_Observer> listObserver = new ArrayList<int_Observer>(); 
+	
 	public Terrain(int x, int y){
 		this.terrain = new abstr_Case[y][x];
+		notifyObserver();
 	}
 	
 	private abstr_Case[][] terrain;
 	
 	public void add_case(int x, int y, abstr_Case c){
 		terrain[y][x] = c;
+		notifyObserver();
 	}
 	
 	public abstr_Case get_case (int x, int y) throws UnreachableCase{
@@ -98,5 +106,20 @@ public class Terrain {
 	
 	public abstr_Case[][] get_terrain(){
 		return this.terrain;
+	}
+	
+	@Override
+	public void addObserver(int_Observer obs) {
+		this.listObserver.add(obs);
+	}
+	@Override
+	public void removeObserver() {
+		listObserver = new ArrayList<int_Observer>();
+		
+	}
+	@Override
+	public void notifyObserver() {
+		for(int_Observer obs : listObserver)
+		      obs.update(this);
 	}
 }
