@@ -1,5 +1,6 @@
 package map;
 
+import couleur.Couleur;
 import robot.Orientation;
 import robot.Robot;
 import exception.UnreachableCase;
@@ -45,6 +46,13 @@ public class Terrain {
 				}
 				if (!caserobot){
 					System.out.print("\t\t");
+					//if(terrain[j][i].get_couleur()==Couleur.BLEU){
+						//System.out.print("B");
+					//}
+					//else if(terrain[j][i].get_couleur()==Couleur.JAUNE){
+						//System.out.print("\tJ");
+					//}
+					
 				}else{
 					switch (robotList[0].getOrientation()){
 					case TOP : 

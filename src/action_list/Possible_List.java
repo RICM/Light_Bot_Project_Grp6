@@ -52,4 +52,8 @@ public class Possible_List implements int_Action_List{
 	public String get_name(int i){
 		return allowed_actions.get(i).getClass().getCanonicalName();
 	}
+	
+	public LinkedList<int_Action> get(){
+		return this.allowed_actions;
+	}
 }

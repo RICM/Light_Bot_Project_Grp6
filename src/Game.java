@@ -2,6 +2,7 @@ import java.awt.EventQueue;
 
 import map.Coordonnees;
 import map.Normal_Case;
+import map.Painted_Case;
 import map.Teleporter_Case;
 import map.Terrain;
 import map.World;
@@ -9,6 +10,7 @@ import map.abstr_Case;
 import robot.Robot;
 import action.Activate;
 import action.Jump;
+import action.LightCase;
 import action.MoveForward;
 import action.TurnRIght;
 import action_list.Possible_List;
@@ -40,6 +42,7 @@ public class Game {
 		list.addActionToList(Jump.jump());
 		list.addActionToList(TurnRIght.turn_right());
 		list.addActionToList(Activate.activate());
+		list.addActionToList(LightCase.light_case());
 		//System.out.println("Liste permise : ");
 		//System.out.println(list.toString());
 
@@ -49,10 +52,18 @@ public class Game {
 		/** Définition du terrain **/
 		Terrain terrain_test = new Terrain(7,6);
 		abstr_Case initRob;
+	
 		for (int i = 0; i < 7; i++){
 			for (int j = 0; j < 6; j++){
+				Couleur color = Couleur.GRIS;
+				if(i+j%3 == 0){
+					color = Couleur.JAUNE;
+				}
+				else if (i+j%3==1){
+					color = Couleur.BLEU;
+				}
 				Coordonnees cord = new Coordonnees(i,j,0);
-				Normal_Case carre = new Normal_Case(0,cord);
+				Painted_Case carre = new Painted_Case(0,color, cord);
 				terrain_test.add_case(i, j, carre);
 			}
 		}
