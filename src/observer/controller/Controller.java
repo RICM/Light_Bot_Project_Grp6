@@ -1,4 +1,4 @@
-package controller;
+package observer.controller;
 
 import observable.action.int_Action;
 import observable.grahique.Jeu;
