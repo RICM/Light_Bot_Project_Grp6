@@ -5,9 +5,9 @@ public class Teleporter_Case extends abstr_Case {
 	private abstr_Case dest;
 	
 	public Teleporter_Case(int h, Couleur Color, Coordonnees cord, abstr_Case destination){
-		this.couleur = Color;
-		this.coordonnees = cord;
-		this.hauteur = h;
+		this.set_couleur(Color);
+		this.set_coordonnees(cord);
+		this.set_hauteur(h);
 		this.dest = destination;
 	}
 	
