@@ -1,5 +1,6 @@
 package action;
 
+import couleur.Couleur;
 import exception.MouvementEx;
 import exception.UnreachableCase;
 import map.abstr_Case;
