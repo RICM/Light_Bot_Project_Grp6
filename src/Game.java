@@ -6,6 +6,7 @@ import observable.action.MoveForward;
 import observable.action.TurnLeft;
 import observable.action.TurnRIght;
 import observable.action_list.Possible_List;
+import observable.grahique.Menu2;
 import observable.map.Coordonnees;
 import observable.map.Painted_Case;
 import observable.map.Teleporter_Case;
@@ -16,7 +17,6 @@ import observable.robot.Robot;
 import exception.ActionEx;
 import exception.MouvementEx;
 import exception.UnreachableCase;
-import grahique.Menu2;
 
 
 public class Game {
