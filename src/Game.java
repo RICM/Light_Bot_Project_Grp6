@@ -1,7 +1,4 @@
-import java.awt.EventQueue;
-
 import map.Coordonnees;
-import map.Normal_Case;
 import map.Painted_Case;
 import map.Teleporter_Case;
 import map.Terrain;
@@ -19,7 +16,7 @@ import couleur.Couleur;
 import exception.ActionEx;
 import exception.MouvementEx;
 import exception.UnreachableCase;
-import grahique.Jeu;
+import grahique.Menu2;
 
 
 public class Game {
@@ -54,7 +51,7 @@ public class Game {
 		/** Définition du terrain **/
 		Terrain terrain_test = new Terrain(7,6);
 		abstr_Case initRob;
-	
+
 		for (int i = 0; i < 7; i++){
 			for (int j = 0; j < 6; j++){
 				Couleur color = Couleur.GRIS;
@@ -120,8 +117,10 @@ public class Game {
 		} catch (UnreachableCase e1) {
 			System.out.println(e1.getMessage());
 		}
-		
-		Jeu game = new Jeu(0);
+
+		Menu2 game = new Menu2();
+		game.setVisible(true);
+		game.setLocationRelativeTo(null);
 
 
 

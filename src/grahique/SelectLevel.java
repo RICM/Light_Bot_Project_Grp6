@@ -106,7 +106,7 @@ public class SelectLevel extends JDialog implements ActionListener{
 
 		if(e.getSource()==tabJbutton[0]){
 			this.dispose();
-			Jeu game = new Jeu(0);
+			Jeu game = new Jeu(0,this.frame);
 		}
 
 	}
