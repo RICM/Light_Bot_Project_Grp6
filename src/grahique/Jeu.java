@@ -1,3 +1,4 @@
+package grahique;
 
 
 import java.awt.Frame;

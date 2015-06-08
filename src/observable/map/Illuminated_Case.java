@@ -15,6 +15,7 @@ public class Illuminated_Case extends abstr_Case {
 	
 	public void set_active(boolean act){
 		this.active = act;
+		notifyObserver();
 	}
 	
 	public boolean get_active(){

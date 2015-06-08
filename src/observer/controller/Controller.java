@@ -1,12 +1,12 @@
 package observer.controller;
 
 import observable.action.int_Action;
-import observable.grahique.Jeu;
 import observable.map.World;
 import observable.robot.Robot;
 import exception.ActionEx;
 import exception.MouvementEx;
 import exception.UnreachableCase;
+import grahique.Jeu;
 
 public class Controller {
 	
