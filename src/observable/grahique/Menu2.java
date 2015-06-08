@@ -1,4 +1,4 @@
-package grahique;
+package observable.grahique;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;

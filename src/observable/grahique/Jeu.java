@@ -1,4 +1,4 @@
-package grahique;
+package observable.grahique;
 
 
 import java.awt.Frame;
@@ -10,12 +10,12 @@ import java.util.Iterator;
 
 import javax.swing.JOptionPane;
 
-import map.Empty_Case;
-import map.Normal_Case;
-import map.Painted_Case;
-import map.Terrain;
-import map.World;
-import map.abstr_Case;
+import observable.map.Empty_Case;
+import observable.map.Normal_Case;
+import observable.map.Painted_Case;
+import observable.map.Terrain;
+import observable.map.World;
+import observable.map.abstr_Case;
 
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.RenderWindow;
@@ -30,10 +30,10 @@ import org.jsfml.window.WindowStyle;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.Event.Type;
 
-import robot.Orientation;
-import robot.Robot;
-import action.TurnLeft;
-import action.TurnRIght;
+import observable.robot.Orientation;
+import observable.robot.Robot;
+import observable.action.TurnLeft;
+import observable.action.TurnRIght;
 import couleur.Couleur;
 import exception.ActionEx;
 
