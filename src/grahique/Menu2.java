@@ -96,6 +96,7 @@ public class Menu2 extends JFrame implements ActionListener{
 		this.panCenter.add(this.btnJouer);
 	}
 
+	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource()==this.btnFullScreen){

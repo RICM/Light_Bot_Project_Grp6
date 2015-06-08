@@ -1,6 +1,5 @@
 import java.awt.EventQueue;
 
-import couleur.Couleur;
 import map.Coordonnees;
 import map.Normal_Case;
 import map.Teleporter_Case;
@@ -10,15 +9,14 @@ import map.abstr_Case;
 import robot.Robot;
 import action.Activate;
 import action.Jump;
-import action.LightCase;
 import action.MoveForward;
-import action.TurnLeft;
 import action.TurnRIght;
 import action_list.Possible_List;
+import couleur.Couleur;
 import exception.ActionEx;
 import exception.MouvementEx;
 import exception.UnreachableCase;
-import grahique.Menu2;
+import grahique.Jeu;
 
 
 public class Game {
@@ -34,7 +32,7 @@ public class Game {
 		 * orientation vers la droite
 		 * setWorld
 		 */
-		
+
 		/** Définition de la liste des actions permises au robot **/
 		Possible_List list = new Possible_List();
 		/** Ajouts des actions de base **/
@@ -104,16 +102,14 @@ public class Game {
 			System.out.println(e1.getMessage());
 		}
 
-		
-		
-		
+
+
+
 		EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
 				try {
-					Menu2 frame = new Menu2();
-					frame.setLocationRelativeTo(null);
-					frame.setVisible(true);
+					Jeu game = new Jeu(0);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
