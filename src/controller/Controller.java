@@ -1,12 +1,12 @@
 package controller;
 
+import observable.action.int_Action;
+import observable.grahique.Jeu;
+import observable.map.World;
+import observable.robot.Robot;
 import exception.ActionEx;
 import exception.MouvementEx;
 import exception.UnreachableCase;
-import robot.Robot;
-import action.int_Action;
-import map.World;
-import grahique.Jeu;
 
 public class Controller {
 	
@@ -97,4 +97,17 @@ public class Controller {
 		 */
 		jeu.display_world(World.currentWorld);
 	}
+	
+	public void setNotificationUpdatedRobot(){
+		/**
+		 * Send a notification to view to display the robot
+		 */
+		jeu.display_robot(World.currentWorld.get_robot(current_robot));
+	}
+	
+	public void getNotificationUpdatedRobot(){
+		setNotificationUpdatedRobot();
+	}
+	
+	
 }

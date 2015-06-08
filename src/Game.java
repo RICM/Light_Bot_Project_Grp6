@@ -1,22 +1,22 @@
-import map.Coordonnees;
-import map.Painted_Case;
-import map.Teleporter_Case;
-import map.Terrain;
-import map.World;
-import map.abstr_Case;
-import robot.Robot;
-import action.Activate;
-import action.Jump;
-import action.LightCase;
-import action.MoveForward;
-import action.TurnLeft;
-import action.TurnRIght;
-import action_list.Possible_List;
-import couleur.Couleur;
+import observable.action.Activate;
+import observable.action.Jump;
+import observable.action.LightCase;
+import observable.action.MoveForward;
+import observable.action.TurnLeft;
+import observable.action.TurnRIght;
+import observable.action_list.Possible_List;
+import observable.couleur.Couleur;
+import observable.grahique.Menu2;
+import observable.map.Coordonnees;
+import observable.map.Painted_Case;
+import observable.map.Teleporter_Case;
+import observable.map.Terrain;
+import observable.map.World;
+import observable.map.abstr_Case;
+import observable.robot.Robot;
 import exception.ActionEx;
 import exception.MouvementEx;
 import exception.UnreachableCase;
-import grahique.Menu2;
 
 
 public class Game {
