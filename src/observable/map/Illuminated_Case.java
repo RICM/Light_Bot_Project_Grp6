@@ -1,6 +1,6 @@
 package observable.map;
 
-import observable.couleur.*;
+import couleur.*;
 
 public class Illuminated_Case extends abstr_Case {
 	

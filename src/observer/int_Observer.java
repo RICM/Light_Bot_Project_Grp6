@@ -1,5 +1,5 @@
 package observer;
 
-public class int_Observer {
-
+public interface int_Observer {
+	public void update(Object obj);
 }

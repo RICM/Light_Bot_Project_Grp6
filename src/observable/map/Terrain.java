@@ -1,6 +1,6 @@
 package observable.map;
 
-import observable.couleur.Couleur;
+import couleur.Couleur;
 import observable.robot.Orientation;
 import observable.robot.Robot;
 import exception.UnreachableCase;

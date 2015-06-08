@@ -1,4 +1,4 @@
-package observable.couleur;
+package couleur;
 
 public enum Couleur {
 	BLEU,

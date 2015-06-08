@@ -1,5 +1,5 @@
 package observable.map;
-import observable.couleur.*;
+import couleur.*;
 
 public abstract class abstr_Case {
 	private int hauteur;

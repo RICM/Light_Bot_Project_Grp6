@@ -1,7 +1,7 @@
 package observable.robot;
+import couleur.Couleur;
 import observable.action.*;
 import observable.action_list.*;
-import observable.couleur.Couleur;
 import observable.map.abstr_Case;
 import exception.UnreachableCase;
 import exception.MouvementEx;

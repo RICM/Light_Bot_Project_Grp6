@@ -1,3 +1,4 @@
+import couleur.Couleur;
 import observable.action.Activate;
 import observable.action.Jump;
 import observable.action.LightCase;
@@ -5,7 +6,6 @@ import observable.action.MoveForward;
 import observable.action.TurnLeft;
 import observable.action.TurnRIght;
 import observable.action_list.Possible_List;
-import observable.couleur.Couleur;
 import observable.grahique.Menu2;
 import observable.map.Coordonnees;
 import observable.map.Painted_Case;

@@ -1,5 +1,5 @@
 package observable.map;
-import observable.couleur.Couleur;
+import couleur.Couleur;
 
 public class Normal_Case extends abstr_Case {
 	

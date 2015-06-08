@@ -1,5 +1,5 @@
 package observable.map;
-import observable.couleur.*;
+import couleur.*;
 
 public class Teleporter_Case extends abstr_Case {
 	private abstr_Case dest;

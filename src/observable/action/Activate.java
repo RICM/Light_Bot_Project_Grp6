@@ -1,10 +1,17 @@
 package observable.action;
-import observable.couleur.Couleur;
+import java.util.ArrayList;
+
+import couleur.Couleur;
 import observable.map.*;
 import observable.robot.Robot;
 import exception.MouvementEx;
+import observable.int_Observable;
+import observer.int_Observer;
 
-public class Activate implements int_Action{
+public class Activate implements int_Action, int_Observable{
+	
+	private ArrayList<int_Observer> listObserver = new ArrayList<int_Observer>(); 
+	
 	private Couleur color;
 	public static Activate activate(){
 		return new Activate();
@@ -24,9 +31,11 @@ public class Activate implements int_Action{
 	if (isPossible(r,cprime)){
 		if(cprime.getClass().getCanonicalName().equals("map.Teleporter_Case")){
 			r.setCurrent_Case(((Teleporter_Case)cprime).get_destination());
+			notifyObserver();
 		}
 		else {
 			r.set_couleur(cprime.get_couleur());
+			notifyObserver();
 		}
 	}
 	else{
@@ -40,6 +49,20 @@ public class Activate implements int_Action{
 					(color.equals(r.get_couleur())||
 						color.equals(Couleur.GRIS))) 
 				|| c.getClass().getCanonicalName().equals("map.Painted_Case")));
+	}
+	@Override
+	public void addObserver(int_Observer obs) {
+		this.listObserver.add(obs);
+	}
+	@Override
+	public void removeObserver() {
+		listObserver = new ArrayList<int_Observer>();
+		
+	}
+	@Override
+	public void notifyObserver() {
+		for(int_Observer obs : listObserver)
+		      obs.update(this);
 	}
 }
 

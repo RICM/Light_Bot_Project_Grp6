@@ -1,13 +1,19 @@
 package observable.action;
-import observable.couleur.Couleur;
+import java.util.ArrayList;
+
+import couleur.Couleur;
 import observable.map.*;
 import observable.robot.*;
 import exception.MouvementEx;
 import exception.UnreachableCase;
+import observable.int_Observable;
+import observer.int_Observer;
 
 
 
-public class MoveForward implements int_Action{
+public class MoveForward implements int_Action, int_Observable{
+	
+	private ArrayList<int_Observer> listObserver = new ArrayList<int_Observer>(); 
 	
 	private Couleur color;
 	public static MoveForward move_forward(){
@@ -62,6 +68,7 @@ public class MoveForward implements int_Action{
 		} else {
 			r.setCurrent_Case(c_prime);
 			World.currentWorld.basic_print_world();
+			notifyObserver();
 		}
 		
 	}
@@ -69,5 +76,20 @@ public class MoveForward implements int_Action{
 	public boolean isPossible(Robot r, abstr_Case c){
 		return ((color.equals(Couleur.GRIS) || color.equals(r.get_couleur())) 
 				&& (r.getCurrent_Case().get_hauteur() == c.get_hauteur()));
+	}
+	
+	@Override
+	public void addObserver(int_Observer obs) {
+		this.listObserver.add(obs);
+	}
+	@Override
+	public void removeObserver() {
+		listObserver = new ArrayList<int_Observer>();
+		
+	}
+	@Override
+	public void notifyObserver() {
+		for(int_Observer obs : listObserver)
+		      obs.update(this);
 	}
 }
