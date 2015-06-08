@@ -15,7 +15,7 @@ public class Teleporter_Case extends abstr_Case {
 		return this.dest;
 	}
 	
-	public void ser_destination(abstr_Case new_dest){
+	public void set_destination(abstr_Case new_dest){
 		this.dest = new_dest;
 	}
 }
