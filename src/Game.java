@@ -1,11 +1,14 @@
 import java.awt.EventQueue;
 
+import couleur.Couleur;
 import map.Coordonnees;
 import map.Normal_Case;
+import map.Teleporter_Case;
 import map.Terrain;
 import map.World;
 import map.abstr_Case;
 import robot.Robot;
+import action.Activate;
 import action.Jump;
 import action.LightCase;
 import action.MoveForward;
@@ -38,6 +41,7 @@ public class Game {
 		list.addActionToList(MoveForward.move_forward());
 		list.addActionToList(Jump.jump());
 		list.addActionToList(TurnRIght.turn_right());
+		list.addActionToList(Activate.activate());
 		//System.out.println("Liste permise : ");
 		//System.out.println(list.toString());
 
@@ -53,6 +57,13 @@ public class Game {
 				Normal_Case carre = new Normal_Case(0,cord);
 				terrain_test.add_case(i, j, carre);
 			}
+		}
+		Coordonnees cord = new Coordonnees(2,2,0);
+		try {
+			Teleporter_Case test_tele = new Teleporter_Case(0,Couleur.GRIS,cord, terrain_test.get_case(1, 1));
+			terrain_test.add_case(2, 2, test_tele);
+		} catch (UnreachableCase e2) {
+			System.out.println("case innacessible");
 		}
 		try {
 			initRob = terrain_test.get_case(3, 3);
@@ -70,7 +81,7 @@ public class Game {
 				robert.add_Action_User_Actions(TurnRIght.turn_right());
 
 				robert.add_Action_User_Actions(MoveForward.move_forward());
-				
+				robert.add_Action_User_Actions(Activate.activate());
 				System.out.println("Position initiale : ");
 				robert.printPosition();
 				Robot roblist[] = new Robot[1];
