@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import couleur.Couleur;
 import observable.robot.Orientation;
 import observable.robot.Robot;
+import observable.robot.abstr_Robot;
 import exception.UnreachableCase;
 import observable.int_Observable;
 import observer.int_Observer;
@@ -35,7 +36,7 @@ public class Terrain implements int_Observable{
 		throw new UnreachableCase("Case is unreachable");
 	}
 	
-	public void print_basic_terrain(Robot[] robotList){
+	public void print_basic_terrain(abstr_Robot[] liste_robot){
 		for (int i = 0; i < terrain.length; i++){
 			String horizontal_separator = " ";
 			for (int y = 0; y < terrain[i].length; y++){
@@ -44,8 +45,8 @@ public class Terrain implements int_Observable{
 			System.out.println(horizontal_separator);
 			for (int y = 0; y < terrain[i].length; y++){
 				boolean caserobot = false;
-				for (int j = 0; j < robotList.length; j++){
-					if (robotList[j].getCurrent_Case().get_coordonnees().equals(terrain[i][y].get_coordonnees())){
+				for (int j = 0; j < liste_robot.length; j++){
+					if (liste_robot[j].getCurrent_Case().get_coordonnees().equals(terrain[i][y].get_coordonnees())){
 						caserobot = true;
 					}
 				}
@@ -54,17 +55,17 @@ public class Terrain implements int_Observable{
 				}
 				if (!caserobot){
 					System.out.print("\t");
-					switch (terrain[i][y].getClass().getCanonicalName()){
-						case "map.Painted_Case":
+					switch (terrain[i][y].getClass().getSimpleName()){
+						case "Painted_Case":
 							System.out.print("P");
 							break;
-						case "map.Normal_Case":
+						case "Normal_Case":
 							System.out.print("N");
 							break;
-						case "map.Illuminated_Case":
+						case "Illuminated_Case":
 							System.out.print("I");
 							break;
-						case "map.Teleporter_Case":
+						case "Teleporter_Case":
 							System.out.print("T");
 							break;
 					}
@@ -77,7 +78,7 @@ public class Terrain implements int_Observable{
 					System.out.print("\t");
 					
 				}else{
-					switch (robotList[0].getOrientation()){
+					switch (liste_robot[0].getOrientation()){
 					case TOP : 
 						System.out.print("\t^");
 						break;
