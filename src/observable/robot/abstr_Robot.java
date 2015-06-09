@@ -90,6 +90,18 @@ public abstract class abstr_Robot {
 		this.order_exec.addFirst(to_add);
 	}
 	
+	public void remove_Action_User_Actions(int_Action twas_too_long){
+		this.user_actions.removeActionFromList(twas_too_long);
+	}
+	
+	public void remove_Action_P1(int_Action twas_too_long){
+		this.P1.removeActionFromList(twas_too_long);
+	}
+	
+	public void remove_Action_P2(int_Action twas_too_long){
+		this.P2.removeActionFromList(twas_too_long);
+	}
+	
 	public void printPosition(){
 		System.out.println("position x : "+current_case.get_coordonnees().get_x());
 		System.out.println("position y : "+current_case.get_coordonnees().get_y());
