@@ -32,10 +32,12 @@ import org.jsfml.window.event.Event.Type;
 
 import observable.robot.Orientation;
 import observable.robot.Robot;
+import observable.robot.abstr_Robot;
 import observable.action.TurnLeft;
 import observable.action.TurnRIght;
 import couleur.Couleur;
 import exception.ActionEx;
+import exception.UnreachableCase;
 
 public class Jeu {
 
@@ -52,7 +54,7 @@ public class Jeu {
 	private Frame f;
 
 	private static World w = World.currentWorld;
-	private static Robot r = w.get_robot(0);
+	private static abstr_Robot r = w.get_robot(0);
 	private Terrain t = w.get_terrain(level);
 	private abstr_Case[][] cases = t.get_terrain();
 	private int width_case = 80;
@@ -119,10 +121,10 @@ public class Jeu {
 			maTextureBackground.loadFromFile(Paths.get("background.jpg"));
 			monSpriteBackground.setTexture(maTextureBackground);
 			app.draw(monSpriteBackground);
-			for(int i=0;i<cases.length;i++){
+			/*for(int i=0;i<cases.length;i++){
 				for(int j=0; j<cases[i].length;j++){
 					typeCases(cases[i][j]);
-					/*if(cases[i][j] instanceof Normal_Case){
+					if(cases[i][j] instanceof Normal_Case){
 						maTexture.loadFromFile(Paths.get("square.png"));
 					}
 					else if(cases[i][j] instanceof Empty_Case){
@@ -138,13 +140,13 @@ public class Jeu {
 							maTexture.loadFromFile(Paths.get("square_yellow.png"));
 					}
 =======
-					}*/
+					}
 
 					monSprite.setTexture(maTexture);
 					monSprite.setPosition(80+(width_case-5)*(j+((NB_MAX_CASE-cases[i].length)/2)), 80+(height_case-5)*(i+((NB_MAX_CASE-cases.length)/2)));
 					app.draw(monSprite);
 				}
-			}
+			}*/
 
 		} catch (IOException e) {
 			e.printStackTrace();
