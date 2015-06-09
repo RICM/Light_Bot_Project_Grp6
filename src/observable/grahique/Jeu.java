@@ -14,6 +14,7 @@ import observable.action.TurnLeft;
 import observable.action.TurnRIght;
 import observable.map.Empty_Case;
 import observable.map.Normal_Case;
+import observable.map.Painted_Case;
 import observable.map.Terrain;
 import observable.map.World;
 import observable.map.abstr_Case;
@@ -174,7 +175,7 @@ public class Jeu {
 					monSprite.setPosition(80+(width_case-5)*(j+((NB_MAX_CASE-cases[i].length)/2)), 80+(height_case-5)*(i+((NB_MAX_CASE-cases.length)/2)));
 					app.draw(monSprite);
 				}
-			}*/
+			}
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -193,7 +194,7 @@ public class Jeu {
 				maTexturePerso.loadFromFile(Paths.get("gif/images_fixes/11.png"));
 
 			this.monSpritePerso.setTexture(this.maTexturePerso);
-			this.monSpritePerso.setPosition(80+25+(this.width_case-5)*(y+((NB_MAX_CASE-this.cases[x].length)/2)), 80+5+(this.height_case-5)*(x+((NB_MAX_CASE-this.cases.length)/2)));
+			this.monSpritePerso.setPosition(X,Y);
 			app.draw(this.monSpritePerso);
 
 
@@ -323,7 +324,7 @@ public class Jeu {
 				try {
 					this.maTexture.loadFromFile(Paths.get("Cases/Square_normal.png"));
 					this.monSprite.setTexture(this.maTexture);
-					this.monSprite.setPosition(app.getSize().x/2 +59*(X-Y), app.getSize().y/2 -26*hauteur + 18*(8-(X+Y)));
+					this.monSprite.setPosition(PosX,PosY-26*hauteur);
 					app.draw(this.monSprite);
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -331,7 +332,7 @@ public class Jeu {
 			}
 			this.typeCases(Ma_case);
 			this.monSprite.setTexture(this.maTexture);
-			this.monSprite.setPosition(app.getSize().x/2 +59*(X-Y), app.getSize().y/2 -26*hauteur_max + 18*(8-(X+Y)));
+			this.monSprite.setPosition(PosX,PosY-26*hauteur_max);
 			app.draw(this.monSprite);
 			
 			//Si le pingouin est sur cette case, alors on l'affiche à la hauteur maximale de celle-ci
