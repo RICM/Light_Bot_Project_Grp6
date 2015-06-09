@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import observable.action.TurnLeft;
 import observable.action.TurnRIght;
 import observable.map.Empty_Case;
+import observable.map.Illuminated_Case;
 import observable.map.Normal_Case;
 import observable.map.Painted_Case;
 import observable.map.Terrain;
@@ -37,6 +38,9 @@ import org.jsfml.window.event.Event.Type;
 import observable.robot.Orientation;
 import observable.robot.Robot;
 import observable.robot.abstr_Robot;
+import observable.action.Activate;
+import observable.action.Jump;
+import observable.action.LightCase;
 import observable.action.MoveForward;
 import observable.action.TurnLeft;
 import observable.action.TurnRIght;
@@ -94,6 +98,18 @@ public class Jeu {
 				r.setOrientation(Orientation.orientation.RIGHT);
 				try {
 					MoveForward.move_forward().execute(r);
+				} catch (MouvementEx e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (UnreachableCase e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+			if (Keyboard.isKeyPressed(Key.SPACE)){
+				try {
+					Jump.jump().execute(r);
+					LightCase.light_case().execute(r);
 				} catch (MouvementEx e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -261,6 +277,13 @@ public class Jeu {
 				else if(cases.get_couleur()== Couleur.ROUGE)
 					maTexture.loadFromFile(Paths.get("Cases/Square_rouge.png"));
 			}
+			else if(cases instanceof Illuminated_Case){
+				if(((Illuminated_Case) cases).get_active()==false){
+					this.maTexture.loadFromFile(Paths.get("Cases/Square_allumable2.png"));
+				}else{
+					this.maTexture.loadFromFile(Paths.get("Cases/Square_allumé.png"));
+				}
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		} // on charge la texture qui se trouve dans notre dossier assets
@@ -337,7 +360,7 @@ public class Jeu {
 			
 			//Si le pingouin est sur cette case, alors on l'affiche à la hauteur maximale de celle-ci
 			if ((x == X) && (y == Y)){
-				drawPerso(PosX+30+10,PosY+25);
+				drawPerso(PosX+30+10,PosY-26*hauteur_max+25);
 			}
 			
 		} catch (UnreachableCase e1) {
