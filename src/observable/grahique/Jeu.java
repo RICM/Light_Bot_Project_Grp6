@@ -121,11 +121,13 @@ public class Jeu {
 			app.draw(monSpriteBackground);
 			for(int i=0;i<cases.length;i++){
 				for(int j=0; j<cases[i].length;j++){
-					if(cases[i][j] instanceof Normal_Case){
+					typeCases(cases[i][j]);
+					/*if(cases[i][j] instanceof Normal_Case){
 						maTexture.loadFromFile(Paths.get("square.png"));
 					}
 					else if(cases[i][j] instanceof Empty_Case){
 						maTexture.loadFromFile(Paths.get("square_vide.png"));
+<<<<<<< Updated upstream:src/observable/grahique/Jeu.java
 					}
 					else if(cases[i][j] instanceof Painted_Case){
 						if(cases[i][j].get_couleur()== Couleur.BLEU)
@@ -135,6 +137,9 @@ public class Jeu {
 						else if(cases[i][j].get_couleur()== Couleur.JAUNE)
 							maTexture.loadFromFile(Paths.get("square_yellow.png"));
 					}
+=======
+					}*/
+
 					monSprite.setTexture(maTexture);
 					monSprite.setPosition(80+(width_case-5)*(j+((NB_MAX_CASE-cases[i].length)/2)), 80+(height_case-5)*(i+((NB_MAX_CASE-cases.length)/2)));
 					app.draw(monSprite);
@@ -211,5 +216,84 @@ public class Jeu {
 		}
 	}
 
+	public void typeCases(abstr_Case cases){
+		try{
+			if(cases instanceof Normal_Case){
+				maTexture.loadFromFile(Paths.get("Cases/Square_allumé.png"));
+			}
+			else if(cases instanceof Empty_Case){
+				maTexture.loadFromFile(Paths.get("Cases/Square_vide.png"));
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} // on charge la texture qui se trouve dans notre dossier assets
+		
+
+	}
+	
+	public void drawGrilleISO(){
+		try{
+			maTextureBackground.loadFromFile(Paths.get("background.jpg"));
+			monSpriteBackground.setTexture(maTextureBackground);
+			app.draw(monSpriteBackground);
+
+			int Xtemp,Ytemp;
+			int taille_abs =  World.currentWorld.get_terrain(0).get_terrain()[0].length;
+			int taille_ord =  World.currentWorld.get_terrain(0).get_terrain().length;
+			int hauteur_max;
+			System.out.println("***************");
+			for(int X=taille_abs-1;X>=0;X--){
+				Ytemp=taille_ord-1;
+				System.out.println("X = "+X);
+				for(Xtemp=X;Xtemp<taille_abs;Xtemp++){
+					if(Ytemp<0){
+						break;
+					}
+					affichageISO(Xtemp,Ytemp);
+					System.out.println("(Xtemp,Ytemp) = ("+Xtemp+","+Ytemp+")");
+					Ytemp--;
+				}
+			}
+			for(int Y=taille_ord-2;Y>=0;Y--){//-2 car on a géré le cas 0 avec X juste au dessus
+				Xtemp=0;
+				System.out.println("Y = "+Y);
+				for(Ytemp=Y;Ytemp>=0;Ytemp--){
+					if(Xtemp>=taille_abs){
+						break;
+					}
+					affichageISO(Xtemp,Ytemp);
+					System.out.println("(Xtemp,Ytemp) = ("+Xtemp+","+Ytemp+")");
+					Xtemp++;
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} // on charge la texture qui se trouve dans notre dossier assets
+	}
+	
+	public void affichageISO(int X, int Y){
+		
+		try {
+			abstr_Case Ma_case = World.currentWorld.get_terrain(0).get_case(X,Y);
+			int hauteur_max = Ma_case.get_hauteur();
+			for(int hauteur=1; hauteur<hauteur_max;hauteur++){
+				try {
+					maTexture.loadFromFile(Paths.get("Cases/Square_normal.png"));
+					monSprite.setTexture(maTexture);
+					monSprite.setPosition(app.getSize().x/2 +59*(X-Y), app.getSize().y/2 -26*hauteur + 18*(8-(X+Y)));
+					app.draw(monSprite);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			typeCases(Ma_case);
+			monSprite.setTexture(maTexture);
+			monSprite.setPosition(app.getSize().x/2 +59*(X-Y), app.getSize().y/2 -26*hauteur_max + 18*(8-(X+Y)));
+			app.draw(monSprite);
+			
+		} catch (UnreachableCase e1) {
+			e1.printStackTrace();
+		}		
+	}
 
 }

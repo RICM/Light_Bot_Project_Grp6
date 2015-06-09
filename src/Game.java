@@ -66,15 +66,8 @@ public class Game {
 				terrain_test.add_case(i, j, carre);
 			}
 		}
-		Coordonnees cord = new Coordonnees(2,2,0);
 		try {
-			Teleporter_Case test_tele = new Teleporter_Case(0,Couleur.GRIS,cord, terrain_test.get_case(1, 1));
-			terrain_test.add_case(2, 2, test_tele);
-		} catch (UnreachableCase e2) {
-			System.out.println("case innacessible");
-		}
-		try {
-			initRob = terrain_test.get_case(3, 3);
+			initRob = terrain_test.get_case(1, 3);
 			Robot robert = new Robot(initRob, list);
 			Robot robotlist[] = new Robot[1];
 			Terrain terrainlist[] = new Terrain[1];
