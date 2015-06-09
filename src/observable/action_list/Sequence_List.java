@@ -44,6 +44,10 @@ private ArrayList<int_Observer> listObserver = new ArrayList<int_Observer>();
 		return this.actions_list_seq.contains(act);
 	}
 
+	public int_Action get(int i){
+		return actions_list_seq.get(i);
+	}
+	
 	@Override
 	public void addObserver(int_Observer obs) {
 		this.listObserver.add(obs);
