@@ -6,6 +6,7 @@ import observable.action.MoveForward;
 import observable.action.TurnLeft;
 import observable.action.TurnRIght;
 import observable.action_list.Possible_List;
+import observable.grahique.Jeu;
 import observable.grahique.Menu2;
 import observable.map.Coordonnees;
 import observable.map.Illuminated_Case;
@@ -120,9 +121,10 @@ public class Game {
 			System.out.println(e1.getMessage());
 		}
 
-		Menu2 game = new Menu2();
-		game.setVisible(true);
-		game.setLocationRelativeTo(null);
+		Jeu game = new Jeu(0,null);
+		//Menu2 game = new Menu2();
+		//game.setVisible(true);
+		//game.setLocationRelativeTo(null);
 
 
 

@@ -1,5 +1,7 @@
 package observer.controller;
 
+import java.io.IOException;
+
 import observable.action.int_Action;
 import observable.grahique.Jeu;
 import observable.map.Terrain;
@@ -34,7 +36,11 @@ public class Controller implements int_Observer {
 	}
 
 	private void getNotificationUpdatedTerrain(Terrain obj) {
-		jeu.display_terrain(obj);
+		try {
+			jeu.display_terrain(obj);
+		} catch (IOException e) {
+			jeu.draw_popup("Désolé une erreur est survenue lors de la création du terrain");
+		}
 	}
 
 	public Controller(){
@@ -69,7 +75,7 @@ public class Controller implements int_Observer {
 		/**
 		 * Receive a notification from view to add an action to the robot list action
 		 */
-		Robot rob = World.currentWorld.get_robot(current_robot); 
+		abstr_Robot rob = World.currentWorld.get_robot(current_robot); 
 		try {
 			rob.add_Action_User_Actions(act);
 		} catch (ActionEx e) {
@@ -81,8 +87,11 @@ public class Controller implements int_Observer {
 		/**
 		 * Receive a notification from view to remove an action to the robot list
 		 */
-		Robot rob = World.currentWorld.get_robot(current_robot);
+		abstr_Robot rob = World.currentWorld.get_robot(current_robot);
 		rob.remove_Action_User_Actions(act);
+		/**
+		 * La vue aura besoin d'avoir un hashmap de boutons|actions
+		 */
 	}
 	
 	public void getNotificationChangeRobot(int i){
@@ -110,7 +119,11 @@ public class Controller implements int_Observer {
 		/**
 		 * Send a notification to view to display the current "terrain"
 		 */
-		jeu.display_terrain(World.currentWorld.get_terrain(current_terrain));
+		try {
+			jeu.display_terrain(World.currentWorld.get_terrain(current_terrain));
+		} catch (IOException e) {
+			jeu.draw_popup("Une erreur s'est produite durant la création du terrain de jeu!");
+		}
 	}
 	
 	public void setNotificationDisplayWorld(){

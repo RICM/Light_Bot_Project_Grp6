@@ -177,6 +177,31 @@ public class Jeu {
 	public void draw_popup(String msg){
 		JOptionPane.showMessageDialog(null, msg);
 	}
+	
+	/**
+	 * Used to display a robot
+	 * @param rob
+	 */
+	public void display_robot(abstr_Robot rob){
+		try {
+			if(r.getOrientation() == Orientation.orientation.BOT)
+				maTexturePerso.loadFromFile(Paths.get("gif/images_fixes/3.png"));
+			else if(r.getOrientation() == Orientation.orientation.LEFT)
+				maTexturePerso.loadFromFile(Paths.get("gif/images_fixes/15.png"));
+			else if(r.getOrientation() == Orientation.orientation.RIGHT)
+				maTexturePerso.loadFromFile(Paths.get("gif/images_fixes/7.png"));
+			else if(r.getOrientation() == Orientation.orientation.TOP)
+				maTexturePerso.loadFromFile(Paths.get("gif/images_fixes/11.png"));
+
+			this.monSpritePerso.setTexture(this.maTexturePerso);
+			this.monSpritePerso.setPosition(rob.getCurrent_Case().get_coordonnees().get_x(),rob.getCurrent_Case().get_coordonnees().get_y());
+			app.draw(this.monSpritePerso);
+
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} // on charge la texture qui se trouve dans notre dossier assets
+	}
 
 	public void drawGrille(){
 		try {
@@ -290,6 +315,47 @@ public class Jeu {
 
 
 	}
+	
+	public void display_world(World world){
+		
+	}
+	
+	public void display_terrain(Terrain terrain) throws IOException{
+			this.maTextureBackground.loadFromFile(Paths.get("background.jpg"));
+			this.monSpriteBackground.setTexture(this.maTextureBackground);
+			app.draw(this.monSpriteBackground);
+
+			int Xtemp,Ytemp;
+			int taille_abs =  terrain.get_terrain()[0].length;
+			int taille_ord =  terrain.get_terrain().length;
+
+			System.out.println("***************");
+			for(int X=taille_abs-1;X>=0;X--){
+				Ytemp=0;//taille_ord-1;
+				System.out.println("X = "+X);
+				for(Xtemp=X;Xtemp<taille_abs;Xtemp++){
+					if(Ytemp<0){
+						break;
+					}
+					System.out.println("(Xtemp,Ytemp) = ("+Xtemp+","+Ytemp+")");
+					this.affichageISO(Xtemp,Ytemp);
+					Ytemp++;
+				}
+			}
+			for(int Y=1;Y<taille_ord;Y++){//-2 car on a géré le cas 0 avec X juste au dessus
+				Xtemp=0;
+				System.out.println("Y = "+Y);
+				for(Ytemp=Y;Ytemp<taille_ord;Ytemp++){
+					if(Xtemp>=taille_abs){
+						break;
+					}
+					this.affichageISO(Xtemp,Ytemp);
+					System.out.println("(Xtemp,Ytemp) = ("+Xtemp+","+Ytemp+")");
+					Xtemp++;
+				}
+			}// on charge la texture qui se trouve dans notre dossier assets
+	}
+	
 
 	public void drawGrilleISO(){
 		try{
