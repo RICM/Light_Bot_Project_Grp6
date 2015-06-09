@@ -143,6 +143,21 @@ public class Jeu {
 				}
 			}
 
+			if (Keyboard.isKeyPressed(Key.SPACE)){
+				try {
+					r.run();
+				} catch (MouvementEx e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (UnreachableCase e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (ActionEx e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+			
 			if (e.type == Event.Type.MOUSE_BUTTON_PRESSED) {
 				e.asMouseEvent();
 				Vector2i pos = Mouse.getPosition(app);
@@ -257,7 +272,7 @@ public class Jeu {
 					liste_sprite.put(monSpriteBouton,Orientation.orientation.RIGHT);
 				}
 				else{
-					maTextureBouton.loadFromFile(Paths.get("bouton/tout_droit.png"));
+					maTextureBouton.loadFromFile(Paths.get("bouton/rota_gauche.png"));
 					liste_sprite.put(monSpriteBouton,null);
 				}
 				monSpriteBouton.setTexture(maTextureBouton);
@@ -366,29 +381,29 @@ public class Jeu {
 			int Xtemp,Ytemp;
 			int taille_abs =  World.currentWorld.get_terrain(0).get_terrain()[0].length;
 			int taille_ord =  World.currentWorld.get_terrain(0).get_terrain().length;
-
-			System.out.println("***************");
+//
+	//		System.out.println("***************");
 			for(int X=taille_abs-1;X>=0;X--){
 				Ytemp=0;//taille_ord-1;
-				System.out.println("X = "+X);
+			//	System.out.println("X = "+X);
 				for(Xtemp=X;Xtemp<taille_abs;Xtemp++){
 					if(Ytemp<0){
 						break;
 					}
-					System.out.println("(Xtemp,Ytemp) = ("+Xtemp+","+Ytemp+")");
+				//	System.out.println("(Xtemp,Ytemp) = ("+Xtemp+","+Ytemp+")");
 					this.affichageISO(Xtemp,Ytemp);
 					Ytemp++;
 				}
 			}
 			for(int Y=1;Y<taille_ord;Y++){//-2 car on a géré le cas 0 avec X juste au dessus
 				Xtemp=0;
-				System.out.println("Y = "+Y);
+		//		System.out.println("Y = "+Y);
 				for(Ytemp=Y;Ytemp<taille_ord;Ytemp++){
 					if(Xtemp>=taille_abs){
 						break;
 					}
 					this.affichageISO(Xtemp,Ytemp);
-					System.out.println("(Xtemp,Ytemp) = ("+Xtemp+","+Ytemp+")");
+			//		System.out.println("(Xtemp,Ytemp) = ("+Xtemp+","+Ytemp+")");
 					Xtemp++;
 				}
 			}

@@ -21,6 +21,7 @@ public class Robot extends abstr_Robot implements int_Observable {
 		set_tailleMain(12);
 		set_tailleP1(8);
 		set_tailleP2(8);
+		set_couleur(Couleur.GRIS);
 	}
 	public Robot(abstr_Case initCase, Possible_List allowed_actions, int tailleM, int TailleP1, int tailleP2){
 		setOrientation(Orientation.orientation.LEFT);
@@ -29,6 +30,7 @@ public class Robot extends abstr_Robot implements int_Observable {
 		set_tailleMain(12);
 		set_tailleP1(8);
 		set_tailleP2(8);
+		set_couleur(Couleur.GRIS);
 	}
 	
 	public Robot(abstr_Case initCase, Possible_List allowed_actions, Orientation.orientation or, int tailleM, int TailleP1, int tailleP2){
@@ -38,6 +40,7 @@ public class Robot extends abstr_Robot implements int_Observable {
 		set_tailleMain(12);
 		set_tailleP1(8);
 		set_tailleP2(8);
+		set_couleur(Couleur.GRIS);
 	}
 	
 	public void print_allowed_act(){

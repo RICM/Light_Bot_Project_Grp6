@@ -22,7 +22,10 @@ public class Execution_list {
 	public void run(abstr_Robot r) throws MouvementEx, UnreachableCase, ActionEx{
 		while(Run_List.size()>0){
 			while(Run_List.getFirst().size() > 0){
-				Run_List.getFirst().removeFirst().execute(r);
+				int_Action temp = Run_List.getFirst().removeFirst();
+				if (temp.getClass().getSimpleName()=="Call_P1"){
+					System.out.println("Call_p1");
+				}
 			}
 			Run_List.removeFirst();
 		}
