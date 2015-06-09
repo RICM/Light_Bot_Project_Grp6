@@ -3,6 +3,7 @@ import java.util.ArrayList;
 
 import observable.int_Observable;
 import observable.robot.Robot;
+import observable.robot.abstr_Robot;
 import observer.int_Observer;
 
 public class World implements int_Observable {
@@ -15,13 +16,13 @@ public class World implements int_Observable {
 	public static World currentWorld = new World();
 
 	private Terrain[] liste_terrain;
-	private Robot[]   liste_robot;
+	private abstr_Robot[]   liste_robot;
 
 	public Terrain get_terrain(int n){
 		return liste_terrain[n];
 	}
 
-	public Robot get_robot(int n){
+	public abstr_Robot get_robot(int n){
 		return liste_robot[n];
 	}
 
@@ -34,7 +35,7 @@ public class World implements int_Observable {
 		notifyObserver();
 	}
 
-	Robot[] get_liste_robot(){
+	abstr_Robot[] get_liste_robot(){
 		return  liste_robot;
 	}
 

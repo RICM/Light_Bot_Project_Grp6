@@ -2,20 +2,42 @@ package observer.controller;
 
 import observable.action.int_Action;
 import observable.grahique.Jeu;
+import observable.map.Terrain;
 import observable.map.World;
 import observable.robot.Robot;
+import observable.robot.abstr_Robot;
 import exception.ActionEx;
 import exception.MouvementEx;
 import exception.UnreachableCase;
-
-public class Controller {
+import observer.int_Observer;
+public class Controller implements int_Observer {
 	
 	private Jeu jeu;
 	private int current_robot;
 	private int current_terrain;
 	
-	public Controller(Jeu jeu){
-		this.jeu = jeu;
+	public void update(Object obj){
+		switch (obj.getClass().getSimpleName()){
+			case "Robot" :
+				setNotificationUpdatedRobot((Robot)obj);
+				break;
+			case "Terrain" :
+				setNotificationUpdatedTerrain((Terrain)obj);
+				break;
+			default:
+				break;
+		}
+	}
+	
+	private void setNotificationUpdatedTerrain(Terrain obj) {
+		getNotificationUpdatedTerrain(obj);
+	}
+
+	private void getNotificationUpdatedTerrain(Terrain obj) {
+		jeu.display_terrain(obj);
+	}
+
+	public Controller(){
 		current_robot = 0;
 		current_terrain = 0;
 	}
@@ -98,15 +120,15 @@ public class Controller {
 		jeu.display_world(World.currentWorld);
 	}
 	
-	public void setNotificationUpdatedRobot(){
+	public void setNotificationUpdatedRobot(abstr_Robot rob){
 		/**
 		 * Send a notification to view to display the robot
 		 */
-		jeu.display_robot(World.currentWorld.get_robot(current_robot));
+		jeu.display_robot(rob);
 	}
 	
-	public void getNotificationUpdatedRobot(){
-		setNotificationUpdatedRobot();
+	public void getNotificationUpdatedRobot(abstr_Robot rob){
+		setNotificationUpdatedRobot(rob);
 	}
 	
 	

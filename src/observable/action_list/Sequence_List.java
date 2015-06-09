@@ -23,13 +23,20 @@ private ArrayList<int_Observer> listObserver = new ArrayList<int_Observer>();
 		actions_list_seq.remove(act);
 	}
 	
-	public void execute (Robot r) throws MouvementEx,UnreachableCase{
+	public int_Action removeFirst(){
+		return this.actions_list_seq.removeFirst();
+	}
+	
+/*	public void execute (Robot r) throws MouvementEx,UnreachableCase{
 		int size = actions_list_seq.size();
 		for (int i = 0 ; i < size ; i++ ){
 			int_Action act;
 			act = actions_list_seq.get(i);
 			act.execute(r);
 		}
+	}*/
+	public int size(){
+		return this.actions_list_seq.size();
 	}
 
 	@Override
