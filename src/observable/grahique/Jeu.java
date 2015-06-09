@@ -10,12 +10,15 @@ import java.util.Iterator;
 
 import javax.swing.JOptionPane;
 
+import observable.action.TurnLeft;
+import observable.action.TurnRIght;
 import observable.map.Empty_Case;
 import observable.map.Normal_Case;
-import observable.map.Painted_Case;
 import observable.map.Terrain;
 import observable.map.World;
 import observable.map.abstr_Case;
+import observable.robot.Orientation;
+import observable.robot.abstr_Robot;
 
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.RenderWindow;
@@ -30,12 +33,6 @@ import org.jsfml.window.WindowStyle;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.Event.Type;
 
-import observable.robot.Orientation;
-import observable.robot.Robot;
-import observable.robot.abstr_Robot;
-import observable.action.TurnLeft;
-import observable.action.TurnRIght;
-import couleur.Couleur;
 import exception.ActionEx;
 import exception.UnreachableCase;
 
@@ -55,8 +52,8 @@ public class Jeu {
 
 	private static World w = World.currentWorld;
 	private static abstr_Robot r = w.get_robot(0);
-	private Terrain t = w.get_terrain(level);
-	private abstr_Case[][] cases = t.get_terrain();
+	private Terrain t = w.get_terrain(this.level);
+	private abstr_Case[][] cases = this.t.get_terrain();
 	private int width_case = 80;
 	private int height_case = 50;
 	private static final int NB_MAX_CASE = 10;
@@ -65,6 +62,10 @@ public class Jeu {
 		app.setKeyRepeatEnabled(false);
 		for(Event e : app.pollEvents()){
 			if(e.type == Type.CLOSED){
+				app.close();
+				Menu2 game = new Menu2();
+				game.setVisible(true);
+				game.setLocationRelativeTo(null);
 				app.close();
 			}
 
@@ -118,9 +119,9 @@ public class Jeu {
 
 	public void drawGrille(){
 		try {
-			maTextureBackground.loadFromFile(Paths.get("background.jpg"));
-			monSpriteBackground.setTexture(maTextureBackground);
-			app.draw(monSpriteBackground);
+			this.maTextureBackground.loadFromFile(Paths.get("background.jpg"));
+			this.monSpriteBackground.setTexture(this.maTextureBackground);
+			app.draw(this.monSpriteBackground);
 			/*for(int i=0;i<cases.length;i++){
 				for(int j=0; j<cases[i].length;j++){
 					typeCases(cases[i][j]);
@@ -158,17 +159,17 @@ public class Jeu {
 			int x = r.getCurrent_Case().get_coordonnees().get_x();
 			int y = r.getCurrent_Case().get_coordonnees().get_y();
 			if(r.getOrientation() == Orientation.orientation.BOT)
-				maTexturePerso.loadFromFile(Paths.get("gif/images_fixes/2.png"));
+				this.maTexturePerso.loadFromFile(Paths.get("gif/images_fixes/2.png"));
 			else if(r.getOrientation() == Orientation.orientation.LEFT)
-				maTexturePerso.loadFromFile(Paths.get("gif/images_fixes/13.png"));
+				this.maTexturePerso.loadFromFile(Paths.get("gif/images_fixes/13.png"));
 			else if(r.getOrientation() == Orientation.orientation.RIGHT)
-				maTexturePerso.loadFromFile(Paths.get("gif/images_fixes/5.png"));
+				this.maTexturePerso.loadFromFile(Paths.get("gif/images_fixes/5.png"));
 			else if(r.getOrientation() == Orientation.orientation.TOP)
-				maTexturePerso.loadFromFile(Paths.get("gif/images_fixes/9.png"));
+				this.maTexturePerso.loadFromFile(Paths.get("gif/images_fixes/9.png"));
 
-			monSpritePerso.setTexture(maTexturePerso);
-			monSpritePerso.setPosition(80+25+(width_case-5)*(y+((NB_MAX_CASE-cases[x].length)/2)), 80+5+(height_case-5)*(x+((NB_MAX_CASE-cases.length)/2)));
-			app.draw(monSpritePerso);
+			this.monSpritePerso.setTexture(this.maTexturePerso);
+			this.monSpritePerso.setPosition(80+25+(this.width_case-5)*(y+((NB_MAX_CASE-this.cases[x].length)/2)), 80+5+(this.height_case-5)*(x+((NB_MAX_CASE-this.cases.length)/2)));
+			app.draw(this.monSpritePerso);
 
 
 		} catch (IOException e) {
@@ -195,7 +196,7 @@ public class Jeu {
 				monSpriteBouton.setTexture(maTextureBouton);
 				monSpriteBouton.setPosition(100+100*i,550);
 				app.draw(monSpriteBouton);
-				liste_text.add(maTextureBouton);
+				this.liste_text.add(maTextureBouton);
 
 			}
 		} catch (IOException e) {
@@ -205,14 +206,14 @@ public class Jeu {
 	}
 
 	public Jeu(int lvl,Frame frame){
-		this.level = lvl+1;
-		f = frame;
-		f.setVisible(false);
+		this.level = lvl;
+		this.f = frame;
+		this.f.setVisible(false);
 		while(app.isOpen()){
 			processEvent();
-			drawGrille();
-			drawPerso();
-			draw_bouton();
+			this.drawGrille();
+			this.drawPerso();
+			this.draw_bouton();
 			app.display();
 			//System.out.println(Mouse.getPosition().x + " " + Mouse.getPosition().y);
 		}
@@ -221,23 +222,23 @@ public class Jeu {
 	public void typeCases(abstr_Case cases){
 		try{
 			if(cases instanceof Normal_Case){
-				maTexture.loadFromFile(Paths.get("Cases/Square_allumé.png"));
+				this.maTexture.loadFromFile(Paths.get("Cases/Square_allumé.png"));
 			}
 			else if(cases instanceof Empty_Case){
-				maTexture.loadFromFile(Paths.get("Cases/Square_vide.png"));
+				this.maTexture.loadFromFile(Paths.get("Cases/Square_vide.png"));
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		} // on charge la texture qui se trouve dans notre dossier assets
-		
+
 
 	}
-	
+
 	public void drawGrilleISO(){
 		try{
-			maTextureBackground.loadFromFile(Paths.get("background.jpg"));
-			monSpriteBackground.setTexture(maTextureBackground);
-			app.draw(monSpriteBackground);
+			this.maTextureBackground.loadFromFile(Paths.get("background.jpg"));
+			this.monSpriteBackground.setTexture(this.maTextureBackground);
+			app.draw(this.monSpriteBackground);
 
 			int Xtemp,Ytemp;
 			int taille_abs =  World.currentWorld.get_terrain(0).get_terrain()[0].length;
@@ -251,7 +252,7 @@ public class Jeu {
 					if(Ytemp<0){
 						break;
 					}
-					affichageISO(Xtemp,Ytemp);
+					this.affichageISO(Xtemp,Ytemp);
 					System.out.println("(Xtemp,Ytemp) = ("+Xtemp+","+Ytemp+")");
 					Ytemp--;
 				}
@@ -263,7 +264,7 @@ public class Jeu {
 					if(Xtemp>=taille_abs){
 						break;
 					}
-					affichageISO(Xtemp,Ytemp);
+					this.affichageISO(Xtemp,Ytemp);
 					System.out.println("(Xtemp,Ytemp) = ("+Xtemp+","+Ytemp+")");
 					Xtemp++;
 				}
@@ -272,30 +273,30 @@ public class Jeu {
 			e.printStackTrace();
 		} // on charge la texture qui se trouve dans notre dossier assets
 	}
-	
+
 	public void affichageISO(int X, int Y){
-		
+
 		try {
 			abstr_Case Ma_case = World.currentWorld.get_terrain(0).get_case(X,Y);
 			int hauteur_max = Ma_case.get_hauteur();
 			for(int hauteur=1; hauteur<hauteur_max;hauteur++){
 				try {
-					maTexture.loadFromFile(Paths.get("Cases/Square_normal.png"));
-					monSprite.setTexture(maTexture);
-					monSprite.setPosition(app.getSize().x/2 +59*(X-Y), app.getSize().y/2 -26*hauteur + 18*(8-(X+Y)));
-					app.draw(monSprite);
+					this.maTexture.loadFromFile(Paths.get("Cases/Square_normal.png"));
+					this.monSprite.setTexture(this.maTexture);
+					this.monSprite.setPosition(app.getSize().x/2 +59*(X-Y), app.getSize().y/2 -26*hauteur + 18*(8-(X+Y)));
+					app.draw(this.monSprite);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
-			typeCases(Ma_case);
-			monSprite.setTexture(maTexture);
-			monSprite.setPosition(app.getSize().x/2 +59*(X-Y), app.getSize().y/2 -26*hauteur_max + 18*(8-(X+Y)));
-			app.draw(monSprite);
-			
+			this.typeCases(Ma_case);
+			this.monSprite.setTexture(this.maTexture);
+			this.monSprite.setPosition(app.getSize().x/2 +59*(X-Y), app.getSize().y/2 -26*hauteur_max + 18*(8-(X+Y)));
+			app.draw(this.monSprite);
+
 		} catch (UnreachableCase e1) {
 			e1.printStackTrace();
-		}		
+		}
 	}
 
 }
