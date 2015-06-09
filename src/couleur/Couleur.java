@@ -1,7 +1,7 @@
 package couleur;
 
 public enum Couleur {
-	BLEU,
-	JAUNE,
+	VERT,
+	ROUGE,
 	GRIS,
 }

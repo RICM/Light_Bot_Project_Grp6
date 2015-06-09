@@ -49,17 +49,17 @@ public class Game {
 
 
 		/** Définition du terrain **/
-		Terrain terrain_test = new Terrain(7,6);
+		Terrain terrain_test = new Terrain(5,5);
 		abstr_Case initRob;
 
-		for (int i = 0; i < 7; i++){
-			for (int j = 0; j < 6; j++){
+		for (int i = 0; i < 5; i++){
+			for (int j = 0; j < 5; j++){
 				Couleur color = Couleur.GRIS;
 				if((i+j)%3 == 0){
-					color = Couleur.JAUNE;
+					color = Couleur.ROUGE;
 				}
 				else if ((i+j)%3==1){
-					color = Couleur.BLEU;
+					color = Couleur.VERT;
 				}
 				Coordonnees cord = new Coordonnees(i,j,0);
 				Painted_Case carre = new Painted_Case(0,color, cord);
@@ -67,7 +67,7 @@ public class Game {
 			}
 		}
 		try {
-			initRob = terrain_test.get_case(1, 3);
+			initRob = terrain_test.get_case(0, 0);
 			Robot robert = new Robot(initRob, list);
 			Robot robotlist[] = new Robot[1];
 			Terrain terrainlist[] = new Terrain[1];
@@ -79,7 +79,7 @@ public class Game {
 			//robert.print_allowed_act();
 			try{
 				robert.add_Action_User_Actions(Activate.activate());
-				robert.add_Action_User_Actions(MoveForward.move_forward(Couleur.JAUNE));
+				robert.add_Action_User_Actions(MoveForward.move_forward(Couleur.ROUGE));
 				robert.add_Action_User_Actions(TurnRIght.turn_right());
 				robert.add_Action_User_Actions(Activate.activate());
 				robert.add_Action_User_Actions(MoveForward.move_forward());
@@ -87,7 +87,7 @@ public class Game {
 				robert.add_Action_User_Actions(TurnRIght.turn_right());
 				robert.add_Action_User_Actions(MoveForward.move_forward());
 				robert.add_Action_User_Actions(Activate.activate());
-				robert.add_Action_User_Actions(TurnLeft.turn_left(Couleur.JAUNE));
+				robert.add_Action_User_Actions(TurnLeft.turn_left(Couleur.ROUGE));
 				robert.add_Action_User_Actions(Activate.activate());
 				//System.out.println("Position initiale : ");
 				//robert.printPosition();

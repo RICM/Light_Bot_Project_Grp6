@@ -69,10 +69,10 @@ public class Terrain implements int_Observable{
 							System.out.print("T");
 							break;
 					}
-					if(terrain[i][y].get_couleur()==Couleur.BLEU){
+					if(terrain[i][y].get_couleur()==Couleur.VERT){
 						System.out.print("B");
 					}
-					else if(terrain[i][y].get_couleur()==Couleur.JAUNE){
+					else if(terrain[i][y].get_couleur()==Couleur.ROUGE){
 						System.out.print("J");
 					}
 					System.out.print("\t");
