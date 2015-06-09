@@ -67,6 +67,8 @@ public class Controller implements int_Observer {
 				e.printStackTrace();
 			} catch (UnreachableCase e) {
 				jeu.draw_popup("Segmentation Fault!\nVous êtes sortis du terrain! ");
+			} catch (ActionEx e) {
+				jeu.draw_popup("Cette action n'est pas possible!");
 			}
 		}
 	}
