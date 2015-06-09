@@ -23,9 +23,11 @@ public class Execution_list {
 		while(Run_List.size()>0){
 			while(Run_List.getFirst().size() > 0){
 				int_Action temp = Run_List.getFirst().removeFirst();
-				if (temp.getClass().getSimpleName()=="Call_P1"){
+				System.out.println("nom de la classe a executer"+ temp.getClass().getSimpleName());
+				if (temp.getClass().getSimpleName().equals("Call_P1")){
 					System.out.println("Call_p1");
 				}
+				temp.execute(r);
 			}
 			Run_List.removeFirst();
 		}
