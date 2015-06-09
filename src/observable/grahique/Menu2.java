@@ -53,7 +53,6 @@ public class Menu2 extends JFrame implements ActionListener{
 
 
 		this.setContentPane(this.contentPane);
-		this.setVisible(true);
 	}
 
 	public void setBackgr() {
