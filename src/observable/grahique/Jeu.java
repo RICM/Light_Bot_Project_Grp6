@@ -289,8 +289,8 @@ public class Jeu {
 
 	public Jeu(int lvl,Frame frame){
 		this.level = lvl;
-		this.f = frame;
-		this.f.setVisible(false);
+		//this.f = frame;
+		//this.f.setVisible(false);
 		while(app.isOpen()){
 			processEvent();
 			this.drawGrilleISO();

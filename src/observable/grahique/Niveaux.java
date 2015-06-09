@@ -53,7 +53,7 @@ public class Niveaux {
 	private void btnClick(Vector2i pos) {
 		int x = pos.x;
 		int y = pos.y;
-		//clic bouton précédent
+		//clic bouton prï¿½cï¿½dent
 		FloatRect rect = this.sprite_btnPrec.getGlobalBounds();
 		if(x>=rect.left && x<=rect.left+rect.width &&
 				y>=rect.top && y<=rect.top+rect.height){
@@ -73,6 +73,12 @@ public class Niveaux {
 				y>=rect3.top && y<=rect3.top+rect3.height){
 			Menu game = new Menu();
 		}
+		//clic bouton jouer
+				FloatRect rect4 = this.sprite_btnLevel.getGlobalBounds();
+				if(x>=rect4.left && x<=rect4.left+rect4.width &&
+						y>=rect4.top && y<=rect4.top+rect4.height){
+					Jeu jeu = new Jeu(0, null);
+				}
 
 	}
 
@@ -112,7 +118,7 @@ public class Niveaux {
 			//Affichage bouton Jouer
 			this.texture_btnLevel.loadFromFile(Paths.get("selectLvl/level.png"));
 			this.sprite_btnLevel.setTexture(this.texture_btnLevel);
-			this.sprite_btnLevel.setPosition(Niveaux.WIDTH/2,700/2);
+			this.sprite_btnLevel.setPosition(Niveaux.WIDTH/2-330,700/2+210);
 			Menu.app.draw(this.sprite_btnLevel);
 
 			Font f = new Font();
