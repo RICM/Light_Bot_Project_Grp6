@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import couleur.Couleur;
 import observable.map.*;
 import observable.robot.Robot;
+import observable.robot.abstr_Robot;
 import observer.int_Observer;
 import exception.MouvementEx;
 import observable.int_Observable;
@@ -28,7 +29,7 @@ public class LightCase implements int_Action, int_Observable{
 	}
 	
 	
-	public void execute(Robot r) throws MouvementEx {
+	public void execute(abstr_Robot r) throws MouvementEx {
 		Illuminated_Case Case;
 		if(isPossible(r,r.getCurrent_Case())){
 				Case = (Illuminated_Case)r.getCurrent_Case();
@@ -41,8 +42,8 @@ public class LightCase implements int_Action, int_Observable{
 		
 	}
 
-	public boolean isPossible(Robot r, abstr_Case c) {
-		return ((c.getClass().getCanonicalName() == "map.Illuminated_Case") 
+	public boolean isPossible(abstr_Robot r, abstr_Case c) {
+		return ((c.getClass().getCanonicalName() == "observable.map.Illuminated_Case") 
 				&& (color.equals(Couleur.GRIS) || color.equals(r.get_couleur())));
 	}
 	

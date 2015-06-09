@@ -29,7 +29,7 @@ public class MoveForward implements int_Action, int_Observable{
 		this.color = col;
 	}
 	
-	public void execute(Robot r) throws MouvementEx, UnreachableCase{
+	public void execute(abstr_Robot r) throws MouvementEx, UnreachableCase{
 		abstr_Case c_prime = null;
 		int i,j;
 		Coordonnees pos = r.getCurrent_Case().get_coordonnees();
@@ -73,7 +73,7 @@ public class MoveForward implements int_Action, int_Observable{
 		
 	}
 	
-	public boolean isPossible(Robot r, abstr_Case c){
+	public boolean isPossible(abstr_Robot r, abstr_Case c){
 		return ((color.equals(Couleur.GRIS) || color.equals(r.get_couleur())) 
 				&& (r.getCurrent_Case().get_hauteur() == c.get_hauteur()));
 	}

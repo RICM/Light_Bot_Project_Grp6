@@ -8,6 +8,7 @@ import observable.map.World;
 import observable.map.abstr_Case;
 import observable.robot.Orientation;
 import observable.robot.Robot;
+import observable.robot.abstr_Robot;
 import observer.int_Observer;
 import exception.MouvementEx;
 
@@ -29,7 +30,7 @@ public class TurnLeft implements int_Action, int_Observable{
 		this.color = col;
 	}
 	
-	public void execute(Robot r) throws MouvementEx {
+	public void execute(abstr_Robot r) throws MouvementEx {
 		if(isPossible(r,r.getCurrent_Case())){
 		switch (r.getOrientation()) {  
     		case  TOP :
@@ -55,7 +56,7 @@ public class TurnLeft implements int_Action, int_Observable{
 	}
 
 
-	public boolean isPossible(Robot r, abstr_Case c) {
+	public boolean isPossible(abstr_Robot r, abstr_Case c) {
 		return (Couleur.GRIS.equals(color) || r.get_couleur().equals(color));
 	}
 
