@@ -36,12 +36,16 @@ public class Jump implements int_Action, int_Observable{
 		switch (r.getOrientation()) {  
 	    	case  TOP :
 	    		c_prime = World.currentWorld.get_terrain(pos.get_n()).get_case(pos.get_x(),pos.get_y()-1);
+	    		break;
 	    	case  BOT :
 	    		c_prime = World.currentWorld.get_terrain(pos.get_n()).get_case(pos.get_x(),pos.get_y()+1);;
+	    		break;
 	    	case  LEFT :
 	    		c_prime = World.currentWorld.get_terrain(pos.get_n()).get_case(pos.get_x()-1,pos.get_y());
+	    		break;
 	    	case  RIGHT :
 	    		c_prime = World.currentWorld.get_terrain(pos.get_n()).get_case(pos.get_x()+1,pos.get_y());
+	    		break;
 		}
 		
 		if (! isPossible(r,c_prime)){
