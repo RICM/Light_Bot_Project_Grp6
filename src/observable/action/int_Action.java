@@ -10,10 +10,10 @@ import exception.UnreachableCase;
 public interface int_Action extends int_Observable {
 	
 	//
-	public void execute (Robot r) throws MouvementEx, UnreachableCase;
+	public void execute (abstr_Robot r) throws MouvementEx, UnreachableCase;
 	
 	//
-	public boolean isPossible(Robot r,abstr_Case c);
+	public boolean isPossible(abstr_Robot r,abstr_Case c);
 	
 	
 }

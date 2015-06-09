@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import couleur.Couleur;
 import observable.map.*;
 import observable.robot.Robot;
+import observable.robot.abstr_Robot;
 import exception.MouvementEx;
 import observable.int_Observable;
 import observer.int_Observer;
@@ -26,7 +27,7 @@ public class Activate implements int_Action, int_Observable{
 		this.color = col;
 	}
 	@Override
-	public void execute(Robot r) throws MouvementEx {
+	public void execute(abstr_Robot r) throws MouvementEx {
 	abstr_Case cprime = r.getCurrent_Case();
 	if (isPossible(r,cprime)){
 		if(cprime.getClass().getCanonicalName().equals("map.Teleporter_Case")){
@@ -44,11 +45,11 @@ public class Activate implements int_Action, int_Observable{
 	}
 
 	@Override
-	public boolean isPossible(Robot r, abstr_Case c) {
-		return (((c.getClass().getCanonicalName().equals("map.Teleporter_Case")&&
+	public boolean isPossible(abstr_Robot r, abstr_Case c) {
+		return (((c.getClass().getCanonicalName().equals("observable.map.Teleporter_Case")&&
 					(color.equals(r.get_couleur())||
 						color.equals(Couleur.GRIS))) 
-				|| c.getClass().getCanonicalName().equals("map.Painted_Case")));
+				|| c.getClass().getCanonicalName().equals("observable.map.Painted_Case")));
 	}
 	@Override
 	public void addObserver(int_Observer obs) {

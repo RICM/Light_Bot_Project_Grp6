@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import couleur.Couleur;
 import observable.map.*;
 import observable.robot.Robot;
+import observable.robot.abstr_Robot;
 import exception.MouvementEx;
 import exception.UnreachableCase;
 import observable.int_Observable;
@@ -28,7 +29,7 @@ public class Jump implements int_Action, int_Observable{
 		this.color = Couleur.GRIS;
 	}
 
-	public void execute(Robot r) throws MouvementEx,UnreachableCase {
+	public void execute(abstr_Robot r) throws MouvementEx,UnreachableCase {
 		
 		abstr_Case c_prime = null;
 		Coordonnees pos = r.getCurrent_Case().get_coordonnees();
@@ -53,7 +54,7 @@ public class Jump implements int_Action, int_Observable{
 	}
 	// true == on peut sauter et avancer
 	//false == on saute sur place
-	public boolean isPossible(Robot r, abstr_Case c) {
+	public boolean isPossible(abstr_Robot r, abstr_Case c) {
 		return ((r.get_couleur().equals(color) || Couleur.GRIS.equals(color)) 
 				&& (r.getCurrent_Case().get_hauteur()+1 == c.get_hauteur()) 
 					|| (c.get_hauteur() < r.getCurrent_Case().get_hauteur()));
