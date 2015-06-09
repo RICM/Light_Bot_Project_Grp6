@@ -2,6 +2,7 @@ package observable.action_list;
 
 import java.util.LinkedList;
 
+import exception.ActionEx;
 import exception.MouvementEx;
 import exception.UnreachableCase;
 import observable.robot.abstr_Robot;
@@ -18,7 +19,7 @@ public class Execution_list {
 		Run_List.addFirst(new_h);
 	}
 
-	public void run(abstr_Robot r) throws MouvementEx, UnreachableCase{
+	public void run(abstr_Robot r) throws MouvementEx, UnreachableCase, ActionEx{
 		while(Run_List.size()>0){
 			while(Run_List.getFirst().size() > 0){
 				Run_List.getFirst().removeFirst().execute(r);

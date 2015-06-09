@@ -6,8 +6,10 @@ import observable.action.MoveForward;
 import observable.action.TurnLeft;
 import observable.action.TurnRIght;
 import observable.action_list.Possible_List;
+import observable.grahique.Jeu;
 import observable.grahique.Menu2;
 import observable.map.Coordonnees;
+import observable.map.Illuminated_Case;
 import observable.map.Painted_Case;
 import observable.map.Teleporter_Case;
 import observable.map.Terrain;
@@ -66,6 +68,14 @@ public class Game {
 				terrain_test.add_case(i, j, carre);
 			}
 		}
+		Couleur color = Couleur.VERT;
+		Coordonnees cord = new Coordonnees(2,2,0);
+		Illuminated_Case carre = new Illuminated_Case(1,color, cord);
+		terrain_test.add_case(2, 2, carre);
+
+		Coordonnees cord2 = new Coordonnees(2,3,0);
+		Illuminated_Case carre2 = new Illuminated_Case(2,color, cord2);
+		terrain_test.add_case(2, 3, carre2);
 		try {
 			initRob = terrain_test.get_case(0, 0);
 			Robot robert = new Robot(initRob, list);
@@ -111,9 +121,10 @@ public class Game {
 			System.out.println(e1.getMessage());
 		}
 
-		Menu2 game = new Menu2();
-		game.setVisible(true);
-		game.setLocationRelativeTo(null);
+		Jeu game = new Jeu(0,null);
+		//Menu2 game = new Menu2();
+		//game.setVisible(true);
+		//game.setLocationRelativeTo(null);
 
 
 

@@ -26,7 +26,7 @@ public abstract class abstr_Robot {
 	private ArrayList<int_Observer> listObserver = new ArrayList<int_Observer>(); 
 	
 	
-	public void run() throws MouvementEx, UnreachableCase{
+	public void run() throws MouvementEx, UnreachableCase, ActionEx{
 		order_exec.addFirst(user_actions);
 		order_exec.run(this);
 	}
@@ -86,7 +86,9 @@ public abstract class abstr_Robot {
 			throw new ActionEx("impossible d'ajouter");
 		}
 	}
-	
+	public void add_execute(Sequence_List to_add){
+		this.order_exec.addFirst(to_add);
+	}
 	
 	public void printPosition(){
 		System.out.println("position x : "+current_case.get_coordonnees().get_x());
@@ -140,6 +142,9 @@ public abstract class abstr_Robot {
 	public void set_tailleP1(int new_t){
 		this.nbActionP1 = new_t;
 	}
+	public Sequence_List get_P1(){
+		return this.P1;
+	}
 	
 	public int get_tailleP2(){
 		return this.nbActionP2;
@@ -147,6 +152,10 @@ public abstract class abstr_Robot {
 	public void set_tailleP2(int new_t){
 		this.nbActionP2 = new_t;
 	}
+	public Sequence_List get_P2(){
+		return this.P2;
+	}
+	
 	public void addObserver(int_Observer obs) {
 		this.listObserver.add(obs);
 	}
