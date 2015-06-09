@@ -26,7 +26,7 @@ public abstract class abstr_Robot {
 	private ArrayList<int_Observer> listObserver = new ArrayList<int_Observer>(); 
 	
 	
-	public void run() throws MouvementEx, UnreachableCase{
+	public void run() throws MouvementEx, UnreachableCase, ActionEx{
 		order_exec.addFirst(user_actions);
 		order_exec.run(this);
 	}
