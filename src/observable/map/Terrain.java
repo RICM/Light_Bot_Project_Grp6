@@ -29,7 +29,7 @@ public class Terrain implements int_Observable{
 	public abstr_Case get_case (int x, int y) throws UnreachableCase{
 		//System.out.println(x+" , "+y);
 		if (y >= 0 && y < terrain.length){
-			if (x >= 0 && x < terrain[x].length){
+			if (x >= 0 && x < terrain[y].length){
 				return terrain[y][x];
 			}
 		}
