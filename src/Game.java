@@ -1,4 +1,3 @@
-import couleur.Couleur;
 import observable.action.Activate;
 import observable.action.Jump;
 import observable.action.LightCase;
@@ -6,16 +5,15 @@ import observable.action.MoveForward;
 import observable.action.TurnLeft;
 import observable.action.TurnRIght;
 import observable.action_list.Possible_List;
-import observable.grahique.Jeu;
-import observable.grahique.Menu2;
+import observable.grahique.Menu;
 import observable.map.Coordonnees;
 import observable.map.Illuminated_Case;
 import observable.map.Painted_Case;
-import observable.map.Teleporter_Case;
 import observable.map.Terrain;
 import observable.map.World;
 import observable.map.abstr_Case;
 import observable.robot.Robot;
+import couleur.Couleur;
 import exception.ActionEx;
 import exception.MouvementEx;
 import exception.UnreachableCase;
@@ -121,8 +119,8 @@ public class Game {
 			System.out.println(e1.getMessage());
 		}
 
-		Jeu game = new Jeu(0,null);
-		//Menu2 game = new Menu2();
+		//Jeu game = new Jeu(0,null);
+		Menu game = new Menu();
 		//game.setVisible(true);
 		//game.setLocationRelativeTo(null);
 

@@ -2,6 +2,7 @@ package observable.grahique;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,7 +11,6 @@ import java.net.URL;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -133,23 +133,24 @@ public class Menu2 extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource()==this.btnFullScreen){
-			if(this.getExtendedState()==this.MAXIMIZED_BOTH){
+			if(this.getExtendedState()==Frame.MAXIMIZED_BOTH){
 				this.setBounds(100, 100, 1200, 700);
 				this.imageMenu.setBounds(this.getSize().width/2-315, 0, this.ImageLargeur, this.ImageHauteur);
 				this.btnJouer.setBounds(this.getSize().width/2-90, this.ImageHauteur + 50, 180, 44);
 				this.setLocationRelativeTo(null);
 			}
 			else{
-				this.setExtendedState(this.MAXIMIZED_BOTH);
+				this.setExtendedState(Frame.MAXIMIZED_BOTH);
 				this.imageMenu.setBounds(this.getSize().width/2-315, 0, 700, this.ImageHauteur*3/2);
 				this.btnJouer.setLocation(this.getSize().width/2-90, 2*this.getSize().height/6+20);
 			}
 		}
 		else if(e.getSource()==this.btnJouer){
-			SelectLevel dialog = new SelectLevel(this);
-			dialog.setLocationRelativeTo(null);
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
+			//			SelectLevel dialog = new SelectLevel(this);
+			//			dialog.setLocationRelativeTo(null);
+			//			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			//			dialog.setVisible(true);
+			Niveaux level = new Niveaux();
 		}
 	}
 }
