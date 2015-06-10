@@ -70,8 +70,7 @@ public class Menu {
 		for(Event e : Menu.app.pollEvents()){
 
 			if(e.type == Type.CLOSED){
-				JOptionPane.showMessageDialog(null, "Va te faire, tu joues avec moi connard!");
-				//				Menu.app.close();
+				Menu.app.close();
 			}
 
 
