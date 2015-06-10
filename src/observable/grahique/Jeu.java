@@ -289,7 +289,7 @@ public class Jeu {
 				this.maTexture.loadFromFile(Paths.get("Cases/Square_vide.png"));
 			}
 			else if(cases instanceof Teleporter_Case){
-				this.maTexture.loadFromFile(Paths.get("Cases/case_teleporteur/"+ indice_tele+".png"));
+				this.maTexture.loadFromFile(Paths.get("Cases/case_teleporteur/Case_pointeur_"+ indice_tele+".png"));
 				 indice_tele++;
 				if( indice_tele>=9){
 					 indice_tele=0;
@@ -305,10 +305,8 @@ public class Jeu {
 			}
 			else if(cases instanceof Illuminated_Case){
 				if(((Illuminated_Case) cases).get_active()==false){
-					this.maTexture = new Texture();
 					this.maTexture.loadFromFile(Paths.get("Cases/Square_allumable2.png"));
 				}else{
-					maTexture = new Texture();
 					this.maTexture.loadFromFile(Paths.get("Cases/Square_allume.png"));
 				}
 			}
