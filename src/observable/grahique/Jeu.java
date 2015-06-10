@@ -75,10 +75,10 @@ public class Jeu {
 					MoveForward.move_forward().execute(Jeu.r);
 				} catch (MouvementEx e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					System.out.println(e1.getMessage());
 				} catch (UnreachableCase e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					System.out.println(e1.getMessage());
 				}
 			}
 			if (Keyboard.isKeyPressed(Key.RIGHT)){
@@ -87,10 +87,10 @@ public class Jeu {
 					MoveForward.move_forward().execute(Jeu.r);
 				} catch (MouvementEx e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					System.out.println(e1.getMessage());
 				} catch (UnreachableCase e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					System.out.println(e1.getMessage());
 				}
 			}
 			if (Keyboard.isKeyPressed(Key.SPACE)){
@@ -99,10 +99,10 @@ public class Jeu {
 					LightCase.light_case().execute(Jeu.r);
 				} catch (MouvementEx e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					System.out.println(e1.getMessage());
 				} catch (UnreachableCase e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					System.out.println(e1.getMessage());
 				}
 			}
 			if (Keyboard.isKeyPressed(Key.UP)){
@@ -111,10 +111,10 @@ public class Jeu {
 					MoveForward.move_forward().execute(Jeu.r);
 				} catch (MouvementEx e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					System.out.println(e1.getMessage());
 				} catch (UnreachableCase e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					System.out.println(e1.getMessage());
 				}
 			}
 			if (Keyboard.isKeyPressed(Key.DOWN)){
@@ -123,10 +123,10 @@ public class Jeu {
 					MoveForward.move_forward().execute(Jeu.r);
 				} catch (MouvementEx e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					System.out.println(e1.getMessage());
 				} catch (UnreachableCase e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					System.out.println(e1.getMessage());
 				}
 			}
 
@@ -135,13 +135,13 @@ public class Jeu {
 					Jeu.r.run();
 				} catch (MouvementEx e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					System.out.println(e1.getMessage());
 				} catch (UnreachableCase e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					System.out.println(e1.getMessage());
 				} catch (ActionEx e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					System.out.println(e1.getMessage());
 				}
 			}
 
@@ -152,7 +152,7 @@ public class Jeu {
 				try {
 					Jeu.detect_move(pos);
 				} catch (ActionEx e1) {
-					e1.printStackTrace();
+					System.out.println(e1.getMessage());
 				}
 			}
 
@@ -201,7 +201,7 @@ public class Jeu {
 
 
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		} // on charge la texture qui se trouve dans notre dossier assets
 	}
 
@@ -221,7 +221,7 @@ public class Jeu {
 			}
 
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		} // on charge la texture qui se trouve dans notre dossier assets
 	}
 
@@ -242,7 +242,7 @@ public class Jeu {
 
 
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		} // on charge la texture qui se trouve dans notre dossier assets
 	}
 	public void draw_bouton(){
@@ -270,7 +270,7 @@ public class Jeu {
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 	}
 
@@ -312,7 +312,7 @@ public class Jeu {
 				}
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		} // on charge la texture qui se trouve dans notre dossier assets
 
 
@@ -395,7 +395,7 @@ public class Jeu {
 				}
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		} // on charge la texture qui se trouve dans notre dossier assets
 	}
 
@@ -418,7 +418,7 @@ public class Jeu {
 					this.monSprite.setPosition(PosX,PosY-26*hauteur);
 					Menu.app.draw(this.monSprite);
 				} catch (IOException e) {
-					e.printStackTrace();
+					System.out.println(e.getMessage());
 				}
 			}
 			this.typeCases(Ma_case);
@@ -432,7 +432,7 @@ public class Jeu {
 			}
 
 		} catch (UnreachableCase e1) {
-			e1.printStackTrace();
+			System.out.println(e1.getMessage());
 		}
 	}
 
