@@ -7,6 +7,7 @@ import observable.int_Observable;
 import observable.action.int_Action;
 import observable.robot.Robot;
 import observer.int_Observer;
+import exception.ActionEx;
 import exception.UnreachableCase;
 import exception.MouvementEx;
 
@@ -35,7 +36,7 @@ public class Possible_List implements int_Action_List, int_Observable{
 		return this.allowed_actions.contains(act);
 	}
 	
-	public void execute (Robot r) throws MouvementEx, UnreachableCase{
+	public void execute (Robot r) throws MouvementEx, UnreachableCase, ActionEx{
 		int size = allowed_actions.size();
 		for (int i = 0 ; i < size ; i++ ){
 			int_Action act;
