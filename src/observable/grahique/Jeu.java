@@ -291,7 +291,7 @@ public class Jeu {
 			else if(cases instanceof Teleporter_Case){
 				this.maTexture.loadFromFile(Paths.get("Cases/case_teleporteur/"+ indice_tele+".png"));
 				 indice_tele++;
-				if( indice_tele>9){
+				if( indice_tele>=9){
 					 indice_tele=0;
 				}
 			}
