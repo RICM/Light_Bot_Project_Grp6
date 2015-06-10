@@ -3,6 +3,8 @@ package observable.grahique;
 import java.io.IOException;
 import java.nio.file.Paths;
 
+import javax.swing.JOptionPane;
+
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.RenderWindow;
 import org.jsfml.graphics.Sprite;
@@ -68,7 +70,8 @@ public class Menu {
 		for(Event e : Menu.app.pollEvents()){
 
 			if(e.type == Type.CLOSED){
-				Menu.app.close();
+				JOptionPane.showMessageDialog(null, "Va te faire, tu joues avec moi connard!");
+				//				Menu.app.close();
 			}
 
 

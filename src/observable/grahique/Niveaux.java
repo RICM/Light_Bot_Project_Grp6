@@ -2,6 +2,7 @@ package observable.grahique;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 import org.jsfml.graphics.Color;
 import org.jsfml.graphics.FloatRect;
@@ -27,6 +28,7 @@ public class Niveaux {
 	protected Sprite sprite_btnMenu= new Sprite();
 	protected Texture texture_btnLevel = new Texture();
 	protected Sprite sprite_btnLevel = new Sprite();
+	protected ArrayList<Sprite> listSprite = new ArrayList<Sprite>();
 	protected int level = 1;
 	protected static final int WIDTH = 1200;
 	protected static final int HEIGHT = 700;
@@ -36,7 +38,8 @@ public class Niveaux {
 		for(Event e : Menu.app.pollEvents()){
 
 			if(e.type == Type.CLOSED){
-				Menu.app.close();
+				Menu jeu = new Menu();
+				//				Menu.app.close();
 			}
 
 
@@ -53,32 +56,57 @@ public class Niveaux {
 	private void btnClick(Vector2i pos) {
 		int x = pos.x;
 		int y = pos.y;
-		//clic bouton pr�c�dent
-		FloatRect rect = this.sprite_btnPrec.getGlobalBounds();
-		if(x>=rect.left && x<=rect.left+rect.width &&
-				y>=rect.top && y<=rect.top+rect.height){
-			this.level--;
-			if(this.level<1)
-				this.level = 1;
-		}
-		//clic bouton suivant
-		FloatRect rect2 = this.sprite_btnNext.getGlobalBounds();
-		if(x>=rect2.left && x<=rect2.left+rect2.width &&
-				y>=rect2.top && y<=rect2.top+rect2.height){
-			this.level++;
-		}
-		//clic bouton menu
-		FloatRect rect3 = this.sprite_btnMenu.getGlobalBounds();
-		if(x>=rect3.left && x<=rect3.left+rect3.width &&
-				y>=rect3.top && y<=rect3.top+rect3.height){
-			Menu game = new Menu();
-		}
-		//clic bouton jouer
-				FloatRect rect4 = this.sprite_btnLevel.getGlobalBounds();
-				if(x>=rect4.left && x<=rect4.left+rect4.width &&
-						y>=rect4.top && y<=rect4.top+rect4.height){
+		int cpt = 0;
+
+		for(Sprite s : this.listSprite){
+			FloatRect rect = s.getGlobalBounds();
+			if(x>=rect.left && x<=rect.left+rect.width &&
+					y>=rect.top && y<=rect.top+rect.height){
+				if(cpt == 0){
+					this.level--;
+					if(this.level<1)
+						this.level = 1;
+				}
+				else if(cpt == 1){
+					this.level++;
+				}
+				else if(cpt == 2){
+					Menu game = new Menu();
+				}
+				else if(cpt == 3){
 					Jeu jeu = new Jeu(0, null);
 				}
+			}
+			cpt++;
+
+		}
+		//
+		//		//clic bouton pr�c�dent
+		//		FloatRect rect = this.sprite_btnPrec.getGlobalBounds();
+		//		if(x>=rect.left && x<=rect.left+rect.width &&
+		//				y>=rect.top && y<=rect.top+rect.height){
+		//			this.level--;
+		//			if(this.level<1)
+		//				this.level = 1;
+		//		}
+		//		//clic bouton suivant
+		//		FloatRect rect2 = this.sprite_btnNext.getGlobalBounds();
+		//		if(x>=rect2.left && x<=rect2.left+rect2.width &&
+		//				y>=rect2.top && y<=rect2.top+rect2.height){
+		//			this.level++;
+		//		}
+		//		//clic bouton menu
+		//		FloatRect rect3 = this.sprite_btnMenu.getGlobalBounds();
+		//		if(x>=rect3.left && x<=rect3.left+rect3.width &&
+		//				y>=rect3.top && y<=rect3.top+rect3.height){
+		//			Menu game = new Menu();
+		//		}
+		//		//clic bouton jouer
+		//		FloatRect rect4 = this.sprite_btnLevel.getGlobalBounds();
+		//		if(x>=rect4.left && x<=rect4.left+rect4.width &&
+		//				y>=rect4.top && y<=rect4.top+rect4.height){
+		//			Jeu jeu = new Jeu(0, null);
+		//		}
 
 	}
 
@@ -127,6 +155,12 @@ public class Niveaux {
 			t.setColor(Color.BLACK);
 			t.setPosition(Niveaux.WIDTH/2+18, 350);
 			Menu.app.draw(t);
+
+			this.listSprite.add(this.sprite_btnPrec);
+			this.listSprite.add(this.sprite_btnNext);
+			this.listSprite.add(this.sprite_btnMenu);
+			this.listSprite.add(this.sprite_btnLevel);
+
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
