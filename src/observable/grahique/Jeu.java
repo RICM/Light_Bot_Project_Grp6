@@ -19,6 +19,7 @@ import observable.map.Empty_Case;
 import observable.map.Illuminated_Case;
 import observable.map.Normal_Case;
 import observable.map.Painted_Case;
+import observable.map.Teleporter_Case;
 import observable.map.Terrain;
 import observable.map.World;
 import observable.map.abstr_Case;
@@ -60,6 +61,7 @@ public class Jeu {
 	private int width_case = 80;
 	private int height_case = 50;
 	private static final int NB_MAX_CASE = 10;
+	private int indice_tele=0;
 
 	public static void processEvent(){
 		Menu.app.setKeyRepeatEnabled(false);
@@ -246,26 +248,16 @@ public class Jeu {
 	}
 	public void draw_bouton(){
 		try {
-			for(int i=0;i<3;i++){
+			String tab[]=  {"rota_gauche","rota_droite","tout_droit","allumer","saut"};
+			for(int i=0;i<tab.length;i++){
 				Texture maTextureBouton = new Texture();
 				Sprite monSpriteBouton = new Sprite();
-				if(i==0){
-					maTextureBouton.loadFromFile(Paths.get("bouton/rota_gauche.png"));
-					Jeu.liste_sprite.put(monSpriteBouton,Orientation.orientation.LEFT);
-				}
-				else if(i==1){
-					maTextureBouton.loadFromFile(Paths.get("bouton/rota_droite.png"));
-					Jeu.liste_sprite.put(monSpriteBouton,Orientation.orientation.RIGHT);
-				}
-				else{
-					maTextureBouton.loadFromFile(Paths.get("bouton/tout_droit.png"));
-					Jeu.liste_sprite.put(monSpriteBouton,null);
-				}
+				maTextureBouton.loadFromFile(Paths.get("bouton/"+tab[i]+".png"));
+				Jeu.liste_sprite.put(monSpriteBouton,Orientation.orientation.LEFT);
 				monSpriteBouton.setTexture(maTextureBouton);
-				monSpriteBouton.setPosition(100+100*i,600);
+				monSpriteBouton.setPosition(10+100*i,610);
 				Menu.app.draw(monSpriteBouton);
 				this.liste_text.add(maTextureBouton);
-
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -291,22 +283,33 @@ public class Jeu {
 		maTexture = new Texture();
 		try{
 			if(cases instanceof Normal_Case){
-				maTexture.loadFromFile(Paths.get("Cases/Square_allume.png"));
-			} else if(cases instanceof Empty_Case){
-				maTexture.loadFromFile(Paths.get("Cases/Square_vide.png"));
-			} else if(cases instanceof Painted_Case){
-				if(cases.get_couleur()== Couleur.VERT){
-					maTexture.loadFromFile(Paths.get("Cases/Square_vert.png"));
-				}else if(cases.get_couleur()== Couleur.GRIS){
-					maTexture.loadFromFile(Paths.get("Cases/Square_normal.png"));
-				}else if(cases.get_couleur()== Couleur.ROUGE){
-					maTexture.loadFromFile(Paths.get("Cases/Square_rouge.png"));
+				this.maTexture.loadFromFile(Paths.get("Cases/Square_allume.png"));
+			}
+			else if(cases instanceof Empty_Case){
+				this.maTexture.loadFromFile(Paths.get("Cases/Square_vide.png"));
+			}
+			else if(cases instanceof Teleporter_Case){
+				this.maTexture.loadFromFile(Paths.get("Cases/case_teleporteur/"+ indice_tele+".png"));
+				 indice_tele++;
+				if( indice_tele>9){
+					 indice_tele=0;
 				}
-			} else if(cases instanceof Illuminated_Case){
+			}
+			else if(cases instanceof Painted_Case){
+				if(cases.get_couleur()== Couleur.VERT)
+					this.maTexture.loadFromFile(Paths.get("Cases/Square_vert.png"));
+				else if(cases.get_couleur()== Couleur.GRIS)
+					this.maTexture.loadFromFile(Paths.get("Cases/Square_normal.png"));
+				else if(cases.get_couleur()== Couleur.ROUGE)
+					this.maTexture.loadFromFile(Paths.get("Cases/Square_rouge.png"));
+			}
+			else if(cases instanceof Illuminated_Case){
 				if(((Illuminated_Case) cases).get_active()==false){
-					maTexture.loadFromFile(Paths.get("Cases/Square_allumable2.png"));
+					this.maTexture = new Texture();
+					this.maTexture.loadFromFile(Paths.get("Cases/Square_allumable2.png"));
 				}else{
-					maTexture.loadFromFile(Paths.get("Cases/Square_allume.png"));
+					maTexture = new Texture();
+					this.maTexture.loadFromFile(Paths.get("Cases/Square_allume.png"));
 				}
 			}
 		} catch (IOException e) {

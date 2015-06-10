@@ -9,6 +9,7 @@ import observable.grahique.Menu;
 import observable.map.Coordonnees;
 import observable.map.Illuminated_Case;
 import observable.map.Painted_Case;
+import observable.map.Teleporter_Case;
 import observable.map.Terrain;
 import observable.map.World;
 import observable.map.abstr_Case;
@@ -72,7 +73,7 @@ public class Game {
 		terrain_test.add_case(2, 1, carre);
 
 		Coordonnees cord2 = new Coordonnees(2,3,0);
-		Illuminated_Case carre2 = new Illuminated_Case(3,color, cord2);
+		Teleporter_Case carre2 = new Teleporter_Case(2,color, cord2,carre);
 		terrain_test.add_case(2, 3, carre2);
 		try {
 			initRob = terrain_test.get_case(0, 0);
