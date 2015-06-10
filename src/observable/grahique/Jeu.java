@@ -148,7 +148,6 @@ public class Jeu {
 			if (e.type == Event.Type.MOUSE_BUTTON_PRESSED) {
 				e.asMouseEvent();
 				Vector2i pos = Mouse.getPosition(Menu.app);
-				System.out.println(pos.x+" "+pos.y);
 				try {
 					Jeu.detect_move(pos);
 				} catch (ActionEx e1) {
@@ -289,30 +288,24 @@ public class Jeu {
 	}
 
 	public void typeCases(abstr_Case cases){
+		maTexture = new Texture();
 		try{
 			if(cases instanceof Normal_Case){
-				maTexture = new Texture();
 				maTexture.loadFromFile(Paths.get("Cases/Square_allume.png"));
 			} else if(cases instanceof Empty_Case){
-				maTexture = new Texture();
 				maTexture.loadFromFile(Paths.get("Cases/Square_vide.png"));
 			} else if(cases instanceof Painted_Case){
 				if(cases.get_couleur()== Couleur.VERT){
-					maTexture = new Texture();
 					maTexture.loadFromFile(Paths.get("Cases/Square_vert.png"));
 				}else if(cases.get_couleur()== Couleur.GRIS){
-					maTexture = new Texture();
 					maTexture.loadFromFile(Paths.get("Cases/Square_normal.png"));
 				}else if(cases.get_couleur()== Couleur.ROUGE){
-					maTexture = new Texture();
 					maTexture.loadFromFile(Paths.get("Cases/Square_rouge.png"));
 				}
 			} else if(cases instanceof Illuminated_Case){
 				if(((Illuminated_Case) cases).get_active()==false){
-					maTexture = new Texture();
 					maTexture.loadFromFile(Paths.get("Cases/Square_allumable2.png"));
 				}else{
-					maTexture = new Texture();
 					maTexture.loadFromFile(Paths.get("Cases/Square_allume.png"));
 				}
 			}
@@ -336,7 +329,7 @@ public class Jeu {
 		int taille_abs =  terrain.get_terrain()[0].length;
 		int taille_ord =  terrain.get_terrain().length;
 
-		System.out.println("***************");
+		System.out.println("*********");
 		for(int X=taille_abs-1;X>=0;X--){
 			Ytemp=0;//taille_ord-1;
 			System.out.println("X = "+X);
@@ -418,7 +411,8 @@ public class Jeu {
 
 			for(int hauteur=1; hauteur<hauteur_max;hauteur++){
 				try {
-					this.maTexture.loadFromFile(Paths.get("Cases/Square_normal.png"));
+					this.maTexture = new Texture();
+					this.maTexture.loadFromFile(Paths.get("Cases/Square_empile.png"));
 					this.monSprite.setTexture(this.maTexture);
 					this.monSprite.setPosition(PosX,PosY-26*hauteur);
 					Menu.app.draw(this.monSprite);
