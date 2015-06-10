@@ -49,17 +49,17 @@ public class Game {
 
 
 		/** Définition du terrain **/
-		Terrain terrain_test = new Terrain(5,5);
+		Terrain terrain_test = new Terrain(6,6);
 		abstr_Case initRob;
 
-		for (int i = 0; i < 5; i++){
-			for (int j = 0; j < 5; j++){
+		for (int i = 0; i < 6; i++){
+			for (int j = 0; j < 6; j++){
 				Couleur color = Couleur.GRIS;
 				if((i+j)%3 == 0){
-					color = Couleur.ROUGE;
+					color = Couleur.VERT;
 				}
 				else if ((i+j)%3==1){
-					color = Couleur.VERT;
+					color = Couleur.ROUGE;
 				}
 				Coordonnees cord = new Coordonnees(i,j,0);
 				Painted_Case carre = new Painted_Case(0,color, cord);
@@ -67,12 +67,12 @@ public class Game {
 			}
 		}
 		Couleur color = Couleur.VERT;
-		Coordonnees cord = new Coordonnees(2,2,0);
+		Coordonnees cord = new Coordonnees(2,1,0);
 		Illuminated_Case carre = new Illuminated_Case(1,color, cord);
-		terrain_test.add_case(2, 2, carre);
+		terrain_test.add_case(2, 1, carre);
 
 		Coordonnees cord2 = new Coordonnees(2,3,0);
-		Illuminated_Case carre2 = new Illuminated_Case(2,color, cord2);
+		Illuminated_Case carre2 = new Illuminated_Case(3,color, cord2);
 		terrain_test.add_case(2, 3, carre2);
 		try {
 			initRob = terrain_test.get_case(0, 0);
