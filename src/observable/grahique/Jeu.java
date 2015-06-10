@@ -42,7 +42,7 @@ import exception.UnreachableCase;
 
 public class Jeu {
 
-	public Texture maTexture = new Texture();
+	public Texture maTexture;
 	public Sprite monSprite = new Sprite();
 	public Texture maTextureBackground = new Texture();
 	public Sprite monSpriteBackground = new Sprite();
@@ -291,24 +291,29 @@ public class Jeu {
 	public void typeCases(abstr_Case cases){
 		try{
 			if(cases instanceof Normal_Case){
-				this.maTexture.loadFromFile(Paths.get("Cases/Square_allume.png"));
-			}
-			else if(cases instanceof Empty_Case){
-				this.maTexture.loadFromFile(Paths.get("Cases/Square_vide.png"));
-			}
-			else if(cases instanceof Painted_Case){
-				if(cases.get_couleur()== Couleur.VERT)
-					this.maTexture.loadFromFile(Paths.get("Cases/Square_vert.png"));
-				else if(cases.get_couleur()== Couleur.GRIS)
-					this.maTexture.loadFromFile(Paths.get("Cases/Square_normal.png"));
-				else if(cases.get_couleur()== Couleur.ROUGE)
-					this.maTexture.loadFromFile(Paths.get("Cases/Square_rouge.png"));
-			}
-			else if(cases instanceof Illuminated_Case){
+				maTexture = new Texture();
+				maTexture.loadFromFile(Paths.get("Cases/Square_allume.png"));
+			} else if(cases instanceof Empty_Case){
+				maTexture = new Texture();
+				maTexture.loadFromFile(Paths.get("Cases/Square_vide.png"));
+			} else if(cases instanceof Painted_Case){
+				if(cases.get_couleur()== Couleur.VERT){
+					maTexture = new Texture();
+					maTexture.loadFromFile(Paths.get("Cases/Square_vert.png"));
+				}else if(cases.get_couleur()== Couleur.GRIS){
+					maTexture = new Texture();
+					maTexture.loadFromFile(Paths.get("Cases/Square_normal.png"));
+				}else if(cases.get_couleur()== Couleur.ROUGE){
+					maTexture = new Texture();
+					maTexture.loadFromFile(Paths.get("Cases/Square_rouge.png"));
+				}
+			} else if(cases instanceof Illuminated_Case){
 				if(((Illuminated_Case) cases).get_active()==false){
-					this.maTexture.loadFromFile(Paths.get("Cases/Square_allumable2.png"));
+					maTexture = new Texture();
+					maTexture.loadFromFile(Paths.get("Cases/Square_allumable2.png"));
 				}else{
-					this.maTexture.loadFromFile(Paths.get("Cases/Square_allume.png"));
+					maTexture = new Texture();
+					maTexture.loadFromFile(Paths.get("Cases/Square_allume.png"));
 				}
 			}
 		} catch (IOException e) {
