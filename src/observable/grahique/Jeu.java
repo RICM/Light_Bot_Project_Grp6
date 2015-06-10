@@ -258,11 +258,11 @@ public class Jeu {
 					Jeu.liste_sprite.put(monSpriteBouton,Orientation.orientation.RIGHT);
 				}
 				else{
-					maTextureBouton.loadFromFile(Paths.get("bouton/rota_gauche.png"));
+					maTextureBouton.loadFromFile(Paths.get("bouton/tout_droit.png"));
 					Jeu.liste_sprite.put(monSpriteBouton,null);
 				}
 				monSpriteBouton.setTexture(maTextureBouton);
-				monSpriteBouton.setPosition(100+100*i,550);
+				monSpriteBouton.setPosition(100+100*i,600);
 				Menu.app.draw(monSpriteBouton);
 				this.liste_text.add(maTextureBouton);
 
@@ -359,7 +359,7 @@ public class Jeu {
 
 	public void drawGrilleISO(){
 		try{
-			this.maTextureBackground.loadFromFile(Paths.get("background.jpg"));
+			this.maTextureBackground.loadFromFile(Paths.get("background2.jpg"));
 			this.monSpriteBackground.setTexture(this.maTextureBackground);
 			Menu.app.draw(this.monSpriteBackground);
 
@@ -406,8 +406,8 @@ public class Jeu {
 			int hauteur_max = Ma_case.get_hauteur();
 			int taille_abs =  World.currentWorld.get_terrain(0).get_terrain()[0].length;
 			int taille_ord =  World.currentWorld.get_terrain(0).get_terrain().length;
-			int PosX = Menu.app.getSize().x/2 +59*(Y+X)-taille_abs*60;
-			int PosY = Menu.app.getSize().y/2 +18*(Y-X)-taille_ord*18;
+			int PosX = Menu.app.getSize().x/2 +59*(Y+X)-taille_abs*60-180;
+			int PosY = Menu.app.getSize().y/2 +18*(Y-X)-taille_ord*18+100;
 
 			for(int hauteur=1; hauteur<hauteur_max;hauteur++){
 				try {
