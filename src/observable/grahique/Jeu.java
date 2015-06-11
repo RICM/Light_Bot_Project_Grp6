@@ -137,7 +137,18 @@ public class Jeu {
 			}
 
 			if (Keyboard.isKeyPressed(Key.SPACE)){
+				try {
 				Jeu.r.run();
+				} catch (MouvementEx e1) {
+					// TODO Auto-generated catch block
+					System.out.println(e1.getMessage());
+				} catch (UnreachableCase e1) {
+					// TODO Auto-generated catch block
+					System.out.println(e1.getMessage());
+				} catch (ActionEx e1) {
+					// TODO Auto-generated catch block
+					System.out.println(e1.getMessage());
+				}
 			}
 
 			if (e.type == Event.Type.MOUSE_BUTTON_PRESSED && Mouse.isButtonPressed(Button.LEFT)) {
@@ -255,10 +266,8 @@ public class Jeu {
 	public void draw_bouton() throws IOException{
 		LinkedList<int_Action> actions = r.get_possible().get();
 		String tab[]=  {"TurnLeft","TurnRIght","MoveForward","Activate","Jump","Bug"};
-		int i =0;
-	
-			//String tab[]=  {"rota_gauche","rota_droite","tout_droit","allumer","saut"};
-			for(i=0;i<tab.length;i++){
+
+			for(int i=0;i<tab.length;i++){
 				Texture maTextureBouton = new Texture();
 				Sprite monSpriteBouton = new Sprite();
 				
