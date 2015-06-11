@@ -1,6 +1,7 @@
 package observable.robot;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import observable.map.abstr_Case;
 import observable.action.int_Action;
@@ -25,7 +26,7 @@ public abstract class abstr_Robot {
 	private Execution_list order_exec = new Execution_list();
 	private ArrayList<int_Observer> listObserver = new ArrayList<int_Observer>();
 	private boolean activable = true;
-	
+	private LinkedList<Position> rollback = new LinkedList<Position>();
 	
 	public void run(){
 		order_exec.addFirst(user_actions);
@@ -183,7 +184,34 @@ public abstract class abstr_Robot {
 		for(int_Observer obs : listObserver)
 		      obs.update(this);
 	}
-
+	/**
+	 * ajoute la osition actuelle du robot en debut de liste des positions
+	 */
+	public void store_position(){
+		Position pos = new Position(this.current_case.get_coordonnees(), this.getOrientation());
+		rollback.addFirst(pos);
+	}
+	
+	/**
+	 * 
+	 * @return la taille de la liste de position mémorisée
+	 */
+	public int get_size_pos(){
+		return rollback.size();
+	}
+	/**
+	 * 
+	 * @return la dernière positionmémorisée
+	 * @throws ActionEx
+	 */
+	public Position get_last_pos() throws ActionEx{
+		if (this.rollback.size()>0){
+			return this.rollback.removeFirst();
+		}
+		else{
+			throw new ActionEx("Pas de position en memoire");
+		}
+	}
 
 	public boolean get_activable(){
 		return activable;
