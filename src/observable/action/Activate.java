@@ -6,6 +6,7 @@ import observable.map.*;
 import observable.robot.Robot;
 import observable.robot.abstr_Robot;
 import exception.MouvementEx;
+import exception.UnreachableCase;
 import observable.int_Observable;
 import observer.int_Observer;
 
@@ -27,12 +28,15 @@ public class Activate implements int_Action, int_Observable{
 		this.color = col;
 	}
 	@Override
-	public void execute(abstr_Robot r) throws MouvementEx {
+	public void execute(abstr_Robot r) throws MouvementEx, UnreachableCase {
 	abstr_Case cprime = r.getCurrent_Case();
 	if (isPossible(r,cprime)){
-		if(cprime.getClass().getCanonicalName().equals("map.Teleporter_Case")){
-			r.setCurrent_Case(((Teleporter_Case)cprime).get_destination());
+		if(cprime.getClass().getSimpleName().equals("Teleporter_Case")){
+			r.setCurrent_Case(World.currentWorld.get_case(((Teleporter_Case)cprime).get_destination()));
 			notifyObserver();
+		}
+		else if(cprime.getClass().getSimpleName().equals("Illiminated_Case")){
+			((Illuminated_Case)cprime).set_active(!((Illuminated_Case)cprime).get_active());
 		}
 		else {
 			r.set_couleur(cprime.get_couleur());
@@ -46,10 +50,11 @@ public class Activate implements int_Action, int_Observable{
 
 	@Override
 	public boolean isPossible(abstr_Robot r, abstr_Case c) {
-		return (((c.getClass().getCanonicalName().equals("observable.map.Teleporter_Case")&&
-					(color.equals(r.get_couleur())||
-						color.equals(Couleur.GRIS))) 
-				|| c.getClass().getCanonicalName().equals("observable.map.Painted_Case")));
+		return (((c.getClass().getSimpleName().equals("Teleporter_Case")
+					|| c.getClass().getSimpleName().equals("Painted_Case"))
+					|| c.getClass().getSimpleName().equals("Illiminated_Case"))
+				&&(color.equals(r.get_couleur())||
+					color.equals(Couleur.GRIS))) ;
 	}
 	@Override
 	public void addObserver(int_Observer obs) {
