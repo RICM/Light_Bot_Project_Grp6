@@ -2,8 +2,8 @@ package observer.controller;
 
 import java.io.IOException;
 
+import View.Jeu;
 import observable.action.int_Action;
-import observable.grahique.Jeu;
 import observable.map.Terrain;
 import observable.map.World;
 import observable.robot.Robot;

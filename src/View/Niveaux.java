@@ -1,4 +1,4 @@
-package observable.grahique;
+package View;
 
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -18,7 +18,6 @@ import org.jsfml.window.event.Event.Type;
 
 public class Niveaux {
 
-	//	protected static RenderWindow app = new RenderWindow(new VideoMode(Niveaux.WIDTH, Niveaux.HEIGHT),"Lightbot",WindowStyle.CLOSE);
 	protected Texture texture_Background = new Texture();
 	protected Sprite sprite_Background = new Sprite();
 	protected Texture texture_btnNext = new Texture();
@@ -34,13 +33,27 @@ public class Niveaux {
 	protected static final int WIDTH = 1200;
 	protected static final int HEIGHT = 700;
 
+
+	public Niveaux(){
+
+		while(Menu.app.isOpen()){
+			this.processEvent();
+			this.displayBackground();
+			this.displayBtn();
+			Menu.app.display();
+			//System.out.println(Mouse.getPosition().x + " " + Mouse.getPosition().y);
+		}
+	}
+
+	/**
+	 * Détecte les entrées claviers et souris
+	 */
 	public void processEvent(){
 		Menu.app.setKeyRepeatEnabled(false);
 		for(Event e : Menu.app.pollEvents()){
 
 			if(e.type == Type.CLOSED){
-				Menu jeu = new Menu();
-				//				Menu.app.close();
+				Menu.app.close();
 			}
 
 
@@ -55,6 +68,10 @@ public class Niveaux {
 		}
 	}
 
+	/**
+	 * Regarde si le clique passé en paramètre est sur l'un des boutons
+	 * @param pos Coordonnées du clique souris
+	 */
 	private void btnClick(Vector2f pos) {
 		float x = pos.x;
 		float y = pos.y;
@@ -73,45 +90,21 @@ public class Niveaux {
 					this.level++;
 				}
 				else if(cpt == 2){
-					Menu game = new Menu();
+					new Menu();
 				}
 				else if(cpt == 3){
-					Jeu jeu = new Jeu(0);
+					new Jeu(0);
 				}
 			}
 			cpt++;
 
 		}
-		//
-		//		//clic bouton prï¿½cï¿½dent
-		//		FloatRect rect = this.sprite_btnPrec.getGlobalBounds();
-		//		if(x>=rect.left && x<=rect.left+rect.width &&
-		//				y>=rect.top && y<=rect.top+rect.height){
-		//			this.level--;
-		//			if(this.level<1)
-		//				this.level = 1;
-		//		}
-		//		//clic bouton suivant
-		//		FloatRect rect2 = this.sprite_btnNext.getGlobalBounds();
-		//		if(x>=rect2.left && x<=rect2.left+rect2.width &&
-		//				y>=rect2.top && y<=rect2.top+rect2.height){
-		//			this.level++;
-		//		}
-		//		//clic bouton menu
-		//		FloatRect rect3 = this.sprite_btnMenu.getGlobalBounds();
-		//		if(x>=rect3.left && x<=rect3.left+rect3.width &&
-		//				y>=rect3.top && y<=rect3.top+rect3.height){
-		//			Menu game = new Menu();
-		//		}
-		//		//clic bouton jouer
-		//		FloatRect rect4 = this.sprite_btnLevel.getGlobalBounds();
-		//		if(x>=rect4.left && x<=rect4.left+rect4.width &&
-		//				y>=rect4.top && y<=rect4.top+rect4.height){
-		//			Jeu jeu = new Jeu(0, null);
-		//		}
 
 	}
 
+	/**
+	 * Affiche le background
+	 */
 	private void displayBackground() {
 		try {
 			this.texture_Background.loadFromFile(Paths.get("selectLvl/back.jpg"));
@@ -125,6 +118,9 @@ public class Niveaux {
 
 	}
 
+	/**
+	 * Affiche les boutons
+	 */
 	protected void displayBtn() {
 		try {
 			//Affichage bouton next
@@ -170,17 +166,5 @@ public class Niveaux {
 		}
 
 	}
-	public Niveaux(){
-
-		while(Menu.app.isOpen()){
-			this.processEvent();
-			this.displayBackground();
-			this.displayBtn();
-			Menu.app.display();
-			//System.out.println(Mouse.getPosition().x + " " + Mouse.getPosition().y);
-		}
-	}
-
-
 
 }

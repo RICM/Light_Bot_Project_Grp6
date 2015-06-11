@@ -1,22 +1,16 @@
-package observable.grahique;
+package View;
 
 
-import java.awt.Frame;
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-
 import javax.swing.JOptionPane;
 
 import observable.action.Activate;
-import observable.action.Jump;
 import observable.action.MoveForward;
-import observable.action.TurnLeft;
-import observable.action.TurnRIght;
 import observable.action.int_Action;
 import observable.map.Empty_Case;
 import observable.map.Illuminated_Case;
@@ -39,7 +33,6 @@ import org.jsfml.window.Mouse;
 import org.jsfml.window.Mouse.Button;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.Event.Type;
-import org.jsfml.window.event.MouseButtonEvent;
 
 import couleur.Couleur;
 import exception.ActionEx;
@@ -66,6 +59,30 @@ public class Jeu {
 	private int height_case = 50;
 	private static final int NB_MAX_CASE = 10;
 	private int indice_tele=0;
+
+	/**********CONSTRUCTEURS************/
+	public Jeu(int lvl){
+		this.level = lvl;
+		while(Menu.app.isOpen()){
+			Menu.app.clear();
+			Jeu.processEvent();
+			this.drawGrilleISO();
+			//drawPerso();
+			try {
+				this.draw_bouton();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			this.draw_procedure();
+			Menu.app.display();
+			if(World.currentWorld.is_cleared()){
+				//				JOptionPane.showMessageDialog(null, "Fin");
+				//				Menu.app.close();
+			}
+			//System.out.println(Mouse.getPosition().x + " " + Mouse.getPosition().y);
+		}
+	}
 
 	public static void processEvent(){
 		Menu.app.setKeyRepeatEnabled(false);
@@ -147,7 +164,7 @@ public class Jeu {
 				} catch (ActionEx e1) {
 					System.out.println(e1.getMessage());
 				}
-				
+
 			}
 
 		}
@@ -255,47 +272,28 @@ public class Jeu {
 		LinkedList<int_Action> actions = r.get_possible().get();
 		String tab[]=  {"TurnLeft","TurnRIght","MoveForward","Activate","Jump","Bug"};
 
-			for(int i=0;i<tab.length;i++){
-				Texture maTextureBouton = new Texture();
-				Sprite monSpriteBouton = new Sprite();
-				
+		for(int i=0;i<tab.length;i++){
+			Texture maTextureBouton = new Texture();
+			Sprite monSpriteBouton = new Sprite();
+			if(i<5)
 				maTextureBouton.loadFromFile(Paths.get("bouton/"+tab[i]+".png"));
-				Jeu.liste_sprite.put(monSpriteBouton,"");
-				monSpriteBouton.setTexture(maTextureBouton);
-				monSpriteBouton.setPosition(10+100*i,610);
-				Jeu.liste_sprite.put(monSpriteBouton,tab[i]);
-				Menu.app.draw(monSpriteBouton);
-				
-				
-			}
+			Jeu.liste_sprite.put(monSpriteBouton,"");
+			monSpriteBouton.setTexture(maTextureBouton);
+			monSpriteBouton.setPosition(10+100*i,610);
+			Jeu.liste_sprite.put(monSpriteBouton,tab[i]);
+			Menu.app.draw(monSpriteBouton);
+		}
 	}
 
 
-		//		try {
-		//			String tab[]=  {"rota_gauche","rota_droite","tout_droit","allumer","saut"};
-		//			for(int i=0;i<tab.length;i++){
-		//				Texture maTextureBouton = new Texture();
-		//				Sprite monSpriteBouton = new Sprite();
-		//				maTextureBouton.loadFromFile(Paths.get("bouton/"+tab[i]+".png"));
-		//				monSpriteBouton.setTexture(maTextureBouton);
-		//				monSpriteBouton.setPosition(10+100*i,610);
-		//				Jeu.liste_sprite.put(monSpriteBouton,tab[i]);
-		//				Menu.app.draw(monSpriteBouton);
-		//				this.liste_text.add(maTextureBouton);
-		//			}
-		//		} catch (IOException e) {
-		//			// TODO Auto-generated catch block
-		//			System.out.println(e.getMessage());
-		//		}
-	
 
 	public void draw_procedure(){
 		try {
 			String tab[]=  {"Fond_Main","Fond_P1","Fond_P2"};
 			for(int i=0;i<tab.length;i++){
 				Sprite monSpriteBouton = new Sprite();
-				maTexture.loadFromFile(Paths.get("background/"+tab[i]+".png"));
-				monSpriteBouton.setTexture(maTexture);
+				this.maTexture.loadFromFile(Paths.get("background/"+tab[i]+".png"));
+				monSpriteBouton.setTexture(this.maTexture);
 				Menu.app.draw(monSpriteBouton);
 			}
 			int nombre_bouton[] = {r.get_tailleMain(),r.get_tailleP1(),r.get_tailleP2()};
@@ -308,9 +306,9 @@ public class Jeu {
 						y++;
 					}
 					Sprite monSprite = new Sprite();
-					maTexture.loadFromFile(Paths.get("background/Fond_Bouton.png"));
+					this.maTexture.loadFromFile(Paths.get("background/Fond_Bouton.png"));
 					monSprite.setPosition(884+(x%4*(70+4)), pos_bouton[i] + (y-1)*(70+10));
-					monSprite.setTexture(maTexture);
+					monSprite.setTexture(this.maTexture);
 					Menu.app.draw(monSprite);
 				}
 			}
@@ -318,45 +316,24 @@ public class Jeu {
 			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
 		}
-		
-		
+
+
 	}
-	
-	public Jeu(int lvl){
-		this.level = lvl;
-		while(Menu.app.isOpen()){
-			Jeu.processEvent();
-			this.drawGrilleISO();
-			//drawPerso();
-			try {
-				this.draw_bouton();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			this.draw_procedure();
-			Menu.app.display();
-			if(World.currentWorld.is_cleared()){
-//				JOptionPane.showMessageDialog(null, "Fin");
-//				Menu.app.close();
-			}
-			//System.out.println(Mouse.getPosition().x + " " + Mouse.getPosition().y);
-		}
-	}
+
 
 	public void typeCases(abstr_Case cases){
 		try{
 			if(cases instanceof Normal_Case){
-				maTexture.loadFromFile(Paths.get("Cases/Square_normal.png"));
+				this.maTexture.loadFromFile(Paths.get("Cases/Square_normal.png"));
 			}
 			else if(cases instanceof Empty_Case){
 				this.maTexture.loadFromFile(Paths.get("Cases/Square_vide.png"));
 			}
 			else if(cases instanceof Teleporter_Case){
-				this.maTexture.loadFromFile(Paths.get("Cases/case_teleporteur/Case_pointeur_"+ indice_tele+".png"));
-				 indice_tele++;
-				if( indice_tele>=9){
-					 indice_tele=0;
+				this.maTexture.loadFromFile(Paths.get("Cases/case_teleporteur/Case_pointeur_"+ this.indice_tele+".png"));
+				this.indice_tele++;
+				if( this.indice_tele>=9){
+					this.indice_tele=0;
 				}
 			}
 			else if(cases instanceof Painted_Case){
@@ -371,7 +348,7 @@ public class Jeu {
 				if(((Illuminated_Case) cases).get_active()==false){
 					this.maTexture.loadFromFile(Paths.get("Cases/Square_allumable2.png"));
 				}else{
-					maTexture.loadFromFile(Paths.get("Cases/Square_allume.png"));
+					this.maTexture.loadFromFile(Paths.get("Cases/Square_allume.png"));
 				}
 			}
 		} catch (IOException e) {

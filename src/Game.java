@@ -1,10 +1,10 @@
+import View.Menu;
 import observable.action.Activate;
 import observable.action.Jump;
 import observable.action.MoveForward;
 import observable.action.TurnLeft;
 import observable.action.TurnRIght;
 import observable.action_list.Possible_List;
-import observable.grahique.Menu;
 import observable.map.Coordonnees;
 import observable.map.Illuminated_Case;
 import observable.map.Painted_Case;
