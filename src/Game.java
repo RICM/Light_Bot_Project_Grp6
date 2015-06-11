@@ -1,6 +1,5 @@
 import observable.action.Activate;
 import observable.action.Jump;
-import observable.action.LightCase;
 import observable.action.MoveForward;
 import observable.action.TurnLeft;
 import observable.action.TurnRIght;
@@ -41,7 +40,6 @@ public class Game {
 		list.addActionToList(Jump.jump());
 		list.addActionToList(TurnRIght.turn_right());
 		list.addActionToList(Activate.activate());
-		list.addActionToList(LightCase.light_case());
 		list.addActionToList(TurnLeft.turn_left());
 		//System.out.println("Liste permise : ");
 		//System.out.println(list.toString());
@@ -73,7 +71,7 @@ public class Game {
 		terrain_test.add_case(2, 1, carre);
 
 		Coordonnees cord2 = new Coordonnees(2,3,0);
-		Teleporter_Case carre2 = new Teleporter_Case(2,color, cord2,carre);
+		Teleporter_Case carre2 = new Teleporter_Case(2,color, cord2,cord);
 		terrain_test.add_case(2, 3, carre2);
 		try {
 			initRob = terrain_test.get_case(0, 0);

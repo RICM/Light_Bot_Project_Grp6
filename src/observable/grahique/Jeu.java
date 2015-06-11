@@ -10,8 +10,8 @@ import java.util.Iterator;
 
 import javax.swing.JOptionPane;
 
+import observable.action.Activate;
 import observable.action.Jump;
-import observable.action.LightCase;
 import observable.action.MoveForward;
 import observable.action.TurnLeft;
 import observable.action.TurnRIght;
@@ -98,7 +98,7 @@ public class Jeu {
 			if (Keyboard.isKeyPressed(Key.SPACE)){
 				try {
 					Jump.jump().execute(Jeu.r);
-					LightCase.light_case().execute(Jeu.r);
+					Activate.activate().execute(Jeu.r);
 				} catch (MouvementEx e1) {
 					// TODO Auto-generated catch block
 					System.out.println(e1.getMessage());
