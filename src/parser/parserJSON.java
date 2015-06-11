@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+import observable.action.Activate;
 import observable.action.Jump;
 import observable.action.MoveForward;
 import observable.action.TurnLeft;
@@ -16,6 +17,7 @@ import observable.map.Empty_Case;
 import observable.map.Illuminated_Case;
 import observable.map.Normal_Case;
 import observable.map.Painted_Case;
+import observable.map.Teleporter_Case;
 import observable.map.Terrain;
 import observable.map.World;
 import observable.map.abstr_Case;
@@ -122,8 +124,11 @@ public class parserJSON {
 								break;	
 						
 							case "case_teleporter" :
-								
-								//carre = new Teleporter_Case(hauteur.intValue(), coul, coor, 
+								Number destX = (Number)  ObcaseCurrent.get("destX");
+								Number destY = (Number)  ObcaseCurrent.get("destY");
+								Number indice = (Number) ObcaseCurrent.get("indice");
+						        //new Teleporter_Case(h, Color, cord, destination)
+								carre = new Teleporter_Case(hauteur.intValue(), coul, coor, new Coordonnees(destX.intValue(), destY.intValue(), indice.intValue()));
 								//System.out.println("terrain"+i+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
 								break;	
 						
@@ -261,6 +266,9 @@ public class parserJSON {
 					//System.out.println(actions.get(a));
 					int_Action act = null;
 					switch ((String)actions.get(a)){
+					case "Activate":
+						act = Activate.activate();
+					
 					case "Jump":
 						act = Jump.jump();
 						break;

@@ -32,6 +32,9 @@ public class Activate implements int_Action, int_Observable{
 	abstr_Case cprime = r.getCurrent_Case();
 	if (isPossible(r,cprime)){
 		if(cprime.getClass().getSimpleName().equals("Teleporter_Case")){
+			System.out.println("et ta soeur le toxico ta offert un beau cadeau");
+			Coordonnees next = ((Teleporter_Case)cprime).get_destination();
+			System.out.println(next);
 			r.setCurrent_Case(World.currentWorld.get_case(((Teleporter_Case)cprime).get_destination()));
 			notifyObserver();
 		}
@@ -39,10 +42,12 @@ public class Activate implements int_Action, int_Observable{
 			((Illuminated_Case)cprime).set_active(!((Illuminated_Case)cprime).get_active());
 			if (((Illuminated_Case)cprime).get_active()){
 				World.currentWorld.increment_allume();
-			}
+				}
 			else {
 				World.currentWorld.decrement_allume();
 			}
+			notifyObserver();
+			
 		}
 		else {
 			r.set_couleur(cprime.get_couleur());

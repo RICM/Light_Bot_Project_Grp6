@@ -97,7 +97,6 @@ public class Jeu {
 			}
 			if (Keyboard.isKeyPressed(Key.SPACE)){
 				try {
-					Jump.jump().execute(Jeu.r);
 					Activate.activate().execute(Jeu.r);
 				} catch (MouvementEx e1) {
 					// TODO Auto-generated catch block
