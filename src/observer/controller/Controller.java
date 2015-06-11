@@ -60,16 +60,7 @@ public class Controller implements int_Observer {
 		 */
 		int robotN = World.currentWorld.number_robots();
 		for (int i = 0; i < robotN; i++){
-			try {
-				World.currentWorld.get_robot(i).run();
-			} catch (MouvementEx e) {
-				jeu.draw_popup("Ce mouvement ne vous est pas permis!");
-				e.printStackTrace();
-			} catch (UnreachableCase e) {
-				jeu.draw_popup("Segmentation Fault!\nVous êtes sortis du terrain! ");
-			} catch (ActionEx e) {
-				jeu.draw_popup("Cette action n'est pas possible!");
-			}
+			World.currentWorld.get_robot(i).run();
 		}
 	}
 	

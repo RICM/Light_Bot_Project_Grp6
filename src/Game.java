@@ -107,13 +107,9 @@ public class Game {
 				World.currentWorld.set_liste_robot(roblist);
 				World.currentWorld.set_liste_terrain(terrlist);
 				parserJSON.currentparser.lecture();
-				try{
 				robert.run();
 				//System.out.println("Position finale : ");
 				//robert.printPosition();
-				}catch(MouvementEx e){
-					System.out.println(e.getMessage());
-				}
 			}catch (ActionEx ex){
 				System.out.println(ex.getMessage());
 			}
