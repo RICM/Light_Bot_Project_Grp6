@@ -20,12 +20,18 @@ public class Execution_list {
 	}
 
 	public void run(abstr_Robot r) throws MouvementEx, UnreachableCase, ActionEx{
-		while(Run_List.size()>0){
-			while(Run_List.getFirst().size() > 0){
+		if(Run_List.size()>0){
+			if(Run_List.getFirst().size() > 0){
 				int_Action temp = Run_List.getFirst().removeFirst();
 				temp.execute(r);
 			}
-			Run_List.removeFirst();
+			else{
+				Run_List.removeFirst();
+				this.run(r);
+			}
+		}
+		else{
+			throw new ActionEx("Liste robot vide");
 		}
 	}
 }
