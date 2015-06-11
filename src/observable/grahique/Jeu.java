@@ -137,7 +137,18 @@ public class Jeu {
 			}
 
 			if (Keyboard.isKeyPressed(Key.SPACE)){
-				Jeu.r.run();
+				try {
+					Jeu.r.run();
+				} catch (MouvementEx e1) {
+					// TODO Auto-generated catch block
+					System.out.println(e1.getMessage());
+				} catch (UnreachableCase e1) {
+					// TODO Auto-generated catch block
+					System.out.println(e1.getMessage());
+				} catch (ActionEx e1) {
+					// TODO Auto-generated catch block
+					System.out.println(e1.getMessage());
+				}
 			}
 
 			if (e.type == Event.Type.MOUSE_BUTTON_PRESSED && Mouse.isButtonPressed(Button.LEFT)) {
@@ -248,7 +259,6 @@ public class Jeu {
 			this.monSpritePerso.setPosition(X,Y);
 			Menu.app.draw(this.monSpritePerso);
 
-
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		} // on charge la texture qui se trouve dans notre dossier assets
@@ -258,30 +268,13 @@ public class Jeu {
 		String tab[]=  {"TurnLeft","TurnRIght","MoveForward","Activate","Jump","Bug"};
 		int i =0;
 		try {
-			for(int_Action a : actions){
-				monSpriteBouton = new Sprite();
-				int val = tab.length-1;
-				if(a instanceof Jump){
-					maTextureBouton.loadFromFile(Paths.get("bouton/saut.png"));
-					val = 4;
-				}
-				if(a instanceof TurnRIght){
-					maTextureBouton.loadFromFile(Paths.get("bouton/rota_droite.png"));
-					val = 1;
-				}
-				if(a instanceof TurnLeft){
-					maTextureBouton.loadFromFile(Paths.get("bouton/rota_gauche.png"));
-					val = 0;
-				}
-				if(a instanceof Activate){
-					maTextureBouton.loadFromFile(Paths.get("bouton/allumer.png"));
-					val = 3;
-				}
-				if(a instanceof MoveForward){
-					maTextureBouton.loadFromFile(Paths.get("bouton/tout_droit.png"));
-					val = 2;
-				}
-
+			String tab[]=  {"rota_gauche","rota_droite","tout_droit","allumer","saut"};
+			for(int i=0;i<tab.length;i++){
+				Texture maTextureBouton = new Texture();
+				Sprite monSpriteBouton = new Sprite();
+				if(i==0){
+				maTextureBouton.loadFromFile(Paths.get("bouton/"+tab[i]+".png"));
+				Jeu.liste_sprite.put(monSpriteBouton,Orientation.orientation.LEFT);
 				monSpriteBouton.setTexture(maTextureBouton);
 				monSpriteBouton.setPosition(10+100*i,610);
 				Jeu.liste_sprite.put(monSpriteBouton,tab[val]);
@@ -312,13 +305,47 @@ public class Jeu {
 		//		}
 	}
 
-	public Jeu(int lvl){
+	public void draw_procedure(){
+		try {
+			String tab[]=  {"Fond_Main","Fond_P1","Fond_P2"};
+			for(int i=0;i<tab.length;i++){
+				Sprite monSpriteBouton = new Sprite();
+				maTexture.loadFromFile(Paths.get("background/"+tab[i]+".png"));
+				monSpriteBouton.setTexture(maTexture);
+				Menu.app.draw(monSpriteBouton);
+			}
+			int nombre_bouton[] = {r.get_tailleMain(),r.get_tailleP1(),r.get_tailleP2()};
+			int pos_bouton[] = {44,324,530};
+			int y;
+			for(int i=0; i<pos_bouton.length;i++){
+				y=0;
+				for(int x=0; x<nombre_bouton[i];x++){
+					if(x%4==0){
+						y++;
+					}
+					Sprite monSprite = new Sprite();
+					maTexture.loadFromFile(Paths.get("background/Fond_Bouton.png"));
+					monSprite.setPosition(884+(x%4*(70+4)), pos_bouton[i] + (y-1)*(70+10));
+					monSprite.setTexture(maTexture);
+					Menu.app.draw(monSprite);
+				}
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());
+		}
+		
+		
+	}
+	
+	public Jeu(int lvl,Frame frame){
 		this.level = lvl;
 		while(Menu.app.isOpen()){
 			Jeu.processEvent();
 			this.drawGrilleISO();
 			//drawPerso();
 			this.draw_bouton();
+			this.draw_procedure();
 			Menu.app.display();
 			if(World.currentWorld.is_cleared()){
 //				JOptionPane.showMessageDialog(null, "Fin");
