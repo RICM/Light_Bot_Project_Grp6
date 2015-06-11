@@ -84,7 +84,7 @@ public class Game {
 			World.currentWorld.set_liste_terrain(terrainlist);
 			World.currentWorld.set_liste_robot(robotlist);
 			World.currentWorld.basic_print_world();
-			parserJSON.currentparser.lecture();
+			//parserJSON.currentparser.lecture();
 			//robert.print_allowed_act();
 			try{
 				robert.add_Action_User_Actions(Activate.activate());
@@ -106,11 +106,11 @@ public class Game {
 				terrlist[0] = terrain_test;
 				World.currentWorld.set_liste_robot(roblist);
 				World.currentWorld.set_liste_terrain(terrlist);
-				//parserJSON.currentparser.lecture();
+				parserJSON.currentparser.lecture();
 				try{
-					robert.run();
-					//System.out.println("Position finale : ");
-					//robert.printPosition();
+				robert.run();
+				//System.out.println("Position finale : ");
+				//robert.printPosition();
 				}catch(MouvementEx e){
 					System.out.println(e.getMessage());
 				}

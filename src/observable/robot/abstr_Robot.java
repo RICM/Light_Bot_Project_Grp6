@@ -27,11 +27,14 @@ public abstract class abstr_Robot {
 	private boolean activable = true;
 	
 	
-	public void run() throws MouvementEx, UnreachableCase, ActionEx{
+	public void run(){
 		order_exec.addFirst(user_actions);
-		order_exec.run(this);
+		
 	}
 	
+	public void execute() throws MouvementEx, UnreachableCase, ActionEx{
+		order_exec.run(this);
+	}
 	
 	public void add_Action_Allowed_Actions(int_Action act){
 		allowed_actions.addActionToList(act);
