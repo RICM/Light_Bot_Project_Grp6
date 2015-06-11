@@ -124,7 +124,7 @@ public class parserJSON {
 								
 							case "case_empty" :
 								carre = new Empty_Case();
-								System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
+								//System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
 								break;
 								
 							case "case_illuminated" :
