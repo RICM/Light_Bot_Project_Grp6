@@ -10,6 +10,7 @@ import org.jsfml.graphics.Font;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Text;
 import org.jsfml.graphics.Texture;
+import org.jsfml.system.Vector2f;
 import org.jsfml.system.Vector2i;
 import org.jsfml.window.Mouse;
 import org.jsfml.window.event.Event;
@@ -46,16 +47,17 @@ public class Niveaux {
 			if (e.type == Event.Type.MOUSE_BUTTON_PRESSED) {
 				e.asMouseEvent();
 				Vector2i pos = Mouse.getPosition(Menu.app);
+				Vector2f click = Menu.app.mapPixelToCoords(pos);
 				System.out.println(pos.x+" "+pos.y);
-				this.btnClick(pos);
+				this.btnClick(click);
 			}
 
 		}
 	}
 
-	private void btnClick(Vector2i pos) {
-		int x = pos.x;
-		int y = pos.y;
+	private void btnClick(Vector2f pos) {
+		float x = pos.x;
+		float y = pos.y;
 		int cpt = 0;
 
 		for(Sprite s : this.listSprite){
@@ -74,7 +76,7 @@ public class Niveaux {
 					Menu game = new Menu();
 				}
 				else if(cpt == 3){
-					Jeu jeu = new Jeu(0, null);
+					Jeu jeu = new Jeu(0);
 				}
 			}
 			cpt++;

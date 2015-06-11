@@ -7,6 +7,9 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
+
+import javafx.scene.input.MouseButton;
 
 import javax.swing.JOptionPane;
 
@@ -15,6 +18,7 @@ import observable.action.Jump;
 import observable.action.MoveForward;
 import observable.action.TurnLeft;
 import observable.action.TurnRIght;
+import observable.action.int_Action;
 import observable.map.Empty_Case;
 import observable.map.Illuminated_Case;
 import observable.map.Normal_Case;
@@ -33,8 +37,10 @@ import org.jsfml.system.Vector2i;
 import org.jsfml.window.Keyboard;
 import org.jsfml.window.Keyboard.Key;
 import org.jsfml.window.Mouse;
+import org.jsfml.window.Mouse.Button;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.Event.Type;
+import org.jsfml.window.event.MouseButtonEvent;
 
 import couleur.Couleur;
 import exception.ActionEx;
@@ -43,17 +49,16 @@ import exception.UnreachableCase;
 
 public class Jeu {
 
-	public Texture maTexture;
+	public Texture maTexture = new Texture();
 	public Sprite monSprite = new Sprite();
+	public Texture maTextureBouton = new Texture();
+	public Sprite monSpriteBouton = new Sprite();
 	public Texture maTextureBackground = new Texture();
 	public Sprite monSpriteBackground = new Sprite();
 	public Texture maTexturePerso = new Texture();
 	public Sprite monSpritePerso = new Sprite();
-	public ArrayList<Texture> liste_text = new ArrayList<Texture>();
-	public static HashMap<Sprite,Orientation.orientation> liste_sprite = new HashMap<Sprite, Orientation.orientation>();
+	public static HashMap<Sprite,String> liste_sprite = new HashMap<Sprite, String>();
 	private int level;
-	private Frame f;
-
 	private static World w = World.currentWorld;
 	private static abstr_Robot r = Jeu.w.get_robot(0);
 	private Terrain t = Jeu.w.get_terrain(this.level);
@@ -67,7 +72,7 @@ public class Jeu {
 		Menu.app.setKeyRepeatEnabled(false);
 		for(Event e : Menu.app.pollEvents()){
 			if(e.type == Type.CLOSED){
-				Menu game = new Menu();
+				Menu.app.close();
 
 			}
 
@@ -146,7 +151,7 @@ public class Jeu {
 				}
 			}
 
-			if (e.type == Event.Type.MOUSE_BUTTON_PRESSED) {
+			if (e.type == Event.Type.MOUSE_BUTTON_PRESSED && Mouse.isButtonPressed(Button.LEFT)) {
 				e.asMouseEvent();
 				Vector2i pos = Mouse.getPosition(Menu.app);
 				try {
@@ -154,6 +159,7 @@ public class Jeu {
 				} catch (ActionEx e1) {
 					System.out.println(e1.getMessage());
 				}
+				
 			}
 
 		}
@@ -166,15 +172,28 @@ public class Jeu {
 		while(keySetIterator.hasNext()){
 			Sprite s = keySetIterator.next();
 			FloatRect rect = s.getGlobalBounds();
+			System.out.println(rect.left+" "+rect.top+" "+rect.width+" "+rect.height);
 			if(x>=rect.left && x<=rect.left+rect.width &&
 					y>=rect.top && y<=rect.top+rect.height){
-				if(Jeu.liste_sprite.get(s) == Orientation.orientation.LEFT)
-					Jeu.r.add_Action_User_Actions(TurnLeft.turn_left());
-				else if(Jeu.liste_sprite.get(s) == Orientation.orientation.RIGHT)
-					Jeu.r.add_Action_User_Actions(TurnRIght.turn_right());
+				if(Jeu.liste_sprite.get(s).equals("MoveForward"))
+					//					Jeu.r.add_Action_User_Actions(TurnLeft.turn_left());
+					System.out.println("Avance");
+				else if(Jeu.liste_sprite.get(s).equals("TurnRIght"))
+					//					Jeu.r.add_Action_User_Actions(TurnRIght.turn_right());
+					System.out.println("Droite");
+				else if(Jeu.liste_sprite.get(s).equals("TurnLeft"))
+					//					Jeu.r.add_Action_User_Actions(TurnRIght.turn_right());
+					System.out.println("Gauche");
+				else if(Jeu.liste_sprite.get(s).equals("Activate"))
+					//					Jeu.r.add_Action_User_Actions(TurnRIght.turn_right());
+					System.out.println("Allumer");
+				else if(Jeu.liste_sprite.get(s).equals("Jump"))
+					//					Jeu.r.add_Action_User_Actions(TurnRIght.turn_right());
+					System.out.println("Sauter");
 			}
 		}
 	}
+
 
 	public void draw_popup(String msg){
 		JOptionPane.showMessageDialog(null, msg);
@@ -246,45 +265,83 @@ public class Jeu {
 		} // on charge la texture qui se trouve dans notre dossier assets
 	}
 	public void draw_bouton(){
+		LinkedList<int_Action> actions = r.get_possible().get();
+		String tab[]=  {"TurnLeft","TurnRIght","MoveForward","Activate","Jump","Bug"};
+		int i =0;
 		try {
-			String tab[]=  {"rota_gauche","rota_droite","tout_droit","allumer","saut"};
-			for(int i=0;i<tab.length;i++){
-				Texture maTextureBouton = new Texture();
-				Sprite monSpriteBouton = new Sprite();
-				if(i==0){
-				maTextureBouton.loadFromFile(Paths.get("bouton/"+tab[i]+".png"));
-				Jeu.liste_sprite.put(monSpriteBouton,Orientation.orientation.LEFT);
+			for(int_Action a : actions){
+				monSpriteBouton = new Sprite();
+				int val = tab.length-1;
+				if(a instanceof Jump){
+					maTextureBouton.loadFromFile(Paths.get("bouton/saut.png"));
+					val = 4;
+				}
+				if(a instanceof TurnRIght){
+					maTextureBouton.loadFromFile(Paths.get("bouton/rota_droite.png"));
+					val = 1;
+				}
+				if(a instanceof TurnLeft){
+					maTextureBouton.loadFromFile(Paths.get("bouton/rota_gauche.png"));
+					val = 0;
+				}
+				if(a instanceof Activate){
+					maTextureBouton.loadFromFile(Paths.get("bouton/allumer.png"));
+					val = 3;
+				}
+				if(a instanceof MoveForward){
+					maTextureBouton.loadFromFile(Paths.get("bouton/tout_droit.png"));
+					val = 2;
+				}
+
 				monSpriteBouton.setTexture(maTextureBouton);
 				monSpriteBouton.setPosition(10+100*i,610);
+				Jeu.liste_sprite.put(monSpriteBouton,tab[val]);
 				Menu.app.draw(monSpriteBouton);
-				this.liste_text.add(maTextureBouton);
-				}
+				i++;
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
+
+
+		//		try {
+		//			String tab[]=  {"rota_gauche","rota_droite","tout_droit","allumer","saut"};
+		//			for(int i=0;i<tab.length;i++){
+		//				Texture maTextureBouton = new Texture();
+		//				Sprite monSpriteBouton = new Sprite();
+		//				maTextureBouton.loadFromFile(Paths.get("bouton/"+tab[i]+".png"));
+		//				monSpriteBouton.setTexture(maTextureBouton);
+		//				monSpriteBouton.setPosition(10+100*i,610);
+		//				Jeu.liste_sprite.put(monSpriteBouton,tab[i]);
+		//				Menu.app.draw(monSpriteBouton);
+		//				this.liste_text.add(maTextureBouton);
+		//			}
+		//		} catch (IOException e) {
+		//			// TODO Auto-generated catch block
+		//			System.out.println(e.getMessage());
+		//		}
 	}
 
-	public Jeu(int lvl,Frame frame){
+	public Jeu(int lvl){
 		this.level = lvl;
-		//this.f = frame;
-		//this.f.setVisible(false);
 		while(Menu.app.isOpen()){
 			Jeu.processEvent();
 			this.drawGrilleISO();
 			//drawPerso();
 			this.draw_bouton();
 			Menu.app.display();
+			if(World.currentWorld.is_cleared()){
+//				JOptionPane.showMessageDialog(null, "Fin");
+//				Menu.app.close();
+			}
 			//System.out.println(Mouse.getPosition().x + " " + Mouse.getPosition().y);
 		}
 	}
 
 	public void typeCases(abstr_Case cases){
-		maTexture = new Texture();
 		try{
 			if(cases instanceof Normal_Case){
-				maTexture = new Texture();
 				maTexture.loadFromFile(Paths.get("Cases/Square_normal.png"));
 			}
 			else if(cases instanceof Empty_Case){
@@ -414,7 +471,6 @@ public class Jeu {
 
 			for(int hauteur=1; hauteur<hauteur_max;hauteur++){
 				try {
-					this.maTexture = new Texture();
 					this.maTexture.loadFromFile(Paths.get("Cases/Square_empile.png"));
 					this.monSprite.setTexture(this.maTexture);
 					this.monSprite.setPosition(PosX,PosY-26*hauteur);
