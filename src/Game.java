@@ -1,6 +1,5 @@
 import observable.action.Activate;
 import observable.action.Jump;
-import observable.action.LightCase;
 import observable.action.MoveForward;
 import observable.action.TurnLeft;
 import observable.action.TurnRIght;
@@ -42,7 +41,6 @@ public class Game {
 		list.addActionToList(Jump.jump());
 		list.addActionToList(TurnRIght.turn_right());
 		list.addActionToList(Activate.activate());
-		list.addActionToList(LightCase.light_case());
 		list.addActionToList(TurnLeft.turn_left());
 		//System.out.println("Liste permise : ");
 		//System.out.println(list.toString());
@@ -74,7 +72,7 @@ public class Game {
 		terrain_test.add_case(2, 1, carre);
 
 		Coordonnees cord2 = new Coordonnees(2,3,0);
-		Teleporter_Case carre2 = new Teleporter_Case(2,color, cord2,carre);
+		Teleporter_Case carre2 = new Teleporter_Case(2,color, cord2, cord);
 		terrain_test.add_case(2, 3, carre2);
 		try {
 			initRob = terrain_test.get_case(0, 0);
@@ -86,6 +84,7 @@ public class Game {
 			World.currentWorld.set_liste_terrain(terrainlist);
 			World.currentWorld.set_liste_robot(robotlist);
 			World.currentWorld.basic_print_world();
+			parserJSON.currentparser.lecture();
 			//robert.print_allowed_act();
 			try{
 				robert.add_Action_User_Actions(Activate.activate());
@@ -107,7 +106,7 @@ public class Game {
 				terrlist[0] = terrain_test;
 				World.currentWorld.set_liste_robot(roblist);
 				World.currentWorld.set_liste_terrain(terrlist);
-				parserJSON.currentparser.lecture();
+				//parserJSON.currentparser.lecture();
 				try{
 					robert.run();
 					//System.out.println("Position finale : ");

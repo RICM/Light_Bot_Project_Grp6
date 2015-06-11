@@ -5,11 +5,23 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-import observable.map.*;
-import observable.action_list.*;
-import observable.action.*;
-import observable.robot.*;
+import observable.action.Jump;
+import observable.action.MoveForward;
+import observable.action.TurnLeft;
+import observable.action.TurnRIght;
+import observable.action.int_Action;
+import observable.action_list.Possible_List;
+import observable.map.Coordonnees;
+import observable.map.Empty_Case;
+import observable.map.Illuminated_Case;
+import observable.map.Normal_Case;
+import observable.map.Painted_Case;
+import observable.map.Terrain;
+import observable.map.World;
+import observable.map.abstr_Case;
+import observable.robot.Orientation;
 import observable.robot.Orientation.orientation;
+import observable.robot.Robot;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -97,23 +109,21 @@ public class parserJSON {
 								break;
 								
 							case "GRIS" :
-								coul = Couleur.GRIS;
-								break;
-							
 							default :
 								coul = Couleur.GRIS;
 								break;
 						}
 						
 						abstr_Case carre = null;
-						switch ((String) ObcaseCurrent.get("type_case")) {
+						switch ((String) ObcaseCurrent.get("type_case")) { //Class.forName((String)ObcaseCurrent.get("type_case")).
 							case "case_painted" :
 								carre = new Painted_Case(hauteur.intValue(), coul, coor);
 								System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
 								break;	
 						
 							case "case_teleporter" :
-								//carre = new Teleporter_Case(hauteur.intValue(), coul, coor, destination)
+								
+								//carre = new Teleporter_Case(hauteur.intValue(), coul, coor, 
 								//System.out.println("terrain"+i+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
 								break;	
 						

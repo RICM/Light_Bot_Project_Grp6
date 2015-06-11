@@ -46,8 +46,11 @@ public class Terrain implements int_Observable{
 			for (int y = 0; y < terrain[i].length; y++){
 				boolean caserobot = false;
 				for (int j = 0; j < liste_robot.length; j++){
-					if (liste_robot[j].getCurrent_Case().get_coordonnees().equals(terrain[i][y].get_coordonnees())){
-						caserobot = true;
+					abstr_Case temp = terrain[i][y];
+					if(!temp.getClass().getSimpleName().equals("Empty_Case")){
+						if (liste_robot[j].getCurrent_Case().get_coordonnees().equals(terrain[i][y].get_coordonnees())){
+							caserobot = true;
+						}
 					}
 				}
 				if (y == 0){
@@ -58,6 +61,9 @@ public class Terrain implements int_Observable{
 					switch (terrain[i][y].getClass().getSimpleName()){
 						case "Painted_Case":
 							System.out.print("P");
+							break;
+						case "Empty_Case":
+							System.out.print("E");
 							break;
 						case "Normal_Case":
 							System.out.print("N");
