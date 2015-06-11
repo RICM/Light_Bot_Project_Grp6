@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import javafx.scene.input.MouseButton;
 
 import javax.swing.JOptionPane;
 
@@ -137,18 +136,7 @@ public class Jeu {
 			}
 
 			if (Keyboard.isKeyPressed(Key.SPACE)){
-				try {
 				Jeu.r.run();
-				} catch (MouvementEx e1) {
-					// TODO Auto-generated catch block
-					System.out.println(e1.getMessage());
-				} catch (UnreachableCase e1) {
-					// TODO Auto-generated catch block
-					System.out.println(e1.getMessage());
-				} catch (ActionEx e1) {
-					// TODO Auto-generated catch block
-					System.out.println(e1.getMessage());
-				}
 			}
 
 			if (e.type == Event.Type.MOUSE_BUTTON_PRESSED && Mouse.isButtonPressed(Button.LEFT)) {
