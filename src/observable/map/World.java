@@ -73,9 +73,24 @@ public class World implements int_Observable {
 		for(int_Observer obs : listObserver)
 		      obs.update(this);
 	}
-
+	/**
+	 * 
+	 * @param coor
+	 * @return la case au coordonnees defini par coor
+	 * @throws UnreachableCase si la case n'existe pas
+	 */
 	public abstr_Case get_case(Coordonnees coor) throws UnreachableCase {
 		return liste_terrain[coor.get_n()].get_case(coor.get_x(), coor.get_y());
+	}
+	
+	public boolean isOccupied(abstr_Case dest) throws UnreachableCase{
+		boolean res = false;
+		for(int i = 0; i<liste_robot.length; i++){
+			if(liste_robot[i].getCurrent_Case().get_coordonnees().equals(dest)){
+				res = true;
+			}
+		}
+		return res;
 	}
 	/**
 	 * 
