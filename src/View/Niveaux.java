@@ -56,7 +56,6 @@ public class Niveaux {
 				Menu.app.close();
 			}
 
-
 			if (e.type == Event.Type.MOUSE_BUTTON_PRESSED) {
 				e.asMouseEvent();
 				Vector2i pos = Mouse.getPosition(Menu.app);
@@ -64,7 +63,6 @@ public class Niveaux {
 				System.out.println(pos.x+" "+pos.y);
 				this.btnClick(click);
 			}
-
 		}
 	}
 
@@ -97,9 +95,7 @@ public class Niveaux {
 				}
 			}
 			cpt++;
-
 		}
-
 	}
 
 	/**

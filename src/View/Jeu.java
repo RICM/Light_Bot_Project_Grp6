@@ -10,7 +10,10 @@ import java.util.LinkedList;
 import javax.swing.JOptionPane;
 
 import observable.action.Activate;
+import observable.action.Jump;
 import observable.action.MoveForward;
+import observable.action.TurnLeft;
+import observable.action.TurnRIght;
 import observable.action.int_Action;
 import observable.map.Empty_Case;
 import observable.map.Illuminated_Case;
@@ -35,61 +38,54 @@ import org.jsfml.window.event.Event;
 import org.jsfml.window.event.Event.Type;
 
 import couleur.Couleur;
-import exception.ActionEx;
 import exception.MouvementEx;
 import exception.UnreachableCase;
 
 public class Jeu {
 
-	public Texture maTexture = new Texture();
-	public Sprite monSprite = new Sprite();
-	public Texture maTextureBouton = new Texture();
-	public Sprite monSpriteBouton = new Sprite();
-	public Texture maTextureBackground = new Texture();
-	public Sprite monSpriteBackground = new Sprite();
-	public Texture maTexturePerso = new Texture();
-	public Sprite monSpritePerso = new Sprite();
-	public static HashMap<Sprite,String> liste_sprite = new HashMap<Sprite, String>();
-	private int level;
-	private static World w = World.currentWorld;
-	private static abstr_Robot r = Jeu.w.get_robot(0);
-	private Terrain t = Jeu.w.get_terrain(this.level);
-	private abstr_Case[][] cases = this.t.get_terrain();
-	private int width_case = 80;
-	private int height_case = 50;
-	private static final int NB_MAX_CASE = 10;
-	private int indice_tele=0;
+	protected Texture maTexture = new Texture();
+	protected Sprite monSprite = new Sprite();
+	protected Texture maTextureBouton = new Texture();
+	protected Sprite monSpriteBouton = new Sprite();
+	protected Texture maTextureBackground = new Texture();
+	protected Sprite monSpriteBackground = new Sprite();
+	protected Texture maTexturePerso = new Texture();
+	protected Sprite monSpritePerso = new Sprite();
+	protected static HashMap<Sprite,String> liste_sprite = new HashMap<Sprite, String>();
+	protected int level;
+	protected static World w = World.currentWorld;
+	protected static abstr_Robot r = Jeu.w.get_robot(0);
+	protected Terrain t = Jeu.w.get_terrain(this.level);
+	protected abstr_Case[][] cases = this.t.get_terrain();
+	protected int width_case = 80;
+	protected int height_case = 50;
+	protected static final int NB_MAX_CASE = 10;
+	protected int indice_tele=0;
 
-	/**********CONSTRUCTEURS************/
 	public Jeu(int lvl){
 		this.level = lvl;
 		while(Menu.app.isOpen()){
 			Menu.app.clear();
 			Jeu.processEvent();
 			this.drawGrilleISO();
-			//drawPerso();
-			try {
-				this.draw_bouton();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			this.draw_bouton();
 			this.draw_procedure();
 			Menu.app.display();
 			if(World.currentWorld.is_cleared()){
 				//				JOptionPane.showMessageDialog(null, "Fin");
 				//				Menu.app.close();
 			}
-			//System.out.println(Mouse.getPosition().x + " " + Mouse.getPosition().y);
 		}
 	}
 
+	/**
+	 * Détecte les entrées claviers et souris
+	 */
 	public static void processEvent(){
 		Menu.app.setKeyRepeatEnabled(false);
 		for(Event e : Menu.app.pollEvents()){
 			if(e.type == Type.CLOSED){
 				Menu.app.close();
-
 			}
 
 			if (Keyboard.isKeyPressed(Key.LEFT)){
@@ -97,10 +93,8 @@ public class Jeu {
 				try {
 					MoveForward.move_forward().execute(Jeu.r);
 				} catch (MouvementEx e1) {
-					// TODO Auto-generated catch block
 					System.out.println(e1.getMessage());
 				} catch (UnreachableCase e1) {
-					// TODO Auto-generated catch block
 					System.out.println(e1.getMessage());
 				}
 			}
@@ -109,10 +103,8 @@ public class Jeu {
 				try {
 					MoveForward.move_forward().execute(Jeu.r);
 				} catch (MouvementEx e1) {
-					// TODO Auto-generated catch block
 					System.out.println(e1.getMessage());
 				} catch (UnreachableCase e1) {
-					// TODO Auto-generated catch block
 					System.out.println(e1.getMessage());
 				}
 			}
@@ -120,10 +112,8 @@ public class Jeu {
 				try {
 					Activate.activate().execute(Jeu.r);
 				} catch (MouvementEx e1) {
-					// TODO Auto-generated catch block
 					System.out.println(e1.getMessage());
 				} catch (UnreachableCase e1) {
-					// TODO Auto-generated catch block
 					System.out.println(e1.getMessage());
 				}
 			}
@@ -132,10 +122,8 @@ public class Jeu {
 				try {
 					MoveForward.move_forward().execute(Jeu.r);
 				} catch (MouvementEx e1) {
-					// TODO Auto-generated catch block
 					System.out.println(e1.getMessage());
 				} catch (UnreachableCase e1) {
-					// TODO Auto-generated catch block
 					System.out.println(e1.getMessage());
 				}
 			}
@@ -144,10 +132,8 @@ public class Jeu {
 				try {
 					MoveForward.move_forward().execute(Jeu.r);
 				} catch (MouvementEx e1) {
-					// TODO Auto-generated catch block
 					System.out.println(e1.getMessage());
 				} catch (UnreachableCase e1) {
-					// TODO Auto-generated catch block
 					System.out.println(e1.getMessage());
 				}
 			}
@@ -159,18 +145,17 @@ public class Jeu {
 			if (e.type == Event.Type.MOUSE_BUTTON_PRESSED && Mouse.isButtonPressed(Button.LEFT)) {
 				e.asMouseEvent();
 				Vector2i pos = Mouse.getPosition(Menu.app);
-				try {
-					Jeu.detect_move(pos);
-				} catch (ActionEx e1) {
-					System.out.println(e1.getMessage());
-				}
-
+				Jeu.detect_move(pos);
 			}
 
 		}
 	}
 
-	private static void detect_move(Vector2i pos) throws ActionEx {
+	/**
+	 *
+	 * @param pos Coordonnées du clique souris
+	 */
+	private static void detect_move(Vector2i pos) {
 		int x = pos.x;
 		int y = pos.y;
 		Iterator<Sprite> keySetIterator = Jeu.liste_sprite.keySet().iterator();
@@ -205,8 +190,8 @@ public class Jeu {
 	}
 
 	/**
-	 * Used to display a robot
-	 * @param rob
+	 * Affiche le personnage
+	 * @param rob le personnage a afficher
 	 */
 	public void display_robot(abstr_Robot rob){
 		try {
@@ -230,6 +215,11 @@ public class Jeu {
 	}
 
 
+	/**
+	 *	Affiche le personnage
+	 * @param X la position en x du personnage
+	 * @param Y la position en y du personnage
+	 */
 	public void drawPerso(int X, int Y){
 		try {
 			if(Jeu.r.getOrientation() == Orientation.orientation.BOT)
@@ -249,20 +239,49 @@ public class Jeu {
 			System.out.println(e.getMessage());
 		} // on charge la texture qui se trouve dans notre dossier assets
 	}
-	public void draw_bouton() throws IOException{
+
+	/**
+	 * Affiche les boutons
+	 */
+	public void draw_bouton(){
 		LinkedList<int_Action> actions = r.get_possible().get();
 		String tab[]=  {"TurnLeft","TurnRIght","MoveForward","Activate","Jump","Bug"};
+		int i =0;
+		try {
+			for(int_Action a : actions){
+				Texture maTextureBouton = new Texture();
+				Sprite monSpriteBouton = new Sprite();
+				int val = tab.length-1;
+				if(a instanceof Jump){
+					maTextureBouton.loadFromFile(Paths.get("Images/Jeu/bouton/Jump.png"));
+					val = 4;
+				}
+				if(a instanceof TurnRIght){
+					maTextureBouton.loadFromFile(Paths.get("Images/Jeu/bouton/TurnRIght.png"));
+					val = 1;
+				}
+				if(a instanceof TurnLeft){
+					maTextureBouton.loadFromFile(Paths.get("Images/Jeu/bouton/TurnLeft.png"));
+					val = 0;
+				}
+				if(a instanceof Activate){
+					maTextureBouton.loadFromFile(Paths.get("Images/Jeu/bouton/Activate.png"));
+					val = 3;
+				}
+				if(a instanceof MoveForward){
+					maTextureBouton.loadFromFile(Paths.get("Images/Jeu/bouton/MoveForward.png"));
+					val = 2;
+				}
 
-		for(int i=0;i<tab.length;i++){
-			Texture maTextureBouton = new Texture();
-			Sprite monSpriteBouton = new Sprite();
-			if(i<5)
-				maTextureBouton.loadFromFile(Paths.get("Images/Jeu/bouton/"+tab[i]+".png"));
-			Jeu.liste_sprite.put(monSpriteBouton,"");
-			monSpriteBouton.setTexture(maTextureBouton);
-			monSpriteBouton.setPosition(10+100*i,610);
-			Jeu.liste_sprite.put(monSpriteBouton,tab[i]);
-			Menu.app.draw(monSpriteBouton);
+				monSpriteBouton.setTexture(maTextureBouton);
+				monSpriteBouton.setPosition(10+100*i,610);
+				Jeu.liste_sprite.put(monSpriteBouton,tab[val]);
+				Menu.app.draw(monSpriteBouton);
+				i++;
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -302,6 +321,10 @@ public class Jeu {
 	}
 
 
+	/**
+	 * Associe une image avec la case en fonction de son type
+	 * @param cases
+	 */
 	public void typeCases(abstr_Case cases){
 		try{
 			if(cases instanceof Normal_Case){
@@ -344,42 +367,13 @@ public class Jeu {
 	}
 
 	public void display_terrain(Terrain terrain) throws IOException{
-		//			this.maTextureBackground.loadFromFile(Paths.get("background.jpg"));
-		//			this.monSpriteBackground.setTexture(this.maTextureBackground);
-		//			Menu.app.draw(this.monSpriteBackground);
-		//
-		//			int Xtemp,Ytemp;
-		//			int taille_abs =  terrain.get_terrain()[0].length;
-		//			int taille_ord =  terrain.get_terrain().length;
-		//
-		//			System.out.println("*********");
-		//			for(int X=taille_abs-1;X>=0;X--){
-		//				Ytemp=0;//taille_ord-1;
-		//				System.out.println("X = "+X);
-		//				for(Xtemp=X;Xtemp<taille_abs;Xtemp++){
-		//					if(Ytemp<0){
-		//						break;
-		//					}
-		//					System.out.println("(Xtemp,Ytemp) = ("+Xtemp+","+Ytemp+")");
-		//					this.affichageISO(Xtemp,Ytemp);
-		//					Ytemp++;
-		//				}
-		//			}
-		//			for(int Y=1;Y<taille_ord;Y++){//-2 car on a gÃ©rÃ© le cas 0 avec X juste au dessus
-		//				Xtemp=0;
-		//				System.out.println("Y = "+Y);
-		//				for(Ytemp=Y;Ytemp<taille_ord;Ytemp++){
-		//					if(Xtemp>=taille_abs){
-		//						break;
-		//					}
-		//					this.affichageISO(Xtemp,Ytemp);
-		//					System.out.println("(Xtemp,Ytemp) = ("+Xtemp+","+Ytemp+")");
-		//					Xtemp++;
-		//				}
-		//			}// on charge la texture qui se trouve dans notre dossier assets
+
 	}
 
 
+	/**
+	 * Affiche le terrain
+	 */
 	public void drawGrilleISO(){
 		try{
 			this.maTextureBackground.loadFromFile(Paths.get("Images/Jeu/background2.jpg"));
@@ -417,9 +411,14 @@ public class Jeu {
 			}
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
-		} // on charge la texture qui se trouve dans notre dossier assets
+		}
 	}
 
+	/**
+	 * Si la hauteur de la case est > 1, affiche toutes les cases en dessous
+	 * @param X coordonnées x de la case
+	 * @param Y coordonnées y de la case
+	 */
 	public void affichageISO(int X, int Y){
 
 		try {
