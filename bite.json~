@@ -1,0 +1,59 @@
+{
+    "nb_terrain": 2,
+    "terrains": [
+        {
+            "terrain1": [
+                {"nb_case_hauteur": 5},
+                {"nb_case_largeur": 5}
+                { "lignes" : [ 
+		              {"ligne1" : [{"type_case": "case_normale","hauteur": 3,"couleur": "gris"},{"type_case": "case_normale","hauteur": 4,"couleur": "gris"},{"type_case": "case_normale","hauteur": null,"couleur": "gris"},{"type_case": "case_normale","hauteur": null,"couleur": "gris"},{"type_case": "case_normale","hauteur":null,"couleur": "gris"} ]},
+		              {"ligne2" : [{"type_case": "case_normale","hauteur": 4,"couleur": "gris"},{"type_case": "case_normale","hauteur": 3,"couleur": "gris"},{"type_case": "case_normale","hauteur": 7,"couleur": "gris"},{"type_case": "case_normale","hauteur": 6,"couleur": "gris"},{"type_case": "case_normale","hauteur": null,"couleur": "gris"} ]},
+		              {"ligne3" : [{"type_case": "case_normale","hauteur": null,"couleur": "gris"},{"type_case": "case_normale","hauteur": 7,"couleur": "gris"},{"type_case": "case_normale","hauteur": 8,"couleur": "gris"},{"type_case": "case_normale","hauteur": 7,"couleur": "gris"},{"type_case": "case_normale","hauteur": null,"couleur": "gris"} ]},
+		              {"ligne4" : [{"type_case": "case_normale","hauteur": null,"couleur": "gris"},{"type_case": "case_normale","hauteur": 6,"couleur": "gris"},{"type_case": "case_normale","hauteur": 7,"couleur": "gris"},{"type_case": "case_normale","hauteur": 3,"couleur": "gris"},{"type_case": "case_normale","hauteur": 4,"couleur": "gris"} ]},
+		              {"ligne5" : [{"type_case": "case_normale","hauteur": null,"couleur": "gris"},{"type_case": "case_normale","hauteur": null,"couleur": "gris"},{"type_case": "case_normale","hauteur": null,"couleur": "gris"},{"type_case": "case_normale","hauteur": 4,"couleur": "gris"},{"type_case": "case_normale","hauteur": 3,"couleur": "gris"} ]},
+		            ]}
+            ]
+        },
+        {
+            "terrain2": [
+                {"nb_case_hauteur": 2},
+                {"nb_case_largeur": 2},
+                { "lignes" : [
+		              {"ligne1":[{"type_case": "case_normale","hauteur": 1,"couleur": "gris"},{"type_case": "case_normale","hauteur": 1,"couleur": "gris"}]},
+		              {"ligne2":[{"type_case": "case_normale","hauteur": 1,"couleur": "gris"},{"type_case": "case_normale","hauteur": 1,"couleur": "gris"}]}
+                ]}
+            ]
+        }
+    ],
+    "nb_robot" : 2,
+    "robots" :[
+    		{ 
+    			"robot1" : [
+    						{"type_robot" : "Robot"},
+    						{"couleur" : "GRIS"},
+    						{"coorX" : 1},
+    						{"coorY" : 2},
+    						{"indice_tableau": 0},
+    						{"max_main": 3},
+    						{"max_p1": 3},
+    						{"max_p2": 3},
+    						{"orientation": "left"},
+    						{"actions" :["MoveForward" ,"TurnLeft"]}
+    			]
+    		},
+    		{ 
+    			"robot2" : [
+    						{"type_robot" : "Robot"},
+    						{"couleur" : "BLEU"},
+    						{"coorX" : 2},
+    						{"coorY" : 1},
+    						{"indice_tableau": 0},
+    						{"max_main": 3},
+    						{"max_p1": 3},
+    						{"max_p2": 3},
+    						{"orientation": "left"},
+    						{"actions" :["MoveForward" ,"TurnRight"]}
+    			]
+    		}
+    ]  
+}
