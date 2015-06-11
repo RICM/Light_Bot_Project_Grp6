@@ -38,7 +38,7 @@ public abstract class abstr_Robot {
 	public void add_Action_User_Actions(int_Action act) throws ActionEx{
 		boolean added = false;
 		//System.out.println("trying to add : "+act.getClass().getCanonicalName());
-		String str = act.getClass().getCanonicalName();
+		String str = act.getClass().getSimpleName();
 		if (user_actions.size() < this.get_tailleMain()){
 			for(int i =0; i<allowed_actions.size(); i++){
 				if(str.equals(allowed_actions.get_name(i))){
@@ -55,7 +55,7 @@ public abstract class abstr_Robot {
 	public void add_Action_User_ActionsP1(int_Action act) throws ActionEx{
 		boolean added = false;
 		//System.out.println("trying to add : "+act.getClass().getCanonicalName());
-		String str = act.getClass().getCanonicalName();
+		String str = act.getClass().getSimpleName();
 		if (P1.size() < this.get_tailleP1()){
 			for(int i =0; i<allowed_actions.size(); i++){
 				if(str.equals(allowed_actions.get_name(i))){
@@ -72,7 +72,7 @@ public abstract class abstr_Robot {
 	public void add_Action_User_ActionsP2(int_Action act) throws ActionEx{
 		boolean added = false;
 		//System.out.println("trying to add : "+act.getClass().getCanonicalName());
-		String str = act.getClass().getCanonicalName();
+		String str = act.getClass().getSimpleName();
 		if (P2.size() < this.get_tailleP2()){
 			for(int i =0; i<allowed_actions.size(); i++){
 				if(str.equals(allowed_actions.get_name(i))){

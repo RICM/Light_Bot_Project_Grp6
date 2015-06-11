@@ -38,7 +38,7 @@ public class Activate implements int_Action, int_Observable{
 			r.setCurrent_Case(World.currentWorld.get_case(((Teleporter_Case)cprime).get_destination()));
 			notifyObserver();
 		}
-		else if(cprime.getClass().getSimpleName().equals("Illiminated_Case")){
+		else if(cprime.getClass().getSimpleName().equals("Illuminated_Case")){
 			((Illuminated_Case)cprime).set_active(!((Illuminated_Case)cprime).get_active());
 			if (((Illuminated_Case)cprime).get_active()){
 				World.currentWorld.increment_allume();
@@ -63,7 +63,7 @@ public class Activate implements int_Action, int_Observable{
 	public boolean isPossible(abstr_Robot r, abstr_Case c) {
 		return (((c.getClass().getSimpleName().equals("Teleporter_Case")
 					|| c.getClass().getSimpleName().equals("Painted_Case"))
-					|| c.getClass().getSimpleName().equals("Illiminated_Case"))
+					|| c.getClass().getSimpleName().equals("Illuminated_Case"))
 				&&(color.equals(r.get_couleur())||
 					color.equals(Couleur.GRIS))) ;
 	}

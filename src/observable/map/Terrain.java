@@ -109,6 +109,10 @@ public class Terrain implements int_Observable{
 			horizontal_separator = horizontal_separator + "________________";
 		}
 		System.out.println(horizontal_separator);
+		if (World.currentWorld.is_cleared()) {
+
+			System.out.println("le jeu est cleared");
+		}
 	}
 	
 	public abstr_Case[][] get_terrain(){
