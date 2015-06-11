@@ -137,18 +137,7 @@ public class Jeu {
 			}
 
 			if (Keyboard.isKeyPressed(Key.SPACE)){
-				try {
-					Jeu.r.run();
-				} catch (MouvementEx e1) {
-					// TODO Auto-generated catch block
-					System.out.println(e1.getMessage());
-				} catch (UnreachableCase e1) {
-					// TODO Auto-generated catch block
-					System.out.println(e1.getMessage());
-				} catch (ActionEx e1) {
-					// TODO Auto-generated catch block
-					System.out.println(e1.getMessage());
-				}
+				Jeu.r.run();
 			}
 
 			if (e.type == Event.Type.MOUSE_BUTTON_PRESSED && Mouse.isButtonPressed(Button.LEFT)) {
@@ -263,28 +252,26 @@ public class Jeu {
 			System.out.println(e.getMessage());
 		} // on charge la texture qui se trouve dans notre dossier assets
 	}
-	public void draw_bouton(){
+	public void draw_bouton() throws IOException{
 		LinkedList<int_Action> actions = r.get_possible().get();
 		String tab[]=  {"TurnLeft","TurnRIght","MoveForward","Activate","Jump","Bug"};
 		int i =0;
-		try {
-			String tab[]=  {"rota_gauche","rota_droite","tout_droit","allumer","saut"};
-			for(int i=0;i<tab.length;i++){
+	
+			//String tab[]=  {"rota_gauche","rota_droite","tout_droit","allumer","saut"};
+			for(i=0;i<tab.length;i++){
 				Texture maTextureBouton = new Texture();
 				Sprite monSpriteBouton = new Sprite();
-				if(i==0){
+				
 				maTextureBouton.loadFromFile(Paths.get("bouton/"+tab[i]+".png"));
-				Jeu.liste_sprite.put(monSpriteBouton,Orientation.orientation.LEFT);
+				Jeu.liste_sprite.put(monSpriteBouton,"");
 				monSpriteBouton.setTexture(maTextureBouton);
 				monSpriteBouton.setPosition(10+100*i,610);
-				Jeu.liste_sprite.put(monSpriteBouton,tab[val]);
+				Jeu.liste_sprite.put(monSpriteBouton,tab[i]);
 				Menu.app.draw(monSpriteBouton);
-				i++;
+				
+				
 			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	}
 
 
 		//		try {
@@ -303,7 +290,7 @@ public class Jeu {
 		//			// TODO Auto-generated catch block
 		//			System.out.println(e.getMessage());
 		//		}
-	}
+	
 
 	public void draw_procedure(){
 		try {
@@ -338,13 +325,18 @@ public class Jeu {
 		
 	}
 	
-	public Jeu(int lvl,Frame frame){
+	public Jeu(int lvl){
 		this.level = lvl;
 		while(Menu.app.isOpen()){
 			Jeu.processEvent();
 			this.drawGrilleISO();
 			//drawPerso();
-			this.draw_bouton();
+			try {
+				this.draw_bouton();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			this.draw_procedure();
 			Menu.app.display();
 			if(World.currentWorld.is_cleared()){

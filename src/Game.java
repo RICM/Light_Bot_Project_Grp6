@@ -16,7 +16,6 @@ import observable.robot.Robot;
 import parser.parserJSON;
 import couleur.Couleur;
 import exception.ActionEx;
-import exception.MouvementEx;
 import exception.UnreachableCase;
 
 
