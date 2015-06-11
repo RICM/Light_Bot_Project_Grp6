@@ -48,7 +48,7 @@ public class Menu {
 	private void displayBtn() {
 		// TODO Auto-generated method stub
 		try {
-			this.texture_Play.loadFromFile(Paths.get("menu/play.png"));
+			this.texture_Play.loadFromFile(Paths.get("Images/menu/play.png"));
 			this.sprite_Play = new Sprite();
 			this.sprite_Play.setTexture(this.texture_Play);
 			this.sprite_Play.setPosition(Menu.app.getSize().x/2-75, Menu.app.getSize().y/2-75);
@@ -66,7 +66,7 @@ public class Menu {
 	private void displayBackground() {
 		// TODO Auto-generated method stub
 		try {
-			this.texture_Background.loadFromFile(Paths.get("menu/back1.png"));
+			this.texture_Background.loadFromFile(Paths.get("Images/menu/back1.png"));
 			this.sprite_Background.setTexture(this.texture_Background);
 
 			Menu.app.draw(this.sprite_Background);

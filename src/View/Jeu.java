@@ -211,13 +211,13 @@ public class Jeu {
 	public void display_robot(abstr_Robot rob){
 		try {
 			if(Jeu.r.getOrientation() == Orientation.orientation.BOT)
-				this.maTexturePerso.loadFromFile(Paths.get("gif/images_fixes/3.png"));
+				this.maTexturePerso.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/3.png"));
 			else if(Jeu.r.getOrientation() == Orientation.orientation.LEFT)
-				this.maTexturePerso.loadFromFile(Paths.get("gif/images_fixes/15.png"));
+				this.maTexturePerso.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/15.png"));
 			else if(Jeu.r.getOrientation() == Orientation.orientation.RIGHT)
-				this.maTexturePerso.loadFromFile(Paths.get("gif/images_fixes/7.png"));
+				this.maTexturePerso.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/7.png"));
 			else if(Jeu.r.getOrientation() == Orientation.orientation.TOP)
-				this.maTexturePerso.loadFromFile(Paths.get("gif/images_fixes/11.png"));
+				this.maTexturePerso.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/11.png"));
 
 			this.monSpritePerso.setTexture(this.maTexturePerso);
 			this.monSpritePerso.setPosition(rob.getCurrent_Case().get_coordonnees().get_x(),rob.getCurrent_Case().get_coordonnees().get_y());
@@ -229,36 +229,17 @@ public class Jeu {
 		} // on charge la texture qui se trouve dans notre dossier assets
 	}
 
-	public void drawGrille(){
-		try {
-			this.maTextureBackground.loadFromFile(Paths.get("background.jpg"));
-			this.monSpriteBackground.setTexture(this.maTextureBackground);
-			Menu.app.draw(this.monSpriteBackground);
-			for(int i=0;i<this.cases.length;i++){
-				for(int j=0; j<this.cases[i].length;j++){
-					this.typeCases(this.cases[i][j]);
-
-					this.monSprite.setTexture(this.maTexture);
-					this.monSprite.setPosition(80+(this.width_case-5)*(j+((Jeu.NB_MAX_CASE-this.cases[i].length)/2)), 80+(this.height_case-5)*(i+((Jeu.NB_MAX_CASE-this.cases.length)/2)));
-					Menu.app.draw(this.monSprite);
-				}
-			}
-
-		} catch (IOException e) {
-			System.out.println(e.getMessage());
-		} // on charge la texture qui se trouve dans notre dossier assets
-	}
 
 	public void drawPerso(int X, int Y){
 		try {
 			if(Jeu.r.getOrientation() == Orientation.orientation.BOT)
-				this.maTexturePerso.loadFromFile(Paths.get("gif/images_fixes/3.png"));
+				this.maTexturePerso.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/3.png"));
 			else if(Jeu.r.getOrientation() == Orientation.orientation.LEFT)
-				this.maTexturePerso.loadFromFile(Paths.get("gif/images_fixes/15.png"));
+				this.maTexturePerso.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/15.png"));
 			else if(Jeu.r.getOrientation() == Orientation.orientation.RIGHT)
-				this.maTexturePerso.loadFromFile(Paths.get("gif/images_fixes/7.png"));
+				this.maTexturePerso.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/7.png"));
 			else if(Jeu.r.getOrientation() == Orientation.orientation.TOP)
-				this.maTexturePerso.loadFromFile(Paths.get("gif/images_fixes/11.png"));
+				this.maTexturePerso.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/11.png"));
 
 			this.monSpritePerso.setTexture(this.maTexturePerso);
 			this.monSpritePerso.setPosition(X,Y);
@@ -276,7 +257,7 @@ public class Jeu {
 			Texture maTextureBouton = new Texture();
 			Sprite monSpriteBouton = new Sprite();
 			if(i<5)
-				maTextureBouton.loadFromFile(Paths.get("bouton/"+tab[i]+".png"));
+				maTextureBouton.loadFromFile(Paths.get("Images/Jeu/bouton/"+tab[i]+".png"));
 			Jeu.liste_sprite.put(monSpriteBouton,"");
 			monSpriteBouton.setTexture(maTextureBouton);
 			monSpriteBouton.setPosition(10+100*i,610);
@@ -292,7 +273,7 @@ public class Jeu {
 			String tab[]=  {"Fond_Main","Fond_P1","Fond_P2"};
 			for(int i=0;i<tab.length;i++){
 				Sprite monSpriteBouton = new Sprite();
-				this.maTexture.loadFromFile(Paths.get("background/"+tab[i]+".png"));
+				this.maTexture.loadFromFile(Paths.get("Images/Jeu/background/"+tab[i]+".png"));
 				monSpriteBouton.setTexture(this.maTexture);
 				Menu.app.draw(monSpriteBouton);
 			}
@@ -306,7 +287,7 @@ public class Jeu {
 						y++;
 					}
 					Sprite monSprite = new Sprite();
-					this.maTexture.loadFromFile(Paths.get("background/Fond_Bouton.png"));
+					this.maTexture.loadFromFile(Paths.get("Images/Jeu/background/Fond_Bouton.png"));
 					monSprite.setPosition(884+(x%4*(70+4)), pos_bouton[i] + (y-1)*(70+10));
 					monSprite.setTexture(this.maTexture);
 					Menu.app.draw(monSprite);
@@ -324,13 +305,13 @@ public class Jeu {
 	public void typeCases(abstr_Case cases){
 		try{
 			if(cases instanceof Normal_Case){
-				this.maTexture.loadFromFile(Paths.get("Cases/Square_normal.png"));
+				this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/Square_normal.png"));
 			}
 			else if(cases instanceof Empty_Case){
-				this.maTexture.loadFromFile(Paths.get("Cases/Square_vide.png"));
+				this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/Square_vide.png"));
 			}
 			else if(cases instanceof Teleporter_Case){
-				this.maTexture.loadFromFile(Paths.get("Cases/case_teleporteur/Case_pointeur_"+ this.indice_tele+".png"));
+				this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/case_teleporteur/Case_pointeur_"+ this.indice_tele+".png"));
 				this.indice_tele++;
 				if( this.indice_tele>=9){
 					this.indice_tele=0;
@@ -338,17 +319,17 @@ public class Jeu {
 			}
 			else if(cases instanceof Painted_Case){
 				if(cases.get_couleur()== Couleur.VERT)
-					this.maTexture.loadFromFile(Paths.get("Cases/Square_vert.png"));
+					this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/Square_vert.png"));
 				else if(cases.get_couleur()== Couleur.GRIS)
-					this.maTexture.loadFromFile(Paths.get("Cases/Square_normal.png"));
+					this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/Square_normal.png"));
 				else if(cases.get_couleur()== Couleur.ROUGE)
-					this.maTexture.loadFromFile(Paths.get("Cases/Square_rouge.png"));
+					this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/Square_rouge.png"));
 			}
 			else if(cases instanceof Illuminated_Case){
 				if(((Illuminated_Case) cases).get_active()==false){
-					this.maTexture.loadFromFile(Paths.get("Cases/Square_allumable2.png"));
+					this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/Square_allumable2.png"));
 				}else{
-					this.maTexture.loadFromFile(Paths.get("Cases/Square_allume.png"));
+					this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/Square_allume.png"));
 				}
 			}
 		} catch (IOException e) {
@@ -363,45 +344,45 @@ public class Jeu {
 	}
 
 	public void display_terrain(Terrain terrain) throws IOException{
-		this.maTextureBackground.loadFromFile(Paths.get("background.jpg"));
-		this.monSpriteBackground.setTexture(this.maTextureBackground);
-		Menu.app.draw(this.monSpriteBackground);
-
-		int Xtemp,Ytemp;
-		int taille_abs =  terrain.get_terrain()[0].length;
-		int taille_ord =  terrain.get_terrain().length;
-
-		System.out.println("*********");
-		for(int X=taille_abs-1;X>=0;X--){
-			Ytemp=0;//taille_ord-1;
-			System.out.println("X = "+X);
-			for(Xtemp=X;Xtemp<taille_abs;Xtemp++){
-				if(Ytemp<0){
-					break;
-				}
-				System.out.println("(Xtemp,Ytemp) = ("+Xtemp+","+Ytemp+")");
-				this.affichageISO(Xtemp,Ytemp);
-				Ytemp++;
-			}
-		}
-		for(int Y=1;Y<taille_ord;Y++){//-2 car on a géré le cas 0 avec X juste au dessus
-			Xtemp=0;
-			System.out.println("Y = "+Y);
-			for(Ytemp=Y;Ytemp<taille_ord;Ytemp++){
-				if(Xtemp>=taille_abs){
-					break;
-				}
-				this.affichageISO(Xtemp,Ytemp);
-				System.out.println("(Xtemp,Ytemp) = ("+Xtemp+","+Ytemp+")");
-				Xtemp++;
-			}
-		}// on charge la texture qui se trouve dans notre dossier assets
+		//			this.maTextureBackground.loadFromFile(Paths.get("background.jpg"));
+		//			this.monSpriteBackground.setTexture(this.maTextureBackground);
+		//			Menu.app.draw(this.monSpriteBackground);
+		//
+		//			int Xtemp,Ytemp;
+		//			int taille_abs =  terrain.get_terrain()[0].length;
+		//			int taille_ord =  terrain.get_terrain().length;
+		//
+		//			System.out.println("*********");
+		//			for(int X=taille_abs-1;X>=0;X--){
+		//				Ytemp=0;//taille_ord-1;
+		//				System.out.println("X = "+X);
+		//				for(Xtemp=X;Xtemp<taille_abs;Xtemp++){
+		//					if(Ytemp<0){
+		//						break;
+		//					}
+		//					System.out.println("(Xtemp,Ytemp) = ("+Xtemp+","+Ytemp+")");
+		//					this.affichageISO(Xtemp,Ytemp);
+		//					Ytemp++;
+		//				}
+		//			}
+		//			for(int Y=1;Y<taille_ord;Y++){//-2 car on a géré le cas 0 avec X juste au dessus
+		//				Xtemp=0;
+		//				System.out.println("Y = "+Y);
+		//				for(Ytemp=Y;Ytemp<taille_ord;Ytemp++){
+		//					if(Xtemp>=taille_abs){
+		//						break;
+		//					}
+		//					this.affichageISO(Xtemp,Ytemp);
+		//					System.out.println("(Xtemp,Ytemp) = ("+Xtemp+","+Ytemp+")");
+		//					Xtemp++;
+		//				}
+		//			}// on charge la texture qui se trouve dans notre dossier assets
 	}
 
 
 	public void drawGrilleISO(){
 		try{
-			this.maTextureBackground.loadFromFile(Paths.get("background2.jpg"));
+			this.maTextureBackground.loadFromFile(Paths.get("Images/Jeu/background2.jpg"));
 			this.monSpriteBackground.setTexture(this.maTextureBackground);
 			Menu.app.draw(this.monSpriteBackground);
 
@@ -453,7 +434,7 @@ public class Jeu {
 
 			for(int hauteur=1; hauteur<hauteur_max;hauteur++){
 				try {
-					this.maTexture.loadFromFile(Paths.get("Cases/Square_empile.png"));
+					this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/Square_empile.png"));
 					this.monSprite.setTexture(this.maTexture);
 					this.monSprite.setPosition(PosX,PosY-26*hauteur);
 					Menu.app.draw(this.monSprite);

@@ -107,7 +107,7 @@ public class Niveaux {
 	 */
 	private void displayBackground() {
 		try {
-			this.texture_Background.loadFromFile(Paths.get("selectLvl/back.jpg"));
+			this.texture_Background.loadFromFile(Paths.get("Images/selectLvl/back.jpg"));
 			this.sprite_Background.setTexture(this.texture_Background);
 			this.sprite_Background.setScale(0.7f, 0.7f);
 			Menu.app.draw(this.sprite_Background);
@@ -124,25 +124,25 @@ public class Niveaux {
 	protected void displayBtn() {
 		try {
 			//Affichage bouton next
-			this.texture_btnNext.loadFromFile(Paths.get("selectLvl/next100x100.png"));
+			this.texture_btnNext.loadFromFile(Paths.get("Images/selectLvl/next100x100.png"));
 			this.sprite_btnNext.setTexture(this.texture_btnNext);
 			this.sprite_btnNext.setPosition(Niveaux.WIDTH-250,700/2);
 			Menu.app.draw(this.sprite_btnNext);
 
 			//Affichage bouton prec
-			this.texture_btnPrec.loadFromFile(Paths.get("selectLvl/prec100x100.png"));
+			this.texture_btnPrec.loadFromFile(Paths.get("Images/selectLvl/prec100x100.png"));
 			this.sprite_btnPrec.setTexture(this.texture_btnPrec);
 			this.sprite_btnPrec.setPosition(150,700/2);
 			Menu.app.draw(this.sprite_btnPrec);
 
 			//Affichage bouton menu
-			this.texture_btnMenu.loadFromFile(Paths.get("selectLvl/menu.png"));
+			this.texture_btnMenu.loadFromFile(Paths.get("Images/selectLvl/menu.png"));
 			this.sprite_btnMenu.setTexture(this.texture_btnMenu);
 			this.sprite_btnMenu.setPosition(30,5);
 			Menu.app.draw(this.sprite_btnMenu);
 
 			//Affichage bouton Jouer
-			this.texture_btnLevel.loadFromFile(Paths.get("selectLvl/level.png"));
+			this.texture_btnLevel.loadFromFile(Paths.get("Images/selectLvl/level.png"));
 			this.sprite_btnLevel.setTexture(this.texture_btnLevel);
 			this.sprite_btnLevel.setPosition(Niveaux.WIDTH/2-330,700/2+210);
 			Menu.app.draw(this.sprite_btnLevel);
