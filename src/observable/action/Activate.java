@@ -1,19 +1,23 @@
 package observable.action;
 import java.util.ArrayList;
 
-import couleur.Couleur;
-import observable.map.*;
-import observable.robot.Robot;
+import observable.int_Observable;
+import observable.map.Coordonnees;
+import observable.map.Illuminated_Case;
+import observable.map.Teleporter_Case;
+import observable.map.World;
+import observable.map.abstr_Case;
 import observable.robot.abstr_Robot;
+import observer.int_Observer;
+import couleur.Couleur;
+import exception.ActionEx;
 import exception.MouvementEx;
 import exception.UnreachableCase;
-import observable.int_Observable;
-import observer.int_Observer;
 
 public class Activate implements int_Action, int_Observable{
-	
-	private ArrayList<int_Observer> listObserver = new ArrayList<int_Observer>(); 
-	
+
+	private ArrayList<int_Observer> listObserver = new ArrayList<int_Observer>();
+
 	private Couleur color;
 	public static Activate activate(){
 		return new Activate();
@@ -28,44 +32,55 @@ public class Activate implements int_Action, int_Observable{
 		this.color = col;
 	}
 	@Override
-	public void execute(abstr_Robot r) throws MouvementEx, UnreachableCase {
-	abstr_Case cprime = r.getCurrent_Case();
-	if (isPossible(r,cprime)){
-		if(cprime.getClass().getSimpleName().equals("Teleporter_Case")){
-			System.out.println("et ta soeur le toxico ta offert un beau cadeau");
-			Coordonnees next = ((Teleporter_Case)cprime).get_destination();
-			System.out.println(next);
-			r.setCurrent_Case(World.currentWorld.get_case(((Teleporter_Case)cprime).get_destination()));
-			notifyObserver();
-		}
-		else if(cprime.getClass().getSimpleName().equals("Illuminated_Case")){
-			((Illuminated_Case)cprime).set_active(!((Illuminated_Case)cprime).get_active());
-			if (((Illuminated_Case)cprime).get_active()){
-				World.currentWorld.increment_allume();
+	/**
+	 * si la case actuele est allumable, change l'état de celle ci
+	 * si c'est un teleporteur, l'utilise
+	 * si c'est une case peinet, r prend a couleur de celle ci
+	 */
+	public void execute(abstr_Robot r) throws MouvementEx, UnreachableCase, ActionEx {
+		abstr_Case cprime = r.getCurrent_Case();
+		if (this.isPossible(r,cprime)){
+			if(cprime.getClass().getSimpleName().equals("Teleporter_Case")){
+				Coordonnees next = ((Teleporter_Case)cprime).get_destination();
+				if(!World.currentWorld.isOccupied(World.currentWorld.get_case(next))){
+					r.setCurrent_Case(World.currentWorld.get_case(((Teleporter_Case)cprime).get_destination()));
 				}
-			else {
-				World.currentWorld.decrement_allume();
+				else {
+					throw new ActionEx("la case destination est occupée");
+				}
+				this.notifyObserver();
 			}
-			notifyObserver();
-			
+			else if(cprime.getClass().getSimpleName().equals("Illuminated_Case")){
+				((Illuminated_Case)cprime).set_active(!((Illuminated_Case)cprime).get_active());
+				if (((Illuminated_Case)cprime).get_active()){
+					World.currentWorld.increment_allume();
+				}
+				else {
+					World.currentWorld.decrement_allume();
+				}
+				this.notifyObserver();
+
+			}
+			else {
+				r.set_couleur(cprime.get_couleur());
+				this.notifyObserver();
+			}
 		}
-		else {
-			r.set_couleur(cprime.get_couleur());
-			notifyObserver();
-		}
-	}
-	else{
-		throw (new MouvementEx("impossible à utiliser"));
+		else{
+			throw (new MouvementEx("impossible à utiliser"));
 		}
 	}
 
 	@Override
+	/**
+	 * verifie que la case est une case utilisable
+	 */
 	public boolean isPossible(abstr_Robot r, abstr_Case c) {
 		return (((c.getClass().getSimpleName().equals("Teleporter_Case")
-					|| c.getClass().getSimpleName().equals("Painted_Case"))
-					|| c.getClass().getSimpleName().equals("Illuminated_Case"))
-				&&(color.equals(r.get_couleur())||
-					color.equals(Couleur.GRIS))) ;
+				|| c.getClass().getSimpleName().equals("Painted_Case"))
+				|| c.getClass().getSimpleName().equals("Illuminated_Case"))
+				&&(this.color.equals(r.get_couleur())||
+						this.color.equals(Couleur.GRIS))) ;
 	}
 	@Override
 	public void addObserver(int_Observer obs) {
@@ -73,13 +88,13 @@ public class Activate implements int_Action, int_Observable{
 	}
 	@Override
 	public void removeObserver() {
-		listObserver = new ArrayList<int_Observer>();
-		
+		this.listObserver = new ArrayList<int_Observer>();
+
 	}
 	@Override
 	public void notifyObserver() {
-		for(int_Observer obs : listObserver)
-		      obs.update(this);
+		for(int_Observer obs : this.listObserver)
+			obs.update(this);
 	}
 }
 

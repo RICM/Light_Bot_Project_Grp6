@@ -2,18 +2,18 @@ package observable.action;
 
 import java.util.ArrayList;
 
-import couleur.Couleur;
 import observable.map.abstr_Case;
 import observable.robot.abstr_Robot;
 import observer.int_Observer;
+import couleur.Couleur;
 import exception.ActionEx;
 import exception.MouvementEx;
 import exception.UnreachableCase;
 
 public class Remember implements int_Action {
 
-private ArrayList<int_Observer> listObserver = new ArrayList<int_Observer>(); 
-	
+	private ArrayList<int_Observer> listObserver = new ArrayList<int_Observer>();
+
 	private Couleur color;
 	public static Remember remember(){
 		return new Remember();
@@ -29,8 +29,11 @@ private ArrayList<int_Observer> listObserver = new ArrayList<int_Observer>();
 	}
 
 	@Override
+	/**
+	 * ajoute la position actuelle dans la memoire de position du robot
+	 */
 	public void execute(abstr_Robot r) throws MouvementEx, UnreachableCase,
-			ActionEx {
+	ActionEx {
 		if(this.isPossible(r, null)){
 			r.store_position();
 		}
@@ -39,22 +42,22 @@ private ArrayList<int_Observer> listObserver = new ArrayList<int_Observer>();
 
 	@Override
 	public boolean isPossible(abstr_Robot r, abstr_Case c) {
-			return (r.get_couleur().equals(color) || this.color.equals(Couleur.GRIS));
+		return (r.get_couleur().equals(this.color) || this.color.equals(Couleur.GRIS));
 	}
 
-	
+
 	@Override
 	public void addObserver(int_Observer obs) {
 		this.listObserver.add(obs);
 	}
 	@Override
 	public void removeObserver() {
-		listObserver = new ArrayList<int_Observer>();
-		
+		this.listObserver = new ArrayList<int_Observer>();
+
 	}
 	@Override
 	public void notifyObserver() {
-		for(int_Observer obs : listObserver)
-		      obs.update(this);
+		for(int_Observer obs : this.listObserver)
+			obs.update(this);
 	}
 }
