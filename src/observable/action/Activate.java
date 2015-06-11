@@ -37,6 +37,12 @@ public class Activate implements int_Action, int_Observable{
 		}
 		else if(cprime.getClass().getSimpleName().equals("Illiminated_Case")){
 			((Illuminated_Case)cprime).set_active(!((Illuminated_Case)cprime).get_active());
+			if (((Illuminated_Case)cprime).get_active()){
+				World.currentWorld.increment_allume();
+			}
+			else {
+				World.currentWorld.decrement_allume();
+			}
 		}
 		else {
 			r.set_couleur(cprime.get_couleur());

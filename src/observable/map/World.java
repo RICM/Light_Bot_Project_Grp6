@@ -18,6 +18,9 @@ public class World implements int_Observable {
 
 	private Terrain[] liste_terrain;
 	private abstr_Robot[]   liste_robot;
+	
+	private int nb_case_allumable;
+	private int nb_case_allumees;
 
 	
 	public Terrain get_terrain(int n){
@@ -74,4 +77,46 @@ public class World implements int_Observable {
 	public abstr_Case get_case(Coordonnees coor) throws UnreachableCase {
 		return liste_terrain[coor.get_n()].get_case(coor.get_x(), coor.get_y());
 	}
+	/**
+	 * 
+	 * @return true ssi toutes les cases sont allumées
+	 */
+	public boolean is_cleared(){
+		return this.nb_case_allumable == this.nb_case_allumees;
+	}
+	
+	/**
+	 * Increment nb_case_allumés
+	 */
+	public void increment_allume(){
+		this.nb_case_allumees++;
+	}
+	
+	/**
+	 * decrement nb_case_allumés
+	 */
+	public void decrement_allume(){
+		this.nb_case_allumees--;
+	}
+	
+	/**
+	 * @return void, set nb_case allumables et allumées au bonne valeurs
+	 * @throws UnreachableCase
+	 */
+	public void refresh_allumable() throws UnreachableCase{
+		this.nb_case_allumable = 0;
+		this.nb_case_allumees = 0;
+		for(int i = 0; i<liste_terrain.length; i++){
+			for(int j = 0; j<liste_terrain[i].get_terrain().length;j++ ){
+				for(int k = 0; k<liste_terrain[i].get_terrain()[j].length; k++){
+					if (liste_terrain[i].get_case(i, j).getClass().getSimpleName().equals("Illuminated_Case")){
+						this.nb_case_allumable++;
+						if (((Illuminated_Case)liste_terrain[i].get_case(i, j)).get_active()){
+							this.nb_case_allumees++;
+						}
+					}
+				}
+			}
+		}
+	}	
 }
