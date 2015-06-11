@@ -1,6 +1,7 @@
 package observable.map;
 import java.util.ArrayList;
 
+import exception.UnreachableCase;
 import observable.int_Observable;
 import observable.robot.Robot;
 import observable.robot.abstr_Robot;
@@ -18,6 +19,7 @@ public class World implements int_Observable {
 	private Terrain[] liste_terrain;
 	private abstr_Robot[]   liste_robot;
 
+	
 	public Terrain get_terrain(int n){
 		return liste_terrain[n];
 	}
@@ -67,5 +69,9 @@ public class World implements int_Observable {
 	public void notifyObserver() {
 		for(int_Observer obs : listObserver)
 		      obs.update(this);
+	}
+
+	public abstr_Case get_case(Coordonnees coor) throws UnreachableCase {
+		return liste_terrain[coor.get_n()].get_case(coor.get_x(), coor.get_y());
 	}
 }

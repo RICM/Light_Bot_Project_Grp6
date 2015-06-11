@@ -59,7 +59,7 @@ public class Possible_List implements int_Action_List, int_Observable{
 		return allowed_actions.size();
 	}
 	public String get_name(int i){
-		return allowed_actions.get(i).getClass().getCanonicalName();
+		return allowed_actions.get(i).getClass().getSimpleName();
 	}
 	
 	public LinkedList<int_Action> get(){
