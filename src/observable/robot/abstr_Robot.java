@@ -23,7 +23,8 @@ public abstract class abstr_Robot {
 	private Orientation.orientation current_orientation;
 	private Couleur color;
 	private Execution_list order_exec = new Execution_list();
-	private ArrayList<int_Observer> listObserver = new ArrayList<int_Observer>(); 
+	private ArrayList<int_Observer> listObserver = new ArrayList<int_Observer>();
+	private boolean activable = true;
 	
 	
 	public void run() throws MouvementEx, UnreachableCase, ActionEx{
@@ -179,4 +180,14 @@ public abstract class abstr_Robot {
 		for(int_Observer obs : listObserver)
 		      obs.update(this);
 	}
+
+
+	public boolean get_activable(){
+		return activable;
+	}
+	
+	public void set_activable( boolean activ){
+		this.activable = activ;
+	}
 }
+	
