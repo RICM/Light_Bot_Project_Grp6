@@ -252,6 +252,7 @@ public class Jeu {
 			for(int i=0;i<tab.length;i++){
 				Texture maTextureBouton = new Texture();
 				Sprite monSpriteBouton = new Sprite();
+				if(i==0){
 				maTextureBouton.loadFromFile(Paths.get("bouton/"+tab[i]+".png"));
 				Jeu.liste_sprite.put(monSpriteBouton,Orientation.orientation.LEFT);
 				monSpriteBouton.setTexture(maTextureBouton);
@@ -283,7 +284,8 @@ public class Jeu {
 		maTexture = new Texture();
 		try{
 			if(cases instanceof Normal_Case){
-				this.maTexture.loadFromFile(Paths.get("Cases/Square_allume.png"));
+				maTexture = new Texture();
+				maTexture.loadFromFile(Paths.get("Cases/Square_normal.png"));
 			}
 			else if(cases instanceof Empty_Case){
 				this.maTexture.loadFromFile(Paths.get("Cases/Square_vide.png"));
@@ -307,7 +309,7 @@ public class Jeu {
 				if(((Illuminated_Case) cases).get_active()==false){
 					this.maTexture.loadFromFile(Paths.get("Cases/Square_allumable2.png"));
 				}else{
-					this.maTexture.loadFromFile(Paths.get("Cases/Square_allume.png"));
+					maTexture.loadFromFile(Paths.get("Cases/Square_allume.png"));
 				}
 			}
 		} catch (IOException e) {

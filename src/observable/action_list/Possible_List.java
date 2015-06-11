@@ -36,14 +36,14 @@ public class Possible_List implements int_Action_List, int_Observable{
 		return this.allowed_actions.contains(act);
 	}
 	
-	public void execute (Robot r) throws MouvementEx, UnreachableCase, ActionEx{
+	/*public void execute (Robot r) throws MouvementEx, UnreachableCase, ActionEx{
 		int size = allowed_actions.size();
 		for (int i = 0 ; i < size ; i++ ){
 			int_Action act;
 			act = allowed_actions.get(i);
 			act.execute(r);
 		}
-	}
+	}*/
 	
 	public int_Action pickAction (int index){
 		int_Action ax = allowed_actions.get(index);

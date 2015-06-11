@@ -1,5 +1,6 @@
 package parser;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -22,7 +23,7 @@ import exception.UnreachableCase;
 
 public class parserJSON {
 
-	private static final String filePath = "/home/adrien/git/Light_Bot_Project_Grp6/essaie.json";
+	private static final String filePath = new File("").getAbsolutePath()+"/essaie.json";
 	
 	public static parserJSON currentparser = new parserJSON();
 	

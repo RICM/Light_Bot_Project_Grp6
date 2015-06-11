@@ -14,6 +14,7 @@ import observable.map.Terrain;
 import observable.map.World;
 import observable.map.abstr_Case;
 import observable.robot.Robot;
+import parser.parserJSON;
 import couleur.Couleur;
 import exception.ActionEx;
 import exception.MouvementEx;
@@ -106,6 +107,7 @@ public class Game {
 				terrlist[0] = terrain_test;
 				World.currentWorld.set_liste_robot(roblist);
 				World.currentWorld.set_liste_terrain(terrlist);
+				parserJSON.currentparser.lecture();
 				try{
 					robert.run();
 					//System.out.println("Position finale : ");
