@@ -82,7 +82,21 @@ public class World implements int_Observable {
 	 * @return true ssi toutes les cases sont allumées
 	 */
 	public boolean is_cleared(){
-		return this.nb_case_allumable == this.nb_case_allumees;_
+		return this.nb_case_allumable == this.nb_case_allumees;
+	}
+	
+	/**
+	 * Increment nb_case_allumés
+	 */
+	public void increment_allume(){
+		this.nb_case_allumees++;
+	}
+	
+	/**
+	 * decrement nb_case_allumés
+	 */
+	public void decrement_allume(){
+		this.nb_case_allumees--;
 	}
 	
 	/**
