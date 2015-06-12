@@ -61,16 +61,19 @@ public class Jeu {
 	protected int height_case = 50;
 	protected static final int NB_MAX_CASE = 10;
 	protected int indice_tele=0;
+	protected static float x_whale = -600;
+	protected static int y_whale = Menu.HEIGHT/2-200;
 
 	public Jeu(int lvl){
 		Menu.reset_cam();
 		this.level = lvl;
 		while(Menu.app.isOpen()){
 			Menu.app.clear();
+			this.drawBackground();
 			this.drawGrilleISO();
 			this.draw_bouton();
 			this.draw_procedure();
-			Jeu.processEvent();
+			this.processEvent();
 			Menu.app.display();
 			if(World.currentWorld.is_cleared()){
 				//				JOptionPane.showMessageDialog(null, "Fin");
@@ -82,11 +85,31 @@ public class Jeu {
 	/**
 	 * D�tecte les entr�es claviers et souris
 	 */
-	public static void processEvent(){
+	public void processEvent(){
 		Menu.app.setKeyRepeatEnabled(false);
 
 		for(Event e : Menu.app.pollEvents()){
 			if(e.type == Type.CLOSED){
+				Texture te = new Texture();
+				Sprite sp = new Sprite();
+				try {
+					te.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/whale.png"));
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				sp.setTexture(te);
+				while(Jeu.x_whale < 1200){
+					sp.setPosition(Jeu.x_whale,Jeu.y_whale);
+					this.drawBackground();
+					if(x_whale < Menu.WIDTH/3-200)
+						this.drawGrilleISO();
+					this.draw_bouton();
+					Menu.app.draw(sp);
+					Menu.app.display();
+					Jeu.x_whale += 20;
+					Menu.app.clear();
+				}
 				Menu.app.close();
 			}
 
@@ -228,6 +251,7 @@ public class Jeu {
 
 	/**
 	 *	Affiche le personnage
+	 * @param rob le personnage a afficher
 	 * @param X la position en x du personnage
 	 * @param Y la position en y du personnage
 	 */
@@ -381,47 +405,50 @@ public class Jeu {
 
 	}
 
+	public void drawBackground(){
+		try {
+			this.maTextureBackground.loadFromFile(Paths.get("Images/Jeu/background2.jpg"));
+			this.monSpriteBackground.setTexture(this.maTextureBackground);
+			Menu.app.draw(this.monSpriteBackground);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 
 	/**
 	 * Affiche le terrain
 	 */
 	public void drawGrilleISO(){
-		try{
-			this.maTextureBackground.loadFromFile(Paths.get("Images/Jeu/background2.jpg"));
-			this.monSpriteBackground.setTexture(this.maTextureBackground);
-			Menu.app.draw(this.monSpriteBackground);
-
-			int Xtemp,Ytemp;
-			int taille_abs =  World.currentWorld.get_terrain(0).get_terrain()[0].length;
-			int taille_ord =  World.currentWorld.get_terrain(0).get_terrain().length;
-			//
-			//		System.out.println("***************");
-			for(int X=taille_abs-1;X>=0;X--){
-				Ytemp=0;//taille_ord-1;
-				//	System.out.println("X = "+X);
-				for(Xtemp=X;Xtemp<taille_abs;Xtemp++){
-					if(Ytemp<0){
-						break;
-					}
-					//	System.out.println("(Xtemp,Ytemp) = ("+Xtemp+","+Ytemp+")");
-					this.affichageISO(Xtemp,Ytemp);
-					Ytemp++;
+		int Xtemp,Ytemp;
+		int taille_abs =  World.currentWorld.get_terrain(0).get_terrain()[0].length;
+		int taille_ord =  World.currentWorld.get_terrain(0).get_terrain().length;
+		//
+		//		System.out.println("***************");
+		for(int X=taille_abs-1;X>=0;X--){
+			Ytemp=0;//taille_ord-1;
+			//	System.out.println("X = "+X);
+			for(Xtemp=X;Xtemp<taille_abs;Xtemp++){
+				if(Ytemp<0){
+					break;
 				}
+				//	System.out.println("(Xtemp,Ytemp) = ("+Xtemp+","+Ytemp+")");
+				this.affichageISO(Xtemp,Ytemp);
+				Ytemp++;
 			}
-			for(int Y=1;Y<taille_ord;Y++){//-2 car on a géré le cas 0 avec X juste au dessus
-				Xtemp=0;
-				//		System.out.println("Y = "+Y);
-				for(Ytemp=Y;Ytemp<taille_ord;Ytemp++){
-					if(Xtemp>=taille_abs){
-						break;
-					}
-					this.affichageISO(Xtemp,Ytemp);
-					//		System.out.println("(Xtemp,Ytemp) = ("+Xtemp+","+Ytemp+")");
-					Xtemp++;
+		}
+		for(int Y=1;Y<taille_ord;Y++){//-2 car on a géré le cas 0 avec X juste au dessus
+			Xtemp=0;
+			//		System.out.println("Y = "+Y);
+			for(Ytemp=Y;Ytemp<taille_ord;Ytemp++){
+				if(Xtemp>=taille_abs){
+					break;
 				}
+				this.affichageISO(Xtemp,Ytemp);
+				//		System.out.println("(Xtemp,Ytemp) = ("+Xtemp+","+Ytemp+")");
+				Xtemp++;
 			}
-		} catch (IOException e) {
-			System.out.println(e.getMessage());
 		}
 	}
 
