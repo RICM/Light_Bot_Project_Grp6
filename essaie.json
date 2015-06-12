@@ -6,7 +6,7 @@
                 {"nb_case_hauteur": 3},
                 {"nb_case_largeur": 3},
                 { "lignes" : [ 
-		              {"ligne1" : [{"type_case": "case_teleporter","hauteur": 1,"couleur": "gris","destX":1,"destY":1,"indice":0},{"type_case": "case_normale","hauteur": 1,"couleur": "gris"},{"type_case": "case_normale","hauteur": 1,"couleur": "gris"} ]},
+		              {"ligne1" : [{"type_case": "case_teleporter","hauteur": 2,"couleur": "gris","destX":1,"destY":1,"indice":0},{"type_case": "case_normale","hauteur": 1,"couleur": "gris"},{"type_case": "case_normale","hauteur": 2,"couleur": "gris"} ]},
 		              {"ligne2" : [{"type_case": "case_normale","hauteur": 1,"couleur": "gris"},{"type_case": "case_painted","hauteur": 1,"couleur": "gris"},{"type_case": "case_normale","hauteur": 1,"couleur": "gris"} ]},
 		              {"ligne3" : [{"type_case": "case_normale","hauteur": 1,"couleur": "gris"},{"type_case": "case_painted","hauteur": 1,"couleur": "gris"},{"type_case": "case_normale","hauteur": 1,"couleur": "gris"} ]}
 		            ]}

@@ -1,4 +1,3 @@
-import View.Menu;
 import observable.action.Activate;
 import observable.action.Jump;
 import observable.action.MoveForward;
@@ -14,6 +13,7 @@ import observable.map.World;
 import observable.map.abstr_Case;
 import observable.robot.Robot;
 import parser.parserJSON;
+import View.Menu;
 import couleur.Couleur;
 import exception.ActionEx;
 import exception.UnreachableCase;
@@ -83,7 +83,7 @@ public class Game {
 			World.currentWorld.set_liste_terrain(terrainlist);
 			World.currentWorld.set_liste_robot(robotlist);
 			World.currentWorld.basic_print_world();
-			//parserJSON.currentparser.lecture();
+			parserJSON.currentparser.lecture();
 			//robert.print_allowed_act();
 			try{
 				robert.add_Action_User_Actions(Activate.activate());
