@@ -353,7 +353,7 @@ public class Jeu {
 				}
 			}
 			else if(cases instanceof Destination_Case){
-				this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/Square_vert.png"));
+				this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/Square_destination.png"));
 			}
 			else if(cases instanceof Painted_Case){
 				if(cases.get_couleur()== Couleur.VERT)
