@@ -11,7 +11,10 @@ import java.util.LinkedList;
 import javax.swing.JOptionPane;
 
 import observable.action.Activate;
+import observable.action.Jump;
 import observable.action.MoveForward;
+import observable.action.TurnLeft;
+import observable.action.TurnRIght;
 import observable.action.int_Action;
 import observable.map.Illuminated_Case;
 import observable.map.Terrain;
@@ -57,7 +60,7 @@ public class Jeu {
 	protected int indice_tele=0;
 	protected static float x_whale = -600;
 	protected static int y_whale = Menu.HEIGHT/2-200;
-	protected static String activate = "Fond_Main";
+	protected static String activate = "Main";
 	protected static ArrayList<Sprite> liste_background = new ArrayList<Sprite>();
 
 	public Jeu(int lvl){
@@ -184,6 +187,16 @@ public class Jeu {
 			if(x>=rect.left && x<=rect.left+rect.width &&
 					y>=rect.top && y<=rect.top+rect.height){
 				if(Jeu.liste_sprite.get(s).equals("MoveForward")){
+					//ajoute l'action dans la liste d'action du robot en fonction du panneau activé
+					try {
+						switch(activate){
+						case ("Main") : r.add_Action_User_Actions(MoveForward.move_forward());break;
+						case ("P1") : r.add_Action_User_ActionsP1(MoveForward.move_forward());break;
+						case ("P2") : r.add_Action_User_ActionsP2(MoveForward.move_forward());break;
+						}
+					}catch (ActionEx e) {
+						e.printStackTrace();
+					}
 					try {
 						MoveForward.move_forward().execute(Jeu.r);
 					} catch (MouvementEx e1) {
@@ -194,6 +207,16 @@ public class Jeu {
 					break;
 				}
 				else if(Jeu.liste_sprite.get(s).equals("TurnRIght")){
+					//ajoute l'action dans la liste d'action du robot en fonction du panneau activé
+					try {
+						switch(activate){
+						case ("Main") : r.add_Action_User_Actions(TurnRIght.turn_right());break;
+						case ("P1") : r.add_Action_User_ActionsP1(TurnRIght.turn_right());break;
+						case ("P2") : r.add_Action_User_ActionsP2(TurnRIght.turn_right());break;
+						}
+					}catch (ActionEx e) {
+						e.printStackTrace();
+					}
 					switch(r.getOrientation()){
 					case TOP : Jeu.r.setOrientation(Orientation.orientation.RIGHT);break;
 					case RIGHT:Jeu.r.setOrientation(Orientation.orientation.BOT);break;
@@ -203,6 +226,16 @@ public class Jeu {
 					break;
 				}
 				else if(Jeu.liste_sprite.get(s).equals("TurnLeft")){
+					//ajoute l'action dans la liste d'action du robot en fonction du panneau activé
+					try {
+						switch(activate){
+						case ("Main") : r.add_Action_User_Actions(TurnLeft.turn_left());break;
+						case ("P1") : r.add_Action_User_ActionsP1(TurnLeft.turn_left());break;
+						case ("P2") : r.add_Action_User_ActionsP2(TurnLeft.turn_left());break;
+						}
+					}catch (ActionEx e) {
+						e.printStackTrace();
+					}
 					switch(r.getOrientation()){
 					case TOP : Jeu.r.setOrientation(Orientation.orientation.LEFT);break;
 					case RIGHT:Jeu.r.setOrientation(Orientation.orientation.TOP);break;
@@ -212,7 +245,16 @@ public class Jeu {
 					break;
 				}
 				else if(Jeu.liste_sprite.get(s).equals("Activate")){
-					//					Jeu.r.add_Action_User_Actions(TurnRIght.turn_right());
+					//ajoute l'action dans la liste d'action du robot en fonction du panneau activé
+					try {
+						switch(activate){
+						case ("Main") : r.add_Action_User_Actions(Activate.activate());break;
+						case ("P1") : r.add_Action_User_ActionsP1(Activate.activate());break;
+						case ("P2") : r.add_Action_User_ActionsP2(Activate.activate());break;
+						}
+					}catch (ActionEx e) {
+						e.printStackTrace();
+					}
 					System.out.println("Allumer");
 					try {
 						Activate.activate().execute(r);
@@ -226,13 +268,31 @@ public class Jeu {
 					break;
 				}
 				else if(Jeu.liste_sprite.get(s).equals("Jump"))
-					//					Jeu.r.add_Action_User_Actions(TurnRIght.turn_right());
-					System.out.println("Sauter");
+					//ajoute l'action dans la liste d'action du robot en fonction du panneau activé
+					try {
+						switch(activate){
+						case ("Main") : r.add_Action_User_Actions(Jump.jump());break;
+						case ("P1") : r.add_Action_User_ActionsP1(Jump.jump());break;
+						case ("P2") : r.add_Action_User_ActionsP2(Jump.jump());break;
+						}
+					}catch (ActionEx e) {
+						e.printStackTrace();
+					}
+				System.out.println("Sauter");
+				try {
+					Jump.jump().execute(r);
+				} catch (MouvementEx e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (UnreachableCase e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				break;
 			}
 		}
 		int cmp=0;
-		String background[]=  {"Fond_Main","Fond_P1","Fond_P2"};
+		String background[]=  {"Main","P1","P2"};
 		for(Sprite s: liste_background){
 			FloatRect rect = s.getGlobalBounds();
 			if(x>=rect.left && x<=rect.left+rect.width &&
@@ -310,40 +370,52 @@ public class Jeu {
 
 	public void draw_procedure(){
 		try {
-			String background[]=  {"Fond_Main","Fond_P1","Fond_P2"};
+			String background[]=  {"Main","P1","P2"};
+			int nombre_bouton[] = {r.get_tailleMain(),r.get_tailleP1(),r.get_tailleP2()};
+			int nombre_bouton_ajoute[] = {r.get_Main().size(),r.get_P1().size(),r.get_P2().size()};
 			int posY[] = {7, 290, 494};
+			int y;
 			int num=0;
+			int pos_bouton[] = {44,324,530};
 			for(String type_background : background){
 				Sprite monSpriteBackground = new Sprite();
 				if(type_background==activate){
-					this.maTexture.loadFromFile(Paths.get("Images/Jeu/background/"+type_background+"_Activate.png"));
+					this.maTexture.loadFromFile(Paths.get("Images/Jeu/background/Fond_"+type_background+"_Activate.png"));
 				}
 				else{
-					this.maTexture.loadFromFile(Paths.get("Images/Jeu/background/"+type_background+".png"));
+					this.maTexture.loadFromFile(Paths.get("Images/Jeu/background/Fond_"+type_background+".png"));
 				}
 				monSpriteBackground.setPosition(881, posY[num]);
 				monSpriteBackground.setTexture(this.maTexture);
 				liste_background.add(monSpriteBackground);
 				System.out.println("monSpriteBackground.toString(): "+monSpriteBackground.toString());
 				Menu.app.draw(monSpriteBackground);
-				num++;
-			}
-			int nombre_bouton[] = {r.get_tailleMain(),r.get_tailleP1(),r.get_tailleP2()};
-			int pos_bouton[] = {44,324,530};
-			int y;
-			for(int i=0; i<pos_bouton.length;i++){
 				y=0;
-				for(int x=0; x<nombre_bouton[i];x++){
+				for(int x=0; x<nombre_bouton[num];x++){
 					if(x%4==0){
 						y++;
 					}
 					Sprite monSprite = new Sprite();
-					this.maTexture.loadFromFile(Paths.get("Images/Jeu/background/Fond_Bouton.png"));
-					monSprite.setPosition(884+(x%4*(70+4)), pos_bouton[i] + (y-1)*(70+10));
+
+					if (x<nombre_bouton_ajoute[num]){
+						switch(num){
+						case 0 : this.maTexture.loadFromFile(Paths.get("Images/Jeu/bouton/"+r.get_Main().get(x).getClass().getSimpleName()+".png"));break;
+						case 1 : this.maTexture.loadFromFile(Paths.get("Images/Jeu/bouton/"+r.get_P1().get(x).getClass().getSimpleName()+".png"));break;
+						case 2 : this.maTexture.loadFromFile(Paths.get("Images/Jeu/bouton/"+r.get_P2().get(x).getClass().getSimpleName()+".png"));break;
+						}
+					}else{
+						this.maTexture.loadFromFile(Paths.get("Images/Jeu/background/Fond_Bouton.png"));
+					}
+					monSprite.setPosition(884+(x%4*(70+4)), pos_bouton[num] + (y-1)*(70+10));
 					monSprite.setTexture(this.maTexture);
 					Menu.app.draw(monSprite);
 				}
+				num++;
 			}
+			//emplacement des boutons
+
+
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());

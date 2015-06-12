@@ -145,8 +145,13 @@ public abstract class abstr_Robot {
 	public void set_possible(Possible_List allowed){
 		this.allowed_actions = allowed;
 	}
+	public Sequence_List get_Main(){
+		return this.user_actions;
+	}
+
+
 	public int get_tailleMain(){
-		return this.nbActionMain;
+		return this.nbActionP1;
 	}
 
 	public void set_tailleMain(int new_t){

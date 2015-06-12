@@ -83,7 +83,7 @@ public class Game {
 			World.currentWorld.set_liste_terrain(terrainlist);
 			World.currentWorld.set_liste_robot(robotlist);
 			World.currentWorld.basic_print_world();
-			//parserJSON.currentparser.lecture();
+			parserJSON.currentparser.lecture();
 			//robert.print_allowed_act();
 			try{
 				robert.add_Action_User_Actions(Activate.activate());
