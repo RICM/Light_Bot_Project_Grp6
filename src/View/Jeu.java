@@ -243,15 +243,12 @@ public class Jeu {
 	 */
 	public void drawPerso(abstr_Robot rob,int X, int Y){
 		try {
-			if(rob.getOrientation() == Orientation.orientation.BOT)
-				this.maTexturePerso.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/3.png"));
-			else if(rob.getOrientation() == Orientation.orientation.LEFT)
-				this.maTexturePerso.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/15.png"));
-			else if(rob.getOrientation() == Orientation.orientation.RIGHT)
-				this.maTexturePerso.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/7.png"));
-			else if(rob.getOrientation() == Orientation.orientation.TOP)
-				this.maTexturePerso.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/11.png"));
-
+			switch(rob.getOrientation()){
+			case BOT : this.maTexturePerso.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/3.png"));
+			case LEFT:	this.maTexturePerso.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/15.png"));
+			case RIGHT:this.maTexturePerso.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/7.png"));
+			case TOP : this.maTexturePerso.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/11.png"));
+			}
 			this.monSpritePerso.setTexture(this.maTexturePerso);
 			this.monSpritePerso.setPosition(X,Y);
 			Menu.app.draw(this.monSpritePerso);
