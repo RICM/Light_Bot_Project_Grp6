@@ -16,12 +16,7 @@ import observable.action.MoveForward;
 import observable.action.TurnLeft;
 import observable.action.TurnRIght;
 import observable.action.int_Action;
-import observable.map.Destination_Case;
-import observable.map.Empty_Case;
 import observable.map.Illuminated_Case;
-import observable.map.Normal_Case;
-import observable.map.Painted_Case;
-import observable.map.Teleporter_Case;
 import observable.map.Terrain;
 import observable.map.World;
 import observable.map.abstr_Case;
@@ -39,7 +34,6 @@ import org.jsfml.window.Mouse;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.Event.Type;
 
-import couleur.Couleur;
 import exception.MouvementEx;
 import exception.UnreachableCase;
 
@@ -320,7 +314,7 @@ public class Jeu {
 			int posY[] = {7, 290, 494};
 			for(int i=0;i<background.length;i++){
 				Sprite monSpriteBackground = new Sprite();
-				if(i==this.activate){
+				if(i==activate){
 					this.maTexture.loadFromFile(Paths.get("Images/Jeu/background/"+background[i]+"_Activate.png"));
 				}
 				else{
@@ -328,7 +322,7 @@ public class Jeu {
 				}
 				monSpriteBackground.setPosition(881,posY[i]);
 				monSpriteBackground.setTexture(this.maTexture);
-				this.liste_background.add(monSpriteBackground);
+				liste_background.add(monSpriteBackground);
 				Menu.app.draw(monSpriteBackground);
 			}
 			int nombre_bouton[] = {r.get_tailleMain(),r.get_tailleP1(),r.get_tailleP2()};
@@ -362,41 +356,33 @@ public class Jeu {
 	 */
 	public void typeCases(abstr_Case cases){
 		try{
-			if(cases instanceof Normal_Case){
-				this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/Square_normal.png"));
-			}
-			else if(cases instanceof Empty_Case){
-				this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/Square_vide.png"));
-			}
-			else if(cases instanceof Teleporter_Case){
-				this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/case_teleporteur/Case_pointeur_"+ this.indice_tele+".png"));
-				this.indice_tele++;
-				if( this.indice_tele>=9){
-					this.indice_tele=0;
-				}
-			}
-			else if(cases instanceof Destination_Case){
-				this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/Square_destination.png"));
-			}
-			else if(cases instanceof Painted_Case){
-				if(cases.get_couleur()== Couleur.VERT)
-					this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/Square_vert.png"));
-				else if(cases.get_couleur()== Couleur.GRIS)
-					this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/Square_normal.png"));
-				else if(cases.get_couleur()== Couleur.ROUGE)
-					this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/Square_rouge.png"));
-			}
-			else if(cases instanceof Illuminated_Case){
-				if(((Illuminated_Case) cases).get_active()==false){
-					this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/Square_allumable2.png"));
-				}else{
+			System.out.println(cases.getClass().getSimpleName());
+			switch(cases.getClass().getSimpleName()){
+			case("Normal_Case") : this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/Square_normal.png"));break;
+			case("Destination_Case") : this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/Square_destination.png"));break;
+			case("Empty_Case") : this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/Square_vide.png"));break;
+			case("Painted_Case") :
+				switch(cases.get_couleur()){
+				case VERT : this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/Square_vert.png"));break;
+				case GRIS : this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/Square_normal.png"));break;
+				case ROUGE : this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/Square_rouge.png"));break;
+				}break;
+			case("Teleporter_Case") : this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/case_teleporteur/Case_pointeur_"+ this.indice_tele+".png"));
+			this.indice_tele++;
+			if( this.indice_tele>=9){
+				this.indice_tele=0;
+			}break;
+			case("Illuminated_Case") :
+				if(((Illuminated_Case) cases).get_active()){
 					this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/Square_allume.png"));
-				}
+				}else{
+					this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/Square_allumable2.png"));
+				}break;
 			}
 		} catch (IOException e) {
-			System.out.println(e.getMessage());
-		} // on charge la texture qui se trouve dans notre dossier assets
-
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
@@ -441,7 +427,7 @@ public class Jeu {
 				Ytemp++;
 			}
 		}
-		for(int Y=1;Y<taille_ord;Y++){//-2 car on a géré le cas 0 avec X juste au dessus
+		for(int Y=1;Y<taille_ord;Y++){//1 car on a géré le cas 0 avec X juste au dessus
 			Xtemp=0;
 			//		System.out.println("Y = "+Y);
 			for(Ytemp=Y;Ytemp<taille_ord;Ytemp++){
