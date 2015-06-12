@@ -35,7 +35,7 @@ public class Niveaux {
 
 
 	public Niveaux(){
-
+		Menu.reset_cam();
 		while(Menu.app.isOpen()){
 			this.processEvent();
 			this.displayBackground();
@@ -54,6 +54,11 @@ public class Niveaux {
 
 			if(e.type == Type.CLOSED){
 				Menu.app.close();
+			}
+
+
+			if(e.type == Event.Type.RESIZED){
+				Menu.reset_cam();
 			}
 
 			if (e.type == Event.Type.MOUSE_BUTTON_PRESSED) {

@@ -25,14 +25,12 @@ public class Menu {
 	protected Sprite sprite_Background = new Sprite();
 	protected Texture texture_Play= new Texture();
 	protected Sprite sprite_Play = new Sprite();
-	protected View camera = new View();
+	protected static View camera = new View();
 	protected static final int WIDTH = 1200;
 	protected static final int HEIGHT = 700;
 
 	public Menu(){
-		this.camera.setSize(new Vector2f(WIDTH, HEIGHT));
-		this.camera.setCenter(WIDTH/2, HEIGHT/2);
-		Menu.app.setView(this.camera);
+		this.reset_cam();
 		while(Menu.app.isOpen()){
 			Menu.app.clear();
 			this.processEvent();
@@ -88,31 +86,27 @@ public class Menu {
 				Menu.app.close();
 			}
 			if(e.type == Event.Type.RESIZED){
-				int x = Menu.app.getSize().x;
-				int y = Menu.app.getSize().y;
-				this.camera.setSize(x, y);
-				this.camera.setCenter(x/2, y/2);
-				Menu.app.setView(this.camera);
+				Menu.reset_cam();
 			}
 
 			if (Keyboard.isKeyPressed(Key.DOWN)){
-				this.camera.zoom(0.5f);
-				Menu.app.setView(this.camera);
+				Menu.camera.zoom(0.5f);
+				Menu.app.setView(Menu.camera);
 			}
 
 			if (Keyboard.isKeyPressed(Key.UP)){
-				this.camera.zoom(2f);
-				Menu.app.setView(this.camera);
+				Menu.camera.zoom(2f);
+				Menu.app.setView(Menu.camera);
 			}
 
 			if (Keyboard.isKeyPressed(Key.RIGHT)){
-				this.camera.rotate(-45);;
-				Menu.app.setView(this.camera);
+				Menu.camera.rotate(-45);;
+				Menu.app.setView(Menu.camera);
 			}
 
 			if (Keyboard.isKeyPressed(Key.LEFT)){
-				this.camera.rotate(45);;
-				Menu.app.setView(this.camera);
+				Menu.camera.rotate(45);;
+				Menu.app.setView(Menu.camera);
 			}
 
 			if (e.type == Event.Type.MOUSE_BUTTON_PRESSED && Mouse.isButtonPressed(Button.LEFT)) {
@@ -124,6 +118,14 @@ public class Menu {
 			}
 
 		}
+	}
+
+	protected static void reset_cam() {
+		int x = Menu.app.getSize().x;
+		int y = Menu.app.getSize().y;
+		Menu.camera.setSize(x, y);
+		Menu.camera.setCenter(x/2, y/2);
+		Menu.app.setView(Menu.camera);
 	}
 
 	/**

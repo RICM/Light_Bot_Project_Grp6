@@ -63,6 +63,7 @@ public class Jeu {
 	protected int indice_tele=0;
 
 	public Jeu(int lvl){
+		Menu.reset_cam();
 		this.level = lvl;
 		while(Menu.app.isOpen()){
 			Menu.app.clear();
@@ -89,6 +90,9 @@ public class Jeu {
 				Menu.app.close();
 			}
 
+			if(e.type == Event.Type.RESIZED){
+				Menu.reset_cam();
+			}
 			if (Keyboard.isKeyPressed(Key.LEFT)){
 				Jeu.r.setOrientation(Orientation.orientation.LEFT);
 				try {
