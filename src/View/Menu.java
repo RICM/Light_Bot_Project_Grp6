@@ -120,6 +120,9 @@ public class Menu {
 		}
 	}
 
+	/**
+	 *	Réinitialise la caméra
+	 */
 	protected static void reset_cam() {
 		int x = Menu.app.getSize().x;
 		int y = Menu.app.getSize().y;

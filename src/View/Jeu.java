@@ -162,7 +162,6 @@ public class Jeu {
 		while(keySetIterator.hasNext()){
 			Sprite s = keySetIterator.next();
 			FloatRect rect = s.getGlobalBounds();
-			System.out.println(rect.left+" "+rect.top+" "+rect.width+" "+rect.height);
 			if(x>=rect.left && x<=rect.left+rect.width &&
 					y>=rect.top && y<=rect.top+rect.height){
 				if(Jeu.liste_sprite.get(s).equals("MoveForward")){
@@ -440,8 +439,8 @@ public class Jeu {
 			int hauteur_max = Ma_case.get_hauteur();
 			int taille_abs =  World.currentWorld.get_terrain(0).get_terrain()[0].length;
 			int taille_ord =  World.currentWorld.get_terrain(0).get_terrain().length;
-			int PosX = Menu.app.getSize().x/2 +59*(Y+X)-taille_abs*60-180;
-			int PosY = Menu.app.getSize().y/2 +18*(Y-X)-taille_ord*18+100;
+			int PosX = Menu.WIDTH/2 +59*(Y+X)-taille_abs*60-180;
+			int PosY = Menu.HEIGHT/2 +18*(Y-X)-taille_ord*18+100;
 
 			for(int hauteur=1; hauteur<hauteur_max;hauteur++){
 				try {
