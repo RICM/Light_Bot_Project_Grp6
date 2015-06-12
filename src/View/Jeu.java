@@ -11,10 +11,7 @@ import java.util.LinkedList;
 import javax.swing.JOptionPane;
 
 import observable.action.Activate;
-import observable.action.Jump;
 import observable.action.MoveForward;
-import observable.action.TurnLeft;
-import observable.action.TurnRIght;
 import observable.action.int_Action;
 import observable.map.Illuminated_Case;
 import observable.map.Terrain;
@@ -34,6 +31,7 @@ import org.jsfml.window.Mouse;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.Event.Type;
 
+import exception.ActionEx;
 import exception.MouvementEx;
 import exception.UnreachableCase;
 
@@ -59,7 +57,7 @@ public class Jeu {
 	protected int indice_tele=0;
 	protected static float x_whale = -600;
 	protected static int y_whale = Menu.HEIGHT/2-200;
-	protected static int activate = 0;
+	protected static String activate = "Fond_Main";
 	protected static ArrayList<Sprite> liste_background = new ArrayList<Sprite>();
 
 	public Jeu(int lvl){
@@ -196,16 +194,35 @@ public class Jeu {
 					break;
 				}
 				else if(Jeu.liste_sprite.get(s).equals("TurnRIght")){
-					Jeu.r.setOrientation(Orientation.orientation.RIGHT);
+					switch(r.getOrientation()){
+					case TOP : Jeu.r.setOrientation(Orientation.orientation.RIGHT);break;
+					case RIGHT:Jeu.r.setOrientation(Orientation.orientation.BOT);break;
+					case BOT : Jeu.r.setOrientation(Orientation.orientation.LEFT);break;
+					case LEFT: Jeu.r.setOrientation(Orientation.orientation.TOP);break;
+					}
 					break;
 				}
 				else if(Jeu.liste_sprite.get(s).equals("TurnLeft")){
-					Jeu.r.setOrientation(Orientation.orientation.LEFT);
+					switch(r.getOrientation()){
+					case TOP : Jeu.r.setOrientation(Orientation.orientation.LEFT);break;
+					case RIGHT:Jeu.r.setOrientation(Orientation.orientation.TOP);break;
+					case BOT : Jeu.r.setOrientation(Orientation.orientation.RIGHT);break;
+					case LEFT: Jeu.r.setOrientation(Orientation.orientation.BOT);break;
+					}
 					break;
 				}
 				else if(Jeu.liste_sprite.get(s).equals("Activate")){
 					//					Jeu.r.add_Action_User_Actions(TurnRIght.turn_right());
 					System.out.println("Allumer");
+					try {
+						Activate.activate().execute(r);
+					} catch (MouvementEx e) {
+						e.printStackTrace();
+					} catch (UnreachableCase e) {
+						e.printStackTrace();
+					} catch (ActionEx e) {
+						e.printStackTrace();
+					}
 					break;
 				}
 				else if(Jeu.liste_sprite.get(s).equals("Jump"))
@@ -215,11 +232,12 @@ public class Jeu {
 			}
 		}
 		int cmp=0;
+		String background[]=  {"Fond_Main","Fond_P1","Fond_P2"};
 		for(Sprite s: liste_background){
 			FloatRect rect = s.getGlobalBounds();
 			if(x>=rect.left && x<=rect.left+rect.width &&
 					y>=rect.top && y<=rect.top+rect.height){
-				activate=cmp;
+				activate=background[cmp];
 				System.out.println("activate: "+activate);
 				break;
 			}
@@ -241,16 +259,24 @@ public class Jeu {
 	 * @param X la position en x du personnage
 	 * @param Y la position en y du personnage
 	 */
-	public void drawPerso(abstr_Robot rob,int X, int Y){
+	public void drawPerso(abstr_Robot rob){
 		try {
+			abstr_Case c = rob.getCurrent_Case();
+			int X = c.get_coordonnees().get_x();
+			int Y = c.get_coordonnees().get_y();
+			int taille_abs =  World.currentWorld.get_terrain(0).get_terrain()[0].length;
+			int taille_ord =  World.currentWorld.get_terrain(0).get_terrain().length;
+			int PosX = Menu.WIDTH/2 +59*(Y+X)-taille_abs*60-180;
+			int PosY = Menu.HEIGHT/2 +18*(Y-X)-taille_ord*18+100;
+
 			switch(rob.getOrientation()){
-			case BOT : this.maTexturePerso.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/3.png"));
-			case LEFT:	this.maTexturePerso.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/15.png"));
-			case RIGHT:this.maTexturePerso.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/7.png"));
-			case TOP : this.maTexturePerso.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/11.png"));
+			case BOT : this.maTexturePerso.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/3.png"));break;
+			case LEFT:	this.maTexturePerso.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/15.png"));break;
+			case RIGHT:this.maTexturePerso.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/7.png"));break;
+			case TOP : this.maTexturePerso.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/11.png"));break;
 			}
 			this.monSpritePerso.setTexture(this.maTexturePerso);
-			this.monSpritePerso.setPosition(X,Y);
+			this.monSpritePerso.setPosition(PosX+30+10,PosY-26*c.get_hauteur()+25);
 			Menu.app.draw(this.monSpritePerso);
 
 		} catch (IOException e) {
@@ -263,42 +289,19 @@ public class Jeu {
 	 */
 	public void draw_bouton(){
 		LinkedList<int_Action> actions = r.get_possible().get();
-		String tab[]=  {"TurnLeft","TurnRIght","MoveForward","Activate","Jump","Bug"};
 		int i =0;
 		try {
 			for(int_Action a : actions){
 				Texture maTextureBouton = new Texture();
 				Sprite monSpriteBouton = new Sprite();
-				int val = tab.length-1;
-				if(a instanceof Jump){
-					maTextureBouton.loadFromFile(Paths.get("Images/Jeu/bouton/Jump.png"));
-					val = 4;
-				}
-				if(a instanceof TurnRIght){
-					maTextureBouton.loadFromFile(Paths.get("Images/Jeu/bouton/TurnRIght.png"));
-					val = 1;
-				}
-				if(a instanceof TurnLeft){
-					maTextureBouton.loadFromFile(Paths.get("Images/Jeu/bouton/TurnLeft.png"));
-					val = 0;
-				}
-				if(a instanceof Activate){
-					maTextureBouton.loadFromFile(Paths.get("Images/Jeu/bouton/Activate.png"));
-					val = 3;
-				}
-				if(a instanceof MoveForward){
-					maTextureBouton.loadFromFile(Paths.get("Images/Jeu/bouton/MoveForward.png"));
-					val = 2;
-				}
-
+				maTextureBouton.loadFromFile(Paths.get("Images/Jeu/bouton/"+a.getClass().getSimpleName()+".png"));
 				monSpriteBouton.setTexture(maTextureBouton);
 				monSpriteBouton.setPosition(10+100*i,610);
-				Jeu.liste_sprite.put(monSpriteBouton,tab[val]);
+				Jeu.liste_sprite.put(monSpriteBouton,a.getClass().getSimpleName());
 				Menu.app.draw(monSpriteBouton);
 				i++;
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -309,18 +312,21 @@ public class Jeu {
 		try {
 			String background[]=  {"Fond_Main","Fond_P1","Fond_P2"};
 			int posY[] = {7, 290, 494};
-			for(int i=0;i<background.length;i++){
+			int num=0;
+			for(String type_background : background){
 				Sprite monSpriteBackground = new Sprite();
-				if(i==activate){
-					this.maTexture.loadFromFile(Paths.get("Images/Jeu/background/"+background[i]+"_Activate.png"));
+				if(type_background==activate){
+					this.maTexture.loadFromFile(Paths.get("Images/Jeu/background/"+type_background+"_Activate.png"));
 				}
 				else{
-					this.maTexture.loadFromFile(Paths.get("Images/Jeu/background/"+background[i]+".png"));
+					this.maTexture.loadFromFile(Paths.get("Images/Jeu/background/"+type_background+".png"));
 				}
-				monSpriteBackground.setPosition(881,posY[i]);
+				monSpriteBackground.setPosition(881, posY[num]);
 				monSpriteBackground.setTexture(this.maTexture);
 				liste_background.add(monSpriteBackground);
+				System.out.println("monSpriteBackground.toString(): "+monSpriteBackground.toString());
 				Menu.app.draw(monSpriteBackground);
+				num++;
 			}
 			int nombre_bouton[] = {r.get_tailleMain(),r.get_tailleP1(),r.get_tailleP2()};
 			int pos_bouton[] = {44,324,530};
@@ -353,7 +359,6 @@ public class Jeu {
 	 */
 	public void typeCases(abstr_Case cases){
 		try{
-			System.out.println(cases.getClass().getSimpleName());
 			switch(cases.getClass().getSimpleName()){
 			case("Normal_Case") : this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/Square_normal.png"));break;
 			case("Destination_Case") : this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/Square_destination.png"));break;
@@ -473,7 +478,7 @@ public class Jeu {
 				int y = rob[i].getCurrent_Case().get_coordonnees().get_y();
 				//Si le pingouin est sur cette case, alors on l'affiche à la hauteur maximale de celle-ci
 				if ((x == X) && (y == Y)){
-					this.drawPerso(rob[i],PosX+30+10,PosY-26*hauteur_max+25);
+					this.drawPerso(rob[i]);
 				}
 			}
 
