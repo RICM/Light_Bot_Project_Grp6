@@ -3,6 +3,7 @@ package View;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -64,6 +65,8 @@ public class Jeu {
 	protected int indice_tele=0;
 	protected static float x_whale = -600;
 	protected static int y_whale = Menu.HEIGHT/2-200;
+	protected static int activate = 0;
+	protected static ArrayList<Sprite> liste_background = new ArrayList<Sprite>();
 
 	public Jeu(int lvl){
 		Menu.reset_cam();
@@ -217,6 +220,18 @@ public class Jeu {
 				break;
 			}
 		}
+		int cmp=0;
+		for(Sprite s: liste_background){
+			FloatRect rect = s.getGlobalBounds();
+			if(x>=rect.left && x<=rect.left+rect.width &&
+					y>=rect.top && y<=rect.top+rect.height){
+				activate=cmp;
+				System.out.println("activate: "+activate);
+				break;
+			}
+			cmp++;
+		}
+
 	}
 
 
@@ -224,30 +239,6 @@ public class Jeu {
 		JOptionPane.showMessageDialog(null, msg);
 	}
 
-	/**
-	 * Affiche le personnage
-	 * @param rob le personnage a afficher
-	 */
-	public void display_robot(abstr_Robot rob){
-		try {
-			if(Jeu.r.getOrientation() == Orientation.orientation.BOT)
-				this.maTexturePerso.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/3.png"));
-			else if(Jeu.r.getOrientation() == Orientation.orientation.LEFT)
-				this.maTexturePerso.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/15.png"));
-			else if(Jeu.r.getOrientation() == Orientation.orientation.RIGHT)
-				this.maTexturePerso.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/7.png"));
-			else if(Jeu.r.getOrientation() == Orientation.orientation.TOP)
-				this.maTexturePerso.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/11.png"));
-
-			this.monSpritePerso.setTexture(this.maTexturePerso);
-			this.monSpritePerso.setPosition(rob.getCurrent_Case().get_coordonnees().get_x(),rob.getCurrent_Case().get_coordonnees().get_y());
-			Menu.app.draw(this.monSpritePerso);
-
-
-		} catch (IOException e) {
-			System.out.println(e.getMessage());
-		} // on charge la texture qui se trouve dans notre dossier assets
-	}
 
 
 	/**
@@ -325,12 +316,20 @@ public class Jeu {
 
 	public void draw_procedure(){
 		try {
-			String tab[]=  {"Fond_Main","Fond_P1","Fond_P2"};
-			for(int i=0;i<tab.length;i++){
-				Sprite monSpriteBouton = new Sprite();
-				this.maTexture.loadFromFile(Paths.get("Images/Jeu/background/"+tab[i]+".png"));
-				monSpriteBouton.setTexture(this.maTexture);
-				Menu.app.draw(monSpriteBouton);
+			String background[]=  {"Fond_Main","Fond_P1","Fond_P2"};
+			int posY[] = {7, 290, 494};
+			for(int i=0;i<background.length;i++){
+				Sprite monSpriteBackground = new Sprite();
+				if(i==this.activate){
+					this.maTexture.loadFromFile(Paths.get("Images/Jeu/background/"+background[i]+"_Activate.png"));
+				}
+				else{
+					this.maTexture.loadFromFile(Paths.get("Images/Jeu/background/"+background[i]+".png"));
+				}
+				monSpriteBackground.setPosition(881,posY[i]);
+				monSpriteBackground.setTexture(this.maTexture);
+				this.liste_background.add(monSpriteBackground);
+				Menu.app.draw(monSpriteBackground);
 			}
 			int nombre_bouton[] = {r.get_tailleMain(),r.get_tailleP1(),r.get_tailleP2()};
 			int pos_bouton[] = {44,324,530};
