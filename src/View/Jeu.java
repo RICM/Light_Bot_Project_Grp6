@@ -29,11 +29,11 @@ import observable.robot.abstr_Robot;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
+import org.jsfml.system.Vector2f;
 import org.jsfml.system.Vector2i;
 import org.jsfml.window.Keyboard;
 import org.jsfml.window.Keyboard.Key;
 import org.jsfml.window.Mouse;
-import org.jsfml.window.Mouse.Button;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.Event.Type;
 
@@ -66,10 +66,10 @@ public class Jeu {
 		this.level = lvl;
 		while(Menu.app.isOpen()){
 			Menu.app.clear();
-			Jeu.processEvent();
 			this.drawGrilleISO();
 			this.draw_bouton();
 			this.draw_procedure();
+			Jeu.processEvent();
 			Menu.app.display();
 			if(World.currentWorld.is_cleared()){
 				//				JOptionPane.showMessageDialog(null, "Fin");
@@ -83,6 +83,7 @@ public class Jeu {
 	 */
 	public static void processEvent(){
 		Menu.app.setKeyRepeatEnabled(false);
+
 		for(Event e : Menu.app.pollEvents()){
 			if(e.type == Type.CLOSED){
 				Menu.app.close();
@@ -109,13 +110,7 @@ public class Jeu {
 				}
 			}
 			if (Keyboard.isKeyPressed(Key.SPACE)){
-				try {
-					Activate.activate().execute(Jeu.r);
-				} catch (MouvementEx e1) {
-					System.out.println(e1.getMessage());
-				} catch (UnreachableCase e1) {
-					System.out.println(e1.getMessage());
-				}
+
 			}
 			if (Keyboard.isKeyPressed(Key.UP)){
 				Jeu.r.setOrientation(Orientation.orientation.TOP);
@@ -142,10 +137,11 @@ public class Jeu {
 				Jeu.r.run();
 			}
 
-			if (e.type == Event.Type.MOUSE_BUTTON_PRESSED && Mouse.isButtonPressed(Button.LEFT)) {
+			if (e.type == Event.Type.MOUSE_BUTTON_RELEASED ) {
 				e.asMouseEvent();
 				Vector2i pos = Mouse.getPosition(Menu.app);
-				Jeu.detect_move(pos);
+				Vector2f click = Menu.app.mapPixelToCoords(pos);
+				Jeu.detect_move(click);
 			}
 
 		}
@@ -155,9 +151,9 @@ public class Jeu {
 	 *
 	 * @param pos Coordonnées du clique souris
 	 */
-	private static void detect_move(Vector2i pos) {
-		int x = pos.x;
-		int y = pos.y;
+	private static void detect_move(Vector2f pos) {
+		float x = pos.x;
+		float y = pos.y;
 		Iterator<Sprite> keySetIterator = Jeu.liste_sprite.keySet().iterator();
 		while(keySetIterator.hasNext()){
 			Sprite s = keySetIterator.next();
@@ -165,21 +161,33 @@ public class Jeu {
 			System.out.println(rect.left+" "+rect.top+" "+rect.width+" "+rect.height);
 			if(x>=rect.left && x<=rect.left+rect.width &&
 					y>=rect.top && y<=rect.top+rect.height){
-				if(Jeu.liste_sprite.get(s).equals("MoveForward"))
-					//					Jeu.r.add_Action_User_Actions(TurnLeft.turn_left());
-					System.out.println("Avance");
-				else if(Jeu.liste_sprite.get(s).equals("TurnRIght"))
-					//					Jeu.r.add_Action_User_Actions(TurnRIght.turn_right());
-					System.out.println("Droite");
-				else if(Jeu.liste_sprite.get(s).equals("TurnLeft"))
-					//					Jeu.r.add_Action_User_Actions(TurnRIght.turn_right());
-					System.out.println("Gauche");
-				else if(Jeu.liste_sprite.get(s).equals("Activate"))
+				if(Jeu.liste_sprite.get(s).equals("MoveForward")){
+					try {
+						MoveForward.move_forward().execute(Jeu.r);
+					} catch (MouvementEx e1) {
+						System.out.println(e1.getMessage());
+					} catch (UnreachableCase e1) {
+						System.out.println(e1.getMessage());
+					}
+					break;
+				}
+				else if(Jeu.liste_sprite.get(s).equals("TurnRIght")){
+					Jeu.r.setOrientation(Orientation.orientation.RIGHT);
+					break;
+				}
+				else if(Jeu.liste_sprite.get(s).equals("TurnLeft")){
+					Jeu.r.setOrientation(Orientation.orientation.LEFT);
+					break;
+				}
+				else if(Jeu.liste_sprite.get(s).equals("Activate")){
 					//					Jeu.r.add_Action_User_Actions(TurnRIght.turn_right());
 					System.out.println("Allumer");
+					break;
+				}
 				else if(Jeu.liste_sprite.get(s).equals("Jump"))
 					//					Jeu.r.add_Action_User_Actions(TurnRIght.turn_right());
 					System.out.println("Sauter");
+				break;
 			}
 		}
 	}
@@ -334,11 +342,11 @@ public class Jeu {
 				this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/Square_vide.png"));
 			}
 			else if(cases instanceof Teleporter_Case){
-				this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/case_teleporteur/Case_pointeur_"+ this.indice_tele+".png"));
-				this.indice_tele++;
-				if( this.indice_tele>=9){
-					this.indice_tele=0;
-				}
+				//				this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/case_teleporteur/Case_pointeur_"+ this.indice_tele+".png"));
+				//				this.indice_tele++;
+				//				if( this.indice_tele>=9){
+				//					this.indice_tele=0;
+				//				}
 			}
 			else if(cases instanceof Painted_Case){
 				if(cases.get_couleur()== Couleur.VERT)
