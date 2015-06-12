@@ -231,15 +231,15 @@ public class Jeu {
 	 * @param X la position en x du personnage
 	 * @param Y la position en y du personnage
 	 */
-	public void drawPerso(int X, int Y){
+	public void drawPerso(abstr_Robot rob,int X, int Y){
 		try {
-			if(Jeu.r.getOrientation() == Orientation.orientation.BOT)
+			if(rob.getOrientation() == Orientation.orientation.BOT)
 				this.maTexturePerso.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/3.png"));
-			else if(Jeu.r.getOrientation() == Orientation.orientation.LEFT)
+			else if(rob.getOrientation() == Orientation.orientation.LEFT)
 				this.maTexturePerso.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/15.png"));
-			else if(Jeu.r.getOrientation() == Orientation.orientation.RIGHT)
+			else if(rob.getOrientation() == Orientation.orientation.RIGHT)
 				this.maTexturePerso.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/7.png"));
-			else if(Jeu.r.getOrientation() == Orientation.orientation.TOP)
+			else if(rob.getOrientation() == Orientation.orientation.TOP)
 				this.maTexturePerso.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/11.png"));
 
 			this.monSpritePerso.setTexture(this.maTexturePerso);
@@ -434,8 +434,6 @@ public class Jeu {
 
 		try {
 			abstr_Case Ma_case = World.currentWorld.get_terrain(0).get_case(X,Y);
-			int x = Jeu.r.getCurrent_Case().get_coordonnees().get_x();
-			int y = Jeu.r.getCurrent_Case().get_coordonnees().get_y();
 			int hauteur_max = Ma_case.get_hauteur();
 			int taille_abs =  World.currentWorld.get_terrain(0).get_terrain()[0].length;
 			int taille_ord =  World.currentWorld.get_terrain(0).get_terrain().length;
@@ -456,10 +454,14 @@ public class Jeu {
 			this.monSprite.setTexture(this.maTexture);
 			this.monSprite.setPosition(PosX,PosY-26*hauteur_max);
 			Menu.app.draw(this.monSprite);
-
-			//Si le pingouin est sur cette case, alors on l'affiche à la hauteur maximale de celle-ci
-			if ((x == X) && (y == Y)){
-				this.drawPerso(PosX+30+10,PosY-26*hauteur_max+25);
+			abstr_Robot [] rob = w.get_liste_robot();
+			for(int i = 0;i<rob.length;i++){
+				int x = rob[i].getCurrent_Case().get_coordonnees().get_x();
+				int y = rob[i].getCurrent_Case().get_coordonnees().get_y();
+				//Si le pingouin est sur cette case, alors on l'affiche à la hauteur maximale de celle-ci
+				if ((x == X) && (y == Y)){
+					this.drawPerso(rob[i],PosX+30+10,PosY-26*hauteur_max+25);
+				}
 			}
 
 		} catch (UnreachableCase e1) {
