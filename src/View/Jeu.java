@@ -15,6 +15,7 @@ import observable.action.MoveForward;
 import observable.action.TurnLeft;
 import observable.action.TurnRIght;
 import observable.action.int_Action;
+import observable.map.Destination_Case;
 import observable.map.Empty_Case;
 import observable.map.Illuminated_Case;
 import observable.map.Normal_Case;
@@ -80,7 +81,7 @@ public class Jeu {
 	}
 
 	/**
-	 * Détecte les entrées claviers et souris
+	 * Dï¿½tecte les entrï¿½es claviers et souris
 	 */
 	public static void processEvent(){
 		Menu.app.setKeyRepeatEnabled(false);
@@ -153,7 +154,7 @@ public class Jeu {
 
 	/**
 	 *
-	 * @param pos Coordonnées du clique souris
+	 * @param pos Coordonnï¿½es du clique souris
 	 */
 	private static void detect_move(Vector2f pos) {
 		float x = pos.x;
@@ -345,11 +346,14 @@ public class Jeu {
 				this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/Square_vide.png"));
 			}
 			else if(cases instanceof Teleporter_Case){
-				//				this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/case_teleporteur/Case_pointeur_"+ this.indice_tele+".png"));
-				//				this.indice_tele++;
-				//				if( this.indice_tele>=9){
-				//					this.indice_tele=0;
-				//				}
+				this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/case_teleporteur/Case_pointeur_"+ this.indice_tele+".png"));
+				this.indice_tele++;
+				if( this.indice_tele>=9){
+					this.indice_tele=0;
+				}
+			}
+			else if(cases instanceof Destination_Case){
+				this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/Square_vert.png"));
 			}
 			else if(cases instanceof Painted_Case){
 				if(cases.get_couleur()== Couleur.VERT)
@@ -427,8 +431,8 @@ public class Jeu {
 
 	/**
 	 * Si la hauteur de la case est > 1, affiche toutes les cases en dessous
-	 * @param X coordonnées x de la case
-	 * @param Y coordonnées y de la case
+	 * @param X coordonnï¿½es x de la case
+	 * @param Y coordonnï¿½es y de la case
 	 */
 	public void affichageISO(int X, int Y){
 
