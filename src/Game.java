@@ -1,4 +1,3 @@
-import View.Menu;
 import observable.action.Activate;
 import observable.action.Jump;
 import observable.action.MoveForward;
@@ -14,6 +13,7 @@ import observable.map.World;
 import observable.map.abstr_Case;
 import observable.robot.Robot;
 import parser.parserJSON;
+import View.Menu;
 import couleur.Couleur;
 import exception.ActionEx;
 import exception.UnreachableCase;
