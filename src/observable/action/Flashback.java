@@ -63,6 +63,7 @@ public class Flashback implements int_Action {
 			else{
 				r.setCurrent_Case(dest);
 				r.setOrientation(pos_dest.get_orientation());
+				r.set_couleur(pos_dest.get_couleur());
 			}
 		}
 		else{
