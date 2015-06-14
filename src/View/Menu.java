@@ -3,6 +3,8 @@ package View;
 import java.io.IOException;
 import java.nio.file.Paths;
 
+import observer.controller.Controller;
+
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.RenderWindow;
 import org.jsfml.graphics.Sprite;
@@ -28,8 +30,10 @@ public class Menu {
 	protected static View camera = new View();
 	protected static final int WIDTH = 1200;
 	protected static final int HEIGHT = 700;
+	protected static Controller controller;
 
-	public Menu(){
+	public Menu(Controller acontroller){
+		controller = acontroller;
 		this.reset_cam();
 		while(Menu.app.isOpen()){
 			Menu.app.clear();
@@ -38,6 +42,10 @@ public class Menu {
 			this.displayBtn();
 			Menu.app.display();
 		}
+	}
+
+	public void addController(Controller acontroller){
+		controller = acontroller;
 	}
 
 	/**
@@ -75,7 +83,7 @@ public class Menu {
 	}
 
 	/**
-	 * Détecte les entrées claviers et souris
+	 * Dï¿½tecte les entrï¿½es claviers et souris
 	 */
 	private void processEvent() {
 		// TODO Auto-generated method stub
@@ -121,7 +129,7 @@ public class Menu {
 	}
 
 	/**
-	 *	Réinitialise la caméra
+	 *	Rï¿½initialise la camï¿½ra
 	 */
 	protected static void reset_cam() {
 		int x = Menu.app.getSize().x;
@@ -132,8 +140,8 @@ public class Menu {
 	}
 
 	/**
-	 * Regarde si le clique passé en paramètre est sur le bouton Jouer
-	 * @param pos Coordonnées du clique souris
+	 * Regarde si le clique passï¿½ en paramï¿½tre est sur le bouton Jouer
+	 * @param pos Coordonnï¿½es du clique souris
 	 */
 	private void btnClick(Vector2f pos) {
 		// TODO Auto-generated method stub
@@ -142,7 +150,7 @@ public class Menu {
 		FloatRect rect = this.sprite_Play.getGlobalBounds();
 		if(x>=rect.left && x<=rect.left+rect.width &&
 				y>=rect.top && y<=rect.top+rect.height){
-			new Niveaux();
+			Niveaux niv = new Niveaux(controller);
 		}
 	}
 }

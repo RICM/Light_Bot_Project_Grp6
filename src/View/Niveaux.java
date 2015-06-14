@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
+import observer.controller.Controller;
+
 import org.jsfml.graphics.Color;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.Font;
@@ -32,9 +34,11 @@ public class Niveaux {
 	protected int level = 1;
 	protected static final int WIDTH = 1200;
 	protected static final int HEIGHT = 700;
+	protected static Controller controller;
 
 
-	public Niveaux(){
+	public Niveaux(Controller acontroller){
+		controller = acontroller;
 		Menu.reset_cam();
 		while(Menu.app.isOpen()){
 			this.processEvent();
@@ -45,8 +49,12 @@ public class Niveaux {
 		}
 	}
 
+	public void addController(Controller acontroller){
+		controller = acontroller;
+	}
+
 	/**
-	 * Détecte les entrées claviers et souris
+	 * Dï¿½tecte les entrï¿½es claviers et souris
 	 */
 	public void processEvent(){
 		Menu.app.setKeyRepeatEnabled(false);
@@ -72,8 +80,8 @@ public class Niveaux {
 	}
 
 	/**
-	 * Regarde si le clique passé en paramètre est sur l'un des boutons
-	 * @param pos Coordonnées du clique souris
+	 * Regarde si le clique passï¿½ en paramï¿½tre est sur l'un des boutons
+	 * @param pos Coordonnï¿½es du clique souris
 	 */
 	private void btnClick(Vector2f pos) {
 		float x = pos.x;
@@ -93,10 +101,10 @@ public class Niveaux {
 					this.level++;
 				}
 				else if(cpt == 2){
-					new Menu();
+					new Menu(controller);
 				}
 				else if(cpt == 3){
-					new Jeu(0);
+					Jeu jeu = new Jeu(this.level, controller);
 				}
 			}
 			cpt++;

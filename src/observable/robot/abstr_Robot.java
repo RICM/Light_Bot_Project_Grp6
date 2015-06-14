@@ -16,15 +16,15 @@ import exception.UnreachableCase;
 
 public abstract class abstr_Robot {
 	private Possible_List allowed_actions;
-	private Sequence_List user_actions = new Sequence_List();
-	private Sequence_List P1 = new Sequence_List();
-	private Sequence_List P2 = new Sequence_List();
+	private Sequence_List user_actions = new Sequence_List(this.listObserver.get(0));
+	private Sequence_List P1 = new Sequence_List(this.listObserver.get(0));
+	private Sequence_List P2 = new Sequence_List(this.listObserver.get(0));
 	private int nbActionMain, nbActionP1, nbActionP2;
 	private abstr_Case current_case;
 	private Orientation.orientation current_orientation;
 	private Couleur color;
 	private Execution_list order_exec = new Execution_list();
-	private ArrayList<int_Observer> listObserver = new ArrayList<int_Observer>();
+	protected ArrayList<int_Observer> listObserver = new ArrayList<int_Observer>();
 	private boolean activable = true;
 	private LinkedList<Position> rollback = new LinkedList<Position>();
 
@@ -65,6 +65,7 @@ public abstract class abstr_Robot {
 			for(int i =0; i<this.allowed_actions.size(); i++){
 				if(str.equals(this.allowed_actions.get_name(i))){
 					this.P1.addActionToList(act);
+					System.out.println("Action ajoutée au robot");
 					added = true;
 					break;
 				}
@@ -82,6 +83,7 @@ public abstract class abstr_Robot {
 			for(int i =0; i<this.allowed_actions.size(); i++){
 				if(str.equals(this.allowed_actions.get_name(i))){
 					this.P2.addActionToList(act);
+					System.out.println("Action ajoutée au robot");
 					added = true;
 					break;
 				}

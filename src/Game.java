@@ -12,6 +12,7 @@ import observable.map.Terrain;
 import observable.map.World;
 import observable.map.abstr_Case;
 import observable.robot.Robot;
+import observer.controller.Controller;
 import parser.parserJSON;
 import View.Menu;
 import couleur.Couleur;
@@ -22,6 +23,7 @@ import exception.UnreachableCase;
 public class Game {
 
 	public static void main (String[] args){
+		Controller acontroller = new Controller();
 		/**
 		 * un robot
 		 * tableau de robot
@@ -75,7 +77,7 @@ public class Game {
 		terrain_test.add_case(2, 3, carre2);
 		try {
 			initRob = terrain_test.get_case(0, 0);
-			Robot robert = new Robot(initRob, list);
+			Robot robert = new Robot(initRob, list, acontroller);
 			Robot robotlist[] = new Robot[1];
 			Terrain terrainlist[] = new Terrain[1];
 			robotlist[0] = robert;
@@ -117,7 +119,8 @@ public class Game {
 		}
 
 		//Jeu game = new Jeu(0,null);
-		Menu game = new Menu();
+
+		Menu game = new Menu(acontroller);
 		//game.setVisible(true);
 		//game.setLocationRelativeTo(null);
 

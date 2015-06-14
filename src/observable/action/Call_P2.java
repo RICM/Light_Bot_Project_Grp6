@@ -18,18 +18,20 @@ public class Call_P2 implements int_Action, int_Observable{
 
 	private ArrayList<int_Observer> listObserver = new ArrayList<int_Observer>();
 
-	public static Call_P2 call_p2(){
-		return new Call_P2();
+	public static Call_P2 call_p2(int_Observer controller){
+		return new Call_P2(controller);
 	}
-	private Call_P2(){
+	private Call_P2(int_Observer controller){
+		this.listObserver.add(controller);
 		this.color = Couleur.GRIS;
 	}
 
-	public static Call_P2 call_p2(Couleur col){
-		return new Call_P2(col);
+	public static Call_P2 call_p2(Couleur col, int_Observer controller){
+		return new Call_P2(col, controller);
 	}
-	private Call_P2(Couleur col){
+	private Call_P2(Couleur col, int_Observer controller){
 		this.color = col;
+		this.listObserver.add(controller);
 	}
 
 	@Override
@@ -54,7 +56,7 @@ public class Call_P2 implements int_Action, int_Observable{
 	 */
 	public void execute(abstr_Robot r) throws MouvementEx, UnreachableCase, ActionEx {
 		if (this.isPossible(r,r.getCurrent_Case())){
-			Sequence_List temp = new Sequence_List();
+			Sequence_List temp = new Sequence_List(this.listObserver.get(0));
 			for (int i =0; i<r.get_P2().size(); i++){
 				temp.addActionToList(r.get_P2().get(i));
 			}
