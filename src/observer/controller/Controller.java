@@ -77,10 +77,7 @@ public class Controller implements int_Observer {
 		/**
 		 * Receive a notification from view to run program
 		 */
-		int robotN = World.currentWorld.number_robots();
-		for (int i = 0; i < robotN; i++){
-			World.currentWorld.get_robot(i).run();
-		}
+
 	}
 
 	public void getNotificationAddToRobotList(int_Action act){
