@@ -63,7 +63,8 @@ public class Jump implements int_Action, int_Observable{
 	}
 	@Override
 	public boolean isPossible(abstr_Robot r, abstr_Case c) {
-		return ((r.get_couleur().equals(this.color) || Couleur.GRIS.equals(this.color))
+		return ((!c.getClass().getSimpleName().equals("Empty_Case"))
+				&& (r.get_couleur().equals(this.color) || Couleur.GRIS.equals(this.color))
 				&& (r.getCurrent_Case().get_hauteur()+1 == c.get_hauteur())
 				|| (c.get_hauteur() < r.getCurrent_Case().get_hauteur()));
 	}
@@ -82,7 +83,6 @@ public class Jump implements int_Action, int_Observable{
 		for(int_Observer obs : this.listObserver)
 			obs.update(this);
 	}
-
 
 
 }

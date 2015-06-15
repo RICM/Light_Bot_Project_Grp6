@@ -16,7 +16,6 @@ public class Sequence_List implements int_Action_List, int_Observable{
 	@Override
 	public void addActionToList(int_Action act){
 		this.actions_list_seq.add(act);
-		System.out.println("je suis en bas");
 		this.notifyObserver();
 	}
 
@@ -69,6 +68,16 @@ public class Sequence_List implements int_Action_List, int_Observable{
 
 	public Sequence_List(int_Observer acontroller){
 		this.listObserver.add(acontroller);
+	}
+
+
+	@Override
+	public String toString(){
+		String str = new String();
+		for (int i = 0; i<this.actions_list_seq.size(); i++){
+			str = str+" , "+this.actions_list_seq.get(i).getClass().getSimpleName();
+		}
+		return str;
 	}
 
 }
