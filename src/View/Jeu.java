@@ -10,7 +10,6 @@ import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 
-import observable.action.Activate;
 import observable.action.MoveForward;
 import observable.action.int_Action;
 import observable.action_list.Sequence_List;
@@ -33,7 +32,6 @@ import org.jsfml.window.Mouse;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.Event.Type;
 
-import exception.ActionEx;
 import exception.MouvementEx;
 import exception.UnreachableCase;
 
@@ -202,7 +200,7 @@ public class Jeu {
 					y>=rect.top && y<=rect.top+rect.height){
 				if(Jeu.liste_sprite.get(s).equals("MoveForward")){
 					//ajoute l'action dans la liste d'action du robot en fonction du panneau activé
-					try {
+					/*try {
 						switch(activate){
 						case ("Main") : r.add_Action_User_Actions(MoveForward.move_forward());break;
 						case ("P1") : r.add_Action_User_ActionsP1(MoveForward.move_forward());break;
@@ -221,6 +219,10 @@ public class Jeu {
 					} catch (UnreachableCase e1) {
 						System.out.println(e1.getMessage());
 					}
+					break;*/
+					int_Action actionToAdd = controller.getNotificationAddActionToUserList(Jeu.liste_sprite.get(s));
+					if (actionToAdd != null)
+						Jeu.liste_sprite_Action.put(s, actionToAdd);
 					break;
 				}
 				else if(Jeu.liste_sprite.get(s).equals("TurnRIght")){
@@ -275,7 +277,7 @@ public class Jeu {
 				}
 				else if(Jeu.liste_sprite.get(s).equals("Activate")){
 					//ajoute l'action dans la liste d'action du robot en fonction du panneau activé
-					try {
+					/*try {
 						switch(activate){
 						case ("Main") : r.add_Action_User_Actions(Activate.activate());break;
 						case ("P1") : r.add_Action_User_ActionsP1(Activate.activate());break;
@@ -294,11 +296,15 @@ public class Jeu {
 					} catch (ActionEx e) {
 						e.printStackTrace();
 					}
+					break;*/
+					int_Action actionToAdd = controller.getNotificationAddActionToUserList(Jeu.liste_sprite.get(s));
+					if (actionToAdd != null)
+						Jeu.liste_sprite_Action.put(s, actionToAdd);
 					break;
 				}
-				else if(Jeu.liste_sprite.get(s).equals("Jump"))
+				else if(Jeu.liste_sprite.get(s).equals("Jump")){
 					//ajoute l'action dans la liste d'action du robot en fonction du panneau activé
-					try {
+					/*try {
 						switch(activate){
 						case ("Main") : r.add_Action_User_Actions(Jump.jump());break;
 						case ("P1") : r.add_Action_User_ActionsP1(Jump.jump());break;
