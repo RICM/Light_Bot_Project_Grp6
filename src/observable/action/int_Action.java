@@ -3,6 +3,7 @@ package observable.action;
 import observable.int_Observable;
 import observable.map.abstr_Case;
 import observable.robot.abstr_Robot;
+import couleur.Couleur;
 import exception.ActionEx;
 import exception.MouvementEx;
 import exception.UnreachableCase;
@@ -26,5 +27,8 @@ public interface int_Action extends int_Observable {
 	 */
 	public boolean isPossible(abstr_Robot r,abstr_Case c);
 
+	public Couleur getColor();
+
+	public void setColor(Couleur color);
 
 }

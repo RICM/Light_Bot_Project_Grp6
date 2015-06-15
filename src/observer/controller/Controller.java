@@ -15,6 +15,7 @@ import observable.robot.Robot;
 import observable.robot.abstr_Robot;
 import observer.int_Observer;
 import View.Jeu;
+import couleur.Couleur;
 import exception.ActionEx;
 public class Controller implements int_Observer {
 
@@ -168,7 +169,7 @@ public class Controller implements int_Observer {
 		this.setNotificationUpdatedRobot(rob);
 	}
 
-	public int_Action getNotificationAddActionToUserList(String str){
+	public int_Action getNotificationAddActionToUserList(String str, Couleur color){
 		try{
 			switch (str){
 			case "TurnRIght" :

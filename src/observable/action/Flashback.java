@@ -18,6 +18,16 @@ public class Flashback implements int_Action {
 
 	private Couleur color;
 
+	@Override
+	public Couleur getColor() {
+		return this.color;
+	}
+
+	@Override
+	public void setColor(Couleur color) {
+		this.color = color;
+	}
+
 	public static Flashback flashback(){
 		return new Flashback();
 	}
