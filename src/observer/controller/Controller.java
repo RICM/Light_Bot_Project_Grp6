@@ -101,15 +101,15 @@ public class Controller implements int_Observer {
 		abstr_Robot rob = World.currentWorld.get_robot(this.current_robot);
 		switch (this.current_program){
 		case 0 :
-			if (position < rob.get_tailleMain())
+			if (position < rob.get_Main().size())
 				rob.get_Main().removeIndice(position);
 			break;
 		case 1 :
-			if (position < rob.get_tailleP1())
+			if (position < rob.get_P1().size())
 				rob.get_P1().removeIndice(position);
 			break;
 		case 2 :
-			if (position < rob.get_tailleP2())
+			if (position < rob.get_P2().size())
 				rob.get_P2().removeIndice(position);
 			break;
 		}
