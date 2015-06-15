@@ -10,11 +10,7 @@ import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 
-import observable.action.Activate;
-import observable.action.Jump;
 import observable.action.MoveForward;
-import observable.action.TurnLeft;
-import observable.action.TurnRIght;
 import observable.action.int_Action;
 import observable.action_list.Sequence_List;
 import observable.map.Illuminated_Case;
@@ -38,7 +34,6 @@ import org.jsfml.window.event.Event;
 import org.jsfml.window.event.Event.Type;
 
 import couleur.Couleur;
-import exception.ActionEx;
 import exception.MouvementEx;
 import exception.UnreachableCase;
 
@@ -231,170 +226,36 @@ public class Jeu {
 			if(x>=rect.left && x<=rect.left+rect.width && y>=rect.top && y<=rect.top+rect.height){
 				if(Jeu.liste_sprite.get(s).equals("MoveForward")){
 					//ajoute l'action dans la liste d'action du robot en fonction du panneau activé
-					/*try {
-						switch(activate){
-						case ("Main") : r.add_Action_User_Actions(MoveForward.move_forward());break;
-						case ("P1") : r.add_Action_User_ActionsP1(MoveForward.move_forward());break;
-						case ("P2") : r.add_Action_User_ActionsP2(MoveForward.move_forward());break;
-						}
-					}catch (ActionEx e) {
-						e.printStackTrace();
-					}
-					try {
-						MoveForward.move_forward().execute(Jeu.r);
-						int_Action actionToAdd = controller.getNotificationAddActionToUserList(Jeu.liste_sprite.get(s));
-						if (actionToAdd != null)
-							Jeu.liste_sprite_Action.put(s, actionToAdd);
-					} catch (MouvementEx e1) {
-						System.out.println(e1.getMessage());
-					} catch (UnreachableCase e1) {
-						System.out.println(e1.getMessage());
-					}
-					break;*/
-					try {
-						MoveForward.move_forward().execute(r);
-					} catch (MouvementEx | UnreachableCase e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
 					int_Action actionToAdd = controller.getNotificationAddActionToUserList(Jeu.liste_sprite.get(s), couleur_active);
 					if (actionToAdd != null)
 						Jeu.liste_sprite_Action.put(s, actionToAdd);
 					break;
 				}
 				else if(Jeu.liste_sprite.get(s).equals("TurnRIght")){
-					/*//ajoute l'action dans la liste d'action du robot en fonction du panneau activé
-					try {
-						switch(activate){
-						case ("Main") : r.add_Action_User_Actions(TurnRIght.turn_right());break;
-						case ("P1") : r.add_Action_User_ActionsP1(TurnRIght.turn_right());break;
-						case ("P2") : r.add_Action_User_ActionsP2(TurnRIght.turn_right());break;
-						}
-					}catch (ActionEx e) {
-						e.printStackTrace();
-					}
-					switch(r.getOrientation()){
-					case TOP : Jeu.r.setOrientation(Orientation.orientation.RIGHT);break;
-					case RIGHT:Jeu.r.setOrientation(Orientation.orientation.BOT);break;
-					case BOT : Jeu.r.setOrientation(Orientation.orientation.LEFT);break;
-					case LEFT: Jeu.r.setOrientation(Orientation.orientation.TOP);break;
-					}
-					break;
-				}
-				else if(Jeu.liste_sprite.get(s).equals("TurnLeft")){
-					//ajoute l'action dans la liste d'action du robot en fonction du panneau activé
-					try {
-						switch(activate){
-						case ("Main") : r.add_Action_User_Actions(TurnLeft.turn_left());break;
-						case ("P1") : r.add_Action_User_ActionsP1(TurnLeft.turn_left());break;
-						case ("P2") : r.add_Action_User_ActionsP2(TurnLeft.turn_left());break;
-						}
-					}catch (ActionEx e) {
-						e.printStackTrace();
-					}
-					switch(r.getOrientation()){
-					case TOP : Jeu.r.setOrientation(Orientation.orientation.LEFT);break;
-					case RIGHT:Jeu.r.setOrientation(Orientation.orientation.TOP);break;
-					case BOT : Jeu.r.setOrientation(Orientation.orientation.RIGHT);break;
-					case LEFT: Jeu.r.setOrientation(Orientation.orientation.BOT);break;
-					}*/
-					TurnRIght.turn_right().execute(r);
 					int_Action actionToAdd = controller.getNotificationAddActionToUserList(Jeu.liste_sprite.get(s), couleur_active);
 					if (actionToAdd != null)
 						Jeu.liste_sprite_Action.put(s, actionToAdd);
 					break;
 				}
-
 				else if(Jeu.liste_sprite.get(s).equals("TurnLeft")){
-					try {
-						TurnLeft.turn_left().execute(r);
-					} catch (MouvementEx e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
 					int_Action actionToAdd = controller.getNotificationAddActionToUserList(Jeu.liste_sprite.get(s), couleur_active);
 					if (actionToAdd != null)
 						Jeu.liste_sprite_Action.put(s, actionToAdd);
 					break;
 				}
 				else if(Jeu.liste_sprite.get(s).equals("Activate")){
-					//ajoute l'action dans la liste d'action du robot en fonction du panneau activé
-					/*try {
-						switch(activate){
-						case ("Main") : r.add_Action_User_Actions(Activate.activate());break;
-						case ("P1") : r.add_Action_User_ActionsP1(Activate.activate());break;
-						case ("P2") : r.add_Action_User_ActionsP2(Activate.activate());break;
-						}
-					}catch (ActionEx e) {
-						e.printStackTrace();
-					}
-					System.out.println("Allumer");
-					/*try {
-						Activate.activate().execute(r);
-					} catch (MouvementEx e) {
-						e.printStackTrace();
-					} catch (UnreachableCase e) {
-						e.printStackTrace();
-					} catch (ActionEx e) {
-						e.printStackTrace();
-					}
-					break;*/
-					try {
-						Activate.activate().execute(r);
-					} catch (MouvementEx e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (UnreachableCase e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (ActionEx e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					System.out.println(" couleur_active : "+ couleur_active);
 					int_Action actionToAdd = controller.getNotificationAddActionToUserList(Jeu.liste_sprite.get(s), couleur_active);
 					if (actionToAdd != null)
 						Jeu.liste_sprite_Action.put(s, actionToAdd);
 					break;
 				}
 				else if(Jeu.liste_sprite.get(s).equals("Jump")){
-					//ajoute l'action dans la liste d'action du robot en fonction du panneau activé
-					/*try {
-						switch(activate){
-						case ("Main") : r.add_Action_User_Actions(Jump.jump());break;
-						case ("P1") : r.add_Action_User_ActionsP1(Jump.jump());break;
-						case ("P2") : r.add_Action_User_ActionsP2(Jump.jump());break;
-						}
-					}catch (ActionEx e) {
-						e.printStackTrace();
-					}
-				System.out.println("Sauter");
-				try {
-					Jump.jump().execute(r);
-				} catch (MouvementEx e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (UnreachableCase e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				break;*/
-					try {
-						Jump.jump().execute(r);
-					} catch (MouvementEx e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (UnreachableCase e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
 					int_Action actionToAdd = controller.getNotificationAddActionToUserList(Jeu.liste_sprite.get(s), couleur_active);
 					if (actionToAdd != null)
 						Jeu.liste_sprite_Action.put(s, actionToAdd);
 					break;
 				}
 				else if(Jeu.liste_sprite.get(s).equals("Jump")){
-					//					Jeu.r.add_Action_User_Actions(TurnRIght.turn_right());
 					System.out.println("Sauter");
 					int_Action actionToAdd = controller.getNotificationAddActionToUserList(Jeu.liste_sprite.get(s), couleur_active);
 					if (actionToAdd != null)
@@ -428,6 +289,10 @@ public class Jeu {
 				else if(Jeu.liste_sprite.get(s).equals("VERT")){
 					System.out.println("couleur VERT");
 					couleur_active =  Couleur.VERT;
+					break;
+				}
+				else if(Jeu.liste_sprite.get(s).equals("play")){
+					System.out.println("play");
 					break;
 				}
 			}
