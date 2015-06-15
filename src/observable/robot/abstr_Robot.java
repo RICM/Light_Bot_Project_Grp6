@@ -7,6 +7,7 @@ import observable.action.int_Action;
 import observable.action_list.Execution_list;
 import observable.action_list.Possible_List;
 import observable.action_list.Sequence_List;
+import observable.map.World;
 import observable.map.abstr_Case;
 import observer.int_Observer;
 import couleur.Couleur;
@@ -229,5 +230,16 @@ public abstract class abstr_Robot {
 	public void set_activable( boolean activ){
 		this.activable = activ;
 	}
+
+	public void reset_exec(){
+		this.order_exec.clear();
+	}
+
+	public void setFromPosition(Position new_pos) throws UnreachableCase{
+		this.setCurrent_Case(World.currentWorld.get_case(new_pos.get_coordonnees()));
+		this.set_couleur(new_pos.get_couleur());
+		this.setOrientation(new_pos.get_orientation());
+	}
+
 }
 
