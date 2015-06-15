@@ -19,12 +19,15 @@ import observer.int_Observer;
 import View.Jeu;
 import couleur.Couleur;
 import exception.ActionEx;
+import exception.MouvementEx;
+import exception.UnreachableCase;
 public class Controller implements int_Observer {
 
 	private Jeu jeu;
 	private int current_robot;
 	private int current_terrain;
 	private int current_program;
+	private boolean runnable;
 
 	@Override
 	public void update(Object obj){
@@ -67,6 +70,7 @@ public class Controller implements int_Observer {
 		this.current_robot = 0;
 		this.current_terrain = 0;
 		this.current_program = 0;
+		this.runnable = true;
 	}
 
 	public void setNotification(){
@@ -79,7 +83,18 @@ public class Controller implements int_Observer {
 		/**
 		 * Receive a notification from view to run program
 		 */
-
+		World.currentWorld.prerun();
+		while (this.runnable){
+			try {
+				World.currentWorld.get_ordonnanceur().execute();
+			} catch (MouvementEx e) {
+				this.jeu.draw_popup("Vous ne pouvez pas effectuer le prochaine mouvement !");
+			} catch (UnreachableCase e) {
+				this.jeu.draw_popup("Vous venez de vous manger une segfault!! La case visée ne peut etre atteinte");
+			} catch (ActionEx e) {
+				this.jeu.draw_popup("Une erreur est survenue lors de l'execution de l'actions");
+			}
+		}
 	}
 
 	public void getNotificationAddToRobotList(int_Action act){
