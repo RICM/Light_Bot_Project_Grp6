@@ -348,7 +348,8 @@ public class Jeu {
 			if(x>=rect.left && x<=rect.left+rect.width &&
 					y>=rect.top && y<=rect.top+rect.height){
 				activate = background[cmp];
-				System.out.println("activate: "+activate);
+				//System.out.println("activate: "+activate);
+				controller.setNotificationSwitchProgram(cmp);
 				break;
 			}
 			cmp++;
@@ -378,9 +379,11 @@ public class Jeu {
 			FloatRect rect = s.getGlobalBounds();
 			if(x>=rect.left && x<=rect.left+rect.width &&
 					y>=rect.top && y<=rect.top+rect.height){
-				System.out.println("CLICK "+cpt);
-				list.remove(cpt);
-				r.get_Main().removeIndice(cpt);
+				System.out.println(list.get(cpt));
+				if(list.get(cpt)!=null){
+					list.remove(cpt);
+					r.get_Main().removeIndice(cpt);
+				}
 				break;
 			}
 			cpt++;
@@ -504,33 +507,29 @@ public class Jeu {
 						y++;
 					}
 					Sprite monSprite = new Sprite();
-
+					monSprite.setPosition(884+(x%4*(70+4)), pos_bouton[num] + (y-1)*(70+10));
 					if (x<nombre_bouton_ajoute[num]){
 						switch(num){
 						case 0 : this.maTexture.loadFromFile(Paths.get("Images/Jeu/bouton/"+r.get_Main().get(x).getClass().getSimpleName()+".png"));break;
 						case 1 : this.maTexture.loadFromFile(Paths.get("Images/Jeu/bouton/"+r.get_P1().get(x).getClass().getSimpleName()+".png"));break;
 						case 2 : this.maTexture.loadFromFile(Paths.get("Images/Jeu/bouton/"+r.get_P2().get(x).getClass().getSimpleName()+".png"));break;
 						}
+						if(activate.equals("Main")){
+							liste_main.add(monSprite);
+						}
+						else if(activate.equals("P1"))
+						{
+							liste_P1.add(monSprite);
+						}
+						else if(activate.equals("P2"))
+						{
+							liste_P1.add(monSprite);
+						}
 					}else{
 						this.maTexture.loadFromFile(Paths.get("Images/Jeu/background/Fond_Bouton.png"));
 					}
-					monSprite.setPosition(884+(x%4*(70+4)), pos_bouton[num] + (y-1)*(70+10));
 					monSprite.setTexture(this.maTexture);
-					if(x<nombre_bouton_ajoute[num]){
-						liste_main.add(monSprite);
-					}
-					else if(x>=nombre_bouton_ajoute[num] && x<nombre_bouton_ajoute[num])
-					{
-						liste_P1.add(monSprite);
-					}
-					else if(x>=nombre_bouton_ajoute[0] && x<nombre_bouton_ajoute[1])
-					{
-						liste_P1.add(monSprite);
-					}
-					else if(x>=nombre_bouton_ajoute[1])
-					{
-						liste_P2.add(monSprite);
-					}
+
 					Menu.app.draw(monSprite);
 				}
 				num++;
