@@ -2,9 +2,11 @@ package observable.map;
 import java.util.ArrayList;
 
 import observable.int_Observable;
+import observable.robot.Position;
 import observable.robot.Robot;
 import observable.robot.abstr_Robot;
 import observer.int_Observer;
+import exception.ActionEx;
 import exception.UnreachableCase;
 
 public class World implements int_Observable {
@@ -22,6 +24,8 @@ public class World implements int_Observable {
 	private int nb_case_allumable;
 	private int nb_case_allumees;
 
+	private Terrain[] save_terr;
+	private Position[] save_robot;
 
 	public Terrain get_terrain(int n){
 		return this.liste_terrain[n];
@@ -73,6 +77,10 @@ public class World implements int_Observable {
 		for(int_Observer obs : this.listObserver)
 			obs.update(this);
 	}
+	public void set_save_terr(Terrain[] temp){
+		this.save_terr = temp;
+	}
+
 	/**
 	 *
 	 * @param coor
@@ -83,6 +91,13 @@ public class World implements int_Observable {
 		return this.liste_terrain[coor.get_n()].get_case(coor.get_x(), coor.get_y());
 	}
 
+
+	/**
+	 *
+	 * @param dest
+	 * @return true si la case dest est occupée par un robot
+	 * @throws UnreachableCase
+	 */
 	public boolean isOccupied(abstr_Case dest) throws UnreachableCase{
 		boolean res = false;
 		for(int i = 0; i<this.liste_robot.length; i++){
@@ -133,5 +148,30 @@ public class World implements int_Observable {
 				}
 			}
 		}
+	}
+
+	public void store_status() throws UnreachableCase, ActionEx{
+		int size_t = World.currentWorld.get_liste_terrain().length;
+		Terrain temp[] = new Terrain[size_t];
+		World.currentWorld.save_robot = new Position[World.currentWorld.liste_robot.length];
+		for(int i =0; i < this.liste_terrain.length; i++){
+			temp[i] = World.currentWorld.get_terrain(i).Clone();
+			World.currentWorld.set_save_terr(temp);
+		}
+		for(int i =0; i < this.liste_robot.length; i++){
+			World.currentWorld.liste_robot[i].store_position();
+			World.currentWorld.save_robot[i] = World.currentWorld.liste_robot[i].get_last_pos();
+		}
+	}
+
+	public void rewind_status() throws UnreachableCase, ActionEx{
+		for(int i =0; i < this.liste_terrain.length; i++){
+			World.currentWorld.liste_terrain[i] = World.currentWorld.save_terr[i];
+		}
+		for(int i =0; i < this.liste_robot.length; i++){
+			World.currentWorld.liste_robot[i].setFromPosition(World.currentWorld.save_robot[i]);
+			World.currentWorld.liste_robot[i].reset_exec();
+		}
+		World.currentWorld.refresh_allumable();
 	}
 }

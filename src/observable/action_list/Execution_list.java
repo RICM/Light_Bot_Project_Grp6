@@ -43,4 +43,10 @@ public class Execution_list {
 		}
 		return str;
 	}
+	public void clear() {
+		for(int i = 0; i< this.Run_List.size(); i++){
+			this.Run_List.removeFirst();
+		}
+	}
+
 }
