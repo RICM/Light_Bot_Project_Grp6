@@ -235,4 +235,9 @@ public class Controller implements int_Observer {
 			return null;
 		}
 	}
+
+	public void setNotificationSwitchProgram(int cmp) {
+		this.current_program = cmp;
+		System.out.println("switched program to : "+cmp);
+	}
 }
