@@ -78,6 +78,7 @@ public class Jeu {
 			this.drawBackground();
 			this.drawGrilleISO();
 			this.draw_bouton();
+			this.draw_controle();
 			this.draw_procedure();
 			this.processEvent();
 			Menu.app.display();
@@ -259,6 +260,8 @@ public class Jeu {
 						Jeu.liste_sprite_Action.put(s, actionToAdd);
 					break;
 				}
+
+
 				else if(Jeu.liste_sprite.get(s).equals("TurnLeft")){
 					Jeu.r.setOrientation(Orientation.orientation.LEFT);
 					int_Action actionToAdd = controller.getNotificationAddActionToUserList(Jeu.liste_sprite.get(s));
@@ -401,6 +404,30 @@ public class Jeu {
 		}
 	}
 
+	/*
+	 * Affiche bouton play,retour etc
+	 *
+	 *
+	 */
+	public void draw_controle(){
+		int i =0;
+		try {
+			String tab[]={"play","stop","retour"};
+			for(i=0; i < tab.length; i++){
+				Texture maTextureBouton = new Texture();
+				Sprite monSpriteBouton = new Sprite();
+				System.out.println(i);
+				System.out.println(tab[i]);
+				maTextureBouton.loadFromFile(Paths.get("Images/Jeu/bouton/"+tab[i]+".png"));
+				monSpriteBouton.setTexture(maTextureBouton);
+				monSpriteBouton.setPosition(550+100*i,20);
+				Jeu.liste_sprite.put(monSpriteBouton,tab[i]);
+				Menu.app.draw(monSpriteBouton);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 
 	public void draw_procedure(){
