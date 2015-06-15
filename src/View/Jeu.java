@@ -74,6 +74,7 @@ public class Jeu {
 			this.draw_procedure();
 			this.processEvent();
 			Menu.app.display();
+			System.out.println("Robot list : "+r.get_P1().toString());
 			if(World.currentWorld.is_cleared()){
 				//				JOptionPane.showMessageDialog(null, "Fin");
 				//				Menu.app.close();
@@ -388,7 +389,7 @@ public class Jeu {
 				monSpriteBackground.setPosition(881, posY[num]);
 				monSpriteBackground.setTexture(this.maTexture);
 				liste_background.add(monSpriteBackground);
-				System.out.println("monSpriteBackground.toString(): "+monSpriteBackground.toString());
+				//System.out.println("monSpriteBackground.toString(): "+monSpriteBackground.toString());
 				Menu.app.draw(monSpriteBackground);
 				y=0;
 				for(int x=0; x<nombre_bouton[num];x++){
