@@ -3,6 +3,8 @@ package observer.controller;
 import java.io.IOException;
 
 import observable.action.Activate;
+import observable.action.Call_P1;
+import observable.action.Call_P2;
 import observable.action.Jump;
 import observable.action.MoveForward;
 import observable.action.TurnLeft;
@@ -236,6 +238,34 @@ public class Controller implements int_Observer {
 					return action;
 				}else{
 					Jump action = Jump.jump(color);
+					World.currentWorld.get_robot(this.current_robot).add_Action_User_Actions(action);
+					return action;
+				}
+			case "Call_P1" :
+				if (this.current_program == 2){
+					Call_P1 action = Call_P1.call_p1(color, this);
+					World.currentWorld.get_robot(this.current_robot).add_Action_User_ActionsP2(action);
+					return action;
+				}else if (this.current_program == 1){
+					Call_P1 action = Call_P1.call_p1(color, this);
+					World.currentWorld.get_robot(this.current_robot).add_Action_User_ActionsP1(action);
+					return action;
+				}else{
+					Call_P1 action = Call_P1.call_p1(color, this);
+					World.currentWorld.get_robot(this.current_robot).add_Action_User_Actions(action);
+					return action;
+				}
+			case "Call_P2" :
+				if (this.current_program == 2){
+					Call_P2 action = Call_P2.call_p2(color, this);
+					World.currentWorld.get_robot(this.current_robot).add_Action_User_ActionsP2(action);
+					return action;
+				}else if (this.current_program == 1){
+					Call_P2 action = Call_P2.call_p2(color, this);
+					World.currentWorld.get_robot(this.current_robot).add_Action_User_ActionsP1(action);
+					return action;
+				}else{
+					Call_P2 action = Call_P2.call_p2(color, this);
 					World.currentWorld.get_robot(this.current_robot).add_Action_User_Actions(action);
 					return action;
 				}

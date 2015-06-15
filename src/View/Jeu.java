@@ -255,8 +255,15 @@ public class Jeu {
 						Jeu.liste_sprite_Action.put(s, actionToAdd);
 					break;
 				}
-				else if(Jeu.liste_sprite.get(s).equals("Jump")){
-					System.out.println("Sauter");
+				else if(Jeu.liste_sprite.get(s).equals("Call_P1")){
+					System.out.println("Call_P1");
+					int_Action actionToAdd = controller.getNotificationAddActionToUserList(Jeu.liste_sprite.get(s), couleur_active);
+					if (actionToAdd != null)
+						Jeu.liste_sprite_Action.put(s, actionToAdd);
+					break;
+				}
+				else if(Jeu.liste_sprite.get(s).equals("Call_P2")){
+					System.out.println("Call_P2");
 					int_Action actionToAdd = controller.getNotificationAddActionToUserList(Jeu.liste_sprite.get(s), couleur_active);
 					if (actionToAdd != null)
 						Jeu.liste_sprite_Action.put(s, actionToAdd);

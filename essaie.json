@@ -36,7 +36,7 @@
     						{"max_p1": 3},
     						{"max_p2": 3},
     						{"orientation": "left"},
-    						{"actions" :["MoveForward" ,"TurnLeft","Jump","TurnRight","Activate"]}
+    						{"actions" :["MoveForward" ,"TurnLeft","Jump","TurnRight","Activate","P1","P2"]}
     			]
     		},
     		{ 
@@ -50,7 +50,7 @@
     						{"max_p1": 3},
     						{"max_p2": 3},
     						{"orientation": "left"},
-    						{"actions" :["MoveForward" ,"TurnLeft","TurnRight"]}
+    						{"actions" :["MoveForward" ,"TurnLeft","TurnRight","P1","P2"]}
     			]
     		}
     ]  
