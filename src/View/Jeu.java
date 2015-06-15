@@ -397,7 +397,7 @@ public class Jeu {
 	public void delete_button(Event e, Vector2f click){
 		float x = click.x;
 		float y = click.y;
-		if(Mouse.isButtonPressed(Button.RIGHT)){
+		if(Mouse.isButtonPressed(Button.LEFT)){
 			System.out.println(activate);
 			if(activate.equals("Main"))
 				remove_action_liste(liste_main,x,y);
@@ -418,7 +418,7 @@ public class Jeu {
 			if(x>=rect.left && x<=rect.left+rect.width &&
 					y>=rect.top && y<=rect.top+rect.height){
 				if(list_remove.get(compteur)!=null){
-					JOptionPane.showMessageDialog(null, "J'ai cliqué sur le bouton "+compteur);
+					//JOptionPane.showMessageDialog(null, "J'ai clique sur le bouton "+compteur);
 					controller.getNotificationRemoveToRobotList(compteur);
 				}
 				break;
