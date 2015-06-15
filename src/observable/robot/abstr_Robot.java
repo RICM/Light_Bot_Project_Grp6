@@ -7,6 +7,7 @@ import observable.action.int_Action;
 import observable.action_list.Execution_list;
 import observable.action_list.Possible_List;
 import observable.action_list.Sequence_List;
+import observable.map.World;
 import observable.map.abstr_Case;
 import observer.int_Observer;
 import couleur.Couleur;
@@ -29,11 +30,20 @@ public abstract class abstr_Robot {
 	protected boolean activable = true;
 	protected LinkedList<Position> rollback = new LinkedList<Position>();
 
+
+	/**
+	 * initialise la liste d'execution du robot avec le contenu de main
+	 */
 	public void run(){
 		this.order_exec.addFirst(this.user_actions);
 
 	}
-
+	/**
+	 * execute la première action de la liste
+	 * @throws MouvementEx
+	 * @throws UnreachableCase
+	 * @throws ActionEx
+	 */
 	public void execute() throws MouvementEx, UnreachableCase, ActionEx{
 		this.order_exec.run(this);
 	}
@@ -229,5 +239,20 @@ public abstract class abstr_Robot {
 	public void set_activable( boolean activ){
 		this.activable = activ;
 	}
+
+	public void reset_exec(){
+		this.order_exec.clear();
+	}
+
+	public void setFromPosition(Position new_pos) throws UnreachableCase{
+		this.setCurrent_Case(World.currentWorld.get_case(new_pos.get_coordonnees()));
+		this.set_couleur(new_pos.get_couleur());
+		this.setOrientation(new_pos.get_orientation());
+	}
+
+	public void removeFirstRunable(){
+		this.order_exec.removeFirst();
+	}
+
 }
 

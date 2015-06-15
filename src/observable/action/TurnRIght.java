@@ -15,6 +15,14 @@ public class TurnRIght implements int_Action, int_Observable{
 	private ArrayList<int_Observer> listObserver = new ArrayList<int_Observer>();
 
 	private Couleur color;
+	@Override
+	public Couleur getColor() {
+		return this.color;
+	}
+	@Override
+	public void setColor(Couleur color) {
+		this.color = color;
+	}
 	public static TurnRIght turn_right(){
 		return new TurnRIght();
 	}

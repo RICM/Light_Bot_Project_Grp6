@@ -19,6 +19,10 @@ public class Execution_list {
 		this.Run_List.addFirst(new_h);
 	}
 
+	public void removeFirst(){
+		this.Run_List.removeFirst();
+	}
+
 	public void run(abstr_Robot r) throws MouvementEx, UnreachableCase, ActionEx{
 		if(this.Run_List.size()>0){
 			if(this.Run_List.getFirst().size() > 0){
@@ -43,4 +47,10 @@ public class Execution_list {
 		}
 		return str;
 	}
+	public void clear() {
+		for(int i = 0; i< this.Run_List.size(); i++){
+			this.Run_List.removeFirst();
+		}
+	}
+
 }

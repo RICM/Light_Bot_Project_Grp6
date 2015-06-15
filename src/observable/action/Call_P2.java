@@ -16,6 +16,15 @@ public class Call_P2 implements int_Action, int_Observable{
 
 	private Couleur color;
 
+	@Override
+	public Couleur getColor() {
+		return this.color;
+	}
+	@Override
+	public void setColor(Couleur color) {
+		this.color = color;
+	}
+
 	private ArrayList<int_Observer> listObserver = new ArrayList<int_Observer>();
 
 	public static Call_P2 call_p2(int_Observer controller){
