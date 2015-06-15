@@ -5,6 +5,7 @@ import java.nio.file.Paths;
 
 import observer.controller.Controller;
 
+import org.jsfml.audio.Music;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.RenderWindow;
 import org.jsfml.graphics.Sprite;
@@ -31,10 +32,19 @@ public class Menu {
 	protected static final int WIDTH = 1200;
 	protected static final int HEIGHT = 700;
 	protected static Controller controller;
+	protected Music song = new Music();
 
 	public Menu(Controller acontroller){
 		controller = acontroller;
 		this.reset_cam();
+		try {
+			this.song.openFromFile(Paths.get("Song/theme.ogg"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.song.play();
+		this.song.setLoop(true);
 		while(Menu.app.isOpen()){
 			Menu.app.clear();
 			this.processEvent();
