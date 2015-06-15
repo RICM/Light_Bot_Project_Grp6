@@ -64,6 +64,28 @@ public class Jeu {
 	protected static ArrayList<Sprite> liste_P1 = new ArrayList<Sprite>();
 	protected static ArrayList<Sprite> liste_P2 = new ArrayList<Sprite>();
 
+	protected static LinkedList<int_Action> liste_main_actions = new LinkedList<int_Action>();
+	protected static LinkedList<int_Action> liste_P1_actions = new LinkedList<int_Action>();
+	protected static LinkedList<int_Action> liste_P2_actions = new LinkedList<int_Action>();
+
+	public void changeRobotActionsDisplay(abstr_Robot robot){
+		liste_main_actions = robot.get_Main().getListActions();
+		liste_P1_actions = robot.get_P1().getListActions();
+		liste_P2_actions = robot.get_P2().getListActions();
+		liste_main = new ArrayList<Sprite>();
+		liste_P1 = new ArrayList<Sprite>();
+		liste_P2 = new ArrayList<Sprite>();
+		this.setSpritesListesActions();
+	}
+
+	public void setSpritesListesActions(){
+		for (int i = 0; i<liste_main_actions.size(); i++){
+			/*
+			 * TO BE DEVELOPPED
+			 */
+		}
+	}
+
 	protected static HashMap<Sprite,int_Action> liste_sprite_Action = new HashMap<Sprite, int_Action>();
 
 
