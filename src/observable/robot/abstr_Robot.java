@@ -241,5 +241,9 @@ public abstract class abstr_Robot {
 		this.setOrientation(new_pos.get_orientation());
 	}
 
+	public void removeFirstRunable(){
+		this.order_exec.removeFirst();
+	}
+
 }
 
