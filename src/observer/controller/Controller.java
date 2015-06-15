@@ -63,7 +63,7 @@ public class Controller implements int_Observer {
 	public Controller(){
 		this.current_robot = 0;
 		this.current_terrain = 0;
-		this.current_program = 1;
+		this.current_program = 0;
 	}
 
 	public void setNotification(){
@@ -163,9 +163,13 @@ public class Controller implements int_Observer {
 					TurnRIght action = TurnRIght.turn_right();
 					World.currentWorld.get_robot(this.current_robot).add_Action_User_ActionsP2(action);
 					return action;
-				}else{
+				}else if (this.current_program == 1){
 					TurnRIght action = TurnRIght.turn_right();
 					World.currentWorld.get_robot(this.current_robot).add_Action_User_ActionsP1(action);
+					return action;
+				}else{
+					TurnRIght action = TurnRIght.turn_right();
+					World.currentWorld.get_robot(this.current_robot).add_Action_User_Actions(action);;
 					return action;
 				}
 			case "TurnLeft" :
@@ -173,9 +177,13 @@ public class Controller implements int_Observer {
 					TurnLeft action = TurnLeft.turn_left();
 					World.currentWorld.get_robot(this.current_robot).add_Action_User_ActionsP2(action);
 					return action;
-				}else{
+				}else if (this.current_program == 1){
 					TurnLeft action = TurnLeft.turn_left();
 					World.currentWorld.get_robot(this.current_robot).add_Action_User_ActionsP1(action);
+					return action;
+				}else{
+					TurnLeft action = TurnLeft.turn_left();
+					World.currentWorld.get_robot(this.current_robot).add_Action_User_Actions(action);
 					return action;
 				}
 			case "MoveForward" :
@@ -183,9 +191,13 @@ public class Controller implements int_Observer {
 					MoveForward action = MoveForward.move_forward();
 					World.currentWorld.get_robot(this.current_robot).add_Action_User_ActionsP2(action);
 					return action;
-				}else{
+				}else if (this.current_program == 1){
 					MoveForward action = MoveForward.move_forward();
 					World.currentWorld.get_robot(this.current_robot).add_Action_User_ActionsP1(action);
+					return action;
+				}else{
+					MoveForward action = MoveForward.move_forward();
+					World.currentWorld.get_robot(this.current_robot).add_Action_User_Actions(action);
 					return action;
 				}
 			case "Activate" :
@@ -193,9 +205,13 @@ public class Controller implements int_Observer {
 					Activate action = Activate.activate();
 					World.currentWorld.get_robot(this.current_robot).add_Action_User_ActionsP2(action);
 					return action;
-				}else{
+				}else if (this.current_program == 1){
 					Activate action = Activate.activate();
 					World.currentWorld.get_robot(this.current_robot).add_Action_User_ActionsP1(action);
+					return action;
+				}else{
+					Activate action = Activate.activate();
+					World.currentWorld.get_robot(this.current_robot).add_Action_User_Actions(action);
 					return action;
 				}
 			case "Jump" :
@@ -203,9 +219,13 @@ public class Controller implements int_Observer {
 					Jump action = Jump.jump();
 					World.currentWorld.get_robot(this.current_robot).add_Action_User_ActionsP2(action);
 					return action;
-				}else{
+				}else if (this.current_program == 1){
 					Jump action = Jump.jump();
 					World.currentWorld.get_robot(this.current_robot).add_Action_User_ActionsP1(action);
+					return action;
+				}else{
+					Jump action = Jump.jump();
+					World.currentWorld.get_robot(this.current_robot).add_Action_User_Actions(action);
 					return action;
 				}
 			default :
