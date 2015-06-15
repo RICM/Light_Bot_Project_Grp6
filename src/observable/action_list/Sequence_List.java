@@ -24,6 +24,10 @@ public class Sequence_List implements int_Action_List, int_Observable{
 		this.notifyObserver();
 	}
 
+	public LinkedList<int_Action> getListActions(){
+		return this.actions_list_seq;
+	}
+
 	public void removeIndice(int i){
 		this.actions_list_seq.remove(i);
 	}

@@ -94,12 +94,19 @@ public class Controller implements int_Observer {
 		}
 	}
 
-	public void getNotificationRemoveToRobotList(int_Action act){
+	public void getNotificationRemoveToRobotList(int position){
 		/**
 		 * Receive a notification from view to remove an action to the robot list
 		 */
 		abstr_Robot rob = World.currentWorld.get_robot(this.current_robot);
-		rob.remove_Action_User_Actions(act);
+		switch (this.current_program){
+		case 0 :
+			rob.get_Main().removeIndice(position);
+		case 1 :
+			rob.get_P1().removeIndice(position);
+		case 2 :
+			rob.get_P2().removeIndice(position);
+		}
 		/**
 		 * La vue aura besoin d'avoir un hashmap de boutons|actions
 		 */
