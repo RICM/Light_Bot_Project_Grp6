@@ -393,6 +393,7 @@ public class Jeu {
 				Menu.app.draw(monSpriteBackground);
 				y=0;
 				for(int x=0; x<nombre_bouton[num];x++){
+					this.maTexture = new Texture();
 					if(x%4==0){
 						y++;
 					}
