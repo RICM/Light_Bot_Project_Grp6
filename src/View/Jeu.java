@@ -29,6 +29,7 @@ import org.jsfml.system.Vector2i;
 import org.jsfml.window.Keyboard;
 import org.jsfml.window.Keyboard.Key;
 import org.jsfml.window.Mouse;
+import org.jsfml.window.Mouse.Button;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.Event.Type;
 
@@ -56,13 +57,14 @@ public class Jeu {
 	protected int height_case = 50;
 	protected static final int NB_MAX_CASE = 10;
 	protected int indice_tele=0;
+	protected boolean FirstLoop = true;
 	protected static float x_whale = -600;
 	protected static int y_whale = Menu.HEIGHT/2-200;
 	protected static String activate = "Main";
 	protected static ArrayList<Sprite> liste_background = new ArrayList<Sprite>();
-	protected static ArrayList<Sprite> liste_main = new ArrayList<Sprite>();
-	protected static ArrayList<Sprite> liste_P1 = new ArrayList<Sprite>();
-	protected static ArrayList<Sprite> liste_P2 = new ArrayList<Sprite>();
+	protected static LinkedList<Sprite> liste_main = new LinkedList<Sprite>();
+	protected static LinkedList<Sprite> liste_P1 = new LinkedList<Sprite>();
+	protected static LinkedList<Sprite> liste_P2 = new LinkedList<Sprite>();
 
 	protected static HashMap<Sprite,int_Action> liste_sprite_Action = new HashMap<Sprite, int_Action>();
 
@@ -83,9 +85,8 @@ public class Jeu {
 			this.draw_bouton();
 			this.draw_controle();
 			this.draw_procedure();
-			this.processEvent();
 			Menu.app.display();
-			System.out.println("Robot list : "+r.get_P1().toString());
+			this.processEvent();
 			if(World.currentWorld.is_cleared()){
 				//				JOptionPane.showMessageDialog(null, "Fin");
 				//				Menu.app.close();
@@ -175,11 +176,12 @@ public class Jeu {
 				Jeu.r.run();
 			}
 
-			if (e.type == Event.Type.MOUSE_BUTTON_RELEASED ) {
+			if (e.type == Event.Type.MOUSE_BUTTON_PRESSED ) {
 				e.asMouseEvent();
 				Vector2i pos = Mouse.getPosition(Menu.app);
 				Vector2f click = Menu.app.mapPixelToCoords(pos);
 				Jeu.detect_move(click);
+				this.delete_button(e,click);
 			}
 
 		}
@@ -368,25 +370,38 @@ public class Jeu {
 		//			}
 		//			cpt++;
 		//		}
-		remove_action_liste(liste_main,x,y);
-		remove_action_liste(liste_P1,x,y);
-		remove_action_liste(liste_P2,x,y);
+
+	}
+	public void delete_button(Event e, Vector2f click){
+		float x = click.x;
+		float y = click.y;
+		if(Mouse.isButtonPressed(Button.RIGHT)){
+			System.out.println(activate);
+			if(activate.equals("Main"))
+				remove_action_liste(liste_main,x,y);
+			else if(activate.equals("P1")){
+				remove_action_liste(liste_P1,x,y);
+			}
+			else if(activate.equals("P2")){
+				remove_action_liste(liste_P2,x,y);
+			}
+		}
 	}
 
-	public static void remove_action_liste(ArrayList<Sprite> list, float x, float y){
-		int cpt=0;
-		for(Sprite s: list){
+	public static void remove_action_liste(LinkedList<Sprite> list_remove, float x, float y){
+		int compteur=0;
+		System.out.println("test "+list_remove.size());
+		for(Sprite s: list_remove){
 			FloatRect rect = s.getGlobalBounds();
 			if(x>=rect.left && x<=rect.left+rect.width &&
 					y>=rect.top && y<=rect.top+rect.height){
-				System.out.println(list.get(cpt));
-				if(list.get(cpt)!=null){
-					list.remove(cpt);
-					r.get_Main().removeIndice(cpt);
+				if(list_remove.get(compteur)!=null){
+					JOptionPane.showMessageDialog(null, "J'ai cliqué sur le bouton "+compteur);
+					controller.getNotificationRemoveToRobotList(compteur);
 				}
 				break;
 			}
-			cpt++;
+			compteur++;
 		}
 	}
 
@@ -463,8 +478,6 @@ public class Jeu {
 			for(i=0; i < tab.length; i++){
 				Texture maTextureBouton = new Texture();
 				Sprite monSpriteBouton = new Sprite();
-				System.out.println(i);
-				System.out.println(tab[i]);
 				maTextureBouton.loadFromFile(Paths.get("Images/Jeu/bouton/"+tab[i]+".png"));
 				monSpriteBouton.setTexture(maTextureBouton);
 				monSpriteBouton.setPosition(550+100*i,20);
@@ -507,28 +520,30 @@ public class Jeu {
 						y++;
 					}
 					Sprite monSprite = new Sprite();
-					monSprite.setPosition(884+(x%4*(70+4)), pos_bouton[num] + (y-1)*(70+10));
 					if (x<nombre_bouton_ajoute[num]){
 						switch(num){
 						case 0 : this.maTexture.loadFromFile(Paths.get("Images/Jeu/bouton/"+r.get_Main().get(x).getClass().getSimpleName()+".png"));break;
 						case 1 : this.maTexture.loadFromFile(Paths.get("Images/Jeu/bouton/"+r.get_P1().get(x).getClass().getSimpleName()+".png"));break;
 						case 2 : this.maTexture.loadFromFile(Paths.get("Images/Jeu/bouton/"+r.get_P2().get(x).getClass().getSimpleName()+".png"));break;
 						}
-						if(activate.equals("Main")){
-							liste_main.add(monSprite);
-						}
-						else if(activate.equals("P1"))
-						{
-							liste_P1.add(monSprite);
-						}
-						else if(activate.equals("P2"))
-						{
-							liste_P1.add(monSprite);
-						}
 					}else{
 						this.maTexture.loadFromFile(Paths.get("Images/Jeu/background/Fond_Bouton.png"));
 					}
+					monSprite.setPosition(884+(x%4*(70+4)), pos_bouton[num] + (y-1)*(70+10));
 					monSprite.setTexture(this.maTexture);
+					if(this.FirstLoop){
+						if(x<r.get_tailleMain() && num==0){
+							liste_main.add(monSprite);
+						}
+						else if(x<r.get_tailleP1() && num == 1)
+						{
+							liste_P1.add(monSprite);
+						}
+						else if(x<r.get_tailleP2() && num == 2)
+						{
+							liste_P2.add(monSprite);
+						}
+					}
 
 					Menu.app.draw(monSprite);
 				}
@@ -536,7 +551,7 @@ public class Jeu {
 			}
 			//emplacement des boutons
 
-
+			this.FirstLoop = false;
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
