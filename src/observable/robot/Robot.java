@@ -25,6 +25,9 @@ public class Robot extends abstr_Robot implements int_Observable {
 		this.user_actions = new Sequence_List(controller);
 		this.P1 = new Sequence_List(controller);
 		this.P2 = new Sequence_List(controller);
+		for (int_Observer obs : this.listObserver){
+			this.order_exec.addObserver(obs);
+		}
 	}
 
 	public Robot(abstr_Case initCase, Possible_List allowed_actions, int tailleM, int tailleP1, int tailleP2, int_Observer controller){
@@ -39,6 +42,9 @@ public class Robot extends abstr_Robot implements int_Observable {
 		this.user_actions = new Sequence_List(controller);
 		this.P1 = new Sequence_List(controller);
 		this.P2 = new Sequence_List(controller);
+		for (int_Observer obs : this.listObserver){
+			this.order_exec.addObserver(obs);
+		}
 	}
 
 	public Robot(abstr_Case initCase, Possible_List allowed_actions, Orientation.orientation or, int tailleM, int tailleP1, int tailleP2, int_Observer controller){
@@ -53,6 +59,9 @@ public class Robot extends abstr_Robot implements int_Observable {
 		this.user_actions = new Sequence_List(controller);
 		this.P1 = new Sequence_List(controller);
 		this.P2 = new Sequence_List(controller);
+		for (int_Observer obs : this.listObserver){
+			this.order_exec.addObserver(obs);
+		}
 	}
 
 	public void print_allowed_act(){

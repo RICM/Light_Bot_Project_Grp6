@@ -40,6 +40,10 @@ public class Controller implements int_Observer {
 			break;
 		case "Sequence_List" :
 			this.setNotificationUpdatedCurrentProgramList((Sequence_List)obj);
+			break;
+		case "Execution_list" :
+			this.runnable = false;
+			break;
 		default:
 			break;
 		}
@@ -83,10 +87,13 @@ public class Controller implements int_Observer {
 		/**
 		 * Receive a notification from view to run program
 		 */
+		for(int j = 0; j < World.currentWorld.get_liste_robot().length;j++){
+			World.currentWorld.get_ordonnanceur().addRobot(World.currentWorld.get_robot(j));
+		}
 		World.currentWorld.prerun();
-		while (this.runnable){
+		while (this.runnable && !World.currentWorld.is_cleared()){
 			try {
-				World.currentWorld.get_ordonnanceur().execute();
+				World.currentWorld.exec();
 			} catch (MouvementEx e) {
 				this.jeu.draw_popup("Vous ne pouvez pas effectuer le prochaine mouvement !");
 			} catch (UnreachableCase e) {

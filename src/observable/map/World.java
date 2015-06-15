@@ -42,17 +42,22 @@ public class World implements int_Observable {
 	public void prerun(){
 		try {
 			this.store_status();
+			this.refresh_allumable();
 		} catch (UnreachableCase | ActionEx e) {
 			System.out.println("this shouldn't have heppened, WTH was done");
 			e.printStackTrace();
 		}
 		for(int i =0; i< this.liste_robot.length;i++){
 			this.liste_robot[i].run();
+			//	System.out.println("taille de la liste " + this.liste_robot[i].get_run().size());
 		}
+		System.out.println("nb cases a allumer : " + this.nb_case_allumable + "et allumé" + this.nb_case_allumees);
 	}
 
 	public void exec() throws MouvementEx, UnreachableCase, ActionEx{
+		System.out.println("trololo");
 		this.ordo.execute();
+		System.out.println("trolololll");
 	}
 
 	public Terrain get_terrain(int n){
@@ -167,9 +172,10 @@ public class World implements int_Observable {
 		for(int i = 0; i<this.liste_terrain.length; i++){
 			for(int j = 0; j<this.liste_terrain[i].get_terrain().length;j++ ){
 				for(int k = 0; k<this.liste_terrain[i].get_terrain()[j].length; k++){
-					if (this.liste_terrain[i].get_case(i, j).getClass().getSimpleName().equals("Illuminated_Case")){
+					System.out.println(" type de la case " +this.liste_terrain[i].get_case(j, k).getClass().getSimpleName() + "et coordonnees" + j + "   "+ k );
+					if (this.liste_terrain[i].get_case(j, k).getClass().getSimpleName().equals("Illuminated_Case")){
 						this.nb_case_allumable++;
-						if (((Illuminated_Case)this.liste_terrain[i].get_case(i, j)).get_active()){
+						if (((Illuminated_Case)this.liste_terrain[i].get_case(j, k)).get_active()){
 							this.nb_case_allumees++;
 						}
 					}
