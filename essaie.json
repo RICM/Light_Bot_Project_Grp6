@@ -50,7 +50,7 @@
     						{"max_p1": 3},
     						{"max_p2": 3},
     						{"orientation": "left"},
-    						{"actions" :["MoveForward" ,"TurnLeft","Jump","TurnRight"]}
+    						{"actions" :["MoveForward" ,"TurnLeft","TurnRight"]}
     			]
     		}
     ]  

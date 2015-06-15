@@ -174,71 +174,71 @@ public class Controller implements int_Observer {
 			switch (str){
 			case "TurnRIght" :
 				if (this.current_program == 2){
-					TurnRIght action = TurnRIght.turn_right();
+					TurnRIght action = TurnRIght.turn_right(color);
 					World.currentWorld.get_robot(this.current_robot).add_Action_User_ActionsP2(action);
 					return action;
 				}else if (this.current_program == 1){
-					TurnRIght action = TurnRIght.turn_right();
+					TurnRIght action = TurnRIght.turn_right(color);
 					World.currentWorld.get_robot(this.current_robot).add_Action_User_ActionsP1(action);
 					return action;
 				}else{
-					TurnRIght action = TurnRIght.turn_right();
+					TurnRIght action = TurnRIght.turn_right(color);
 					World.currentWorld.get_robot(this.current_robot).add_Action_User_Actions(action);;
 					return action;
 				}
 			case "TurnLeft" :
 				if (this.current_program == 2){
-					TurnLeft action = TurnLeft.turn_left();
+					TurnLeft action = TurnLeft.turn_left(color);
 					World.currentWorld.get_robot(this.current_robot).add_Action_User_ActionsP2(action);
 					return action;
 				}else if (this.current_program == 1){
-					TurnLeft action = TurnLeft.turn_left();
+					TurnLeft action = TurnLeft.turn_left(color);
 					World.currentWorld.get_robot(this.current_robot).add_Action_User_ActionsP1(action);
 					return action;
 				}else{
-					TurnLeft action = TurnLeft.turn_left();
+					TurnLeft action = TurnLeft.turn_left(color);
 					World.currentWorld.get_robot(this.current_robot).add_Action_User_Actions(action);
 					return action;
 				}
 			case "MoveForward" :
 				if (this.current_program == 2){
-					MoveForward action = MoveForward.move_forward();
+					MoveForward action = MoveForward.move_forward(color);
 					World.currentWorld.get_robot(this.current_robot).add_Action_User_ActionsP2(action);
 					return action;
 				}else if (this.current_program == 1){
-					MoveForward action = MoveForward.move_forward();
+					MoveForward action = MoveForward.move_forward(color);
 					World.currentWorld.get_robot(this.current_robot).add_Action_User_ActionsP1(action);
 					return action;
 				}else{
-					MoveForward action = MoveForward.move_forward();
+					MoveForward action = MoveForward.move_forward(color);
 					World.currentWorld.get_robot(this.current_robot).add_Action_User_Actions(action);
 					return action;
 				}
 			case "Activate" :
 				if (this.current_program == 2){
-					Activate action = Activate.activate();
+					Activate action = Activate.activate(color);
 					World.currentWorld.get_robot(this.current_robot).add_Action_User_ActionsP2(action);
 					return action;
 				}else if (this.current_program == 1){
-					Activate action = Activate.activate();
+					Activate action = Activate.activate(color);
 					World.currentWorld.get_robot(this.current_robot).add_Action_User_ActionsP1(action);
 					return action;
 				}else{
-					Activate action = Activate.activate();
+					Activate action = Activate.activate(color);
 					World.currentWorld.get_robot(this.current_robot).add_Action_User_Actions(action);
 					return action;
 				}
 			case "Jump" :
 				if (this.current_program == 2){
-					Jump action = Jump.jump();
+					Jump action = Jump.jump(color);
 					World.currentWorld.get_robot(this.current_robot).add_Action_User_ActionsP2(action);
 					return action;
 				}else if (this.current_program == 1){
-					Jump action = Jump.jump();
+					Jump action = Jump.jump(color);
 					World.currentWorld.get_robot(this.current_robot).add_Action_User_ActionsP1(action);
 					return action;
 				}else{
-					Jump action = Jump.jump();
+					Jump action = Jump.jump(color);
 					World.currentWorld.get_robot(this.current_robot).add_Action_User_Actions(action);
 					return action;
 				}

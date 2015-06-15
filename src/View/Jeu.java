@@ -10,7 +10,11 @@ import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 
+import observable.action.Activate;
+import observable.action.Jump;
 import observable.action.MoveForward;
+import observable.action.TurnLeft;
+import observable.action.TurnRIght;
 import observable.action.int_Action;
 import observable.action_list.Sequence_List;
 import observable.map.Illuminated_Case;
@@ -33,6 +37,8 @@ import org.jsfml.window.Mouse.Button;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.Event.Type;
 
+import couleur.Couleur;
+import exception.ActionEx;
 import exception.MouvementEx;
 import exception.UnreachableCase;
 
@@ -50,7 +56,8 @@ public class Jeu {
 	protected static HashMap<Sprite,String> liste_sprite = new HashMap<Sprite, String>();
 	protected int level;
 	protected static World w = World.currentWorld;
-	protected static abstr_Robot r = Jeu.w.get_robot(0);
+	protected static int identificateur_robot = 0;
+	protected static abstr_Robot r = Jeu.w.get_robot(identificateur_robot);
 	protected Terrain t = Jeu.w.get_terrain(this.level);
 	protected abstr_Case[][] cases = this.t.get_terrain();
 	protected int width_case = 80;
@@ -58,6 +65,7 @@ public class Jeu {
 	protected static final int NB_MAX_CASE = 10;
 	protected int indice_tele=0;
 	protected boolean FirstLoop = true;
+	protected static Couleur couleur_active = Couleur.GRIS;
 	protected static float x_whale = -600;
 	protected static int y_whale = Menu.HEIGHT/2-200;
 	protected static String activate = "Main";
@@ -220,8 +228,7 @@ public class Jeu {
 		while(keySetIterator.hasNext()){
 			Sprite s = keySetIterator.next();
 			FloatRect rect = s.getGlobalBounds();
-			if(x>=rect.left && x<=rect.left+rect.width &&
-					y>=rect.top && y<=rect.top+rect.height){
+			if(x>=rect.left && x<=rect.left+rect.width && y>=rect.top && y<=rect.top+rect.height){
 				if(Jeu.liste_sprite.get(s).equals("MoveForward")){
 					//ajoute l'action dans la liste d'action du robot en fonction du panneau activé
 					/*try {
@@ -244,7 +251,13 @@ public class Jeu {
 						System.out.println(e1.getMessage());
 					}
 					break;*/
-					int_Action actionToAdd = controller.getNotificationAddActionToUserList(Jeu.liste_sprite.get(s));
+					try {
+						MoveForward.move_forward().execute(r);
+					} catch (MouvementEx | UnreachableCase e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					int_Action actionToAdd = controller.getNotificationAddActionToUserList(Jeu.liste_sprite.get(s), couleur_active);
 					if (actionToAdd != null)
 						Jeu.liste_sprite_Action.put(s, actionToAdd);
 					break;
@@ -285,16 +298,21 @@ public class Jeu {
 					case BOT : Jeu.r.setOrientation(Orientation.orientation.RIGHT);break;
 					case LEFT: Jeu.r.setOrientation(Orientation.orientation.BOT);break;
 					}*/
-					Jeu.r.setOrientation(Orientation.orientation.RIGHT);
-					int_Action actionToAdd = controller.getNotificationAddActionToUserList(Jeu.liste_sprite.get(s));
+					TurnRIght.turn_right().execute(r);
+					int_Action actionToAdd = controller.getNotificationAddActionToUserList(Jeu.liste_sprite.get(s), couleur_active);
 					if (actionToAdd != null)
 						Jeu.liste_sprite_Action.put(s, actionToAdd);
 					break;
 				}
 
 				else if(Jeu.liste_sprite.get(s).equals("TurnLeft")){
-					Jeu.r.setOrientation(Orientation.orientation.LEFT);
-					int_Action actionToAdd = controller.getNotificationAddActionToUserList(Jeu.liste_sprite.get(s));
+					try {
+						TurnLeft.turn_left().execute(r);
+					} catch (MouvementEx e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					int_Action actionToAdd = controller.getNotificationAddActionToUserList(Jeu.liste_sprite.get(s), couleur_active);
 					if (actionToAdd != null)
 						Jeu.liste_sprite_Action.put(s, actionToAdd);
 					break;
@@ -321,7 +339,20 @@ public class Jeu {
 						e.printStackTrace();
 					}
 					break;*/
-					int_Action actionToAdd = controller.getNotificationAddActionToUserList(Jeu.liste_sprite.get(s));
+					try {
+						Activate.activate().execute(r);
+					} catch (MouvementEx e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (UnreachableCase e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (ActionEx e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					System.out.println(" couleur_active : "+ couleur_active);
+					int_Action actionToAdd = controller.getNotificationAddActionToUserList(Jeu.liste_sprite.get(s), couleur_active);
 					if (actionToAdd != null)
 						Jeu.liste_sprite_Action.put(s, actionToAdd);
 					break;
@@ -348,7 +379,16 @@ public class Jeu {
 					e.printStackTrace();
 				}
 				break;*/
-					int_Action actionToAdd = controller.getNotificationAddActionToUserList(Jeu.liste_sprite.get(s));
+					try {
+						Jump.jump().execute(r);
+					} catch (MouvementEx e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (UnreachableCase e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					int_Action actionToAdd = controller.getNotificationAddActionToUserList(Jeu.liste_sprite.get(s), couleur_active);
 					if (actionToAdd != null)
 						Jeu.liste_sprite_Action.put(s, actionToAdd);
 					break;
@@ -356,9 +396,38 @@ public class Jeu {
 				else if(Jeu.liste_sprite.get(s).equals("Jump")){
 					//					Jeu.r.add_Action_User_Actions(TurnRIght.turn_right());
 					System.out.println("Sauter");
-					int_Action actionToAdd = controller.getNotificationAddActionToUserList(Jeu.liste_sprite.get(s));
+					int_Action actionToAdd = controller.getNotificationAddActionToUserList(Jeu.liste_sprite.get(s), couleur_active);
 					if (actionToAdd != null)
 						Jeu.liste_sprite_Action.put(s, actionToAdd);
+					break;
+				}
+				else if((Jeu.liste_sprite.get(s).equals("pingouin_GRIS")) && (identificateur_robot == 0)){
+					System.out.println("pingouin_blanc -> esquimau_blanc");
+					identificateur_robot = 1;
+					controller.getNotificationChangeRobot(identificateur_robot);
+					r = Jeu.w.get_robot(identificateur_robot);
+					break;
+				}
+				else if((Jeu.liste_sprite.get(s).equals("esquimau_GRIS")) && (identificateur_robot == 1)){
+					System.out.println("esquimau_blanc -> pingouin_blanc");
+					identificateur_robot = 0;
+					controller.getNotificationChangeRobot(identificateur_robot);
+					r = Jeu.w.get_robot(identificateur_robot);
+					break;
+				}
+				else if(Jeu.liste_sprite.get(s).equals("GRIS")){
+					System.out.println("couleur GRIS");
+					couleur_active =  Couleur.GRIS;
+					break;
+				}
+				else if(Jeu.liste_sprite.get(s).equals("ROUGE")){
+					System.out.println("couleur ROUGE");
+					couleur_active =  Couleur.ROUGE;
+					break;
+				}
+				else if(Jeu.liste_sprite.get(s).equals("VERT")){
+					System.out.println("couleur VERT");
+					couleur_active =  Couleur.VERT;
 					break;
 				}
 			}
@@ -450,12 +519,8 @@ public class Jeu {
 			int PosX = Menu.WIDTH/2 +59*(Y+X)-taille_abs*60-180;
 			int PosY = Menu.HEIGHT/2 +18*(Y-X)-taille_ord*18+100;
 
-			switch(rob.getOrientation()){
-			case BOT : this.maTexturePerso.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/3.png"));break;
-			case LEFT:	this.maTexturePerso.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/15.png"));break;
-			case RIGHT:this.maTexturePerso.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/7.png"));break;
-			case TOP : this.maTexturePerso.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/11.png"));break;
-			}
+			this.maTexturePerso.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/"+rob.getOrientation()+"_"+rob.get_couleur()+".png"));
+
 			this.monSpritePerso.setTexture(this.maTexturePerso);
 			this.monSpritePerso.setPosition(PosX+30+10,PosY-26*c.get_hauteur()+25);
 			Menu.app.draw(this.monSpritePerso);
@@ -475,7 +540,7 @@ public class Jeu {
 			for(int_Action a : actions){
 				Texture maTextureBouton = new Texture();
 				Sprite monSpriteBouton = new Sprite();
-				maTextureBouton.loadFromFile(Paths.get("Images/Jeu/bouton/"+a.getClass().getSimpleName()+".png"));
+				maTextureBouton.loadFromFile(Paths.get("Images/Jeu/bouton/"+a.getClass().getSimpleName()+"_"+couleur_active+".png"));
 				monSpriteBouton.setTexture(maTextureBouton);
 				monSpriteBouton.setPosition(10+100*i,610);
 				Jeu.liste_sprite.put(monSpriteBouton,a.getClass().getSimpleName());
@@ -496,14 +561,27 @@ public class Jeu {
 	public void draw_controle(){
 		int i =0;
 		try {
-			String tab[]={"play","stop","retour"};
-			for(i=0; i < tab.length; i++){
+			String tab_robot[]={"pingouin_GRIS","esquimau_GRIS"};
+			String tab_bouton[]={tab_robot[identificateur_robot],"play","stop","retour"};
+			for(i=0; i < tab_bouton.length; i++){
 				Texture maTextureBouton = new Texture();
 				Sprite monSpriteBouton = new Sprite();
-				maTextureBouton.loadFromFile(Paths.get("Images/Jeu/bouton/"+tab[i]+".png"));
+				maTextureBouton.loadFromFile(Paths.get("Images/Jeu/bouton/"+tab_bouton[i]+".png"));
 				monSpriteBouton.setTexture(maTextureBouton);
-				monSpriteBouton.setPosition(550+100*i,20);
-				Jeu.liste_sprite.put(monSpriteBouton,tab[i]);
+				monSpriteBouton.setPosition(10,10+80*i);
+				Jeu.liste_sprite.put(monSpriteBouton,tab_bouton[i]);
+				Menu.app.draw(monSpriteBouton);
+			}
+
+			String tab_couleur[]={"GRIS","ROUGE","VERT"};
+			for(i=0; i < tab_couleur.length; i++){
+				Texture maTextureBouton = new Texture();
+				Sprite monSpriteBouton = new Sprite();
+
+				maTextureBouton.loadFromFile(Paths.get("Images/Jeu/bouton/tache_"+tab_couleur[i]+".png"));
+				monSpriteBouton.setTexture(maTextureBouton);
+				monSpriteBouton.setPosition(700+50*i,540);
+				Jeu.liste_sprite.put(monSpriteBouton,tab_couleur[i]);
 				Menu.app.draw(monSpriteBouton);
 			}
 		} catch (IOException e) {
@@ -522,13 +600,13 @@ public class Jeu {
 			int y;
 			int num=0;
 			int pos_bouton[] = {44,324,530};
-			for(String type_background : background){
+			for(int i=0;i<background.length;i++){
 				Sprite monSpriteBackground = new Sprite();
-				if(type_background==activate){
-					this.maTexture.loadFromFile(Paths.get("Images/Jeu/background/Fond_"+type_background+"_Activate.png"));
+				if(background[i]==activate){
+					this.maTexture.loadFromFile(Paths.get("Images/Jeu/background/Fond_"+background[i]+"_Activate.png"));
 				}
 				else{
-					this.maTexture.loadFromFile(Paths.get("Images/Jeu/background/Fond_"+type_background+".png"));
+					this.maTexture.loadFromFile(Paths.get("Images/Jeu/background/Fond_"+background[i]+".png"));
 				}
 				monSpriteBackground.setPosition(881, posY[num]);
 				monSpriteBackground.setTexture(this.maTexture);
@@ -544,10 +622,11 @@ public class Jeu {
 					Sprite monSprite = new Sprite();
 					if (x<nombre_bouton_ajoute[num]){
 						switch(num){
-						case 0 : this.maTexture.loadFromFile(Paths.get("Images/Jeu/bouton/"+r.get_Main().get(x).getClass().getSimpleName()+".png"));break;
-						case 1 : this.maTexture.loadFromFile(Paths.get("Images/Jeu/bouton/"+r.get_P1().get(x).getClass().getSimpleName()+".png"));break;
-						case 2 : this.maTexture.loadFromFile(Paths.get("Images/Jeu/bouton/"+r.get_P2().get(x).getClass().getSimpleName()+".png"));break;
+						case 0 : this.maTexture.loadFromFile(Paths.get("Images/Jeu/bouton/"+r.get_Main().get(x).getClass().getSimpleName()+"_"+r.get_Main().get(x).getColor().toString()+".png"));break;
+						case 1 : this.maTexture.loadFromFile(Paths.get("Images/Jeu/bouton/"+r.get_P1().get(x).getClass().getSimpleName()+"_"+r.get_P1().get(x).getColor().toString()+".png"));break;
+						case 2 : this.maTexture.loadFromFile(Paths.get("Images/Jeu/bouton/"+r.get_P2().get(x).getClass().getSimpleName()+"_"+r.get_P2().get(x).getColor().toString()+".png"));break;
 						}
+
 					}else{
 						this.maTexture.loadFromFile(Paths.get("Images/Jeu/background/Fond_Bouton.png"));
 					}
@@ -566,7 +645,7 @@ public class Jeu {
 							liste_P2.add(monSprite);
 						}
 					}
-
+					//Jeu.liste_sprite.put(this.monSprite,r.get_Main().get(x).getClass().getSimpleName());
 					Menu.app.draw(monSprite);
 				}
 				num++;
