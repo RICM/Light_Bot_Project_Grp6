@@ -6,13 +6,18 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import observable.action.Activate;
+import observable.action.Call_P1;
+import observable.action.Call_P2;
+import observable.action.Flashback;
 import observable.action.Jump;
 import observable.action.MoveForward;
+import observable.action.Remember;
 import observable.action.TurnLeft;
 import observable.action.TurnRIght;
 import observable.action.int_Action;
 import observable.action_list.Possible_List;
 import observable.map.Coordonnees;
+import observable.map.Destination_Case;
 import observable.map.Empty_Case;
 import observable.map.Illuminated_Case;
 import observable.map.Normal_Case;
@@ -38,7 +43,7 @@ import exception.UnreachableCase;
 
 public class parserJSON {
 
-	private static final String filePath = new File("").getAbsolutePath()+"/essaie.json";
+	private static final String filePath = new File("").getAbsolutePath()+"/if2.json";
 
 	public static parserJSON currentparser = new parserJSON();
 
@@ -119,6 +124,11 @@ public class parserJSON {
 
 						abstr_Case carre = null;
 						switch ((String) ObcaseCurrent.get("type_case")) { //Class.forName((String)ObcaseCurrent.get("type_case")).
+						case "case_destination" :
+							carre = new Destination_Case(hauteur.intValue(), coul, coor);
+							System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
+							break;
+
 						case "case_painted" :
 							carre = new Painted_Case(hauteur.intValue(), coul, coor);
 							System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
@@ -267,9 +277,26 @@ public class parserJSON {
 					//System.out.println(actions.get(a));
 					int_Action act = null;
 					switch ((String)actions.get(a)){
+					case "Flash":
+						act = Flashback.flashback();
+						break;
+
+					case "Remember":
+						act = Remember.remember();
+						break;
+
+					case "P1":
+						act = Call_P1.call_p1(acontroller);
+						break;
+
+					case "P2":
+						act = Call_P2.call_p2(acontroller);
+						break;
+
 					case "Activate":
 						act = Activate.activate();
 						break;
+
 					case "Jump":
 						act = Jump.jump();
 						break;
