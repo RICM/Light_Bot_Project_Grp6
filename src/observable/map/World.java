@@ -6,7 +6,9 @@ import observable.robot.Position;
 import observable.robot.Robot;
 import observable.robot.abstr_Robot;
 import observer.int_Observer;
+import Ordonnanceur.Ordonnanceur;
 import exception.ActionEx;
+import exception.MouvementEx;
 import exception.UnreachableCase;
 
 public class World implements int_Observable {
@@ -26,6 +28,32 @@ public class World implements int_Observable {
 
 	private Terrain[] save_terr;
 	private Position[] save_robot;
+
+	private Ordonnanceur ordo = new Ordonnanceur();
+
+	public Ordonnanceur get_ordonnanceur(){
+		return this.ordo;
+	}
+
+	public void set_ordonnanceur(Ordonnanceur new_ord){
+		this.ordo = new_ord;
+	}
+
+	public void prerun(){
+		try {
+			this.store_status();
+		} catch (UnreachableCase | ActionEx e) {
+			System.out.println("this shouldn't have heppened, WTH was done");
+			e.printStackTrace();
+		}
+		for(int i =0; i< this.liste_robot.length;i++){
+			this.liste_robot[i].run();
+		}
+	}
+
+	public void exec() throws MouvementEx, UnreachableCase, ActionEx{
+		this.ordo.execute();
+	}
 
 	public Terrain get_terrain(int n){
 		return this.liste_terrain[n];

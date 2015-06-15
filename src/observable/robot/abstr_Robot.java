@@ -30,11 +30,20 @@ public abstract class abstr_Robot {
 	protected boolean activable = true;
 	protected LinkedList<Position> rollback = new LinkedList<Position>();
 
+
+	/**
+	 * initialise la liste d'execution du robot avec le contenu de main
+	 */
 	public void run(){
 		this.order_exec.addFirst(this.user_actions);
 
 	}
-
+	/**
+	 * execute la première action de la liste
+	 * @throws MouvementEx
+	 * @throws UnreachableCase
+	 * @throws ActionEx
+	 */
 	public void execute() throws MouvementEx, UnreachableCase, ActionEx{
 		this.order_exec.run(this);
 	}
