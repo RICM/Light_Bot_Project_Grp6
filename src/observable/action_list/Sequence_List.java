@@ -3,10 +3,11 @@ package observable.action_list;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import observable.int_Observable;
 import observable.action.int_Action;
 import observer.int_Observer;
 
-public class Sequence_List implements int_Action_List {
+public class Sequence_List implements int_Action_List, int_Observable{
 
 	private LinkedList<int_Action> actions_list_seq = new LinkedList<int_Action>();
 
@@ -15,13 +16,16 @@ public class Sequence_List implements int_Action_List {
 	@Override
 	public void addActionToList(int_Action act){
 		this.actions_list_seq.add(act);
+		this.notifyObserver();
 	}
 
 	public void removeActionFromList(int_Action act){
 		this.actions_list_seq.remove(act);
+		this.notifyObserver();
 	}
 
 	public int_Action removeFirst(){
+		this.notifyObserver();
 		return this.actions_list_seq.removeFirst();
 	}
 
@@ -57,9 +61,15 @@ public class Sequence_List implements int_Action_List {
 	}
 	@Override
 	public void notifyObserver() {
+		//System.out.println(this.listObserver.toString());
 		for(int_Observer obs : this.listObserver)
 			obs.update(this);
 	}
+
+	public Sequence_List(int_Observer acontroller){
+		this.listObserver.add(acontroller);
+	}
+
 
 	@Override
 	public String toString(){

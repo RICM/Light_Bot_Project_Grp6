@@ -24,6 +24,7 @@ import observable.map.abstr_Case;
 import observable.robot.Orientation;
 import observable.robot.Orientation.orientation;
 import observable.robot.Robot;
+import observer.int_Observer;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -41,7 +42,7 @@ public class parserJSON {
 
 	public static parserJSON currentparser = new parserJSON();
 
-	public void lecture (){
+	public void lecture (int_Observer acontroller){
 		try {
 			//reader
 			FileReader reader = new FileReader(filePath);
@@ -295,7 +296,7 @@ public class parserJSON {
 				Robot robert =null;
 				switch ((String) Obtyperob.get("type_robot")){
 				case "Robot":
-					robert = new Robot(robotcase, actionlist, o, main, p1, p2);
+					robert = new Robot(robotcase, actionlist, o, main, p1, p2, acontroller);
 					break;
 				default:
 					break;
