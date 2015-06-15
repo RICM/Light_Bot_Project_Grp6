@@ -74,9 +74,9 @@ public class Jeu {
 		liste_main_actions = robot.get_Main().getListActions();
 		liste_P1_actions = robot.get_P1().getListActions();
 		liste_P2_actions = robot.get_P2().getListActions();
-		liste_main = new LinkedList<Sprite>();
-		liste_P1 = new LinkedList<Sprite>();
-		liste_P2 = new LinkedList<Sprite>();
+		//		liste_main = new LinkedList<Sprite>();
+		//		liste_P1 = new LinkedList<Sprite>();
+		//		liste_P2 = new LinkedList<Sprite>();
 		this.setSpritesListesActions();
 	}
 
