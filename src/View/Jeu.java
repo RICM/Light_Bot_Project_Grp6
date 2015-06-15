@@ -590,6 +590,7 @@ public class Jeu {
 	 */
 	public void typeCases(abstr_Case cases){
 		try{
+			this.maTexture = new Texture();
 			switch(cases.getClass().getSimpleName()){
 			case("Normal_Case") : this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/Square_normal.png"));break;
 			case("Destination_Case") : this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/Square_destination.png"));break;
@@ -691,6 +692,7 @@ public class Jeu {
 
 			for(int hauteur=1; hauteur<hauteur_max;hauteur++){
 				try {
+					this.maTexture = new Texture();
 					this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/Square_empile.png"));
 					this.monSprite.setTexture(this.maTexture);
 					this.monSprite.setPosition(PosX,PosY-26*hauteur);
