@@ -348,7 +348,8 @@ public class Jeu {
 			if(x>=rect.left && x<=rect.left+rect.width &&
 					y>=rect.top && y<=rect.top+rect.height){
 				activate = background[cmp];
-				System.out.println("activate: "+activate);
+				//System.out.println("activate: "+activate);
+				controller.setNotificationSwitchProgram(cmp);
 				break;
 			}
 			cmp++;
