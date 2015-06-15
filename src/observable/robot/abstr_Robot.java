@@ -15,18 +15,19 @@ import exception.MouvementEx;
 import exception.UnreachableCase;
 
 public abstract class abstr_Robot {
-	private Possible_List allowed_actions;
-	private Sequence_List user_actions = new Sequence_List(this.listObserver.get(0));
-	private Sequence_List P1 = new Sequence_List(this.listObserver.get(0));
-	private Sequence_List P2 = new Sequence_List(this.listObserver.get(0));
-	private int nbActionMain, nbActionP1, nbActionP2;
-	private abstr_Case current_case;
-	private Orientation.orientation current_orientation;
-	private Couleur color;
-	private Execution_list order_exec = new Execution_list();
 	protected ArrayList<int_Observer> listObserver = new ArrayList<int_Observer>();
-	private boolean activable = true;
-	private LinkedList<Position> rollback = new LinkedList<Position>();
+	protected Possible_List allowed_actions;
+	protected Sequence_List user_actions;
+	protected Sequence_List P1;
+	protected Sequence_List P2;
+	protected int nbActionMain, nbActionP1, nbActionP2;
+	protected abstr_Case current_case;
+	protected Orientation.orientation current_orientation;
+	protected Couleur color;
+	protected Execution_list order_exec = new Execution_list();
+
+	protected boolean activable = true;
+	protected LinkedList<Position> rollback = new LinkedList<Position>();
 
 	public void run(){
 		this.order_exec.addFirst(this.user_actions);
@@ -57,6 +58,7 @@ public abstract class abstr_Robot {
 			throw new ActionEx("impossible d'ajouter");
 		}
 	}
+
 	public void add_Action_User_ActionsP1(int_Action act) throws ActionEx{
 		boolean added = false;
 		//System.out.println("trying to add : "+act.getClass().getCanonicalName());

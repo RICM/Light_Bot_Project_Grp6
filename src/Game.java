@@ -1,23 +1,6 @@
-import observable.action.Activate;
-import observable.action.Jump;
-import observable.action.MoveForward;
-import observable.action.TurnLeft;
-import observable.action.TurnRIght;
-import observable.action_list.Possible_List;
-import observable.map.Coordonnees;
-import observable.map.Illuminated_Case;
-import observable.map.Painted_Case;
-import observable.map.Teleporter_Case;
-import observable.map.Terrain;
-import observable.map.World;
-import observable.map.abstr_Case;
-import observable.robot.Robot;
 import observer.controller.Controller;
 import parser.parserJSON;
 import View.Menu;
-import couleur.Couleur;
-import exception.ActionEx;
-import exception.UnreachableCase;
 
 
 public class Game {
@@ -36,13 +19,13 @@ public class Game {
 		 */
 
 		/** Définition de la liste des actions permises au robot **/
-		Possible_List list = new Possible_List();
+		//Possible_List list = new Possible_List();
 		/** Ajouts des actions de base **/
-		list.addActionToList(MoveForward.move_forward());
-		list.addActionToList(Jump.jump());
-		list.addActionToList(TurnRIght.turn_right());
-		list.addActionToList(Activate.activate());
-		list.addActionToList(TurnLeft.turn_left());
+		//list.addActionToList(MoveForward.move_forward());
+		//list.addActionToList(Jump.jump());
+		//list.addActionToList(TurnRIght.turn_right());
+		//list.addActionToList(Activate.activate());
+		//list.addActionToList(TurnLeft.turn_left());
 		//System.out.println("Liste permise : ");
 		//System.out.println(list.toString());
 
@@ -50,7 +33,7 @@ public class Game {
 
 
 		/** Définition du terrain **/
-		Terrain terrain_test = new Terrain(6,6);
+		/*Terrain terrain_test = new Terrain(6,6);
 		abstr_Case initRob;
 
 		for (int i = 0; i < 6; i++){
@@ -75,8 +58,8 @@ public class Game {
 		Coordonnees cord2 = new Coordonnees(2,3,0);
 		Teleporter_Case carre2 = new Teleporter_Case(2,color, cord2, cord);
 		terrain_test.add_case(2, 3, carre2);
-		try {
-			initRob = terrain_test.get_case(0, 0);
+		try {*/
+		/*initRob = terrain_test.get_case(0, 0);
 			Robot robert = new Robot(initRob, list, acontroller);
 			Robot robotlist[] = new Robot[1];
 			Terrain terrainlist[] = new Terrain[1];
@@ -84,11 +67,10 @@ public class Game {
 			terrainlist[0] = terrain_test;
 			World.currentWorld.set_liste_terrain(terrainlist);
 			World.currentWorld.set_liste_robot(robotlist);
-			World.currentWorld.basic_print_world();
-			parserJSON.currentparser.lecture();
-			//robert.print_allowed_act();
-			try{
-				robert.add_Action_User_Actions(Activate.activate());
+			World.currentWorld.basic_print_world();*/
+		parserJSON.currentparser.lecture(acontroller);
+		//robert.print_allowed_act();
+		/*robert.add_Action_User_Actions(Activate.activate());
 				robert.add_Action_User_Actions(MoveForward.move_forward(Couleur.ROUGE));
 				robert.add_Action_User_Actions(TurnRIght.turn_right());
 				robert.add_Action_User_Actions(Activate.activate());
@@ -106,17 +88,11 @@ public class Game {
 				Terrain terrlist[] = new Terrain[1];
 				terrlist[0] = terrain_test;
 				World.currentWorld.set_liste_robot(roblist);
-				World.currentWorld.set_liste_terrain(terrlist);
-				parserJSON.currentparser.lecture();
-				robert.run();
-				//System.out.println("Position finale : ");
-				//robert.printPosition();
-			}catch (ActionEx ex){
-				System.out.println(ex.getMessage());
-			}
-		} catch (UnreachableCase e1) {
-			System.out.println(e1.getMessage());
-		}
+				World.currentWorld.set_liste_terrain(terrlist);*/
+		parserJSON.currentparser.lecture(acontroller);
+		//robert.run();
+		//System.out.println("Position finale : ");
+		//robert.printPosition();
 
 		//Jeu game = new Jeu(0,null);
 

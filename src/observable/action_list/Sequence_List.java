@@ -62,6 +62,7 @@ public class Sequence_List implements int_Action_List, int_Observable{
 	}
 	@Override
 	public void notifyObserver() {
+		//System.out.println(this.listObserver.toString());
 		for(int_Observer obs : this.listObserver)
 			obs.update(this);
 	}

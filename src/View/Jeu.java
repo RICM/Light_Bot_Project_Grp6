@@ -70,7 +70,7 @@ public class Jeu {
 	}
 
 	public Jeu(int lvl, Controller acontroller){
-		controller = acontroller;
+		this.addController(acontroller);
 		Menu.reset_cam();
 		this.level = lvl;
 		while(Menu.app.isOpen()){
@@ -594,8 +594,6 @@ public class Jeu {
 	}
 
 	public void updateSequenceList(Sequence_List seq) {
-		// TODO Auto-generated method stub
-		// method to update the list of current program
 		System.out.println("j'ai updaté la sequence display");
 	}
 

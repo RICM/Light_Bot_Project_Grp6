@@ -40,6 +40,8 @@ public class Controller implements int_Observer {
 	}
 
 	public void setNotificationUpdatedCurrentProgramList(Sequence_List seq){
+		System.out.println(seq.toString());
+		System.out.println(this.jeu.toString());
 		this.jeu.updateSequenceList(seq);
 	}
 
