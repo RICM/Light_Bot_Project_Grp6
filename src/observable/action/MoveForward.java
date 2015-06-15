@@ -80,7 +80,8 @@ public class MoveForward implements int_Action, int_Observable{
 
 	@Override
 	public boolean isPossible(abstr_Robot r, abstr_Case c){
-		return ((this.color.equals(Couleur.GRIS) || this.color.equals(r.get_couleur()))
+		return ((!c.getClass().getSimpleName().equals("Empty_Case"))
+				&&(this.color.equals(Couleur.GRIS) || this.color.equals(r.get_couleur()))
 				&& (r.getCurrent_Case().get_hauteur() == c.get_hauteur()));
 	}
 
