@@ -21,6 +21,7 @@ import observable.robot.Orientation;
 import observable.robot.abstr_Robot;
 import observer.controller.Controller;
 
+import org.jsfml.audio.Music;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
@@ -129,12 +130,15 @@ public class Jeu {
 			if(e.type == Type.CLOSED){
 				Texture te = new Texture();
 				Sprite sp = new Sprite();
+				Music song_close = new Music();
 				try {
 					te.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/whale.png"));
+					song_close.openFromFile(Paths.get("Song/close.ogg"));
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				song_close.play();
 				sp.setTexture(te);
 				while(Jeu.x_whale < 1200){
 					sp.setPosition(Jeu.x_whale,Jeu.y_whale);
