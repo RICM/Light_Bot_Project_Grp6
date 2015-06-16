@@ -36,7 +36,7 @@ public class Menu {
 
 	public Menu(Controller acontroller){
 		controller = acontroller;
-		this.reset_cam();
+		Menu.reset_cam();
 		try {
 			this.song.openFromFile(Paths.get("Song/theme.ogg"));
 		} catch (IOException e) {
