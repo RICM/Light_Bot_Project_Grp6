@@ -161,6 +161,7 @@ public class Robot extends abstr_Robot implements int_Observable {
 	@Override
 	public void setOrientation(Orientation.orientation or){
 		this.current_orientation = or;
+		this.notifyObserver();
 	}
 
 	@Override
@@ -171,6 +172,7 @@ public class Robot extends abstr_Robot implements int_Observable {
 	@Override
 	public void set_couleur(Couleur new_color){
 		this.color = new_color;
+		this.notifyObserver();
 	}
 
 	@Override
@@ -181,6 +183,7 @@ public class Robot extends abstr_Robot implements int_Observable {
 	@Override
 	public void setCurrent_Case(abstr_Case c){
 		this.current_case = c;
+		this.notifyObserver();
 	}
 
 	@Override
