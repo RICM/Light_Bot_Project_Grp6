@@ -71,4 +71,17 @@ public class Event_Case extends abstr_Case{
 				Clone(),this.getDest_add().Clone(),this.getTo_add().Clone(), this.getStatus());
 	}
 
+	/**
+	 * notify depuis la case qui remplace l'autre
+	 */
+	public void notifyObserverfrom() {
+		if (this.status){
+			this.to_add.notifyObserver();
+		}
+		else{
+			this.replaced.notifyObserver();
+		}
+
+	}
+
 }
