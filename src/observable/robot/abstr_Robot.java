@@ -26,6 +26,7 @@ public abstract class abstr_Robot {
 	protected Orientation.orientation current_orientation;
 	protected Couleur color;
 	protected Execution_list order_exec = new Execution_list();
+	protected abstr_Case prev_case;
 
 	protected boolean activable = true;
 	protected LinkedList<Position> rollback = new LinkedList<Position>();
@@ -149,6 +150,7 @@ public abstract class abstr_Robot {
 	}
 
 	public void setCurrent_Case(abstr_Case c){
+		this.prev_case = this.current_case;
 		this.current_case = c;
 	}
 

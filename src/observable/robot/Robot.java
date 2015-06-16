@@ -129,6 +129,7 @@ public class Robot extends abstr_Robot implements int_Observable {
 
 	@Override
 	public void setCurrent_Case(abstr_Case c){
+		this.prev_case = this.current_case;
 		this.current_case = c;
 		this.notifyObserver();
 	}
