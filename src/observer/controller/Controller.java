@@ -42,7 +42,7 @@ public class Controller implements int_Observer {
 			this.setNotificationUpdatedCurrentProgramList((Sequence_List)obj);
 			break;
 		case "Execution_list" :
-			this.runnable = false;
+			this.runnable = World.currentWorld.isOneRobotActive();
 			break;
 		default:
 			break;
@@ -91,7 +91,7 @@ public class Controller implements int_Observer {
 			World.currentWorld.get_ordonnanceur().addRobot(World.currentWorld.get_robot(j));
 		}
 		World.currentWorld.prerun();
-		while (this.runnable && !World.currentWorld.is_cleared()){
+		while (this.runnable && !(World.currentWorld.is_cleared())){
 			try {
 				World.currentWorld.exec();
 			} catch (MouvementEx e) {

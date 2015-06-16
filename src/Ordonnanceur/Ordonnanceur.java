@@ -26,14 +26,14 @@ public class Ordonnanceur {
 		for (int i =0 ; i < this.list_robot.size() ; i++){
 			System.out.println("taille list exec rob : " + this.list_robot.get(i).get_run().size());
 			if (this.list_robot.get(i).get_activable()){
-				this.list_robot.get(i).execute();
 				System.out.println("lala1");
+				this.list_robot.get(i).execute();
+				System.out.println("lala2");
 				try {
-					Thread.sleep(1000);
+					Thread.sleep(200);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				System.out.println("lala2");
 			}
 		}
 	}

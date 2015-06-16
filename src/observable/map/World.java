@@ -55,9 +55,7 @@ public class World implements int_Observable {
 	}
 
 	public void exec() throws MouvementEx, UnreachableCase, ActionEx{
-		System.out.println("trololo");
 		this.ordo.execute();
-		System.out.println("trolololll");
 	}
 
 	public Terrain get_terrain(int n){
@@ -196,6 +194,16 @@ public class World implements int_Observable {
 			World.currentWorld.liste_robot[i].store_position();
 			World.currentWorld.save_robot[i] = World.currentWorld.liste_robot[i].get_last_pos();
 		}
+	}
+
+	public boolean isOneRobotActive(){
+		for (int i = 0; i < currentWorld.liste_robot.length; i ++){
+			if (currentWorld.liste_robot[i].get_run().size() != 0){
+				System.out.println("True True True");
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public void rewind_status() throws UnreachableCase, ActionEx{

@@ -43,7 +43,7 @@ public class Execution_list implements int_Observable{
 		else{
 			System.out.println("J'AI FINIS TA RACE");
 			this.notifyObserver();
-			throw new ActionEx("Liste robot vide");
+			//throw new ActionEx("Liste robot vide");
 		}
 	}
 
