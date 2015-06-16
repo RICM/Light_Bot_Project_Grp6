@@ -323,7 +323,7 @@ public class parserJSON {
 				Robot robert =null;
 				switch ((String) Obtyperob.get("type_robot")){
 				case "Robot":
-					robert = new Robot(robotcase, actionlist, o, main, p1, p2, acontroller);
+					robert = new Robot(robotcase, actionlist, o, main, p1, p2, acontroller, Couleur.GRIS);
 					break;
 				default:
 					break;

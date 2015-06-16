@@ -23,6 +23,13 @@ public class Execution_list implements int_Observable{
 	public void addFirst(Sequence_List new_h){
 		this.Run_List.addFirst(new_h);
 	}
+	public void initFirst(Sequence_List main){
+		Sequence_List temp = new Sequence_List(null);
+		for(int i = 0; i < main.size(); i++){
+			temp.addActionToList(main.get(i));
+		}
+		this.addFirst(temp);
+	}
 
 	public void removeFirst(){
 		this.Run_List.removeFirst();
