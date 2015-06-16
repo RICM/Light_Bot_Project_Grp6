@@ -16,7 +16,6 @@ import org.jsfml.system.Vector2i;
 import org.jsfml.window.Keyboard;
 import org.jsfml.window.Keyboard.Key;
 import org.jsfml.window.Mouse;
-import org.jsfml.window.Mouse.Button;
 import org.jsfml.window.VideoMode;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.Event.Type;
@@ -43,7 +42,7 @@ public class Menu {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		this.song.play();
+		//this.song.play();
 		this.song.setLoop(true);
 		while(Menu.app.isOpen()){
 			Menu.app.clear();
@@ -98,45 +97,44 @@ public class Menu {
 	private void processEvent() {
 		// TODO Auto-generated method stub
 		Menu.app.setKeyRepeatEnabled(false);
-		Event e = Menu.app.waitEvent();
-		//for(Event e : Menu.app.pollEvents()){
+		for(Event e : Menu.app.pollEvents()){
 
-		if(e.type == Type.CLOSED){
-			Menu.app.close();
-		}
-		if(e.type == Event.Type.RESIZED){
-			Menu.reset_cam();
-		}
+			if(e.type == Type.CLOSED){
+				Menu.app.close();
+			}
+			if(e.type == Event.Type.RESIZED){
+				Menu.reset_cam();
+			}
 
-		if (Keyboard.isKeyPressed(Key.DOWN)){
-			Menu.camera.zoom(0.5f);
-			Menu.app.setView(Menu.camera);
-		}
+			if (Keyboard.isKeyPressed(Key.DOWN)){
+				Menu.camera.zoom(0.5f);
+				Menu.app.setView(Menu.camera);
+			}
 
-		if (Keyboard.isKeyPressed(Key.UP)){
-			Menu.camera.zoom(2f);
-			Menu.app.setView(Menu.camera);
-		}
+			if (Keyboard.isKeyPressed(Key.UP)){
+				Menu.camera.zoom(2f);
+				Menu.app.setView(Menu.camera);
+			}
 
-		if (Keyboard.isKeyPressed(Key.RIGHT)){
-			Menu.camera.rotate(-45);;
-			Menu.app.setView(Menu.camera);
-		}
+			if (Keyboard.isKeyPressed(Key.RIGHT)){
+				Menu.camera.rotate(-45);;
+				Menu.app.setView(Menu.camera);
+			}
 
-		if (Keyboard.isKeyPressed(Key.LEFT)){
-			Menu.camera.rotate(45);;
-			Menu.app.setView(Menu.camera);
-		}
+			if (Keyboard.isKeyPressed(Key.LEFT)){
+				Menu.camera.rotate(45);;
+				Menu.app.setView(Menu.camera);
+			}
 
-		if (e.type == Event.Type.MOUSE_BUTTON_PRESSED && Mouse.isButtonPressed(Button.LEFT)) {
-			e.asMouseEvent();
-			Vector2i pos = Mouse.getPosition(Menu.app);
-			Vector2f poss = Menu.app.mapPixelToCoords(pos);
-			System.out.println(poss.x+" "+poss.y);
-			this.btnClick(poss);
-		}
+			if (e.type == Event.Type.MOUSE_BUTTON_RELEASED) {
+				e.asMouseEvent();
+				Vector2i pos = Mouse.getPosition(Menu.app);
+				Vector2f poss = Menu.app.mapPixelToCoords(pos);
+				System.out.println(poss.x+" "+poss.y);
+				this.btnClick(poss);
+			}
 
-		//}
+		}
 	}
 
 	/**
@@ -161,7 +159,7 @@ public class Menu {
 		FloatRect rect = this.sprite_Play.getGlobalBounds();
 		if(x>=rect.left && x<=rect.left+rect.width &&
 				y>=rect.top && y<=rect.top+rect.height){
-			Niveaux niv = new Niveaux(controller);
+			Theme niv = new Theme(controller);
 		}
 	}
 }

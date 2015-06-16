@@ -361,7 +361,7 @@ public class Jeu {
 			int PosX = Menu.WIDTH/2 +59*(Y+X)-taille_abs*60-180;
 			int PosY = Menu.HEIGHT/2 +18*(Y-X)-taille_ord*18+100;
 
-			this.maTexturePerso.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/"+rob.getOrientation()+"_"+rob.get_couleur()+".png"));
+			this.maTexturePerso.loadFromFile(Paths.get("Images/Jeu/gif/robots/0_"+rob.getOrientation()+"_"+rob.get_couleur()+".png"));
 
 			this.monSpritePerso.setTexture(this.maTexturePerso);
 			this.monSpritePerso.setPosition(PosX+30+10,PosY-26*c.get_hauteur()+25);
