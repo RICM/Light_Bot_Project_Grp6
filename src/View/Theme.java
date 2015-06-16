@@ -146,6 +146,7 @@ public class Theme {
 		String tab [] = {"Tutoriels","Conditions","Pointeurs","Dual_mode"};
 		try {
 			for(int i = 0;i<tab.length;i++){
+				this.texture_Theme = new Texture();
 				this.texture_Theme.loadFromFile(Paths.get("Images/selectLvl/"+tab[i]+".png"));
 				this.sprite_Theme.setTexture(this.texture_Theme);
 				this.sprite_Theme.setPosition(250+(150+50)*i,350);
