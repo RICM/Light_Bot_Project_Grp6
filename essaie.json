@@ -44,7 +44,7 @@
     						{"type_robot" : "Robot"},
     						{"couleur" : "BLEU"},
     						{"coorX" : 2},
-    						{"coorY" : 1},
+    						{"coorY" : 2},
     						{"indice_tableau": 0},
     						{"max_main": 3},
     						{"max_p1": 3},

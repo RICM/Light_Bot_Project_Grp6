@@ -1,0 +1,39 @@
+{
+    "nb_terrain": 1,
+    "terrains": [
+        {
+            "terrain1": [
+                {"nb_case_hauteur": 4},
+                {"nb_case_largeur": 6},
+                { "lignes" : [ 
+                
+                	{"ligne1" : [{"type_case": "case_painted","hauteur": 7,"couleur": "ROUGE"},{"type_case": "case_illuminated","hauteur":8,"couleur": "GRIS"},{"type_case": "case_normale","hauteur": 8,"couleur": "GRIS"},{"type_case": "case_illuminated","hauteur": 8,"couleur": "GRIS"},{"type_case": "case_normale","hauteur": 8,"couleur": "GRIS"},{"type_case": "case_illuminated","hauteur": 8,"couleur": "GRIS"} ]},
+
+		              {"ligne2" : [{"type_case": "case_normale","hauteur": 6,"couleur": "GRIS"},{"type_case": "case_illuminated","hauteur":6,"couleur": "GRIS"},{"type_case": "case_normale","hauteur": 6,"couleur": "GRIS"},{"type_case": "case_illuminated","hauteur": 6,"couleur": "GRIS"},{"type_case": "case_normale","hauteur": 6,"couleur": "GRIS"},{"type_case": "case_painted","hauteur": 5,"couleur": "VERT"} ]},
+		              
+		              {"ligne3" : [{"type_case": "case_painted","hauteur": 3,"couleur": "ROUGE"},{"type_case": "case_illuminated","hauteur":4,"couleur": "GRIS"},{"type_case": "case_normale","hauteur": 4,"couleur": "GRIS"},{"type_case": "case_illuminated","hauteur": 4,"couleur": "GRIS"},{"type_case": "case_normale","hauteur": 4,"couleur": "GRIS"},{"type_case": "case_normale","hauteur": 4,"couleur": "GRIS"} ]},
+		              
+		              {"ligne4" : [{"type_case": "case_normale","hauteur": 2,"couleur": "GRIS"},{"type_case": "case_illuminated","hauteur":2,"couleur": "GRIS"},{"type_case": "case_normale","hauteur": 2,"couleur": "GRIS"},{"type_case": "case_illuminated","hauteur": 2,"couleur": "GRIS"},{"type_case": "case_normale","hauteur": 2,"couleur": "GRIS"},{"type_case": "case_painted","hauteur": 1,"couleur": "VERT"} ]},
+		            ]}
+            ]
+        }
+        
+    ],
+    "nb_robot" : 1,
+    "robots" :[
+    		{ 
+    			"robot1" : [
+    						{"type_robot" : "Robot"},
+    						{"couleur" : "GRIS"},
+    						{"coorX" : 5},
+    						{"coorY" : 3},
+    						{"indice_tableau": 0},
+    						{"max_main": 9},
+    						{"max_p1": 8},
+    						{"max_p2": 6},
+    						{"orientation": "left"},
+    						{"actions" :["MoveForward" ,"TurnLeft","Jump","TurnRight","Activate"]}
+    			]
+    		}
+    ]  
+}

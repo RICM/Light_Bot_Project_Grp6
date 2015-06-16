@@ -52,7 +52,13 @@ public class Activate implements int_Action, int_Observable{
 			if(cprime.getClass().getSimpleName().equals("Teleporter_Case")){
 				Coordonnees next = ((Teleporter_Case)cprime).get_destination();
 				if(!World.currentWorld.isOccupied(World.currentWorld.get_case(next))){
-					r.setCurrent_Case(World.currentWorld.get_case(((Teleporter_Case)cprime).get_destination()));
+					abstr_Case dest = World.currentWorld.get_case(((Teleporter_Case)cprime).get_destination());
+					if (dest.getClass().getSimpleName().equals("Empty_Case")){
+						throw new ActionEx("Null pointer");
+					}
+					else{
+						r.setCurrent_Case(dest);
+					}
 				}
 				else {
 					throw new ActionEx("la case destination est occupée");
