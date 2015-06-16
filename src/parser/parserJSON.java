@@ -43,7 +43,7 @@ import exception.UnreachableCase;
 
 public class parserJSON {
 
-	private static final String filePath = new File("").getAbsolutePath()+"/essaie.json";
+	private static final String filePath = new File("").getAbsolutePath()+"/pt1.json";
 
 	public static parserJSON currentparser = new parserJSON();
 

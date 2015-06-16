@@ -32,7 +32,7 @@
     						{"coorY" : 0},
     						{"indice_tableau": 0},
     						{"max_main": 4},
-    						{"max_p1": 5},
+    						{"max_p1": 6},
     						{"max_p2": 0},
     						{"orientation": "bot"},
     						{"actions" :["MoveForward" ,"TurnLeft","Jump","TurnRight","Activate","P1","P2"]}

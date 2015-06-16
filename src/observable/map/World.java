@@ -170,10 +170,10 @@ public class World implements int_Observable {
 		for(int i = 0; i<this.liste_terrain.length; i++){
 			for(int j = 0; j<this.liste_terrain[i].get_terrain().length;j++ ){
 				for(int k = 0; k<this.liste_terrain[i].get_terrain()[j].length; k++){
-					System.out.println(" type de la case " +this.liste_terrain[i].get_case(j, k).getClass().getSimpleName() + "et coordonnees" + j + "   "+ k );
-					if (this.liste_terrain[i].get_case(j, k).getClass().getSimpleName().equals("Illuminated_Case")){
+					//	System.out.println(" type de la case " +this.liste_terrain[i].get_case(j, k).getClass().getSimpleName() + "et coordonnees" + j + "   "+ k );
+					if (this.liste_terrain[i].get_case(k, j).getClass().getSimpleName().equals("Illuminated_Case")){
 						this.nb_case_allumable++;
-						if (((Illuminated_Case)this.liste_terrain[i].get_case(j, k)).get_active()){
+						if (((Illuminated_Case)this.liste_terrain[i].get_case(k, j)).get_active()){
 							this.nb_case_allumees++;
 						}
 					}

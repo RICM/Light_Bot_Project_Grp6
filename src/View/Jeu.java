@@ -404,7 +404,7 @@ public class Jeu {
 		int i =0;
 		try {
 			String tab_robot[]={"pingouin_GRIS","requin_GRIS"};
-			String tab_bouton[]={tab_robot[identificateur_robot],"play","stop","retour"};
+			String tab_bouton[]={tab_robot[identificateur_robot],"play","stop","rewind"};
 			for(i=0; i < tab_bouton.length; i++){
 				Texture maTextureBouton = new Texture();
 				Sprite monSpriteBouton = new Sprite();

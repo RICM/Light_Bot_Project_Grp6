@@ -134,7 +134,7 @@ public class Terrain implements int_Observable{
 
 	@SuppressWarnings("unchecked")
 	public Terrain Clone() throws UnreachableCase{
-		Terrain to_return = new Terrain(this.terrain.length,this.terrain[this.terrain.length-1].length);
+		Terrain to_return = new Terrain(this.terrain[this.terrain.length-1].length,this.terrain.length);
 		int i,j;
 		j = this.terrain.length;
 		i = this.terrain[j-1].length;
