@@ -6,6 +6,7 @@ import observable.action_list.Sequence_List;
 import observable.map.abstr_Case;
 import observable.robot.Orientation.orientation;
 import observer.int_Observer;
+import couleur.Couleur;
 import exception.ActionEx;
 
 public class Dumb_bot extends abstr_Robot {
@@ -25,9 +26,10 @@ public class Dumb_bot extends abstr_Robot {
 	 * @param taille_P1 taille max de P1
 	 * @param taille_P2 taille max de P2
 	 */
-	public Dumb_bot(abstr_Case case_init, orientation or_init, Possible_List allowed_init,
+	public Dumb_bot(abstr_Case case_init, orientation or_init, Possible_List allowed_init, Couleur color,
 			int_Observer controller, Sequence_List Fixed_main, int taille_P1, int taille_P2){
 		this.allowed_actions = allowed_init;
+		this.set_couleur(color);
 		this.setCurrent_Case(case_init);
 		this.setOrientation(or_init);
 		this.set_tailleP1(taille_P1);
@@ -52,11 +54,12 @@ public class Dumb_bot extends abstr_Robot {
 	 * @param Fixed_P1
 	 * @param taille_P2
 	 */
-	public Dumb_bot(abstr_Case case_init, orientation or_init, Possible_List allowed_init,
+	public Dumb_bot(abstr_Case case_init, orientation or_init, Possible_List allowed_init, Couleur color,
 			int_Observer controller,  int taille_Main, Sequence_List Fixed_P1, int taille_P2){
 		this.allowed_actions = allowed_init;
 		this.setCurrent_Case(case_init);
 		this.setOrientation(or_init);
+		this.set_couleur(color);
 		this.set_tailleMain(taille_Main);
 		this.set_tailleP2(taille_P2);
 		this.listObserver.add(controller);
@@ -80,9 +83,10 @@ public class Dumb_bot extends abstr_Robot {
 	 * @param Fixed_P1 similaire a Fixed main pour P1
 	 * @param taille_P2 taille max de P2
 	 */
-	public Dumb_bot(abstr_Case case_init, orientation or_init, Possible_List allowed_init,
+	public Dumb_bot(abstr_Case case_init, orientation or_init, Possible_List allowed_init, Couleur color,
 			int_Observer controller, Sequence_List Fixed_main, Sequence_List Fixed_P1, int taille_P2){
 		this.allowed_actions = allowed_init;
+		this.set_couleur(color);
 		this.setCurrent_Case(case_init);
 		this.setOrientation(or_init);
 		this.set_tailleP2(taille_P2);
@@ -107,11 +111,12 @@ public class Dumb_bot extends abstr_Robot {
 	 * @param Fixed_P1
 	 * @param Fixed_P2
 	 */
-	public Dumb_bot(abstr_Case case_init, orientation or_init, Possible_List allowed_init,
+	public Dumb_bot(abstr_Case case_init, orientation or_init, Possible_List allowed_init, Couleur color,
 			int_Observer controller, int taille_Main, Sequence_List Fixed_P1,  Sequence_List Fixed_P2){
 		this.allowed_actions = allowed_init;
 		this.setCurrent_Case(case_init);
 		this.setOrientation(or_init);
+		this.set_couleur(color);
 		this.set_tailleMain(taille_Main);
 		this.listObserver.add(controller);
 		this.P2 = Fixed_P2;
@@ -125,11 +130,12 @@ public class Dumb_bot extends abstr_Robot {
 	}
 
 
-	public Dumb_bot(abstr_Case case_init, orientation or_init, Possible_List allowed_init,
+	public Dumb_bot(abstr_Case case_init, orientation or_init, Possible_List allowed_init, Couleur color,
 			int_Observer controller, Sequence_List Fixed_Main, Sequence_List Fixed_P1,  Sequence_List Fixed_P2){
 		this.allowed_actions = allowed_init;
 		this.setCurrent_Case(case_init);
 		this.setOrientation(or_init);
+		this.set_couleur(color);
 		this.listObserver.add(controller);
 		this.user_actions = Fixed_P2;
 		this.user_actions.addObserver(controller);
