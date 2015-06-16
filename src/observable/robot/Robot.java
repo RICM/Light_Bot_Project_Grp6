@@ -99,6 +99,44 @@ public class Robot extends abstr_Robot implements int_Observable {
 	//getteurs et setteurs
 
 	@Override
+	public Orientation.orientation getOrientation(){
+		return this.current_orientation;
+	}
+
+	@Override
+	public void setOrientation(Orientation.orientation or){
+		this.current_orientation = or;
+		this.notifyObserver();
+	}
+
+	@Override
+	public Couleur get_couleur(){
+		return this.color;
+	}
+
+	@Override
+	public void set_couleur(Couleur new_color){
+		this.color = new_color;
+		this.notifyObserver();
+	}
+
+	@Override
+	public abstr_Case getCurrent_Case(){
+		return this.current_case;
+	}
+
+	@Override
+	public void setCurrent_Case(abstr_Case c){
+		this.current_case = c;
+		this.notifyObserver();
+	}
+
+	@Override
+	public Possible_List get_possible(){
+		return this.allowed_actions;
+	}
+
+	@Override
 	public void set_possible(Possible_List allowed){
 		this.allowed_actions = allowed;
 	}
