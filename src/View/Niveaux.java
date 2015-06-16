@@ -58,25 +58,26 @@ public class Niveaux {
 	 */
 	public void processEvent(){
 		Menu.app.setKeyRepeatEnabled(false);
-		for(Event e : Menu.app.pollEvents()){
+		Event e = Menu.app.waitEvent();
+		//for(Event e : Menu.app.pollEvents()){
 
-			if(e.type == Type.CLOSED){
-				Menu.app.close();
-			}
-
-
-			if(e.type == Event.Type.RESIZED){
-				Menu.reset_cam();
-			}
-
-			if (e.type == Event.Type.MOUSE_BUTTON_PRESSED) {
-				e.asMouseEvent();
-				Vector2i pos = Mouse.getPosition(Menu.app);
-				Vector2f click = Menu.app.mapPixelToCoords(pos);
-				System.out.println(pos.x+" "+pos.y);
-				this.btnClick(click);
-			}
+		if(e.type == Type.CLOSED){
+			Menu.app.close();
 		}
+
+
+		if(e.type == Event.Type.RESIZED){
+			Menu.reset_cam();
+		}
+
+		if (e.type == Event.Type.MOUSE_BUTTON_PRESSED) {
+			e.asMouseEvent();
+			Vector2i pos = Mouse.getPosition(Menu.app);
+			Vector2f click = Menu.app.mapPixelToCoords(pos);
+			System.out.println(pos.x+" "+pos.y);
+			this.btnClick(click);
+		}
+		//}
 	}
 
 	/**
