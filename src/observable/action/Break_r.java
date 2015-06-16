@@ -10,7 +10,7 @@ import exception.ActionEx;
 import exception.MouvementEx;
 import exception.UnreachableCase;
 
-public class Break implements int_Action {
+public class Break_r implements int_Action {
 
 	private ArrayList<int_Observer> listObserver = new ArrayList<int_Observer>();
 
@@ -25,6 +25,21 @@ public class Break implements int_Action {
 		this.color = color;
 	}
 
+	public static Break_r break_r(){
+		return new Break_r();
+	}
+
+	public static Break_r break_r(Couleur col){
+		return new Break_r(col);
+	}
+
+	private Break_r(){
+		this.setColor(Couleur.GRIS);
+	}
+
+	private Break_r(Couleur col){
+		this.setColor(col);
+	}
 	@Override
 	public void addObserver(int_Observer obs) {
 		this.listObserver.add(obs);
