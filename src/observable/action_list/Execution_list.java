@@ -26,7 +26,7 @@ public class Execution_list implements int_Observable{
 	public void initFirst(Sequence_List main){
 		Sequence_List temp = new Sequence_List(null);
 		for(int i = 0; i < main.size(); i++){
-			temp.addActionToList(main.get(i));
+			temp.addActionSubSequence(main.get(i));
 		}
 		this.addFirst(temp);
 	}

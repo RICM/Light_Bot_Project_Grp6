@@ -47,10 +47,10 @@ public class Menu {
 		this.song.setLoop(true);
 		while(Menu.app.isOpen()){
 			Menu.app.clear();
-			this.processEvent();
 			this.displayBackground();
 			this.displayBtn();
 			Menu.app.display();
+			this.processEvent();
 		}
 	}
 
@@ -98,44 +98,45 @@ public class Menu {
 	private void processEvent() {
 		// TODO Auto-generated method stub
 		Menu.app.setKeyRepeatEnabled(false);
-		for(Event e : Menu.app.pollEvents()){
+		Event e = Menu.app.waitEvent();
+		//for(Event e : Menu.app.pollEvents()){
 
-			if(e.type == Type.CLOSED){
-				Menu.app.close();
-			}
-			if(e.type == Event.Type.RESIZED){
-				Menu.reset_cam();
-			}
-
-			if (Keyboard.isKeyPressed(Key.DOWN)){
-				Menu.camera.zoom(0.5f);
-				Menu.app.setView(Menu.camera);
-			}
-
-			if (Keyboard.isKeyPressed(Key.UP)){
-				Menu.camera.zoom(2f);
-				Menu.app.setView(Menu.camera);
-			}
-
-			if (Keyboard.isKeyPressed(Key.RIGHT)){
-				Menu.camera.rotate(-45);;
-				Menu.app.setView(Menu.camera);
-			}
-
-			if (Keyboard.isKeyPressed(Key.LEFT)){
-				Menu.camera.rotate(45);;
-				Menu.app.setView(Menu.camera);
-			}
-
-			if (e.type == Event.Type.MOUSE_BUTTON_PRESSED && Mouse.isButtonPressed(Button.LEFT)) {
-				e.asMouseEvent();
-				Vector2i pos = Mouse.getPosition(Menu.app);
-				Vector2f poss = Menu.app.mapPixelToCoords(pos);
-				System.out.println(poss.x+" "+poss.y);
-				this.btnClick(poss);
-			}
-
+		if(e.type == Type.CLOSED){
+			Menu.app.close();
 		}
+		if(e.type == Event.Type.RESIZED){
+			Menu.reset_cam();
+		}
+
+		if (Keyboard.isKeyPressed(Key.DOWN)){
+			Menu.camera.zoom(0.5f);
+			Menu.app.setView(Menu.camera);
+		}
+
+		if (Keyboard.isKeyPressed(Key.UP)){
+			Menu.camera.zoom(2f);
+			Menu.app.setView(Menu.camera);
+		}
+
+		if (Keyboard.isKeyPressed(Key.RIGHT)){
+			Menu.camera.rotate(-45);;
+			Menu.app.setView(Menu.camera);
+		}
+
+		if (Keyboard.isKeyPressed(Key.LEFT)){
+			Menu.camera.rotate(45);;
+			Menu.app.setView(Menu.camera);
+		}
+
+		if (e.type == Event.Type.MOUSE_BUTTON_PRESSED && Mouse.isButtonPressed(Button.LEFT)) {
+			e.asMouseEvent();
+			Vector2i pos = Mouse.getPosition(Menu.app);
+			Vector2f poss = Menu.app.mapPixelToCoords(pos);
+			System.out.println(poss.x+" "+poss.y);
+			this.btnClick(poss);
+		}
+
+		//}
 	}
 
 	/**

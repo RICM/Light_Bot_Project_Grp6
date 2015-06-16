@@ -19,6 +19,10 @@ public class Sequence_List implements int_Action_List, int_Observable{
 		this.notifyObserver();
 	}
 
+	public void addActionSubSequence(int_Action act){
+		this.actions_list_seq.add(act);
+	}
+
 	public void removeActionFromList(int_Action act){
 		this.actions_list_seq.remove(act);
 		this.notifyObserver();
