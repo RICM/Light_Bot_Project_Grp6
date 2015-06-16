@@ -144,7 +144,7 @@ public class Controller implements int_Observer {
 		/**
 		 * Receive a notification from view to change robot to robot[i] from current
 		 */
-		if (World.currentWorld.number_robots()!=0)
+		if (World.currentWorld.number_robots()!=1)
 			this.current_robot = i;
 		this.jeu.updateRobotListAction(World.currentWorld.get_robot(this.current_robot));
 	}

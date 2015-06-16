@@ -8,7 +8,7 @@
                 { "lignes" : [ 
 		              {"ligne1" : [{"type_case": "case_normale","hauteur": 1,"couleur": "GRIS"},{"type_case": 									"case_normale","hauteur": 1,"couleur": "GRIS"}]},
 		              
-		              {"ligne2" : [{"type_case": "case_teleporter","hauteur": 1,"couleur": "GRIS","destX":0,"destY":6,"indice":0},{"type_case": 									"case_normale","hauteur": 1,"couleur": "GRIS"}]},
+		              {"ligne2" : [{"type_case": "case_teleporter","hauteur": 1,"couleur": "GRIS","destX":0,"destY":5,"indice":0},{"type_case": 									"case_normale","hauteur": 1,"couleur": "GRIS"}]},
 		              
 		              {"ligne3" : [{"type_case": "case_empty","hauteur": 1,"couleur": "GRIS"},{"type_case": 									"case_empty","hauteur": 1,"couleur": "GRIS"}]},
 		              

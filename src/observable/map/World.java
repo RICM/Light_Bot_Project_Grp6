@@ -42,7 +42,7 @@ public class World implements int_Observable {
 	public void prerun(){
 		try {
 			this.store_status();
-			this.refresh_allumable();
+			this.init_World();
 		} catch (UnreachableCase | ActionEx e) {
 			System.out.println("this shouldn't have heppened, WTH was done");
 			e.printStackTrace();
@@ -164,16 +164,20 @@ public class World implements int_Observable {
 	 * @return void, set nb_case allumables et allumées au bonne valeurs
 	 * @throws UnreachableCase
 	 */
-	public void refresh_allumable() throws UnreachableCase{
+	public void init_World() throws UnreachableCase{
 		this.nb_case_allumable = 0;
 		this.nb_case_allumees = 0;
 		for(int i = 0; i<this.liste_terrain.length; i++){
 			for(int j = 0; j<this.liste_terrain[i].get_terrain().length;j++ ){
 				for(int k = 0; k<this.liste_terrain[i].get_terrain()[j].length; k++){
-					System.out.println(" type de la case " +this.liste_terrain[i].get_case(j, k).getClass().getSimpleName() + "et coordonnees" + j + "   "+ k );
-					if (this.liste_terrain[i].get_case(j, k).getClass().getSimpleName().equals("Illuminated_Case")){
+					//	System.out.println(" type de la case " +this.liste_terrain[i].get_case(j, k).getClass().getSimpleName() + "et coordonnees" + j + "   "+ k );
+					if (this.liste_terrain[i].get_case(k, j).getClass().getSimpleName().equals("Event_Case")){
+						((Event_Case)this.liste_terrain[i].get_case(k, j)).init();
+						((Event_Case)this.liste_terrain[i].get_case(k, j)).refresh();
+					}
+					if (this.liste_terrain[i].get_case(k, j).getClass().getSimpleName().equals("Illuminated_Case")){
 						this.nb_case_allumable++;
-						if (((Illuminated_Case)this.liste_terrain[i].get_case(j, k)).get_active()){
+						if (((Illuminated_Case)this.liste_terrain[i].get_case(k, j)).get_active()){
 							this.nb_case_allumees++;
 						}
 					}
@@ -214,6 +218,12 @@ public class World implements int_Observable {
 			World.currentWorld.liste_robot[i].setFromPosition(World.currentWorld.save_robot[i]);
 			World.currentWorld.liste_robot[i].reset_exec();
 		}
-		World.currentWorld.refresh_allumable();
+		World.currentWorld.init_World();
 	}
+
+	public void set_Case(Coordonnees dest, abstr_Case replacement){
+		this.liste_terrain[dest.get_n()].add_case(dest.get_x(), dest.get_y(), replacement);
+	}
+
+
 }

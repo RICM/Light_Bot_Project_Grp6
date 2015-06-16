@@ -3,6 +3,7 @@ import java.util.ArrayList;
 
 import observable.int_Observable;
 import observable.map.Coordonnees;
+import observable.map.Event_Case;
 import observable.map.Illuminated_Case;
 import observable.map.Teleporter_Case;
 import observable.map.World;
@@ -76,6 +77,10 @@ public class Activate implements int_Action, int_Observable{
 				this.notifyObserver();
 
 			}
+			else if(cprime.getClass().getSimpleName().equals("Event_Case")){
+				((Event_Case)cprime).setStatus(!((Event_Case)cprime).getStatus());
+				((Event_Case)cprime).notifyObserverfrom();
+			}
 			else {
 				r.set_couleur(cprime.get_couleur());
 				this.notifyObserver();
@@ -93,7 +98,9 @@ public class Activate implements int_Action, int_Observable{
 	public boolean isPossible(abstr_Robot r, abstr_Case c) {
 		return (((c.getClass().getSimpleName().equals("Teleporter_Case")
 				|| c.getClass().getSimpleName().equals("Painted_Case"))
-				|| c.getClass().getSimpleName().equals("Illuminated_Case"))
+				|| c.getClass().getSimpleName().equals("Illuminated_Case")
+				|| c.getClass().getSimpleName().equals("Event_Case"))
+
 				&&(this.color.equals(r.get_couleur())||
 						this.color.equals(Couleur.GRIS))) ;
 	}

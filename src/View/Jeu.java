@@ -361,7 +361,7 @@ public class Jeu {
 			int PosX = Menu.WIDTH/2 +59*(Y+X)-taille_abs*60-180;
 			int PosY = Menu.HEIGHT/2 +18*(Y-X)-taille_ord*18+100;
 
-			this.maTexturePerso.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/"+rob.getOrientation()+"_"+rob.get_couleur()+".png"));
+			this.maTexturePerso.loadFromFile(Paths.get("Images/Jeu/gif/robots/0_"+rob.getOrientation()+"_"+rob.get_couleur()+".png"));
 
 			this.monSpritePerso.setTexture(this.maTexturePerso);
 			this.monSpritePerso.setPosition(PosX+30+10,PosY-26*c.get_hauteur()+25);
@@ -404,7 +404,7 @@ public class Jeu {
 		int i =0;
 		try {
 			String tab_robot[]={"pingouin_GRIS","requin_GRIS"};
-			String tab_bouton[]={tab_robot[identificateur_robot],"play","stop","retour"};
+			String tab_bouton[]={tab_robot[identificateur_robot],"play","stop","rewind"};
 			for(i=0; i < tab_bouton.length; i++){
 				Texture maTextureBouton = new Texture();
 				Sprite monSpriteBouton = new Sprite();
