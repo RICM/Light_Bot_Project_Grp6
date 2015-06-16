@@ -3,7 +3,6 @@ import java.util.ArrayList;
 
 import observable.int_Observable;
 import observable.robot.Position;
-import observable.robot.Robot;
 import observable.robot.abstr_Robot;
 import observer.int_Observer;
 import Ordonnanceur.Ordonnanceur;
@@ -79,7 +78,7 @@ public class World implements int_Observable {
 		return  this.liste_robot;
 	}
 
-	public void set_liste_robot(Robot[] new_liste){
+	public void set_liste_robot(abstr_Robot[] new_liste){
 		this.liste_robot = new_liste;
 		this.notifyObserver();
 	}

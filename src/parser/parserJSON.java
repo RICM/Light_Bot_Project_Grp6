@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import observable.action.Activate;
+import observable.action.Break_r;
 import observable.action.Call_P1;
 import observable.action.Call_P2;
 import observable.action.Flashback;
@@ -16,6 +17,7 @@ import observable.action.TurnLeft;
 import observable.action.TurnRIght;
 import observable.action.int_Action;
 import observable.action_list.Possible_List;
+import observable.action_list.Sequence_List;
 import observable.map.Coordonnees;
 import observable.map.Destination_Case;
 import observable.map.Empty_Case;
@@ -26,9 +28,11 @@ import observable.map.Teleporter_Case;
 import observable.map.Terrain;
 import observable.map.World;
 import observable.map.abstr_Case;
+import observable.robot.Dumb_bot;
 import observable.robot.Orientation;
 import observable.robot.Orientation.orientation;
 import observable.robot.Robot;
+import observable.robot.abstr_Robot;
 import observer.int_Observer;
 
 import org.json.simple.JSONArray;
@@ -43,7 +47,7 @@ import exception.UnreachableCase;
 
 public class parserJSON {
 
-	private static final String filePath = new File("").getAbsolutePath()+"/pt1.json";
+	private static final String filePath = new File("").getAbsolutePath()+"/json/pt4.json";
 
 	public static parserJSON currentparser = new parserJSON();
 
@@ -65,7 +69,7 @@ public class parserJSON {
 			int nb_robot = nb_robot_prime.intValue();
 
 			Terrain terrainlist[] = new Terrain[nb_terrain];
-			Robot robotlist[] = new Robot[nb_robot];
+			abstr_Robot robotlist[] = new abstr_Robot[nb_robot];
 
 
 			for(int i=0; i < nb_terrain ; i++){
@@ -121,9 +125,13 @@ public class parserJSON {
 							coul = Couleur.GRIS;
 							break;
 						}
-
 						abstr_Case carre = null;
 						switch ((String) ObcaseCurrent.get("type_case")) { //Class.forName((String)ObcaseCurrent.get("type_case")).
+						case "case_event":
+
+							//carre = new Event_Case(hauteur.intValue(), coul, coor, dest, type, stat);
+							break;
+
 						case "case_destination" :
 							carre = new Destination_Case(hauteur.intValue(), coul, coor);
 							System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
@@ -138,8 +146,9 @@ public class parserJSON {
 							Number destX = (Number)  ObcaseCurrent.get("destX");
 							Number destY = (Number)  ObcaseCurrent.get("destY");
 							Number indice = (Number) ObcaseCurrent.get("indice");
+							Coordonnees dest = new Coordonnees(destX.intValue(), destY.intValue(),indice.intValue());
 							//new Teleporter_Case(h, Color, cord, destination)
-							carre = new Teleporter_Case(hauteur.intValue(), coul, coor, new Coordonnees(destX.intValue(), destY.intValue(), indice.intValue()));
+							carre = new Teleporter_Case(hauteur.intValue(), coul, coor, dest);
 							//System.out.println("terrain"+i+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
 							break;
 
@@ -164,6 +173,7 @@ public class parserJSON {
 							break;
 						}
 
+
 						terrainlist[i].add_case(x, y, carre);
 					}
 
@@ -185,7 +195,7 @@ public class parserJSON {
 				JSONObject Obcouleur = (JSONObject) robotCurrent.get(1);
 				//System.out.println(Obcouleur);
 
-				String Scouleur = (String) Obcouleur.get("couleur");
+				//String Scouleur = (String) Obcouleur.get("couleur");
 				Couleur cool;
 				switch ((String) Obcouleur.get("couleur")){
 				case "VERT" :
@@ -226,23 +236,6 @@ public class parserJSON {
 				//System.out.println(terrainlist[indice].get_case(robX, robY));
 				abstr_Case robotcase =  terrainlist[indice].get_case(robX, robY);
 
-				JSONObject Obmaxmain = (JSONObject) robotCurrent.get(5);
-				//System.out.println(Obmaxmain);
-				Number nummain = (Number) Obmaxmain.get("max_main");
-				System.out.println("max taille du main: "+nummain.intValue());
-				int main = nummain.intValue();
-
-				JSONObject Obmaxp1 = (JSONObject) robotCurrent.get(6);
-				//System.out.println(Obmaxp1);
-				Number nump1 = (Number) Obmaxp1.get("max_p1");
-				System.out.println("max taille p1: "+nump1.intValue());
-				int p1 = nump1.intValue();
-
-				JSONObject Obmaxp2 = (JSONObject) robotCurrent.get(7);
-				//System.out.println(Obmaxp2);
-				Number nump2 = (Number) Obmaxp2.get("max_p2");
-				System.out.println("max taille p2: "+nump2.intValue());
-				int p2 = nump2.intValue();;
 
 				JSONObject orient = (JSONObject) robotCurrent.get(8);
 				orientation o= null;
@@ -277,8 +270,15 @@ public class parserJSON {
 					//System.out.println(actions.get(a));
 					int_Action act = null;
 					switch ((String)actions.get(a)){
-					case "Flash":
+					case "Break":
+						act = Break_r.break_r();
+						break;
+
+					case "Flashback":
 						act = Flashback.flashback();
+						break;
+
+					case "":
 						break;
 
 					case "Remember":
@@ -320,15 +320,130 @@ public class parserJSON {
 				}
 
 				JSONObject Obtyperob = (JSONObject) robotCurrent.get(0);
-				Robot robert =null;
+				//Robot robert =null;
 				switch ((String) Obtyperob.get("type_robot")){
 				case "Robot":
-					robert = new Robot(robotcase, actionlist, o, main, p1, p2, acontroller, Couleur.GRIS);
+					JSONObject Obmaxmain = (JSONObject) robotCurrent.get(5);
+					//System.out.println(Obmaxmain);
+					Number nummain = (Number) Obmaxmain.get("max_main");
+					System.out.println("max taille du main: "+nummain.intValue());
+					int main = nummain.intValue();
+
+					JSONObject Obmaxp1 = (JSONObject) robotCurrent.get(6);
+					//System.out.println(Obmaxp1);
+					Number nump1 = (Number) Obmaxp1.get("max_p1");
+					System.out.println("max taille p1: "+nump1.intValue());
+					int p1 = nump1.intValue();
+
+					JSONObject Obmaxp2 = (JSONObject) robotCurrent.get(7);
+					//System.out.println(Obmaxp2);
+					Number nump2 = (Number) Obmaxp2.get("max_p2");
+					System.out.println("max taille p2: "+nump2.intValue());
+					int p2 = nump2.intValue();
+					Robot robert = new Robot(robotcase, actionlist, o, main, p1, p2, acontroller, cool);
+					robotlist[i]=robert;
 					break;
+
+				case "Dumb1":
+					JSONObject Obmaind1 = (JSONObject) robotCurrent.get(5);
+					Sequence_List d1main = this.parserListDUM(Obmaind1, acontroller,"liste_main");
+
+					JSONObject Obmaxp1d1 = (JSONObject) robotCurrent.get(6);
+					//System.out.println(Obmaxp1d1);
+					Number nump1d1 = (Number) Obmaxp1d1.get("max_p1");
+					System.out.println("max taille p1: "+nump1d1.intValue());
+					int d1p1 = nump1d1.intValue();
+
+					JSONObject Obmaxp2d1 = (JSONObject) robotCurrent.get(7);
+					//System.out.println(Obmaxp2d1);
+					Number nump2d1 = (Number) Obmaxp2d1.get("max_p2");
+					System.out.println("max taille p2: "+nump2d1.intValue());
+					int d1p2 = nump2d1.intValue();
+
+					Dumb_bot robert_d1 = new Dumb_bot(robotcase, o, actionlist, cool, acontroller, d1main, d1p1, d1p2);
+					robotlist[i]=robert_d1;
+					break;
+
+				case "Dumb2":
+
+					JSONObject Obmaind2 = (JSONObject) robotCurrent.get(5);
+					//System.out.println(Obmaind2);
+					Number nummaind2 = (Number) Obmaind2.get("max_main");
+					System.out.println("max taille main: "+nummaind2.intValue());
+					int d2main = nummaind2.intValue();
+
+					JSONObject Obmaxp1d2 = (JSONObject) robotCurrent.get(6);
+					Sequence_List d2p1 = this.parserListDUM(Obmaxp1d2, acontroller, "liste_p1");
+
+
+					JSONObject Obmaxp2d2 = (JSONObject) robotCurrent.get(7);
+					//System.out.println(Obmaxp2d2);
+					Number nump2d2 = (Number) Obmaxp2d2.get("max_p2");
+					System.out.println("max taille p2: "+nump2d2.intValue());
+					int d2p2 = nump2d2.intValue();
+
+					Dumb_bot robert_d2 = new Dumb_bot(robotcase, o, actionlist, cool, acontroller, d2main, d2p1, d2p2);
+					robotlist[i]=robert_d2;
+					break;
+
+				case "Dumb3":
+
+					JSONObject Obmaind3 = (JSONObject) robotCurrent.get(5);
+					Sequence_List d3main = this.parserListDUM(Obmaind3, acontroller,"liste_main");
+
+					JSONObject Obmaxp1d3 = (JSONObject) robotCurrent.get(6);
+					Sequence_List d3p1 = this.parserListDUM(Obmaxp1d3, acontroller, "liste_p1");
+
+
+					JSONObject Obmaxp2d3 = (JSONObject) robotCurrent.get(7);
+					//System.out.println(Obmaxp2d3);
+					Number nump2d3 = (Number) Obmaxp2d3.get("max_p2");
+					System.out.println("max taille p2: "+nump2d3.intValue());
+					int d3p2 = nump2d3.intValue();
+
+					Dumb_bot robert_d3 = new Dumb_bot(robotcase, o, actionlist, cool, acontroller, d3main, d3p1, d3p2);
+					robotlist[i]=robert_d3;
+					break;
+
+				case "Dumb4":
+
+					JSONObject Obmaind4 = (JSONObject) robotCurrent.get(5);
+					//System.out.println(Obmaind4);
+					Number nummaind4 = (Number) Obmaind4.get("max_main");
+					System.out.println("max taille main: "+nummaind4.intValue());
+					int d4main = nummaind4.intValue();
+
+					JSONObject Obmaxp1d4 = (JSONObject) robotCurrent.get(6);
+					Sequence_List d4p1 = this.parserListDUM(Obmaxp1d4, acontroller, "liste_p1");
+
+					JSONObject Obmaxp2d4 = (JSONObject) robotCurrent.get(5);
+					Sequence_List d4p2 = this.parserListDUM(Obmaxp2d4, acontroller,"liste_p2");
+
+					Dumb_bot robert_d4 = new Dumb_bot(robotcase, o, actionlist, cool, acontroller, d4main, d4p1, d4p2);
+					robotlist[i]=robert_d4;
+					break;
+
+				case "Dumb5":
+
+					JSONObject Obmaind5 = (JSONObject) robotCurrent.get(5);
+					Sequence_List d5main = this.parserListDUM(Obmaind5, acontroller,"liste_main");
+
+					JSONObject Obmaxp1d5 = (JSONObject) robotCurrent.get(6);
+					Sequence_List d5p1 = this.parserListDUM(Obmaxp1d5, acontroller, "liste_p1");
+
+					JSONObject Obmaxp2d5 = (JSONObject) robotCurrent.get(5);
+					Sequence_List d5p2 = this.parserListDUM(Obmaxp2d5, acontroller,"liste_p2");
+
+					Dumb_bot robert_d5 = new Dumb_bot(robotcase, o, actionlist, cool, acontroller, d5main, d5p1, d5p2);
+					robotlist[i]=robert_d5;
+					break;
+
+
+
 				default:
 					break;
 				}
-				robotlist[i]=robert;
+
 			}
 			World.currentWorld.set_liste_robot(robotlist);
 			World.currentWorld.set_liste_terrain(terrainlist);
@@ -345,7 +460,102 @@ public class parserJSON {
 			e.printStackTrace();
 		}
 	}
+
+
+
+	/*
+	 * retourne la case correspondant à la chaine passé en paramètre
+	 *
+	 */
+	public abstr_Case id_Case(String S) throws InstantiationException, IllegalAccessException{
+		abstr_Case carre = null;
+		switch (S){
+		case "Empty" :
+			return Empty_Case.class.newInstance();
+
+		case "Illuminated" :
+			return Illuminated_Case.class.newInstance();
+
+		case "Painted" :
+			return Painted_Case.class.newInstance();
+
+		case "Teleporter" :
+			return Teleporter_Case.class.newInstance();
+
+		case "Destination" :
+			return Destination_Case.class.newInstance();
+
+		case "Normale" :
+			return Normal_Case.class.newInstance();
+
+		default:
+			break;
+		}
+		return carre;
+	}
+
+	public Sequence_List parserListDUM(JSONObject o, int_Observer c,String s){
+		//System.out.println(Oblistmain);
+		JSONArray lmain = (JSONArray) o.get(s);
+		Sequence_List sequencelist = new Sequence_List(c);
+
+		for (int m = 0; m < sequencelist.size(); m++){
+			int_Action act = null;
+			switch ((String)lmain.get(m)){
+			case "Break":
+				act = Break_r.break_r();
+				break;
+
+			case "Flashback":
+				act = Flashback.flashback();
+				break;
+
+			case "":
+				break;
+
+			case "Remember":
+				act = Remember.remember();
+				break;
+
+			case "P1":
+				act = Call_P1.call_p1(c);
+				break;
+
+			case "P2":
+				act = Call_P2.call_p2(c);
+				break;
+
+			case "Activate":
+				act = Activate.activate();
+				break;
+
+			case "Jump":
+				act = Jump.jump();
+				break;
+
+			case "MoveForward":
+				act = MoveForward.move_forward();
+				break;
+
+			case "TurnLeft":
+				act = TurnLeft.turn_left();
+				break;
+
+			case "TurnRight":
+				act = TurnRIght.turn_right();
+				break;
+			default :
+				break;
+			}
+			sequencelist.addActionSubSequence(act);
+		}
+
+
+		return sequencelist;
+	}
+
 }
+
 
 
 
