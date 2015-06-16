@@ -254,5 +254,9 @@ public abstract class abstr_Robot {
 		this.order_exec.removeFirst();
 	}
 
+	public Execution_list get_run(){
+		return this.order_exec;
+	}
+
 }
 

@@ -304,6 +304,7 @@ public class Jeu {
 				}
 				else if(Jeu.liste_sprite.get(s).equals("play")){
 					System.out.println("play");
+					controller.getNotificationRun();
 					break;
 				}
 			}
@@ -477,6 +478,7 @@ public class Jeu {
 			int num=0;
 			int pos_bouton[] = {44,324,530};
 			for(int i=0;i<background.length;i++){
+				this.maTexture = new Texture();
 				Sprite monSpriteBackground = new Sprite();
 				if(background[i]==activate){
 					this.maTexture.loadFromFile(Paths.get("Images/Jeu/background/Fond_"+background[i]+"_Activate.png"));
