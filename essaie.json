@@ -47,8 +47,8 @@
     						{"coorY" : 2},
     						{"indice_tableau": 0},
     						{"max_main": 3},
-    						{"max_p1": 3},
-    						{"max_p2": 3},
+    						{"max_p1": 7},
+    						{"max_p2": 4},
     						{"orientation": "left"},
     						{"actions" :["MoveForward" ,"TurnLeft","TurnRight","P1","P2"]}
     			]
