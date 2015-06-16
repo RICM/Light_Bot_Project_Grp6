@@ -35,7 +35,7 @@ public abstract class abstr_Robot {
 	 * initialise la liste d'execution du robot avec le contenu de main
 	 */
 	public void run(){
-		this.order_exec.addFirst(this.user_actions);
+		this.order_exec.initFirst(this.user_actions);
 
 	}
 	/**
