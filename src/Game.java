@@ -68,7 +68,7 @@ public class Game {
 			World.currentWorld.set_liste_terrain(terrainlist);
 			World.currentWorld.set_liste_robot(robotlist);
 			World.currentWorld.basic_print_world();*/
-		parserJSON.currentparser.lecture(acontroller);
+		//parserJSON.currentparser.lecture(acontroller);
 		//robert.print_allowed_act();
 		/*robert.add_Action_User_Actions(Activate.activate());
 				robert.add_Action_User_Actions(MoveForward.move_forward(Couleur.ROUGE));
