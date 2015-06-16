@@ -387,6 +387,7 @@ public class Jeu {
 	 * @param Y la position en y du personnage
 	 */
 	public void drawPerso(abstr_Robot rob){
+		this.maTexture = new Texture();
 		try {
 			abstr_Case c = rob.getCurrent_Case();
 			int X = c.get_coordonnees().get_x();
