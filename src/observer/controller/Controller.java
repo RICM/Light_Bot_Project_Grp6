@@ -303,4 +303,14 @@ public class Controller implements int_Observer {
 		this.current_program = cmp;
 		System.out.println("switched program to : "+cmp);
 	}
+
+	public void getNotificationRewind(){
+		try {
+			World.currentWorld.rewind_status();
+		} catch (UnreachableCase e) {
+			this.jeu.draw_popup("Désolé, une erreur inattendue s'est produite");
+		} catch (ActionEx e) {
+			this.jeu.draw_popup("Désolé, une erreur inattendue s'est produite");
+		}
+	}
 }
