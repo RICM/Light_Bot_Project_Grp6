@@ -216,6 +216,9 @@ public class Jeu {
 		}
 	}
 
+	public void updateRobotListAction(abstr_Robot rob){
+		this.r = rob;
+	}
 	/**
 	 *
 	 * @param pos Coordonn�es du clique souris
@@ -228,63 +231,24 @@ public class Jeu {
 			Sprite s = keySetIterator.next();
 			FloatRect rect = s.getGlobalBounds();
 			if(x>=rect.left && x<=rect.left+rect.width && y>=rect.top && y<=rect.top+rect.height){
-				if(Jeu.liste_sprite.get(s).equals("MoveForward")){
-					//ajoute l'action dans la liste d'action du robot en fonction du panneau activé
-					int_Action actionToAdd = controller.getNotificationAddActionToUserList(Jeu.liste_sprite.get(s), couleur_active);
-					if (actionToAdd != null)
-						Jeu.liste_sprite_Action.put(s, actionToAdd);
-					break;
-				}
-				else if(Jeu.liste_sprite.get(s).equals("TurnRIght")){
-					int_Action actionToAdd = controller.getNotificationAddActionToUserList(Jeu.liste_sprite.get(s), couleur_active);
-					if (actionToAdd != null)
-						Jeu.liste_sprite_Action.put(s, actionToAdd);
-					break;
-				}
-				else if(Jeu.liste_sprite.get(s).equals("TurnLeft")){
-					int_Action actionToAdd = controller.getNotificationAddActionToUserList(Jeu.liste_sprite.get(s), couleur_active);
-					if (actionToAdd != null)
-						Jeu.liste_sprite_Action.put(s, actionToAdd);
-					break;
-				}
-				else if(Jeu.liste_sprite.get(s).equals("Activate")){
-					int_Action actionToAdd = controller.getNotificationAddActionToUserList(Jeu.liste_sprite.get(s), couleur_active);
-					if (actionToAdd != null)
-						Jeu.liste_sprite_Action.put(s, actionToAdd);
-					break;
-				}
-				else if(Jeu.liste_sprite.get(s).equals("Jump")){
-					int_Action actionToAdd = controller.getNotificationAddActionToUserList(Jeu.liste_sprite.get(s), couleur_active);
-					if (actionToAdd != null)
-						Jeu.liste_sprite_Action.put(s, actionToAdd);
-					break;
-				}
-				else if(Jeu.liste_sprite.get(s).equals("Call_P1")){
-					System.out.println("Call_P1");
-					int_Action actionToAdd = controller.getNotificationAddActionToUserList(Jeu.liste_sprite.get(s), couleur_active);
-					if (actionToAdd != null)
-						Jeu.liste_sprite_Action.put(s, actionToAdd);
-					break;
-				}
-				else if(Jeu.liste_sprite.get(s).equals("Call_P2")){
-					System.out.println("Call_P2");
+				if((Jeu.liste_sprite.get(s).equals("MoveForward")) || (Jeu.liste_sprite.get(s).equals("TurnRIght")) || (Jeu.liste_sprite.get(s).equals("TurnLeft")) || (Jeu.liste_sprite.get(s).equals("Activate")) || (Jeu.liste_sprite.get(s).equals("Jump")) || (Jeu.liste_sprite.get(s).equals("Call_P1")) || (Jeu.liste_sprite.get(s).equals("Call_P2"))){
 					int_Action actionToAdd = controller.getNotificationAddActionToUserList(Jeu.liste_sprite.get(s), couleur_active);
 					if (actionToAdd != null)
 						Jeu.liste_sprite_Action.put(s, actionToAdd);
 					break;
 				}
 				else if((Jeu.liste_sprite.get(s).equals("pingouin_GRIS")) && (identificateur_robot == 0)){
-					System.out.println("pingouin_blanc -> esquimau_blanc");
+					System.out.println("pingouin_blanc -> requin_blanc");
 					identificateur_robot = 1;
 					controller.getNotificationChangeRobot(identificateur_robot);
-					r = Jeu.w.get_robot(identificateur_robot);
+					//r = Jeu.w.get_robot(identificateur_robot);
 					break;
 				}
-				else if((Jeu.liste_sprite.get(s).equals("esquimau_GRIS")) && (identificateur_robot == 1)){
-					System.out.println("esquimau_blanc -> pingouin_blanc");
+				else if((Jeu.liste_sprite.get(s).equals("requin_GRIS")) && (identificateur_robot == 1)){
+					System.out.println("requin_blanc -> pingouin_blanc");
 					identificateur_robot = 0;
 					controller.getNotificationChangeRobot(identificateur_robot);
-					r = Jeu.w.get_robot(identificateur_robot);
+					//r = Jeu.w.get_robot(identificateur_robot);
 					break;
 				}
 				else if(Jeu.liste_sprite.get(s).equals("GRIS")){
@@ -439,7 +403,7 @@ public class Jeu {
 	public void draw_controle(){
 		int i =0;
 		try {
-			String tab_robot[]={"pingouin_GRIS","esquimau_GRIS"};
+			String tab_robot[]={"pingouin_GRIS","requin_GRIS"};
 			String tab_bouton[]={tab_robot[identificateur_robot],"play","stop","retour"};
 			for(i=0; i < tab_bouton.length; i++){
 				Texture maTextureBouton = new Texture();
