@@ -24,8 +24,16 @@ public class Ordonnanceur {
 
 	public void execute() throws MouvementEx, UnreachableCase, ActionEx{
 		for (int i =0 ; i < this.list_robot.size() ; i++){
+			System.out.println("taille list exec rob : " + this.list_robot.get(i).get_run().size());
 			if (this.list_robot.get(i).get_activable()){
+				System.out.println("lala1");
 				this.list_robot.get(i).execute();
+				System.out.println("lala2");
+				try {
+					Thread.sleep(200);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}

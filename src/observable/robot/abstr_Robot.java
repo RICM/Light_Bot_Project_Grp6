@@ -35,7 +35,7 @@ public abstract class abstr_Robot {
 	 * initialise la liste d'execution du robot avec le contenu de main
 	 */
 	public void run(){
-		this.order_exec.addFirst(this.user_actions);
+		this.order_exec.initFirst(this.user_actions);
 
 	}
 	/**
@@ -109,15 +109,15 @@ public abstract class abstr_Robot {
 		this.order_exec.addFirst(to_add);
 	}
 
-	public void remove_Action_User_Actions(int_Action twas_too_long){
+	public void remove_Action_User_Actions(int_Action twas_too_long) throws ActionEx{
 		this.user_actions.removeActionFromList(twas_too_long);
 	}
 
-	public void remove_Action_P1(int_Action twas_too_long){
+	public void remove_Action_P1(int_Action twas_too_long) throws ActionEx{
 		this.P1.removeActionFromList(twas_too_long);
 	}
 
-	public void remove_Action_P2(int_Action twas_too_long){
+	public void remove_Action_P2(int_Action twas_too_long) throws ActionEx{
 		this.P2.removeActionFromList(twas_too_long);
 	}
 
@@ -252,6 +252,10 @@ public abstract class abstr_Robot {
 
 	public void removeFirstRunable(){
 		this.order_exec.removeFirst();
+	}
+
+	public Execution_list get_run(){
+		return this.order_exec;
 	}
 
 }
