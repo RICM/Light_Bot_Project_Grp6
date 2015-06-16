@@ -145,6 +145,7 @@ public class Controller implements int_Observer {
 		 * Receive a notification from view to change robot to robot[i] from current
 		 */
 		this.current_robot = i;
+		this.jeu.updateRobotListAction(World.currentWorld.get_robot(this.current_robot));
 	}
 
 	public void getNotificationDisplayWorld(){
