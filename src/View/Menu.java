@@ -33,6 +33,7 @@ public class Menu {
 
 	public Menu(Controller acontroller){
 		controller = acontroller;
+		Menu.app.setVerticalSyncEnabled(true);
 		try {
 			this.texture_Background.loadFromFile(Paths.get("Images/menu/back1.png"));
 			this.texture_Play.loadFromFile(Paths.get("Images/menu/play.png"));
