@@ -102,18 +102,23 @@ public class Theme {
 
 				if(this.listSprite.get(s).equals("Menu")){
 					new Menu(controller);
+					break;
 				}
 				else if(this.listSprite.get(s).equals("Tutoriels")){
 					new Niveaux(controller,"T");
+					break;
 				}
 				else if(this.listSprite.get(s).equals("Conditions")){
 					new Niveaux(controller,"C");
+					break;
 				}
 				else if(this.listSprite.get(s).equals("Dual_mode")){
 					new Niveaux(controller,"D");
+					break;
 				}
 				else if(this.listSprite.get(s).equals("Pointeurs")){
 					new Niveaux(controller,"P");
+					break;
 				}
 			}
 		}

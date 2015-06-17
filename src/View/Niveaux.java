@@ -37,6 +37,8 @@ public class Niveaux {
 	protected static final int HEIGHT = 700;
 	protected static Controller controller;
 	protected String theme;
+	protected Font f = new Font();
+	protected boolean first_round = true;
 
 
 	public Niveaux(Controller acontroller,String current_theme){
@@ -49,6 +51,7 @@ public class Niveaux {
 			this.texture_btnPrec.loadFromFile(Paths.get("Images/selectLvl/prec100x100.png"));
 			this.texture_btnMenu.loadFromFile(Paths.get("Images/selectLvl/Back.png"));
 			this.texture_btnLevel.loadFromFile(Paths.get("Images/selectLvl/level.png"));
+			this.f.loadFromFile(Paths.get("Fonts/BRUSHSCI.ttf"));
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -125,7 +128,7 @@ public class Niveaux {
 				}
 				else if(this.listSprite.get(s).equals("Level")){
 					String lvl = this.theme+this.level;
-					Jeu jeu = new Jeu(this.level, controller);
+					new Jeu(this.level, controller);
 				}
 			}
 		}
@@ -144,43 +147,37 @@ public class Niveaux {
 	 * Affiche les boutons
 	 */
 	protected void displayBtn() {
-		try {
-			//Affichage bouton next
-			this.sprite_btnNext.setTexture(this.texture_btnNext);
-			this.sprite_btnNext.setPosition(Niveaux.WIDTH-250,700/2);
-			Menu.app.draw(this.sprite_btnNext);
+		//Affichage bouton next
+		this.sprite_btnNext.setTexture(this.texture_btnNext);
+		this.sprite_btnNext.setPosition(Niveaux.WIDTH-250,700/2);
+		Menu.app.draw(this.sprite_btnNext);
 
-			//Affichage bouton prec
-			this.sprite_btnPrec.setTexture(this.texture_btnPrec);
-			this.sprite_btnPrec.setPosition(150,700/2);
-			Menu.app.draw(this.sprite_btnPrec);
+		//Affichage bouton prec
+		this.sprite_btnPrec.setTexture(this.texture_btnPrec);
+		this.sprite_btnPrec.setPosition(150,700/2);
+		Menu.app.draw(this.sprite_btnPrec);
 
-			//Affichage bouton Back
-			this.sprite_btnMenu.setTexture(this.texture_btnMenu);
-			this.sprite_btnMenu.setPosition(30,5);
-			Menu.app.draw(this.sprite_btnMenu);
+		//Affichage bouton Back
+		this.sprite_btnMenu.setTexture(this.texture_btnMenu);
+		this.sprite_btnMenu.setPosition(30,5);
+		Menu.app.draw(this.sprite_btnMenu);
 
-			//Affichage bouton Jouer
-			this.sprite_btnLevel.setTexture(this.texture_btnLevel);
-			this.sprite_btnLevel.setPosition(Niveaux.WIDTH/2-330,700/2+210);
-			Menu.app.draw(this.sprite_btnLevel);
+		//Affichage bouton Jouer
+		this.sprite_btnLevel.setTexture(this.texture_btnLevel);
+		this.sprite_btnLevel.setPosition(Niveaux.WIDTH/2-330,700/2+210);
+		Menu.app.draw(this.sprite_btnLevel);
 
-			Font f = new Font();
-			f.loadFromFile(Paths.get("Fonts/BRUSHSCI.ttf"));
-			Text t = new Text(""+this.level,f,72);
-			t.setColor(Color.BLACK);
-			t.setPosition(Niveaux.WIDTH/2+18, 350);
-			Menu.app.draw(t);
+		Text t = new Text(""+this.level,this.f,72);
+		t.setColor(Color.BLACK);
+		t.setPosition(Niveaux.WIDTH/2+18, 350);
+		Menu.app.draw(t);
 
+		if(this.first_round){
 			this.listSprite.put(this.sprite_btnPrec,"Previous");
 			this.listSprite.put(this.sprite_btnNext,"Next");
 			this.listSprite.put(this.sprite_btnMenu,"Menu");
 			this.listSprite.put(this.sprite_btnLevel, "Level");
-
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			this.first_round = false;
 		}
 
 	}
