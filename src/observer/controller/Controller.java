@@ -2,6 +2,16 @@ package observer.controller;
 
 import java.io.IOException;
 
+import View.Jeu;
+import View.Jeu;
+import couleur.Couleur;
+import couleur.Couleur;
+import exception.ActionEx;
+import exception.ActionEx;
+import exception.MouvementEx;
+import exception.MouvementEx;
+import exception.UnreachableCase;
+import exception.UnreachableCase;
 import observable.action.Activate;
 import observable.action.Call_P1;
 import observable.action.Call_P2;
@@ -17,11 +27,6 @@ import observable.robot.Robot;
 import observable.robot.abstr_Robot;
 import observer.int_Observer;
 import parser.parserJSON;
-import View.Jeu;
-import couleur.Couleur;
-import exception.ActionEx;
-import exception.MouvementEx;
-import exception.UnreachableCase;
 public class Controller implements int_Observer {
 
 	private Jeu jeu;
@@ -34,6 +39,7 @@ public class Controller implements int_Observer {
 	public void update(Object obj){
 		switch (obj.getClass().getSimpleName()){
 		case "Robot" :
+			//System.out.println("Mouvement détécté");
 			this.setNotificationUpdatedRobot((Robot)obj);
 			break;
 		case "Terrain" :
@@ -45,9 +51,17 @@ public class Controller implements int_Observer {
 		case "Execution_list" :
 			this.runnable = World.currentWorld.isOneRobotActive();
 			break;
+		case "Illuminated_Case" :
+			System.out.println("JE SUIS ALLUME");
+			this.setNotificationUpdateCase();
+			break;
 		default:
 			break;
 		}
+	}
+
+	public void setNotificationUpdateCase() {
+		this.jeu.setNotificationDrawForTime();
 	}
 
 	public void setNotificationUpdatedCurrentProgramList(Sequence_List seq){
@@ -64,11 +78,7 @@ public class Controller implements int_Observer {
 	}
 
 	private void getNotificationUpdatedTerrain(Terrain obj) {
-		try {
-			this.jeu.display_terrain(obj);
-		} catch (IOException e) {
-			this.jeu.draw_popup("Désolé une erreur est survenue lors de la création du terrain");
-		}
+		this.jeu.setNotificationDrawForTime();
 	}
 
 	public Controller(){
@@ -76,6 +86,7 @@ public class Controller implements int_Observer {
 		this.current_terrain = 0;
 		this.current_program = 0;
 		this.runnable = true;
+		World.currentWorld.addObserver(this);
 	}
 
 	public void setNotification(){
@@ -94,6 +105,7 @@ public class Controller implements int_Observer {
 		World.currentWorld.prerun();
 		while (this.runnable && !(World.currentWorld.is_cleared())){
 			try {
+				System.out.println("While getNotificationRun");
 				World.currentWorld.exec();
 			} catch (MouvementEx e) {
 				this.jeu.draw_popup("Vous ne pouvez pas effectuer le prochaine mouvement !");
@@ -183,10 +195,7 @@ public class Controller implements int_Observer {
 	}
 
 	public void setNotificationUpdatedRobot(abstr_Robot rob){
-		/**
-		 * Send a notification to view to display the robot
-		 */
-		//this.jeu.display_robot(rob);
+		this.jeu.setNotificationDrawForTime();
 	}
 
 	public void getNotificationUpdatedRobot(abstr_Robot rob){
@@ -307,9 +316,15 @@ public class Controller implements int_Observer {
 		System.out.println("switched program to : "+cmp);
 	}
 
+
+
 	public void getNotificationRewind(){
 		try {
 			World.currentWorld.rewind_status();
+			System.out.println("Rewind : "+World.currentWorld.get_robot(0).getCurrent_Case().get_coordonnees().get_x()
+					+" , "+World.currentWorld.get_robot(0).getCurrent_Case().get_coordonnees().get_y());
+			System.out.println("Liste actions main : "+World.currentWorld.get_robot(0).get_Main().getListActions().toString());
+			System.out.println(World.currentWorld.get_robot(0).get_run().toString());
 		} catch (UnreachableCase e) {
 			this.jeu.draw_popup("Désolé, une erreur inattendue s'est produite");
 		} catch (ActionEx e) {
@@ -317,6 +332,10 @@ public class Controller implements int_Observer {
 		}
 	}
 
+	public void setNotificationUpdatedRobotMouvement() {
+		System.out.println("envoie de la notification");
+		World.currentWorld.get_ordonnanceur().setReady(true);
+	}
 	public void getLevel(Controller controller, String level){
 		parserJSON.currentparser.lecture(controller,level);
 	}

@@ -648,6 +648,29 @@ public class Jeu {
 		}
 	}
 
+	public void setNotificationDrawForTime(){
+		long temps_depart = System.currentTimeMillis();
+		long duree = 300; // en millisecondes
+		while((System.currentTimeMillis() - temps_depart ) < duree)
+		{
+			System.out.println("in while");
+			Menu.app.clear();
+			this.drawBackground();
+			this.drawGrilleISO();
+			this.draw_bouton();
+			this.draw_controle();
+			this.draw_procedure();
+			Menu.app.display();
+			//this.processEvent();
+			if(World.currentWorld.is_cleared()){
+				//				JOptionPane.showMessageDialog(null, "Fin");
+				//				Menu.app.close();
+			}
+		}
+		System.out.println("sortie du while");
+		controller.setNotificationUpdatedRobotMouvement();
+	}
+
 	public void updateSequenceList(Sequence_List seq) {
 		System.out.println("j'ai updaté la sequence display");
 	}

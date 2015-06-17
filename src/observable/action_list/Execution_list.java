@@ -3,13 +3,13 @@ package observable.action_list;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import exception.ActionEx;
+import exception.MouvementEx;
+import exception.UnreachableCase;
 import observable.int_Observable;
 import observable.action.int_Action;
 import observable.robot.abstr_Robot;
 import observer.int_Observer;
-import exception.ActionEx;
-import exception.MouvementEx;
-import exception.UnreachableCase;
 
 public class Execution_list implements int_Observable{
 
@@ -36,9 +36,12 @@ public class Execution_list implements int_Observable{
 	}
 
 	public void run(abstr_Robot r) throws MouvementEx, UnreachableCase, ActionEx{
+		System.out.println("Ich bin in run");
 		if(this.Run_List.size()>0){
+			System.out.println("Ich bin in run : first if");
 			System.out.println("taille run list : "+this.Run_List.size());
 			if(this.Run_List.getFirst().size() > 0){
+				System.out.println("Ich bin in run : second if");
 				int_Action temp = this.Run_List.getFirst().removeFirst();
 				temp.execute(r);
 			}
@@ -54,6 +57,9 @@ public class Execution_list implements int_Observable{
 		}
 	}
 
+	public int_Action getFirstAct(){
+		return this.Run_List.getFirst().getListActions().getFirst();
+	}
 	@Override
 	public String toString(){
 		String str = new String();

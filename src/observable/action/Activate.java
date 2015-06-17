@@ -1,6 +1,10 @@
 package observable.action;
 import java.util.ArrayList;
 
+import couleur.Couleur;
+import exception.ActionEx;
+import exception.MouvementEx;
+import exception.UnreachableCase;
 import observable.int_Observable;
 import observable.map.Coordonnees;
 import observable.map.Event_Case;
@@ -10,10 +14,6 @@ import observable.map.World;
 import observable.map.abstr_Case;
 import observable.robot.abstr_Robot;
 import observer.int_Observer;
-import couleur.Couleur;
-import exception.ActionEx;
-import exception.MouvementEx;
-import exception.UnreachableCase;
 
 public class Activate implements int_Action, int_Observable{
 
@@ -48,6 +48,7 @@ public class Activate implements int_Action, int_Observable{
 	 * si c'est une case peinet, r prend a couleur de celle ci
 	 */
 	public void execute(abstr_Robot r) throws MouvementEx, UnreachableCase, ActionEx {
+		System.out.println("Ich bin in activate");
 		abstr_Case cprime = r.getCurrent_Case();
 		if (this.isPossible(r,cprime)){
 			if(cprime.getClass().getSimpleName().equals("Teleporter_Case")){
@@ -64,9 +65,9 @@ public class Activate implements int_Action, int_Observable{
 				else {
 					throw new ActionEx("la case destination est occupée");
 				}
-				this.notifyObserver();
 			}
 			else if(cprime.getClass().getSimpleName().equals("Illuminated_Case")){
+				System.out.println("Ich bin in activate : là ou tu veux aller");
 				((Illuminated_Case)cprime).set_active(!((Illuminated_Case)cprime).get_active());
 				if (((Illuminated_Case)cprime).get_active()){
 					World.currentWorld.increment_allume();
@@ -74,7 +75,6 @@ public class Activate implements int_Action, int_Observable{
 				else {
 					World.currentWorld.decrement_allume();
 				}
-				this.notifyObserver();
 
 			}
 			else if(cprime.getClass().getSimpleName().equals("Event_Case")){
@@ -83,7 +83,6 @@ public class Activate implements int_Action, int_Observable{
 			}
 			else {
 				r.set_couleur(cprime.get_couleur());
-				this.notifyObserver();
 			}
 		}
 		else{

@@ -1,6 +1,8 @@
 package observable.robot;
 import java.util.ArrayList;
 
+import couleur.Couleur;
+import exception.UnreachableCase;
 import observable.int_Observable;
 import observable.action.int_Action;
 import observable.action_list.Possible_List;
@@ -8,8 +10,6 @@ import observable.action_list.Sequence_List;
 import observable.map.World;
 import observable.map.abstr_Case;
 import observer.int_Observer;
-import couleur.Couleur;
-import exception.UnreachableCase;
 
 public class Robot extends abstr_Robot implements int_Observable {
 
