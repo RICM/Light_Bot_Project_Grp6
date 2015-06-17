@@ -73,8 +73,10 @@ public class Event_Case extends abstr_Case{
 
 	@Override
 	public abstr_Case Clone() {
-		return new Event_Case(this.get_hauteur(),this.get_couleur(),this.get_coordonnees().
+		Event_Case temp = new Event_Case(this.get_hauteur(),this.get_couleur(),this.get_coordonnees().
 				Clone(),this.getTo_add().Clone(), this.getStatus());
+		temp.addObserver(this.listObserver.get(0));
+		return temp;
 	}
 
 

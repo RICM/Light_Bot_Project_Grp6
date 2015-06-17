@@ -27,6 +27,10 @@ public class Illuminated_Case extends abstr_Case {
 		this.notifyObserver();
 	}
 
+	public void preset_active (boolean bool){
+		this.active=bool;
+	}
+
 	public boolean get_active(){
 		return this.active;
 	}
@@ -34,7 +38,8 @@ public class Illuminated_Case extends abstr_Case {
 	@Override
 	public abstr_Case Clone() {
 		Illuminated_Case to_return = new Illuminated_Case(this.get_hauteur(),this.get_couleur(),this.get_coordonnees().Clone());
-		to_return.set_active(this.active);
+		to_return.preset_active(this.active);
+		to_return.addObserver(this.listObserver.get(0));
 		return to_return;
 	}
 

@@ -17,7 +17,9 @@ public class Normal_Case extends abstr_Case {
 
 	@Override
 	public abstr_Case Clone() {
-		return new Normal_Case(this.get_hauteur(),this.get_coordonnees().Clone());
+		Normal_Case temp = new Normal_Case(this.get_hauteur(), this.get_coordonnees().Clone());
+		temp.addObserver(this.listObserver.get(0));
+		return (temp);
 	}
 
 	@Override

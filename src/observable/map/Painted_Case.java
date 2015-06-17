@@ -17,7 +17,9 @@ public class Painted_Case extends abstr_Case {
 
 	@Override
 	public abstr_Case Clone() {
-		return new Painted_Case(this.get_hauteur(),this.get_couleur(),this.get_coordonnees().Clone());
+		Painted_Case temp = new Painted_Case(this.get_hauteur(),this.get_couleur(),this.get_coordonnees().Clone());
+		temp.addObserver(World.currentWorld.getFirstObserver());
+		return temp;
 	}
 
 	@Override

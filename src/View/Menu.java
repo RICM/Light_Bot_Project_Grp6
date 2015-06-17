@@ -3,8 +3,6 @@ package View;
 import java.io.IOException;
 import java.nio.file.Paths;
 
-import observer.controller.Controller;
-
 import org.jsfml.audio.Music;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.RenderWindow;
@@ -17,6 +15,8 @@ import org.jsfml.window.Mouse;
 import org.jsfml.window.VideoMode;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.Event.Type;
+
+import observer.controller.Controller;
 
 public class Menu {
 
@@ -32,6 +32,7 @@ public class Menu {
 	protected Music song = new Music();
 
 	public Menu(Controller acontroller){
+		app.setVerticalSyncEnabled(true);
 		controller = acontroller;
 		try {
 			this.texture_Background.loadFromFile(Paths.get("Images/menu/back1.png"));

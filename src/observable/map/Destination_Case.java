@@ -17,7 +17,9 @@ public class Destination_Case extends abstr_Case {
 
 	@Override
 	public Destination_Case Clone(){
-		return new Destination_Case(this.get_hauteur(), this.get_couleur(),this.get_coordonnees().Clone());
+		Destination_Case temp = new Destination_Case(this.get_hauteur(), this.get_couleur(),this.get_coordonnees().Clone());
+		temp.addObserver(this.listObserver.get(0));
+		return temp;
 	}
 
 	@Override

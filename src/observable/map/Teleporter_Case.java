@@ -26,7 +26,9 @@ public class Teleporter_Case extends abstr_Case {
 
 	@Override
 	public abstr_Case Clone() {
-		return new Teleporter_Case(this.get_hauteur(), this.get_couleur(), this.get_coordonnees().Clone(), this.dest.Clone());
+		Teleporter_Case temp = new Teleporter_Case(this.get_hauteur(), this.get_couleur(), this.get_coordonnees().Clone(), this.dest.Clone());
+		temp.addObserver(World.currentWorld.getFirstObserver());
+		return temp;
 	}
 
 	@Override

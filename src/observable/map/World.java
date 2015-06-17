@@ -44,9 +44,8 @@ public class World implements int_Observable {
 
 	public void prerun(){
 		try {
-			this.store_status();
 			this.init_World();
-		} catch (UnreachableCase | ActionEx e) {
+		} catch (UnreachableCase e) {
 			System.out.println("this shouldn't have heppened, WTH was done");
 			e.printStackTrace();
 		}
@@ -205,6 +204,7 @@ public class World implements int_Observable {
 			World.currentWorld.liste_robot[i].store_position();
 			World.currentWorld.save_robot[i] = World.currentWorld.liste_robot[i].get_last_pos();
 		}
+		System.out.println("j'ai fini de me sauvegarder : world");
 	}
 
 	public boolean isOneRobotActive(){

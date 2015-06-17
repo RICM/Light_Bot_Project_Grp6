@@ -53,10 +53,8 @@ public class Ordonnanceur {
 		for (int i =0 ; i < this.list_robot.size() ; i++){
 			System.out.println("taille list exec rob : " + this.list_robot.get(i).get_run().size());
 			if (this.list_robot.get(i).get_activable()){
-				System.out.println("lala1");
 				this.setReady(false);
 				this.list_robot.get(i).execute();
-				System.out.println("lala2");
 			}
 		}
 	}
@@ -65,6 +63,9 @@ public class Ordonnanceur {
 		return this.ready;
 	}
 
+	public int size(){
+		return this.list_robot.size();
+	}
 	public void setReady(boolean ready) {
 		System.out.println("boolean mis a vrai");
 		this.ready = ready;

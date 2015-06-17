@@ -34,6 +34,7 @@ public class Controller implements int_Observer {
 	private int current_terrain;
 	private int current_program;
 	private boolean runnable;
+	private boolean isRunning = false;
 
 	@Override
 	public void update(Object obj){
@@ -88,32 +89,43 @@ public class Controller implements int_Observer {
 		this.runnable = true;
 		World.currentWorld.addObserver(this);
 	}
-
+	/**
+	 * Receive a notification from model
+	 */
 	public void setNotification(){
-		/**
-		 * Receive a notification from model
-		 */
+
 	}
 
+	/**
+	 * Receive a notification from view to run program
+	 */
 	public void getNotificationRun(){
-		/**
-		 * Receive a notification from view to run program
-		 */
-		for(int j = 0; j < World.currentWorld.get_liste_robot().length;j++){
-			World.currentWorld.get_ordonnanceur().addRobot(World.currentWorld.get_robot(j));
-		}
-		World.currentWorld.prerun();
-		while (this.runnable && !(World.currentWorld.is_cleared())){
-			try {
-				System.out.println("While getNotificationRun");
-				World.currentWorld.exec();
-			} catch (MouvementEx e) {
-				this.jeu.draw_popup("Vous ne pouvez pas effectuer le prochaine mouvement !");
-			} catch (UnreachableCase e) {
-				this.jeu.draw_popup("Vous venez de vous manger une segfault!! La case visée ne peut etre atteinte");
-			} catch (ActionEx e) {
-				this.jeu.draw_popup("Une erreur est survenue lors de l'execution de l'actions");
+
+		if (!this.isRunning){
+			this.isRunning = true;
+			if (World.currentWorld.get_ordonnanceur().size() == 0)
+				for(int j = 0; j < World.currentWorld.get_liste_robot().length;j++){
+					World.currentWorld.get_ordonnanceur().addRobot(World.currentWorld.get_robot(j));
+				}
+			World.currentWorld.prerun();
+			this.runnable = World.currentWorld.isOneRobotActive();
+			System.out.println("contenu de run " + World.currentWorld.get_robot(0).get_run());
+			while (this.runnable && !(World.currentWorld.is_cleared())){
+				try {
+					System.out.println("While getNotificationRun");
+					World.currentWorld.exec();
+				} catch (MouvementEx e) {
+					this.jeu.draw_popup("Vous ne pouvez pas effectuer le prochaine mouvement !");
+				} catch (UnreachableCase e) {
+					this.jeu.draw_popup("Vous venez de vous manger une segfault!! La case visée ne peut etre atteinte");
+				} catch (ActionEx e) {
+					this.jeu.draw_popup("Une erreur est survenue lors de l'execution de l'actions");
+				}
 			}
+			System.out.println("sortie de la boucle de RUN FOREST RUN");
+		}
+		else{
+			System.out.println("On ne peut pas relancer le robot sans redemarrer le niveau");
 		}
 	}
 
@@ -325,6 +337,7 @@ public class Controller implements int_Observer {
 					+" , "+World.currentWorld.get_robot(0).getCurrent_Case().get_coordonnees().get_y());
 			System.out.println("Liste actions main : "+World.currentWorld.get_robot(0).get_Main().getListActions().toString());
 			System.out.println(World.currentWorld.get_robot(0).get_run().toString());
+			this.isRunning = false;
 		} catch (UnreachableCase e) {
 			this.jeu.draw_popup("Désolé, une erreur inattendue s'est produite");
 		} catch (ActionEx e) {
@@ -338,5 +351,6 @@ public class Controller implements int_Observer {
 	}
 	public void getLevel(Controller controller, String level){
 		parserJSON.currentparser.lecture(controller,level);
+
 	}
 }

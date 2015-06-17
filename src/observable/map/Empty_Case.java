@@ -13,7 +13,9 @@ public class Empty_Case extends abstr_Case {
 
 	@Override
 	public abstr_Case Clone() {
-		return new Empty_Case();
+		Empty_Case temp = new Empty_Case();
+		temp.addObserver(this.listObserver.get(0));
+		return temp;
 	}
 
 	@Override

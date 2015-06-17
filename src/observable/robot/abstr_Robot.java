@@ -138,11 +138,18 @@ public abstract class abstr_Robot {
 		this.current_orientation = or;
 	}
 
+	public void presetOrientation(Orientation.orientation or){
+		this.current_orientation = or;
+	}
+
 	public Couleur get_couleur(){
 		return this.color;
 	}
 
 	public void set_couleur(Couleur new_color){
+		this.color = new_color;
+	}
+	public void preset_couleur(Couleur new_color){
 		this.color = new_color;
 	}
 
@@ -151,6 +158,10 @@ public abstract class abstr_Robot {
 	}
 
 	public void setCurrent_Case(abstr_Case c){
+		this.prev_case = this.current_case;
+		this.current_case = c;
+	}
+	public void presetCurrent_Case(abstr_Case c){
 		this.prev_case = this.current_case;
 		this.current_case = c;
 	}
@@ -248,9 +259,9 @@ public abstract class abstr_Robot {
 	}
 
 	public void setFromPosition(Position new_pos) throws UnreachableCase{
-		this.setCurrent_Case(World.currentWorld.get_case(new_pos.get_coordonnees()));
-		this.set_couleur(new_pos.get_couleur());
-		this.setOrientation(new_pos.get_orientation());
+		this.presetCurrent_Case(World.currentWorld.get_case(new_pos.get_coordonnees()));
+		this.preset_couleur(new_pos.get_couleur());
+		this.presetOrientation(new_pos.get_orientation());
 	}
 
 	public void removeFirstRunable(){
