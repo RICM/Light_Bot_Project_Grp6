@@ -333,40 +333,43 @@ public class Controller implements int_Observer {
 	}
 
 	public void setNotificationDrawAllProcedure() {
-		for (int i = 0; i<3; i++){
-			String name_proc;
-			int nombre_bouton_max;
-			LinkedList<String> class_name = new LinkedList<String>();
-			LinkedList<String> color_name = new LinkedList<String>();
-			switch(i){
-			case 0 :
-				name_proc = "Main";
-				nombre_bouton_max = World.currentWorld.get_robot(this.current_robot).get_tailleMain();
-				for(int_Action act :  World.currentWorld.get_robot(this.current_robot).get_Main().getListActions()){
-					class_name.add(act.getClass().getSimpleName());
-					color_name.add(act.getColor().name());
-					this.jeu.updateDrawProcedure(name_proc, nombre_bouton_max, class_name, color_name);
-				}
-				break;
-			case 1 :
-				name_proc = "P1";
-				nombre_bouton_max = World.currentWorld.get_robot(this.current_robot).get_tailleP1();
-				for(int_Action act :  World.currentWorld.get_robot(this.current_robot).get_P1().getListActions()){
-					class_name.add(act.getClass().getSimpleName());
-					color_name.add(act.getColor().name());
-					this.jeu.updateDrawProcedure(name_proc, nombre_bouton_max, class_name, color_name);
-				}
-				break;
-			default :
-				name_proc = "P2";
-				nombre_bouton_max = World.currentWorld.get_robot(this.current_robot).get_tailleP2();
-				for(int_Action act :  World.currentWorld.get_robot(this.current_robot).get_P2().getListActions()){
-					class_name.add(act.getClass().getSimpleName());
-					color_name.add(act.getColor().getClass().getSimpleName());
-					this.jeu.updateDrawProcedure(name_proc, nombre_bouton_max, class_name, color_name);
-				}
-				break;
+		String name_proc;
+		int nombre_bouton_max;
+		System.out.println("AIE");
+		LinkedList<String> class_name = new LinkedList<String>();
+		LinkedList<String> color_name = new LinkedList<String>();
+		int i = 0;
+		switch(i){
+		case 0 :
+			name_proc = "Main";
+			nombre_bouton_max = World.currentWorld.get_robot(this.current_robot).get_tailleMain();
+			for(int_Action act :  World.currentWorld.get_robot(this.current_robot).get_Main().getListActions()){
+				class_name.add(act.getClass().getSimpleName());
+				color_name.add(act.getColor().name());
 			}
+			this.jeu.updateDrawProcedure(name_proc, nombre_bouton_max, class_name, color_name);
+			i++;
+			//break;
+		case 1 :
+			name_proc = "P1";
+			nombre_bouton_max = World.currentWorld.get_robot(this.current_robot).get_tailleP1();
+			for(int_Action act :  World.currentWorld.get_robot(this.current_robot).get_P1().getListActions()){
+				class_name.add(act.getClass().getSimpleName());
+				color_name.add(act.getColor().name());
+			}
+			this.jeu.updateDrawProcedure(name_proc, nombre_bouton_max, class_name, color_name);
+			i++;
+			//break;
+		case 2 :
+			name_proc = "P2";
+			nombre_bouton_max = World.currentWorld.get_robot(this.current_robot).get_tailleP2();
+			for(int_Action act :  World.currentWorld.get_robot(this.current_robot).get_P2().getListActions()){
+				class_name.add(act.getClass().getSimpleName());
+				color_name.add(act.getColor().getClass().getSimpleName());
+			}
+			this.jeu.updateDrawProcedure(name_proc, nombre_bouton_max, class_name, color_name);
+			i++;
+			break;
 		}
 	}
 }
