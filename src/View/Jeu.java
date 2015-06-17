@@ -10,18 +10,6 @@ import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 
-import observable.action.MoveForward;
-import observable.action.int_Action;
-import observable.action_list.Sequence_List;
-import observable.map.Illuminated_Case;
-import observable.map.Terrain;
-import observable.map.World;
-import observable.map.abstr_Case;
-import observable.robot.Orientation;
-import observable.robot.abstr_Robot;
-import observer.controller.Controller;
-
-import org.jsfml.audio.Music;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
@@ -37,6 +25,16 @@ import org.jsfml.window.event.Event.Type;
 import couleur.Couleur;
 import exception.MouvementEx;
 import exception.UnreachableCase;
+import observable.action.MoveForward;
+import observable.action.int_Action;
+import observable.action_list.Sequence_List;
+import observable.map.Illuminated_Case;
+import observable.map.Terrain;
+import observable.map.World;
+import observable.map.abstr_Case;
+import observable.robot.Orientation;
+import observable.robot.abstr_Robot;
+import observer.controller.Controller;
 
 public class Jeu {
 
@@ -128,29 +126,29 @@ public class Jeu {
 		Event e = Menu.app.waitEvent();
 		//		for(Event e : Menu.app.pollEvents()){
 		if(e.type == Type.CLOSED){
-			Texture te = new Texture();
-			Sprite sp = new Sprite();
-			Music song_close = new Music();
-			try {
-				te.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/whale.png"));
-				song_close.openFromFile(Paths.get("Song/close.ogg"));
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			song_close.play();
-			sp.setTexture(te);
-			while(Jeu.x_whale < 1200){
-				sp.setPosition(Jeu.x_whale,Jeu.y_whale);
-				this.drawBackground();
-				if(x_whale < Menu.WIDTH/3-200)
-					this.drawGrilleISO();
-				this.draw_bouton();
-				Menu.app.draw(sp);
-				Menu.app.display();
-				Jeu.x_whale += 20;
-				Menu.app.clear();
-			}
+			//			Texture te = new Texture();
+			//			Sprite sp = new Sprite();
+			//			Music song_close = new Music();
+			//			try {
+			//				te.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/whale.png"));
+			//				song_close.openFromFile(Paths.get("Song/close.ogg"));
+			//			} catch (IOException e1) {
+			//				// TODO Auto-generated catch block
+			//				e1.printStackTrace();
+			//			}
+			//			song_close.play();
+			//			sp.setTexture(te);
+			//			while(Jeu.x_whale < 1200){
+			//				sp.setPosition(Jeu.x_whale,Jeu.y_whale);
+			//				this.drawBackground();
+			//				if(x_whale < Menu.WIDTH/3-200)
+			//					this.drawGrilleISO();
+			//				this.draw_bouton();
+			//				Menu.app.draw(sp);
+			//				Menu.app.display();
+			//				Jeu.x_whale += 20;
+			//				Menu.app.clear();
+			//			}
 			Menu.app.close();
 
 		}
@@ -272,6 +270,11 @@ public class Jeu {
 					controller.getNotificationRun();
 					break;
 				}
+				else if(Jeu.liste_sprite.get(s).equals("rewind")){
+					System.out.println("rewind");
+					controller.getNotificationRewind();
+					break;
+				}
 			}
 		}
 
@@ -386,7 +389,7 @@ public class Jeu {
 				Sprite monSpriteBouton = new Sprite();
 				maTextureBouton.loadFromFile(Paths.get("Images/Jeu/bouton/"+a.getClass().getSimpleName()+"_"+couleur_active+".png"));
 				monSpriteBouton.setTexture(maTextureBouton);
-				monSpriteBouton.setPosition(10+100*i,610);
+				monSpriteBouton.setPosition(10+80*i,610);
 				Jeu.liste_sprite.put(monSpriteBouton,a.getClass().getSimpleName());
 				Menu.app.draw(monSpriteBouton);
 				i++;

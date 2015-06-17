@@ -1,16 +1,19 @@
-*.class
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files #
-*.jar
-*.war
-*.ear
-
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+/bin/
+/bin/
+/bin/
+/bin/
+/bin/
+/bin/
+/bin/
+/bin/
+/bin/
+/bin/
+/bin/
 /bin/
 .classpath
-/lib/
-*.json~
+json-simple-1.1.1.jar
+jsfml.jar
+hs_err_pid17680.log
+hs_err_pid17679.log
+hs_err_pid17665.log
+hs_err_pid13538.log
