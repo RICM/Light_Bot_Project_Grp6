@@ -59,7 +59,7 @@ public class Jeu {
 	protected int width_case = 80;
 	protected int height_case = 50;
 	protected static final int NB_MAX_CASE = 10;
-	protected int indice_tele=0;
+	protected int indice_tele=1;
 	protected boolean FirstLoop = true;
 	protected static Couleur couleur_active = Couleur.GRIS;
 	protected static float x_whale = -600;
@@ -125,95 +125,96 @@ public class Jeu {
 	 */
 	public void processEvent(){
 		Menu.app.setKeyRepeatEnabled(false);
-
-		for(Event e : Menu.app.pollEvents()){
-			if(e.type == Type.CLOSED){
-				Texture te = new Texture();
-				Sprite sp = new Sprite();
-				Music song_close = new Music();
-				try {
-					te.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/whale.png"));
-					song_close.openFromFile(Paths.get("Song/close.ogg"));
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				song_close.play();
-				sp.setTexture(te);
-				while(Jeu.x_whale < 1200){
-					sp.setPosition(Jeu.x_whale,Jeu.y_whale);
-					this.drawBackground();
-					if(x_whale < Menu.WIDTH/3-200)
-						this.drawGrilleISO();
-					this.draw_bouton();
-					Menu.app.draw(sp);
-					Menu.app.display();
-					Jeu.x_whale += 20;
-					Menu.app.clear();
-				}
-				Menu.app.close();
+		Event e = Menu.app.waitEvent();
+		//		for(Event e : Menu.app.pollEvents()){
+		if(e.type == Type.CLOSED){
+			Texture te = new Texture();
+			Sprite sp = new Sprite();
+			Music song_close = new Music();
+			try {
+				te.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/whale.png"));
+				song_close.openFromFile(Paths.get("Song/close.ogg"));
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
-
-			if(e.type == Event.Type.RESIZED){
-				Menu.reset_cam();
+			song_close.play();
+			sp.setTexture(te);
+			while(Jeu.x_whale < 1200){
+				sp.setPosition(Jeu.x_whale,Jeu.y_whale);
+				this.drawBackground();
+				if(x_whale < Menu.WIDTH/3-200)
+					this.drawGrilleISO();
+				this.draw_bouton();
+				Menu.app.draw(sp);
+				Menu.app.display();
+				Jeu.x_whale += 20;
+				Menu.app.clear();
 			}
-			if (Keyboard.isKeyPressed(Key.LEFT)){
-				Jeu.r.setOrientation(Orientation.orientation.LEFT);
-				try {
-					MoveForward.move_forward().execute(Jeu.r);
-				} catch (MouvementEx e1) {
-					System.out.println(e1.getMessage());
-				} catch (UnreachableCase e1) {
-					System.out.println(e1.getMessage());
-				}
-			}
-			if (Keyboard.isKeyPressed(Key.RIGHT)){
-				Jeu.r.setOrientation(Orientation.orientation.RIGHT);
-				try {
-					MoveForward.move_forward().execute(Jeu.r);
-				} catch (MouvementEx e1) {
-					System.out.println(e1.getMessage());
-				} catch (UnreachableCase e1) {
-					System.out.println(e1.getMessage());
-				}
-			}
-			if (Keyboard.isKeyPressed(Key.SPACE)){
-
-			}
-			if (Keyboard.isKeyPressed(Key.UP)){
-				Jeu.r.setOrientation(Orientation.orientation.TOP);
-				try {
-					MoveForward.move_forward().execute(Jeu.r);
-				} catch (MouvementEx e1) {
-					System.out.println(e1.getMessage());
-				} catch (UnreachableCase e1) {
-					System.out.println(e1.getMessage());
-				}
-			}
-			if (Keyboard.isKeyPressed(Key.DOWN)){
-				Jeu.r.setOrientation(Orientation.orientation.BOT);
-				try {
-					MoveForward.move_forward().execute(Jeu.r);
-				} catch (MouvementEx e1) {
-					System.out.println(e1.getMessage());
-				} catch (UnreachableCase e1) {
-					System.out.println(e1.getMessage());
-				}
-			}
-
-			if (Keyboard.isKeyPressed(Key.SPACE)){
-				Jeu.r.run();
-			}
-
-			if (e.type == Event.Type.MOUSE_BUTTON_PRESSED ) {
-				e.asMouseEvent();
-				Vector2i pos = Mouse.getPosition(Menu.app);
-				Vector2f click = Menu.app.mapPixelToCoords(pos);
-				Jeu.detect_move(click);
-				this.delete_button(e,click);
-			}
+			Menu.app.close();
 
 		}
+
+		if(e.type == Event.Type.RESIZED){
+			Menu.reset_cam();
+		}
+		if (Keyboard.isKeyPressed(Key.LEFT)){
+			Jeu.r.setOrientation(Orientation.orientation.LEFT);
+			try {
+				MoveForward.move_forward().execute(Jeu.r);
+			} catch (MouvementEx e1) {
+				System.out.println(e1.getMessage());
+			} catch (UnreachableCase e1) {
+				System.out.println(e1.getMessage());
+			}
+		}
+		if (Keyboard.isKeyPressed(Key.RIGHT)){
+			Jeu.r.setOrientation(Orientation.orientation.RIGHT);
+			try {
+				MoveForward.move_forward().execute(Jeu.r);
+			} catch (MouvementEx e1) {
+				System.out.println(e1.getMessage());
+			} catch (UnreachableCase e1) {
+				System.out.println(e1.getMessage());
+			}
+		}
+		if (Keyboard.isKeyPressed(Key.SPACE)){
+
+		}
+		if (Keyboard.isKeyPressed(Key.UP)){
+			Jeu.r.setOrientation(Orientation.orientation.TOP);
+			try {
+				MoveForward.move_forward().execute(Jeu.r);
+			} catch (MouvementEx e1) {
+				System.out.println(e1.getMessage());
+			} catch (UnreachableCase e1) {
+				System.out.println(e1.getMessage());
+			}
+		}
+		if (Keyboard.isKeyPressed(Key.DOWN)){
+			Jeu.r.setOrientation(Orientation.orientation.BOT);
+			try {
+				MoveForward.move_forward().execute(Jeu.r);
+			} catch (MouvementEx e1) {
+				System.out.println(e1.getMessage());
+			} catch (UnreachableCase e1) {
+				System.out.println(e1.getMessage());
+			}
+		}
+
+		if (Keyboard.isKeyPressed(Key.SPACE)){
+			Jeu.r.run();
+		}
+
+		if (e.type == Event.Type.MOUSE_BUTTON_PRESSED ) {
+			e.asMouseEvent();
+			Vector2i pos = Mouse.getPosition(Menu.app);
+			Vector2f click = Menu.app.mapPixelToCoords(pos);
+			Jeu.detect_move(click);
+			this.delete_button(e,click);
+		}
+
+		//	}
 	}
 
 	public void updateRobotListAction(abstr_Robot rob){
@@ -358,13 +359,14 @@ public class Jeu {
 			int Y = c.get_coordonnees().get_y();
 			int taille_abs =  World.currentWorld.get_terrain(0).get_terrain()[0].length;
 			int taille_ord =  World.currentWorld.get_terrain(0).get_terrain().length;
-			int PosX = Menu.WIDTH/2 +59*(Y+X)-taille_abs*60-180;
-			int PosY = Menu.HEIGHT/2 +18*(Y-X)-taille_ord*18+100;
+			int PosX = Menu.WIDTH/2 +59*(Y+X)-taille_abs*60;
+			int PosY = Menu.HEIGHT/2 +18*(Y-X)-taille_ord*18+200;
 
 			this.maTexturePerso.loadFromFile(Paths.get("Images/Jeu/gif/robots/0_"+rob.getOrientation()+"_"+rob.get_couleur()+".png"));
 
 			this.monSpritePerso.setTexture(this.maTexturePerso);
-			this.monSpritePerso.setPosition(PosX+30+10,PosY-26*c.get_hauteur()+25);
+			this.monSpritePerso.setPosition((float) ((PosX+30+10)*0.8),(float) (0.8*(PosY-26*c.get_hauteur()+25)));
+			this.monSpritePerso.setScale(0.9f,0.9f);
 			Menu.app.draw(this.monSpritePerso);
 
 		} catch (IOException e) {
@@ -524,10 +526,10 @@ public class Jeu {
 				case ROUGE : this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/Square_rouge.png"));break;
 				}break;
 			case("Teleporter_Case") : this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/case_teleporteur/Case_pointeur_"+ this.indice_tele+".png"));
-			this.indice_tele++;
-			if( this.indice_tele>=9){
-				this.indice_tele=0;
-			}break;
+			//			this.indice_tele++;
+			//			if( this.indice_tele>=9){
+			//				this.indice_tele=0;
+			break;
 			case("Illuminated_Case") :
 				if(((Illuminated_Case) cases).get_active()){
 					this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/Square_allume.png"));
@@ -598,9 +600,9 @@ public class Jeu {
 	}
 
 	/**
-	 * Si la hauteur de la case est > 1, affiche toutes les cases en dessous
-	 * @param X coordonn�es x de la case
-	 * @param Y coordonn�es y de la case
+	 * Affichage des cases
+	 * @param X
+	 * @param Y
 	 */
 	public void affichageISO(int X, int Y){
 
@@ -609,8 +611,8 @@ public class Jeu {
 			int hauteur_max = Ma_case.get_hauteur();
 			int taille_abs =  World.currentWorld.get_terrain(0).get_terrain()[0].length;
 			int taille_ord =  World.currentWorld.get_terrain(0).get_terrain().length;
-			int PosX = Menu.WIDTH/2 +59*(Y+X)-taille_abs*60-180;
-			int PosY = Menu.HEIGHT/2 +18*(Y-X)-taille_ord*18+100;
+			int PosX = Menu.WIDTH/2 +59*(Y+X)-taille_abs*60;
+			int PosY = Menu.HEIGHT/2 +18*(Y-X)-taille_ord*18+200;
 
 			for(int hauteur=1; hauteur<hauteur_max;hauteur++){
 				try {
@@ -625,7 +627,8 @@ public class Jeu {
 			}
 			this.typeCases(Ma_case);
 			this.monSprite.setTexture(this.maTexture);
-			this.monSprite.setPosition(PosX,PosY-26*hauteur_max);
+			this.monSprite.setScale(0.8f, 0.8f);
+			this.monSprite.setPosition((float) (PosX*0.8),(float) ((PosY-26*hauteur_max)*0.8));
 			Menu.app.draw(this.monSprite);
 			abstr_Robot [] rob = w.get_liste_robot();
 			for(int i = 0;i<rob.length;i++){
