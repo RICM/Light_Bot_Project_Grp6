@@ -9,6 +9,7 @@ import exception.UnreachableCase;
 
 public class Ordonnanceur {
 	private LinkedList<abstr_Robot> list_robot = new LinkedList<abstr_Robot>();
+	private int ind_ex;
 
 	public void addRobot(abstr_Robot r){
 		this.list_robot.add(r);
@@ -20,6 +21,30 @@ public class Ordonnanceur {
 
 	public void removeRobot(int indice){
 		this.list_robot.remove(indice);
+	}
+	public void executeFirstAction() throws MouvementEx, UnreachableCase, ActionEx{
+		this.ind_ex = 0;
+		if(this.list_robot.get(this.ind_ex).get_activable()){
+			this.list_robot.get(this.ind_ex).execute();
+		}
+		this.increment_ind();
+	}
+
+	private void increment_ind() {
+		if (this.ind_ex >= this.list_robot.size()){
+			this.ind_ex = 0;
+		}
+		else{
+			this.ind_ex++;
+		}
+
+	}
+
+	public void execute_next() throws MouvementEx, UnreachableCase, ActionEx{
+		if(this.list_robot.get(this.ind_ex).get_activable()){
+			this.list_robot.get(this.ind_ex).execute();
+		}
+		this.increment_ind();
 	}
 
 	public void execute() throws MouvementEx, UnreachableCase, ActionEx{

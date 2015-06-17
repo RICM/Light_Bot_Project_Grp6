@@ -42,13 +42,31 @@ public class Niveaux {
 	public Niveaux(Controller acontroller,String current_theme){
 		this.theme = current_theme;
 		controller = acontroller;
+
+		try {
+			this.texture_Background.loadFromFile(Paths.get("Images/selectLvl/back.jpg"));
+			this.texture_btnNext.loadFromFile(Paths.get("Images/selectLvl/next100x100.png"));
+			this.texture_btnPrec.loadFromFile(Paths.get("Images/selectLvl/prec100x100.png"));
+			this.texture_btnMenu.loadFromFile(Paths.get("Images/selectLvl/Back.png"));
+			this.texture_btnLevel.loadFromFile(Paths.get("Images/selectLvl/level.png"));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
 		Menu.reset_cam();
-		this.displayBackground();
-		this.displayBtn();
-		Menu.app.display();
 		while(Menu.app.isOpen()){
+			Menu.app.clear();
+			this.displayBackground();
+			this.displayBtn();
+			Menu.app.display();
 			this.processEvent();
-			//System.out.println(Mouse.getPosition().x + " " + Mouse.getPosition().y);
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -60,26 +78,23 @@ public class Niveaux {
 	 * D�tecte les entr�es claviers et souris
 	 */
 	public void processEvent(){
-		Event e = Menu.app.waitEvent();
-		//		for(e : Menu.app.pollEvents()){
+		for(Event e : Menu.app.pollEvents()){
+			if(e.type == Type.CLOSED){
+				Menu.app.close();
+			}
 
-		if(e.type == Type.CLOSED){
-			Menu.app.close();
+			if(e.type == Event.Type.RESIZED){
+				Menu.reset_cam();
+			}
+
+			if (e.type == Event.Type.MOUSE_BUTTON_RELEASED) {
+				e.asMouseEvent();
+				Vector2i pos = Mouse.getPosition(Menu.app);
+				Vector2f click = Menu.app.mapPixelToCoords(pos);
+				System.out.println(pos.x+" "+pos.y);
+				this.btnClick(click);
+			}
 		}
-
-
-		if(e.type == Event.Type.RESIZED){
-			Menu.reset_cam();
-		}
-
-		if (e.type == Event.Type.MOUSE_BUTTON_RELEASED) {
-			e.asMouseEvent();
-			Vector2i pos = Mouse.getPosition(Menu.app);
-			Vector2f click = Menu.app.mapPixelToCoords(pos);
-			System.out.println(pos.x+" "+pos.y);
-			this.btnClick(click);
-		}
-		//		}
 	}
 
 	/**
@@ -99,17 +114,11 @@ public class Niveaux {
 					this.level--;
 					if(this.level<1)
 						this.level = 1;
-					this.displayBackground();
-					this.displayBtn();
-					Menu.app.display();
 				}
 				else if(this.listSprite.get(s).equals("Next")){
 					this.level++;
 					if(this.level>4)
 						this.level = 4;
-					this.displayBackground();
-					this.displayBtn();
-					Menu.app.display();
 				}
 				else if(this.listSprite.get(s).equals("Menu")){
 					new Theme(controller);
@@ -126,16 +135,9 @@ public class Niveaux {
 	 * Affiche le background
 	 */
 	private void displayBackground() {
-		try {
-			this.texture_Background.loadFromFile(Paths.get("Images/selectLvl/back.jpg"));
-			this.sprite_Background.setTexture(this.texture_Background);
-			this.sprite_Background.setScale(0.7f, 0.7f);
-			Menu.app.draw(this.sprite_Background);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+		this.sprite_Background.setTexture(this.texture_Background);
+		this.sprite_Background.setScale(0.7f, 0.7f);
+		Menu.app.draw(this.sprite_Background);
 	}
 
 	/**
@@ -144,25 +146,21 @@ public class Niveaux {
 	protected void displayBtn() {
 		try {
 			//Affichage bouton next
-			this.texture_btnNext.loadFromFile(Paths.get("Images/selectLvl/next100x100.png"));
 			this.sprite_btnNext.setTexture(this.texture_btnNext);
 			this.sprite_btnNext.setPosition(Niveaux.WIDTH-250,700/2);
 			Menu.app.draw(this.sprite_btnNext);
 
 			//Affichage bouton prec
-			this.texture_btnPrec.loadFromFile(Paths.get("Images/selectLvl/prec100x100.png"));
 			this.sprite_btnPrec.setTexture(this.texture_btnPrec);
 			this.sprite_btnPrec.setPosition(150,700/2);
 			Menu.app.draw(this.sprite_btnPrec);
 
 			//Affichage bouton Back
-			this.texture_btnMenu.loadFromFile(Paths.get("Images/selectLvl/Back.png"));
 			this.sprite_btnMenu.setTexture(this.texture_btnMenu);
 			this.sprite_btnMenu.setPosition(30,5);
 			Menu.app.draw(this.sprite_btnMenu);
 
 			//Affichage bouton Jouer
-			this.texture_btnLevel.loadFromFile(Paths.get("Images/selectLvl/level.png"));
 			this.sprite_btnLevel.setTexture(this.texture_btnLevel);
 			this.sprite_btnLevel.setPosition(Niveaux.WIDTH/2-330,700/2+210);
 			Menu.app.draw(this.sprite_btnLevel);
