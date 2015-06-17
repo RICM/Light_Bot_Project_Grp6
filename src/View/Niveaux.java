@@ -128,6 +128,7 @@ public class Niveaux {
 				}
 				else if(this.listSprite.get(s).equals("Level")){
 					String lvl = this.theme+this.level;
+					controller.getLevel(controller,lvl);
 					new Jeu(this.level, controller);
 				}
 			}

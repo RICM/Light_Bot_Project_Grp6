@@ -16,6 +16,7 @@ import observable.map.World;
 import observable.robot.Robot;
 import observable.robot.abstr_Robot;
 import observer.int_Observer;
+import parser.parserJSON;
 import View.Jeu;
 import couleur.Couleur;
 import exception.ActionEx;
@@ -314,5 +315,9 @@ public class Controller implements int_Observer {
 		} catch (ActionEx e) {
 			this.jeu.draw_popup("Désolé, une erreur inattendue s'est produite");
 		}
+	}
+
+	public void getLevel(Controller controller, String level){
+		parserJSON.currentparser.lecture(controller,level);
 	}
 }
