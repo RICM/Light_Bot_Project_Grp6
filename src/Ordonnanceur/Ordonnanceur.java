@@ -43,7 +43,6 @@ public class Ordonnanceur {
 	public void execute_next() throws MouvementEx, UnreachableCase, ActionEx{
 		System.out.println("Ich bin in execute-next");
 		if(this.list_robot.get(this.ind_ex).get_activable()){
-			System.out.println("Ich bin in execute-next Ich bin in if");
 			this.ready = false;
 			this.list_robot.get(this.ind_ex).execute();
 		}

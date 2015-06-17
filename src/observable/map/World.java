@@ -193,6 +193,7 @@ public class World implements int_Observable {
 	}
 
 	public void store_status() throws UnreachableCase, ActionEx{
+		System.out.println("je me sauvegarde");
 		int size_t = World.currentWorld.get_liste_terrain().length;
 		Terrain temp[] = new Terrain[size_t];
 		World.currentWorld.save_robot = new Position[World.currentWorld.liste_robot.length];
