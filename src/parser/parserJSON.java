@@ -5,6 +5,13 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import couleur.Couleur;
+import exception.UnreachableCase;
 import observable.action.Activate;
 import observable.action.Break_r;
 import observable.action.Call_P1;
@@ -38,26 +45,18 @@ import observable.robot.Robot;
 import observable.robot.abstr_Robot;
 import observer.int_Observer;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
-import couleur.Couleur;
-import exception.UnreachableCase;
-
 
 
 public class parserJSON {
 
-	private static final String filePath = new File("").getAbsolutePath()+"/json/essaie.json";
+	private static final String filePath = new File("").getAbsolutePath()+"/json/";
 
 	public static parserJSON currentparser = new parserJSON();
 
-	public void lecture (int_Observer acontroller){
+	public void lecture (int_Observer acontroller,String s){
 		try {
 			//reader
-			FileReader reader = new FileReader(filePath);
+			FileReader reader = new FileReader(filePath+s);
 			JSONParser jsonParser = new JSONParser();
 			JSONObject jsonObject = (JSONObject) jsonParser.parse(reader);
 
@@ -111,74 +110,16 @@ public class parserJSON {
 						JSONObject ObcaseCurrent = (JSONObject) ligneCurrent.get(x);
 						//System.out.println(ObcaseCurrent);
 
-						//						Coordonnees coor = new Coordonnees(x, y, i);
-						//						Number hauteur = (Number) ObcaseCurrent.get("hauteur");
+						//                                              Coordonnees coor = new Coordonnees(x, y, i);
+						//                                              Number hauteur = (Number) ObcaseCurrent.get("hauteur");
 						//
-						//						Couleur coul = this.parserCouleur((String)ObcaseCurrent.get("couleur"));
-
-						case "ROUGE" :
-							coul = Couleur.ROUGE;
-							break;
-
-						case "GRIS" :
-						default :
-							coul = Couleur.GRIS;
-							break;
-						}
-						abstr_Case carre = null;
-						switch ((String) ObcaseCurrent.get("type_case")) { //Class.forName((String)ObcaseCurrent.get("type_case")).
-						case "case_event":
-
-							//carre = new Event_Case(hauteur.intValue(), coul, coor, dest, type, stat);
-							break;
-
-						case "case_destination" :
-							carre = new Destination_Case(hauteur.intValue(), coul, coor);
-							System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
-							break;
-
-						case "case_painted" :
-							carre = new Painted_Case(hauteur.intValue(), coul, coor);
-							System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
-							break;
-
-						case "case_teleporter" :
-							Number destX = (Number)  ObcaseCurrent.get("destX");
-							Number destY = (Number)  ObcaseCurrent.get("destY");
-							Number indice = (Number) ObcaseCurrent.get("indice");
-							Coordonnees dest = new Coordonnees(destX.intValue(), destY.intValue(),indice.intValue());
-							//new Teleporter_Case(h, Color, cord, destination)
-							carre = new Teleporter_Case(hauteur.intValue(), coul, coor, dest);
-							//System.out.println("terrain"+i+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
-							break;
-
-						case "case_normale" :
-							carre = new Normal_Case(hauteur.intValue(),coor);
-							System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
-							break;
-
-						case "case_empty" :
-							carre = new Empty_Case();
-							//System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
-							break;
-
-						case "case_illuminated" :
-							carre = new Illuminated_Case(hauteur.intValue(), coul, coor);
-							System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
-							break;
-
-						default :
-							carre = new Normal_Case(hauteur.intValue(),coor);
-							System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
-							break;
-						}
-
-
+						//                                              Couleur coul = this.parserCouleur((String)ObcaseCurrent.get("couleur"));
+						abstr_Case carre = this.parserCase(ObcaseCurrent,x,y,i);
 						terrainlist[i].add_case(x, y, carre);
 					}
-
 				}
 			}
+
 
 			System.out.println("nb de terrain: "+terrainlist.length);
 			System.out.println("nb de robot: "+nb_robot);
@@ -431,12 +372,12 @@ public class parserJSON {
 			}
 			World.currentWorld.set_liste_robot(robotlist);
 			World.currentWorld.set_liste_terrain(terrainlist);
-			//			try {
-			//				World.currentWorld.store_status();
-			//			} catch (ActionEx e) {
-			//				// TODO Auto-generated catch block
-			//				e.printStackTrace();
-			//			}
+			//                      try {
+			//                              World.currentWorld.store_status();
+			//                      } catch (ActionEx e) {
+			//                              // TODO Auto-generated catch block
+			//                              e.printStackTrace();
+			//                      }
 
 		}
 		catch (FileNotFoundException ex) {
@@ -678,7 +619,3 @@ public class parserJSON {
 	}
 
 }
-
-
-
-
