@@ -39,14 +39,14 @@ public class Theme {
 		this.displayTheme();
 		Menu.app.display();
 		while(Menu.app.isOpen()){
-			Event e = Menu.app.waitEvent();
-			this.processEvent(e);
+			this.processEvent();
 		}
 
 	}
 
-	protected void processEvent(Event e) {
+	protected void processEvent() {
 		//		for(Event e : Menu.app.pollEvents()){
+		Event e = Menu.app.waitEvent();
 		if(e.type == Type.CLOSED){
 			Menu.app.close();
 		}

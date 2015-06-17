@@ -2,7 +2,8 @@ package View;
 
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 
 import observer.controller.Controller;
 
@@ -30,7 +31,7 @@ public class Niveaux {
 	protected Sprite sprite_btnMenu= new Sprite();
 	protected Texture texture_btnLevel = new Texture();
 	protected Sprite sprite_btnLevel = new Sprite();
-	protected ArrayList<Sprite> listSprite = new ArrayList<Sprite>();
+	protected HashMap<Sprite,String> listSprite = new HashMap<Sprite, String>();
 	protected int level = 1;
 	protected static final int WIDTH = 1200;
 	protected static final int HEIGHT = 700;
@@ -42,12 +43,11 @@ public class Niveaux {
 		this.theme = current_theme;
 		controller = acontroller;
 		Menu.reset_cam();
+		this.displayBackground();
+		this.displayBtn();
+		Menu.app.display();
 		while(Menu.app.isOpen()){
-			this.displayBackground();
-			this.displayBtn();
-			Menu.app.display();
-			Event e = Menu.app.waitEvent();
-			this.processEvent(e);
+			this.processEvent();
 			//System.out.println(Mouse.getPosition().x + " " + Mouse.getPosition().y);
 		}
 	}
@@ -59,8 +59,8 @@ public class Niveaux {
 	/**
 	 * D�tecte les entr�es claviers et souris
 	 */
-	public void processEvent(Event e){
-		Menu.app.setKeyRepeatEnabled(false);
+	public void processEvent(){
+		Event e = Menu.app.waitEvent();
 		//		for(e : Menu.app.pollEvents()){
 
 		if(e.type == Type.CLOSED){
@@ -89,29 +89,36 @@ public class Niveaux {
 	private void btnClick(Vector2f pos) {
 		float x = pos.x;
 		float y = pos.y;
-		int cpt = 0;
-
-		for(Sprite s : this.listSprite){
+		Iterator<Sprite> keySetIterator = this.listSprite.keySet().iterator();
+		while(keySetIterator.hasNext()){
+			Sprite s = keySetIterator.next();
 			FloatRect rect = s.getGlobalBounds();
 			if(x>=rect.left && x<=rect.left+rect.width &&
 					y>=rect.top && y<=rect.top+rect.height){
-				if(cpt == 0){
+				if(this.listSprite.get(s).equals("Previous")){
 					this.level--;
 					if(this.level<1)
 						this.level = 1;
+					this.displayBackground();
+					this.displayBtn();
+					Menu.app.display();
 				}
-				else if(cpt == 1){
+				else if(this.listSprite.get(s).equals("Next")){
 					this.level++;
+					if(this.level>4)
+						this.level = 4;
+					this.displayBackground();
+					this.displayBtn();
+					Menu.app.display();
 				}
-				else if(cpt == 2){
+				else if(this.listSprite.get(s).equals("Menu")){
 					new Theme(controller);
 				}
-				else if(cpt == 3){
+				else if(this.listSprite.get(s).equals("Level")){
 					String lvl = this.theme+this.level;
 					Jeu jeu = new Jeu(this.level, controller);
 				}
 			}
-			cpt++;
 		}
 	}
 
@@ -167,10 +174,10 @@ public class Niveaux {
 			t.setPosition(Niveaux.WIDTH/2+18, 350);
 			Menu.app.draw(t);
 
-			this.listSprite.add(this.sprite_btnPrec);
-			this.listSprite.add(this.sprite_btnNext);
-			this.listSprite.add(this.sprite_btnMenu);
-			this.listSprite.add(this.sprite_btnLevel);
+			this.listSprite.put(this.sprite_btnPrec,"Previous");
+			this.listSprite.put(this.sprite_btnNext,"Next");
+			this.listSprite.put(this.sprite_btnMenu,"Menu");
+			this.listSprite.put(this.sprite_btnLevel, "Level");
 
 
 		} catch (IOException e) {
