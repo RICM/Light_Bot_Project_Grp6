@@ -12,15 +12,18 @@ import observable.action.Call_P2;
 import observable.action.Flashback;
 import observable.action.Jump;
 import observable.action.MoveForward;
+import observable.action.Notify_r;
 import observable.action.Remember;
 import observable.action.TurnLeft;
 import observable.action.TurnRIght;
+import observable.action.Wait_r;
 import observable.action.int_Action;
 import observable.action_list.Possible_List;
 import observable.action_list.Sequence_List;
 import observable.map.Coordonnees;
 import observable.map.Destination_Case;
 import observable.map.Empty_Case;
+import observable.map.Event_Case;
 import observable.map.Illuminated_Case;
 import observable.map.Normal_Case;
 import observable.map.Painted_Case;
@@ -47,14 +50,14 @@ import exception.UnreachableCase;
 
 public class parserJSON {
 
-	private static final String filePath = new File("").getAbsolutePath()+"/json/";
+	private static final String filePath = new File("").getAbsolutePath()+"/json/essaie.json";
 
 	public static parserJSON currentparser = new parserJSON();
 
-	public void lecture (int_Observer acontroller, String s){
+	public void lecture (int_Observer acontroller){
 		try {
 			//reader
-			FileReader reader = new FileReader(filePath+s+".json");
+			FileReader reader = new FileReader(filePath);
 			JSONParser jsonParser = new JSONParser();
 			JSONObject jsonObject = (JSONObject) jsonParser.parse(reader);
 
@@ -107,14 +110,11 @@ public class parserJSON {
 					for (int x =0; x < dimX; x++){
 						JSONObject ObcaseCurrent = (JSONObject) ligneCurrent.get(x);
 						//System.out.println(ObcaseCurrent);
-						Coordonnees coor = new Coordonnees(x, y, i);
-						Number hauteur = (Number) ObcaseCurrent.get("hauteur");
 
-						Couleur coul;
-						switch((String)ObcaseCurrent.get("couleur")){
-						case "VERT" :
-							coul = Couleur.VERT;
-							break;
+						//						Coordonnees coor = new Coordonnees(x, y, i);
+						//						Number hauteur = (Number) ObcaseCurrent.get("hauteur");
+						//
+						//						Couleur coul = this.parserCouleur((String)ObcaseCurrent.get("couleur"));
 
 						case "ROUGE" :
 							coul = Couleur.ROUGE;
@@ -196,24 +196,7 @@ public class parserJSON {
 				//System.out.println(Obcouleur);
 
 				//String Scouleur = (String) Obcouleur.get("couleur");
-				Couleur cool;
-				switch ((String) Obcouleur.get("couleur")){
-				case "VERT" :
-					cool = Couleur.VERT;
-					break;
-
-				case "ROUGE" :
-					cool = Couleur.ROUGE;
-					break;
-
-				case "GRIS" :
-					cool = Couleur.GRIS;
-					break;
-
-				default :
-					cool = Couleur.GRIS;
-					break;
-				}
+				Couleur cool = this.parserCouleur((String) Obcouleur.get("couleur"));
 
 				JSONObject ObcoorX = (JSONObject) robotCurrent.get(2);
 				//System.out.println(ObcoorX);
@@ -264,12 +247,18 @@ public class parserJSON {
 				JSONObject Obactions = (JSONObject) robotCurrent.get(9);
 				JSONArray actions = (JSONArray) Obactions.get("actions");
 				Possible_List actionlist = new Possible_List();
-				//System.out.println(actions);
 
 				for (int a = 0; a < actions.size() ; a++){
-					//System.out.println(actions.get(a));
 					int_Action act = null;
 					switch ((String)actions.get(a)){
+					case "Notify":
+						act = Notify_r.notify_r();
+						break;
+
+					case "Wait":
+						act = Wait_r.wait_r();
+						break;
+
 					case "Break":
 						act = Break_r.break_r();
 						break;
@@ -326,19 +315,16 @@ public class parserJSON {
 					JSONObject Obmaxmain = (JSONObject) robotCurrent.get(5);
 					//System.out.println(Obmaxmain);
 					Number nummain = (Number) Obmaxmain.get("max_main");
-					System.out.println("max taille du main: "+nummain.intValue());
 					int main = nummain.intValue();
 
 					JSONObject Obmaxp1 = (JSONObject) robotCurrent.get(6);
 					//System.out.println(Obmaxp1);
 					Number nump1 = (Number) Obmaxp1.get("max_p1");
-					System.out.println("max taille p1: "+nump1.intValue());
 					int p1 = nump1.intValue();
 
 					JSONObject Obmaxp2 = (JSONObject) robotCurrent.get(7);
 					//System.out.println(Obmaxp2);
 					Number nump2 = (Number) Obmaxp2.get("max_p2");
-					System.out.println("max taille p2: "+nump2.intValue());
 					int p2 = nump2.intValue();
 					Robot robert = new Robot(robotcase, actionlist, o, main, p1, p2, acontroller, cool);
 					robotlist[i]=robert;
@@ -375,13 +361,11 @@ public class parserJSON {
 					JSONObject Obmaxp1d2 = (JSONObject) robotCurrent.get(6);
 					Sequence_List d2p1 = this.parserListDUM(Obmaxp1d2, acontroller, "liste_p1");
 
-
 					JSONObject Obmaxp2d2 = (JSONObject) robotCurrent.get(7);
 					//System.out.println(Obmaxp2d2);
 					Number nump2d2 = (Number) Obmaxp2d2.get("max_p2");
 					System.out.println("max taille p2: "+nump2d2.intValue());
 					int d2p2 = nump2d2.intValue();
-
 					Dumb_bot robert_d2 = new Dumb_bot(robotcase, o, actionlist, cool, acontroller, d2main, d2p1, d2p2);
 					robotlist[i]=robert_d2;
 					break;
@@ -447,6 +431,13 @@ public class parserJSON {
 			}
 			World.currentWorld.set_liste_robot(robotlist);
 			World.currentWorld.set_liste_terrain(terrainlist);
+			//			try {
+			//				World.currentWorld.store_status();
+			//			} catch (ActionEx e) {
+			//				// TODO Auto-generated catch block
+			//				e.printStackTrace();
+			//			}
+
 		}
 		catch (FileNotFoundException ex) {
 			ex.printStackTrace();
@@ -462,46 +453,22 @@ public class parserJSON {
 	}
 
 
-
-	/*
-	 * retourne la case correspondant à la chaine passé en paramètre
-	 *
-	 */
-	public abstr_Case id_Case(String S) throws InstantiationException, IllegalAccessException{
-		abstr_Case carre = null;
-		switch (S){
-		case "Empty" :
-			return Empty_Case.class.newInstance();
-
-		case "Illuminated" :
-			return Illuminated_Case.class.newInstance();
-
-		case "Painted" :
-			return Painted_Case.class.newInstance();
-
-		case "Teleporter" :
-			return Teleporter_Case.class.newInstance();
-
-		case "Destination" :
-			return Destination_Case.class.newInstance();
-
-		case "Normale" :
-			return Normal_Case.class.newInstance();
-
-		default:
-			break;
-		}
-		return carre;
-	}
-
 	public Sequence_List parserListDUM(JSONObject o, int_Observer c,String s){
 		//System.out.println(Oblistmain);
 		JSONArray lmain = (JSONArray) o.get(s);
 		Sequence_List sequencelist = new Sequence_List(c);
 
-		for (int m = 0; m < sequencelist.size(); m++){
+		for (int m = 0; m < lmain.size(); m++){
 			int_Action act = null;
 			switch ((String)lmain.get(m)){
+			case "Notify":
+				act = Notify_r.notify_r();
+				break;
+
+			case "Wait":
+				act = Wait_r.wait_r();
+				break;
+
 			case "Break":
 				act = Break_r.break_r();
 				break;
@@ -550,8 +517,164 @@ public class parserJSON {
 			sequencelist.addActionSubSequence(act);
 		}
 
-
 		return sequencelist;
+	}
+
+	public Couleur parserCouleur(String s){
+		Couleur coul;
+		switch(s){
+		case "VERT" :
+			coul = Couleur.VERT;
+			break;
+
+		case "ROUGE" :
+			coul = Couleur.ROUGE;
+			break;
+
+		case "GRIS" :
+		default :
+			coul = Couleur.GRIS;
+			break;
+		}
+		return coul;
+	}
+
+	public abstr_Case parserCase(JSONObject o, int x, int y, int i){
+
+		Coordonnees coor = new Coordonnees(x, y, i);
+		Number hauteur = (Number) o.get("hauteur");
+
+		Couleur coul = this.parserCouleur((String)o.get("couleur"));
+
+		abstr_Case carre = null;
+		switch ((String) o.get("type_case")) { //Class.forName((String)ObcaseCurrent.get("type_case")).
+		case "case_event":
+
+			carre = this.parserCaseEvent((JSONObject)o.get("case"));
+			break;
+
+		case "case_destination" :
+			carre = new Destination_Case(hauteur.intValue(), coul, coor);
+			System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
+			break;
+
+		case "case_painted" :
+			carre = new Painted_Case(hauteur.intValue(), coul, coor);
+			System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
+			break;
+
+		case "case_teleporter" :
+			Number destX = (Number)  o.get("destX");
+			Number destY = (Number)  o.get("destY");
+			Number indice = (Number) o.get("indice");
+			Coordonnees dest = new Coordonnees(destX.intValue(), destY.intValue(),indice.intValue());
+			//new Teleporter_Case(h, Color, cord, destination)
+			carre = new Teleporter_Case(hauteur.intValue(), coul, coor, dest);
+			//System.out.println("terrain"+i+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
+			break;
+
+		case "case_normale" :
+			carre = new Normal_Case(hauteur.intValue(),coor);
+			System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
+			break;
+
+		case "case_empty" :
+			carre = new Empty_Case();
+			//System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
+			break;
+
+		case "case_illuminated" :
+			carre = new Illuminated_Case(hauteur.intValue(), coul, coor);
+			System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
+			break;
+
+		default :
+			carre = new Normal_Case(hauteur.intValue(),coor);
+			System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
+			break;
+		}
+		return carre;
+
+	}
+
+	public abstr_Case parserCaseEvent (JSONObject o){
+
+		Couleur coul = this.parserCouleur((String) o.get("couleur"));
+		Number coorX = (Number)o.get("coorX");
+		int x = coorX.intValue();
+
+		Number coorY = (Number)o.get("coorY");
+		int y = coorY.intValue();
+
+		Number indice = (Number)o.get("indice");
+		int i = indice.intValue();
+
+		Coordonnees coor = new Coordonnees(x, y, i);
+
+		Number hauteur = (Number)o.get("hauteur");
+		int h = hauteur.intValue();
+
+		abstr_Case carre = null;
+		switch ((String) o.get("type_case")){
+
+		case "case_event":
+
+			boolean s = false;
+			switch ((String)o.get("stat")){
+			case "true" :
+				s = true;
+				break;
+
+			case "false" :
+				s = false;
+				break;
+			default: break;
+			}
+
+			carre = new Event_Case(h, coul, coor,this.parserCaseEvent((JSONObject)o.get("case")), s);
+			break;
+
+		case "case_destination" :
+			carre = new Destination_Case(h,coul,coor);
+			System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
+			break;
+
+		case "case_painted" :
+			carre = new Painted_Case(h, coul, coor);
+			System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
+			break;
+
+		case "case_teleporter" :
+			Number destX = (Number)  o.get("destX");
+			Number destY = (Number)  o.get("destY");
+			Number indicedest = (Number) o.get("indice");
+			Coordonnees dest = new Coordonnees(destX.intValue(), destY.intValue(),indicedest.intValue());
+			//new Teleporter_Case(h, Color, cord, destination)
+			carre = new Teleporter_Case(hauteur.intValue(), coul, coor, dest);
+			//System.out.println("terrain"+i+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
+			break;
+
+		case "case_normale" :
+			carre = new Normal_Case(hauteur.intValue(),coor);
+			System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
+			break;
+
+		case "case_empty" :
+			carre = new Empty_Case();
+			//System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
+			break;
+
+		case "case_illuminated" :
+			carre = new Illuminated_Case(hauteur.intValue(), coul, coor);
+			System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
+			break;
+
+		default :
+			carre = new Normal_Case(hauteur.intValue(),coor);
+			System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
+			break;
+		}
+		return carre;
 	}
 
 }
