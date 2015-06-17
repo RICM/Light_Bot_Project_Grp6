@@ -47,11 +47,15 @@ public class Controller implements int_Observer {
 			break;
 		case "Illuminated_Case" :
 			System.out.println("JE SUIS ALLUME");
-			this.se
+			this.setNotificationUpdateCase();
 			break;
 		default:
 			break;
 		}
+	}
+
+	public void setNotificationUpdateCase() {
+		this.jeu.setNotificationDrawForTime();
 	}
 
 	public void setNotificationUpdatedCurrentProgramList(Sequence_List seq){
@@ -103,12 +107,6 @@ public class Controller implements int_Observer {
 				this.jeu.draw_popup("Vous venez de vous manger une segfault!! La case visée ne peut etre atteinte");
 			} catch (ActionEx e) {
 				this.jeu.draw_popup("Une erreur est survenue lors de l'execution de l'actions");
-			}
-			try {
-				Thread.sleep(7000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
 		}
 	}

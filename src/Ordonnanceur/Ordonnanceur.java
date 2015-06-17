@@ -44,7 +44,6 @@ public class Ordonnanceur {
 		System.out.println("Ich bin in execute-next");
 		if(this.list_robot.get(this.ind_ex).get_activable()){
 			System.out.println("Ich bin in execute-next Ich bin in if");
-			System.out.println(this.list_robot.get(this.ind_ex).get_run().getFirstAct().toString());
 			this.ready = false;
 			this.list_robot.get(this.ind_ex).execute();
 		}
