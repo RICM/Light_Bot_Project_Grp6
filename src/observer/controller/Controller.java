@@ -3,9 +3,14 @@ package observer.controller;
 import java.io.IOException;
 
 import View.Jeu;
+import View.Jeu;
+import couleur.Couleur;
 import couleur.Couleur;
 import exception.ActionEx;
+import exception.ActionEx;
 import exception.MouvementEx;
+import exception.MouvementEx;
+import exception.UnreachableCase;
 import exception.UnreachableCase;
 import observable.action.Activate;
 import observable.action.Call_P1;
@@ -21,6 +26,7 @@ import observable.map.World;
 import observable.robot.Robot;
 import observable.robot.abstr_Robot;
 import observer.int_Observer;
+import parser.parserJSON;
 public class Controller implements int_Observer {
 
 	private Jeu jeu;
@@ -329,5 +335,8 @@ public class Controller implements int_Observer {
 	public void setNotificationUpdatedRobotMouvement() {
 		System.out.println("envoie de la notification");
 		World.currentWorld.get_ordonnanceur().setReady(true);
+	}
+	public void getLevel(Controller controller, String level){
+		parserJSON.currentparser.lecture(controller,level);
 	}
 }

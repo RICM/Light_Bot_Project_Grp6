@@ -47,14 +47,14 @@ import exception.UnreachableCase;
 
 public class parserJSON {
 
-	private static final String filePath = new File("").getAbsolutePath()+"/json/pt4.json";
+	private static final String filePath = new File("").getAbsolutePath()+"/json/";
 
 	public static parserJSON currentparser = new parserJSON();
 
-	public void lecture (int_Observer acontroller){
+	public void lecture (int_Observer acontroller, String s){
 		try {
 			//reader
-			FileReader reader = new FileReader(filePath);
+			FileReader reader = new FileReader(filePath+s+".json");
 			JSONParser jsonParser = new JSONParser();
 			JSONObject jsonObject = (JSONObject) jsonParser.parse(reader);
 

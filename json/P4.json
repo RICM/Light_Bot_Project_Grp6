@@ -42,7 +42,7 @@
     						{"max_p1": 8},
     						{"max_p2": 8},
     						{"orientation": "bot"},
-    						{"actions" :["MoveForward" ,"TurnLeft","Jump","TurnRight","Activate","Break","Flashback","Remember","P1","P2"]}
+    						{"actions" :["MoveForward" ,"TurnLeft","Jump","TurnRight","P2","P1","Activate","Break","Flashback","Remember"]}
     			]
     		}
     ]  
