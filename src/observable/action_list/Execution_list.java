@@ -63,7 +63,7 @@ public class Execution_list implements int_Observable{
 		return str;
 	}
 	public void clear() {
-		for(int i = 0; i< this.Run_List.size(); i++){
+		while (this.size()>0){
 			this.Run_List.removeFirst();
 		}
 	}
