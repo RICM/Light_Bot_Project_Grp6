@@ -1,16 +1,16 @@
 package observable.map;
 import java.util.ArrayList;
 
+import couleur.Couleur;
 import observable.int_Observable;
 import observer.int_Observer;
-import couleur.Couleur;
 
 public abstract class abstr_Case implements int_Observable{
 	private int hauteur;
 	private Couleur couleur;
 	private Coordonnees coordonnees;
 
-	private ArrayList<int_Observer> listObserver = new ArrayList<int_Observer>();
+	protected ArrayList<int_Observer> listObserver = new ArrayList<int_Observer>();
 
 	public Couleur get_couleur(){
 		return this.couleur;

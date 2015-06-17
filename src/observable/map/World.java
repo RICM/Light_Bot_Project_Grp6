@@ -1,18 +1,22 @@
 package observable.map;
 import java.util.ArrayList;
 
-import observable.int_Observable;
-import observable.robot.Position;
-import observable.robot.abstr_Robot;
-import observer.int_Observer;
 import Ordonnanceur.Ordonnanceur;
 import exception.ActionEx;
 import exception.MouvementEx;
 import exception.UnreachableCase;
+import observable.int_Observable;
+import observable.robot.Position;
+import observable.robot.abstr_Robot;
+import observer.int_Observer;
 
 public class World implements int_Observable {
 
 	private ArrayList<int_Observer> listObserver = new ArrayList<int_Observer>();
+
+	public int_Observer getFirstObserver(){
+		return this.listObserver.get(0);
+	}
 
 	private World(){
 	}
@@ -54,7 +58,10 @@ public class World implements int_Observable {
 	}
 
 	public void exec() throws MouvementEx, UnreachableCase, ActionEx{
-		this.ordo.execute();
+		if (this.ordo.isReady()){
+			System.out.println("Ich bin in ordo");
+			this.ordo.execute_next();
+		}
 	}
 
 	public Terrain get_terrain(int n){
