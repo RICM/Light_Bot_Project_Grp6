@@ -10,33 +10,24 @@ import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 
-import observable.action.MoveForward;
-import observable.action.int_Action;
-import observable.action_list.Sequence_List;
-import observable.map.Illuminated_Case;
-import observable.map.Terrain;
-import observable.map.World;
-import observable.map.abstr_Case;
-import observable.robot.Orientation;
-import observable.robot.abstr_Robot;
-import observer.controller.Controller;
-
 import org.jsfml.audio.Music;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
 import org.jsfml.system.Vector2f;
 import org.jsfml.system.Vector2i;
-import org.jsfml.window.Keyboard;
-import org.jsfml.window.Keyboard.Key;
 import org.jsfml.window.Mouse;
 import org.jsfml.window.Mouse.Button;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.Event.Type;
 
 import couleur.Couleur;
-import exception.MouvementEx;
-import exception.UnreachableCase;
+import observable.action.int_Action;
+import observable.action_list.Sequence_List;
+import observable.map.Terrain;
+import observable.map.World;
+import observable.robot.abstr_Robot;
+import observer.controller.Controller;
 
 public class Jeu {
 
@@ -51,16 +42,18 @@ public class Jeu {
 	protected Sprite monSpritePerso = new Sprite();
 	protected static HashMap<Sprite,String> liste_sprite = new HashMap<Sprite, String>();
 	protected int level;
-	protected static World w = World.currentWorld;
+	//protected static World w = World.currentWorld;
 	protected static int identificateur_robot = 0;
-	protected static abstr_Robot r = Jeu.w.get_robot(identificateur_robot);
-	protected Terrain t = Jeu.w.get_terrain(this.level);
-	protected abstr_Case[][] cases = this.t.get_terrain();
+	//protected static abstr_Robot r = Jeu.w.get_robot(identificateur_robot);
+	//protected Terrain t = Jeu.w.get_terrain(this.level);
+	//protected abstr_Case[][] cases = this.t.get_terrain();
 	protected int width_case = 80;
 	protected int height_case = 50;
 	protected static final int NB_MAX_CASE = 10;
 	protected int indice_tele=0;
 	protected boolean FirstLoop = true;
+	private int taille_abs;
+	private int taille_ord;
 	protected static Couleur couleur_active = Couleur.GRIS;
 	protected static float x_whale = -600;
 	protected static int y_whale = Menu.HEIGHT/2-200;
@@ -108,15 +101,18 @@ public class Jeu {
 			Menu.app.clear();
 			this.drawBackground();
 			this.drawGrilleISO();
-			this.draw_bouton();
+			//this.draw_bouton();
+			//Notification draw button
+			controller.setNotificationDrawButton();
+			controller.setNotificationDrawAllProcedure();
 			this.draw_controle();
-			this.draw_procedure();
+			//this.draw_procedure();
 			Menu.app.display();
 			this.processEvent();
-			if(World.currentWorld.is_cleared()){
-				//				JOptionPane.showMessageDialog(null, "Fin");
-				//				Menu.app.close();
-			}
+			//if(World.currentWorld.is_cleared()){
+			//				JOptionPane.showMessageDialog(null, "Fin");
+			//				Menu.app.close();
+			//}
 		}
 	}
 
@@ -145,7 +141,8 @@ public class Jeu {
 					this.drawBackground();
 					if(x_whale < Menu.WIDTH/3-200)
 						this.drawGrilleISO();
-					this.draw_bouton();
+					//this.draw_bouton();
+					//Notification draw button
 					Menu.app.draw(sp);
 					Menu.app.display();
 					Jeu.x_whale += 20;
@@ -157,54 +154,6 @@ public class Jeu {
 			if(e.type == Event.Type.RESIZED){
 				Menu.reset_cam();
 			}
-			if (Keyboard.isKeyPressed(Key.LEFT)){
-				Jeu.r.setOrientation(Orientation.orientation.LEFT);
-				try {
-					MoveForward.move_forward().execute(Jeu.r);
-				} catch (MouvementEx e1) {
-					System.out.println(e1.getMessage());
-				} catch (UnreachableCase e1) {
-					System.out.println(e1.getMessage());
-				}
-			}
-			if (Keyboard.isKeyPressed(Key.RIGHT)){
-				Jeu.r.setOrientation(Orientation.orientation.RIGHT);
-				try {
-					MoveForward.move_forward().execute(Jeu.r);
-				} catch (MouvementEx e1) {
-					System.out.println(e1.getMessage());
-				} catch (UnreachableCase e1) {
-					System.out.println(e1.getMessage());
-				}
-			}
-			if (Keyboard.isKeyPressed(Key.SPACE)){
-
-			}
-			if (Keyboard.isKeyPressed(Key.UP)){
-				Jeu.r.setOrientation(Orientation.orientation.TOP);
-				try {
-					MoveForward.move_forward().execute(Jeu.r);
-				} catch (MouvementEx e1) {
-					System.out.println(e1.getMessage());
-				} catch (UnreachableCase e1) {
-					System.out.println(e1.getMessage());
-				}
-			}
-			if (Keyboard.isKeyPressed(Key.DOWN)){
-				Jeu.r.setOrientation(Orientation.orientation.BOT);
-				try {
-					MoveForward.move_forward().execute(Jeu.r);
-				} catch (MouvementEx e1) {
-					System.out.println(e1.getMessage());
-				} catch (UnreachableCase e1) {
-					System.out.println(e1.getMessage());
-				}
-			}
-
-			if (Keyboard.isKeyPressed(Key.SPACE)){
-				Jeu.r.run();
-			}
-
 			if (e.type == Event.Type.MOUSE_BUTTON_PRESSED ) {
 				e.asMouseEvent();
 				Vector2i pos = Mouse.getPosition(Menu.app);
@@ -216,8 +165,8 @@ public class Jeu {
 		}
 	}
 
-	public void updateRobotListAction(abstr_Robot rob){
-		this.r = rob;
+	public void updateRobot(int rob){
+		identificateur_robot = rob;
 	}
 	/**
 	 *
@@ -239,15 +188,13 @@ public class Jeu {
 				}
 				else if((Jeu.liste_sprite.get(s).equals("pingouin_GRIS")) && (identificateur_robot == 0)){
 					System.out.println("pingouin_blanc -> requin_blanc");
-					identificateur_robot = 1;
-					controller.getNotificationChangeRobot(identificateur_robot);
+					controller.getNotificationChangeRobot();
 					//r = Jeu.w.get_robot(identificateur_robot);
 					break;
 				}
 				else if((Jeu.liste_sprite.get(s).equals("requin_GRIS")) && (identificateur_robot == 1)){
 					System.out.println("requin_blanc -> pingouin_blanc");
-					identificateur_robot = 0;
-					controller.getNotificationChangeRobot(identificateur_robot);
+					controller.getNotificationChangeRobot();
 					//r = Jeu.w.get_robot(identificateur_robot);
 					break;
 				}
@@ -342,6 +289,10 @@ public class Jeu {
 		JOptionPane.showMessageDialog(null, msg);
 	}
 
+	public void updateTailleGrille(int t_abs, int t_ord){
+		this.taille_abs = t_abs;
+		this.taille_ord = t_ord;
+	}
 
 
 	/**
@@ -350,21 +301,16 @@ public class Jeu {
 	 * @param X la position en x du personnage
 	 * @param Y la position en y du personnage
 	 */
-	public void drawPerso(abstr_Robot rob){
+	public void drawPerso(String orientation_robot, String couleur_robot, int X_robot, int Y_robot, int H_robot){
 		this.maTexture = new Texture();
 		try {
-			abstr_Case c = rob.getCurrent_Case();
-			int X = c.get_coordonnees().get_x();
-			int Y = c.get_coordonnees().get_y();
-			int taille_abs =  World.currentWorld.get_terrain(0).get_terrain()[0].length;
-			int taille_ord =  World.currentWorld.get_terrain(0).get_terrain().length;
-			int PosX = Menu.WIDTH/2 +59*(Y+X)-taille_abs*60-180;
-			int PosY = Menu.HEIGHT/2 +18*(Y-X)-taille_ord*18+100;
+			int PosX = Menu.WIDTH/2 +59*(Y_robot+X_robot)-this.taille_abs*60-180;
+			int PosY = Menu.HEIGHT/2 +18*(Y_robot-X_robot)-this.taille_ord*18+100;
 
-			this.maTexturePerso.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/"+rob.getOrientation()+"_"+rob.get_couleur()+".png"));
+			this.maTexturePerso.loadFromFile(Paths.get("Images/Jeu/gif/robots/"+identificateur_robot+"_"+orientation_robot+"_"+couleur_robot+".png"));
 
 			this.monSpritePerso.setTexture(this.maTexturePerso);
-			this.monSpritePerso.setPosition(PosX+30+10,PosY-26*c.get_hauteur()+25);
+			this.monSpritePerso.setPosition(PosX+30+10,PosY-26*H_robot+25);
 			Menu.app.draw(this.monSpritePerso);
 
 		} catch (IOException e) {
@@ -375,17 +321,16 @@ public class Jeu {
 	/**
 	 * Affiche les boutons
 	 */
-	public void draw_bouton(){
-		LinkedList<int_Action> actions = r.get_possible().get();
+	public void updateDrawBouton(LinkedList<String> actions){
 		int i =0;
 		try {
-			for(int_Action a : actions){
+			for(String name : actions){
 				Texture maTextureBouton = new Texture();
 				Sprite monSpriteBouton = new Sprite();
-				maTextureBouton.loadFromFile(Paths.get("Images/Jeu/bouton/"+a.getClass().getSimpleName()+"_"+couleur_active+".png"));
+				maTextureBouton.loadFromFile(Paths.get("Images/Jeu/bouton/"+name+"_"+couleur_active+".png"));
 				monSpriteBouton.setTexture(maTextureBouton);
 				monSpriteBouton.setPosition(10+100*i,610);
-				Jeu.liste_sprite.put(monSpriteBouton,a.getClass().getSimpleName());
+				Jeu.liste_sprite.put(monSpriteBouton,name);
 				Menu.app.draw(monSpriteBouton);
 				i++;
 			}
@@ -433,70 +378,124 @@ public class Jeu {
 
 
 
-	public void draw_procedure(){
+	//	public void draw_procedure(int nombre_bouton_max[], int nombre_bouton_ajoute[], Sequence_List Main, Sequence_List P1, Sequence_List P2){
+	//		try {
+	//			String background[]=  {"Main","P1","P2"};
+	//
+	//			int y;
+	//			int num=0;
+	//			int pos_bouton[] = {44,324,530};
+	//			for(int i=0;i<background.length;i++){
+	//				this.maTexture = new Texture();
+	//				Sprite monSpriteBackground = new Sprite();
+	//				if(background[i]==activate){
+	//					this.maTexture.loadFromFile(Paths.get("Images/Jeu/background/Fond_"+background[i]+"_Activate.png"));
+	//				}
+	//				else{
+	//					this.maTexture.loadFromFile(Paths.get("Images/Jeu/background/Fond_"+background[i]+".png"));
+	//				}
+	//				monSpriteBackground.setPosition(881, posY[num]);
+	//				monSpriteBackground.setTexture(this.maTexture);
+	//				liste_background.add(monSpriteBackground);
+	//				//System.out.println("monSpriteBackground.toString(): "+monSpriteBackground.toString());
+	//				Menu.app.draw(monSpriteBackground);
+	//				y=0;
+	//				for(int x=0; x<nombre_bouton_max[num];x++){
+	//					this.maTexture = new Texture();
+	//					if(x%4==0){
+	//						y++;
+	//					}
+	//					Sprite monSprite = new Sprite();
+	//					if (x<nombre_bouton_ajoute[num]){
+	//						switch(num){
+	//						case 0 : this.maTexture.loadFromFile(Paths.get("Images/Jeu/bouton/"+r.get_Main().get(x).getClass().getSimpleName()+"_"+r.get_Main().get(x).getColor().toString()+".png"));break;
+	//						case 1 : this.maTexture.loadFromFile(Paths.get("Images/Jeu/bouton/"+r.get_P1().get(x).getClass().getSimpleName()+"_"+r.get_P1().get(x).getColor().toString()+".png"));break;
+	//						case 2 : this.maTexture.loadFromFile(Paths.get("Images/Jeu/bouton/"+r.get_P2().get(x).getClass().getSimpleName()+"_"+r.get_P2().get(x).getColor().toString()+".png"));break;
+	//						}
+	//
+	//					}else{
+	//						this.maTexture.loadFromFile(Paths.get("Images/Jeu/background/Fond_Bouton.png"));
+	//					}
+	//					monSprite.setPosition(884+(x%4*(70+4)), pos_bouton[num] + (y-1)*(70+10));
+	//					monSprite.setTexture(this.maTexture);
+	//
+	//					//Jeu.liste_sprite.put(this.monSprite,r.get_Main().get(x).getClass().getSimpleName());
+	//					Menu.app.draw(monSprite);
+	//				}
+	//				num++;
+	//			}
+	//			//emplacement des boutons
+	//
+	//			this.FirstLoop = false;
+	//
+	//		} catch (IOException e) {
+	//			// TODO Auto-generated catch block
+	//			System.out.println(e.getMessage());
+	//		}
+	//
+	//
+	//	}
+
+
+	public void updateDrawProcedure(String name_proc, int nombre_bouton_max, LinkedList<String> class_name, LinkedList<String> color_name ){
+		/**
+		 * A tester
+		 */
 		try {
-			String background[]=  {"Main","P1","P2"};
-			int nombre_bouton[] = {r.get_tailleMain(),r.get_tailleP1(),r.get_tailleP2()};
-			int nombre_bouton_ajoute[] = {r.get_Main().size(),r.get_P1().size(),r.get_P2().size()};
-			int posY[] = {7, 290, 494};
-			int y;
-			int num=0;
-			int pos_bouton[] = {44,324,530};
-			for(int i=0;i<background.length;i++){
-				this.maTexture = new Texture();
-				Sprite monSpriteBackground = new Sprite();
-				if(background[i]==activate){
-					this.maTexture.loadFromFile(Paths.get("Images/Jeu/background/Fond_"+background[i]+"_Activate.png"));
-				}
-				else{
-					this.maTexture.loadFromFile(Paths.get("Images/Jeu/background/Fond_"+background[i]+".png"));
-				}
-				monSpriteBackground.setPosition(881, posY[num]);
-				monSpriteBackground.setTexture(this.maTexture);
-				liste_background.add(monSpriteBackground);
-				//System.out.println("monSpriteBackground.toString(): "+monSpriteBackground.toString());
-				Menu.app.draw(monSpriteBackground);
-				y=0;
-				for(int x=0; x<nombre_bouton[num];x++){
-					this.maTexture = new Texture();
-					if(x%4==0){
-						y++;
-					}
-					Sprite monSprite = new Sprite();
-					if (x<nombre_bouton_ajoute[num]){
-						switch(num){
-						case 0 : this.maTexture.loadFromFile(Paths.get("Images/Jeu/bouton/"+r.get_Main().get(x).getClass().getSimpleName()+"_"+r.get_Main().get(x).getColor().toString()+".png"));break;
-						case 1 : this.maTexture.loadFromFile(Paths.get("Images/Jeu/bouton/"+r.get_P1().get(x).getClass().getSimpleName()+"_"+r.get_P1().get(x).getColor().toString()+".png"));break;
-						case 2 : this.maTexture.loadFromFile(Paths.get("Images/Jeu/bouton/"+r.get_P2().get(x).getClass().getSimpleName()+"_"+r.get_P2().get(x).getColor().toString()+".png"));break;
-						}
-
-					}else{
-						this.maTexture.loadFromFile(Paths.get("Images/Jeu/background/Fond_Bouton.png"));
-					}
-					monSprite.setPosition(884+(x%4*(70+4)), pos_bouton[num] + (y-1)*(70+10));
-					monSprite.setTexture(this.maTexture);
-					if(this.FirstLoop){
-						if(x<r.get_tailleMain() && num==0){
-							liste_main.add(monSprite);
-						}
-						else if(x<r.get_tailleP1() && num == 1)
-						{
-							liste_P1.add(monSprite);
-						}
-						else if(x<r.get_tailleP2() && num == 2)
-						{
-							liste_P2.add(monSprite);
-						}
-					}
-					//Jeu.liste_sprite.put(this.monSprite,r.get_Main().get(x).getClass().getSimpleName());
-					Menu.app.draw(monSprite);
-				}
-				num++;
+			int posY;
+			switch (name_proc){
+			case "Main" :
+				posY = 7;
+				break;
+			case "P1" :
+				posY = 290;
+				break;
+			default :
+				posY = 494;
+				break;
 			}
-			//emplacement des boutons
+			this.maTexture = new Texture();
+			Sprite monSpriteBackground = new Sprite();
+			if(name_proc==activate){
+				this.maTexture.loadFromFile(Paths.get("Images/Jeu/background/Fond_"+name_proc+"_Activate.png"));
+			}
+			else{
+				this.maTexture.loadFromFile(Paths.get("Images/Jeu/background/Fond_"+name_proc+".png"));
+			}
+			monSpriteBackground.setPosition(881, posY);
+			monSpriteBackground.setTexture(this.maTexture);
+			liste_background.add(monSpriteBackground);
+			Menu.app.draw(monSpriteBackground);
 
-			this.FirstLoop = false;
+			int y=0;
+			for(int x=0; x<nombre_bouton_max;x++){
+				this.maTexture = new Texture();
+				Sprite monSprite = new Sprite();
+				if(x%4==0){
+					y++;
+				}
 
+				if (x<class_name.size()){
+					this.maTexture.loadFromFile(Paths.get("Images/Jeu/bouton/"+class_name.get(x)+"_"+color_name.get(x)+".png"));
+				}else{
+					this.maTexture.loadFromFile(Paths.get("Images/Jeu/background/Fond_Bouton.png"));
+				}
+				monSprite.setPosition(884+(x%4*(70+4)), (posY+37) + (y-1)*(70+10));
+				monSprite.setTexture(this.maTexture);
+				if(this.FirstLoop){
+					if(x<class_name.size() && name_proc=="Main"){
+						liste_main.add(this.monSprite);
+					}
+					else if(x<class_name.size() && name_proc=="P1")
+					{
+						liste_P1.add(this.monSprite);
+					}
+					else if(x<class_name.size() && name_proc=="P2")
+					{
+						liste_P2.add(this.monSprite);
+					}
+				}
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
@@ -510,15 +509,15 @@ public class Jeu {
 	 * Associe une image avec la case en fonction de son type
 	 * @param cases
 	 */
-	public void typeCases(abstr_Case cases){
+	public void typeCases(String class_name, Couleur color_name, boolean activated){
 		try{
 			this.maTexture = new Texture();
-			switch(cases.getClass().getSimpleName()){
+			switch(class_name){
 			case("Normal_Case") : this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/Square_normal.png"));break;
 			case("Destination_Case") : this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/Square_destination.png"));break;
 			case("Empty_Case") : this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/Square_vide.png"));break;
 			case("Painted_Case") :
-				switch(cases.get_couleur()){
+				switch(color_name){
 				case VERT : this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/Square_vert.png"));break;
 				case GRIS : this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/Square_normal.png"));break;
 				case ROUGE : this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/Square_rouge.png"));break;
@@ -529,7 +528,7 @@ public class Jeu {
 				this.indice_tele=0;
 			}break;
 			case("Illuminated_Case") :
-				if(((Illuminated_Case) cases).get_active()){
+				if(activated){
 					this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/Square_allume.png"));
 				}else{
 					this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/Square_allumable2.png"));
@@ -579,7 +578,8 @@ public class Jeu {
 					break;
 				}
 				//	System.out.println("(Xtemp,Ytemp) = ("+Xtemp+","+Ytemp+")");
-				this.affichageISO(Xtemp,Ytemp);
+				//this.affichageISO(Xtemp,Ytemp);
+				//setNotificationAffichageIso(Xtemp, Ytemp);
 				Ytemp++;
 			}
 		}
@@ -590,7 +590,8 @@ public class Jeu {
 				if(Xtemp>=taille_abs){
 					break;
 				}
-				this.affichageISO(Xtemp,Ytemp);
+				//this.affichageISO(Xtemp,Ytemp);
+				//setNotificationAffichageIso(xtemp, ytemp);
 				//		System.out.println("(Xtemp,Ytemp) = ("+Xtemp+","+Ytemp+")");
 				Xtemp++;
 			}
@@ -602,44 +603,32 @@ public class Jeu {
 	 * @param X coordonnï¿½es x de la case
 	 * @param Y coordonnï¿½es y de la case
 	 */
-	public void affichageISO(int X, int Y){
+	public void affichageISO(int hauteur_max, String class_name, Couleur color, boolean active, int X, int Y, int nombre_robot){
+		/**
+		 * Appelé par
+		 *setNotificationAffichageISO(x,y); int hauteur, string type, Couleur color, boolean active
+		 */
 
-		try {
-			abstr_Case Ma_case = World.currentWorld.get_terrain(0).get_case(X,Y);
-			int hauteur_max = Ma_case.get_hauteur();
-			int taille_abs =  World.currentWorld.get_terrain(0).get_terrain()[0].length;
-			int taille_ord =  World.currentWorld.get_terrain(0).get_terrain().length;
-			int PosX = Menu.WIDTH/2 +59*(Y+X)-taille_abs*60-180;
-			int PosY = Menu.HEIGHT/2 +18*(Y-X)-taille_ord*18+100;
+		int PosX = Menu.WIDTH/2 +59*(Y+X)-this.taille_abs*60-180;
+		int PosY = Menu.HEIGHT/2 +18*(Y-X)-this.taille_ord*18+100;
 
-			for(int hauteur=1; hauteur<hauteur_max;hauteur++){
-				try {
-					this.maTexture = new Texture();
-					this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/Square_empile.png"));
-					this.monSprite.setTexture(this.maTexture);
-					this.monSprite.setPosition(PosX,PosY-26*hauteur);
-					Menu.app.draw(this.monSprite);
-				} catch (IOException e) {
-					System.out.println(e.getMessage());
-				}
+		//affiche les cases "socle" de la case current (par exemple si la taille est de 4, 3 "socles")
+		for(int hauteur=1; hauteur<hauteur_max;hauteur++){
+			try {
+				this.maTexture = new Texture();
+				this.maTexture.loadFromFile(Paths.get("Images/Jeu/Cases/Square_empile.png"));
+				this.monSprite.setTexture(this.maTexture);
+				this.monSprite.setPosition(PosX,PosY-26*hauteur);
+				Menu.app.draw(this.monSprite);
+			} catch (IOException e) {
+				System.out.println(e.getMessage());
 			}
-			this.typeCases(Ma_case);
-			this.monSprite.setTexture(this.maTexture);
-			this.monSprite.setPosition(PosX,PosY-26*hauteur_max);
-			Menu.app.draw(this.monSprite);
-			abstr_Robot [] rob = w.get_liste_robot();
-			for(int i = 0;i<rob.length;i++){
-				int x = rob[i].getCurrent_Case().get_coordonnees().get_x();
-				int y = rob[i].getCurrent_Case().get_coordonnees().get_y();
-				//Si le pingouin est sur cette case, alors on l'affiche Ã  la hauteur maximale de celle-ci
-				if ((x == X) && (y == Y)){
-					this.drawPerso(rob[i]);
-				}
-			}
-
-		} catch (UnreachableCase e1) {
-			System.out.println(e1.getMessage());
 		}
+		this.typeCases(class_name, color, active);
+		this.monSprite.setTexture(this.maTexture);
+		this.monSprite.setPosition(PosX,PosY-26*hauteur_max);
+		Menu.app.draw(this.monSprite);
+		//abstr_Robot [] rob = w.get_liste_robot();
 	}
 
 	public void updateSequenceList(Sequence_List seq) {

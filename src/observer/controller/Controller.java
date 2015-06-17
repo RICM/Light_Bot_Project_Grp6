@@ -1,7 +1,20 @@
 package observer.controller;
 
+/**
+ * Dans jeu modifier :
+ * - updateTailleGrille();
+ * - drawPerso(String orientation_robot, String couleur_robot, int X_robot, int Y_robot, int H_robot);
+ * - public void P1(String name_proc, int nombre_bouton_max, LinkedList<String> class_name, LinkedList<String> color_name )
+ * -
+ */
 import java.io.IOException;
+import java.util.LinkedList;
 
+import View.Jeu;
+import couleur.Couleur;
+import exception.ActionEx;
+import exception.MouvementEx;
+import exception.UnreachableCase;
 import observable.action.Activate;
 import observable.action.Call_P1;
 import observable.action.Call_P2;
@@ -16,11 +29,6 @@ import observable.map.World;
 import observable.robot.Robot;
 import observable.robot.abstr_Robot;
 import observer.int_Observer;
-import View.Jeu;
-import couleur.Couleur;
-import exception.ActionEx;
-import exception.MouvementEx;
-import exception.UnreachableCase;
 public class Controller implements int_Observer {
 
 	private Jeu jeu;
@@ -140,13 +148,13 @@ public class Controller implements int_Observer {
 		 */
 	}
 
-	public void getNotificationChangeRobot(int i){
+	public void getNotificationChangeRobot(){
 		/**
 		 * Receive a notification from view to change robot to robot[i] from current
 		 */
 		if (World.currentWorld.number_robots()!=1)
-			this.current_robot = i;
-		this.jeu.updateRobotListAction(World.currentWorld.get_robot(this.current_robot));
+			this.current_robot = (this.current_robot+1)%World.currentWorld.number_robots();
+		this.jeu.updateRobot(this.current_robot);
 	}
 
 	public void getNotificationDisplayWorld(){
@@ -313,6 +321,52 @@ public class Controller implements int_Observer {
 			this.jeu.draw_popup("Désolé, une erreur inattendue s'est produite");
 		} catch (ActionEx e) {
 			this.jeu.draw_popup("Désolé, une erreur inattendue s'est produite");
+		}
+	}
+
+	public void setNotificationDrawButton() {
+		LinkedList<String> toReturn = new LinkedList<String>();
+		for (int_Action act : World.currentWorld.get_robot(this.current_robot).get_possible().get()){
+			toReturn.add(act.getClass().getSimpleName());
+		}
+		this.jeu.updateDrawBouton(toReturn);
+	}
+
+	public void setNotificationDrawAllProcedure() {
+		for (int i = 0; i<3; i++){
+			String name_proc;
+			int nombre_bouton_max;
+			LinkedList<String> class_name = new LinkedList<String>();
+			LinkedList<String> color_name = new LinkedList<String>();
+			switch(i){
+			case 0 :
+				name_proc = "Main";
+				nombre_bouton_max = World.currentWorld.get_robot(this.current_robot).get_tailleMain();
+				for(int_Action act :  World.currentWorld.get_robot(this.current_robot).get_Main().getListActions()){
+					class_name.add(act.getClass().getSimpleName());
+					color_name.add(act.getColor().name());
+					this.jeu.updateDrawProcedure(name_proc, nombre_bouton_max, class_name, color_name);
+				}
+				break;
+			case 1 :
+				name_proc = "P1";
+				nombre_bouton_max = World.currentWorld.get_robot(this.current_robot).get_tailleP1();
+				for(int_Action act :  World.currentWorld.get_robot(this.current_robot).get_P1().getListActions()){
+					class_name.add(act.getClass().getSimpleName());
+					color_name.add(act.getColor().name());
+					this.jeu.updateDrawProcedure(name_proc, nombre_bouton_max, class_name, color_name);
+				}
+				break;
+			default :
+				name_proc = "P2";
+				nombre_bouton_max = World.currentWorld.get_robot(this.current_robot).get_tailleP2();
+				for(int_Action act :  World.currentWorld.get_robot(this.current_robot).get_P2().getListActions()){
+					class_name.add(act.getClass().getSimpleName());
+					color_name.add(act.getColor().getClass().getSimpleName());
+					this.jeu.updateDrawProcedure(name_proc, nombre_bouton_max, class_name, color_name);
+				}
+				break;
+			}
 		}
 	}
 }
