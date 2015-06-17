@@ -10,11 +10,11 @@ public class Event_Case extends abstr_Case{
 	private boolean status;
 	private abstr_Case replaced;
 
-	public Event_Case(int h, Couleur col, Coordonnees pos, Coordonnees dest, abstr_Case type,boolean stat){
+	public Event_Case(int h, Couleur col, Coordonnees pos, abstr_Case type,boolean stat){
 		this.set_coordonnees(pos);
 		this.set_couleur(col);
 		this.set_hauteur(h);
-		this.setDest_add(dest);
+		this.setDest_add(type.get_coordonnees());
 		this.setTo_add(type);
 		this.setStatus(stat);
 	}
@@ -68,7 +68,7 @@ public class Event_Case extends abstr_Case{
 	@Override
 	public abstr_Case Clone() {
 		return new Event_Case(this.get_hauteur(),this.get_couleur(),this.get_coordonnees().
-				Clone(),this.getDest_add().Clone(),this.getTo_add().Clone(), this.getStatus());
+				Clone(),this.getTo_add().Clone(), this.getStatus());
 	}
 
 	/**

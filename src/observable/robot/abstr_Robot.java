@@ -167,7 +167,7 @@ public abstract class abstr_Robot {
 
 
 	public int get_tailleMain(){
-		return this.nbActionP1;
+		return this.nbActionMain;
 	}
 
 	public void set_tailleMain(int new_t){

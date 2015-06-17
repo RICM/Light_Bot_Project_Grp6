@@ -1,3 +1,4 @@
+import observable.map.World;
 import observer.controller.Controller;
 import parser.parserJSON;
 import View.Menu;
@@ -90,6 +91,7 @@ public class Game {
 				World.currentWorld.set_liste_robot(roblist);
 				World.currentWorld.set_liste_terrain(terrlist);*/
 		parserJSON.currentparser.lecture(acontroller);
+		System.out.println("AAAAAAAAAAAAAAAAAAaaa"+World.currentWorld.get_robot(0).get_possible());
 		//robert.run();
 		//System.out.println("Position finale : ");
 		//robert.printPosition();
