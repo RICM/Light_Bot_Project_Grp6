@@ -47,11 +47,7 @@ public class Controller implements int_Observer {
 			break;
 		case "Illuminated_Case" :
 			System.out.println("JE SUIS ALLUME");
-			try{
-				Thread.sleep(150000);
-			}catch (Exception ex){
-				System.out.println(ex.getMessage());
-			}
+			this.se
 			break;
 		default:
 			break;
