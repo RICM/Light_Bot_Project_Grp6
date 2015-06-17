@@ -2,16 +2,6 @@ package observer.controller;
 
 import java.io.IOException;
 
-import View.Jeu;
-import View.Jeu;
-import couleur.Couleur;
-import couleur.Couleur;
-import exception.ActionEx;
-import exception.ActionEx;
-import exception.MouvementEx;
-import exception.MouvementEx;
-import exception.UnreachableCase;
-import exception.UnreachableCase;
 import observable.action.Activate;
 import observable.action.Call_P1;
 import observable.action.Call_P2;
@@ -27,6 +17,11 @@ import observable.robot.Robot;
 import observable.robot.abstr_Robot;
 import observer.int_Observer;
 import parser.parserJSON;
+import View.Jeu;
+import couleur.Couleur;
+import exception.ActionEx;
+import exception.MouvementEx;
+import exception.UnreachableCase;
 public class Controller implements int_Observer {
 
 	private Jeu jeu;
@@ -207,6 +202,8 @@ public class Controller implements int_Observer {
 	}
 
 	public void setNotificationUpdatedRobot(abstr_Robot rob){
+		if(rob.getCurrent_Case().isVoisine(rob.getPrevious_Case()))
+			System.out.println("");
 		this.jeu.setNotificationDrawForTime();
 	}
 

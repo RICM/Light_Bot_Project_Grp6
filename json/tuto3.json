@@ -1,0 +1,39 @@
+{
+    "nb_terrain": 1,
+    "terrains": [
+        {
+            "terrain1": [
+                {"nb_case_hauteur": 6},
+                {"nb_case_largeur": 1},
+                { "lignes" : [ 
+		              {"ligne1" : [{"type_case": "case_normale","hauteur": 1,"couleur": "GRIS"}]},
+		              {"ligne2" : [{"type_case": "case_normale","hauteur": 1,"couleur": "GRIS"}]},
+		              {"ligne3" : [{"type_case": "case_normale","hauteur": 2,"couleur": "GRIS"}]},
+		              {"ligne4" : [{"type_case": "case_normale","hauteur": 0,"couleur": "GRIS"}]},
+		              {"ligne5" : [{"type_case": "case_normale","hauteur": 0,"couleur": "GRIS"}]},
+		              {"ligne6" : [{"type_case": "case_illuminated","hauteur": 1,"couleur": "GRIS"}]},
+		             
+		              
+		            ]}
+            ]
+        }
+        
+    ],
+    "nb_robot" : 1,
+    "robots" :[
+    		{ 
+    			"robot1" : [
+    						{"type_robot" : "Robot"},
+    						{"couleur" : "GRIS"},
+    						{"coorX" : 0},
+    						{"coorY" : 0},
+    						{"indice_tableau": 0},
+    						{"max_main": 12},
+    						{"max_p1": 0},
+    						{"max_p2": 0},
+    						{"orientation": "bot"},
+    						{"actions" :["MoveForward" ,"TurnLeft","Jump","TurnRight","Activate"]}
+    			]
+    		}
+    ]  
+}

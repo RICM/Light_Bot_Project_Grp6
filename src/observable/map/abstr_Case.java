@@ -1,9 +1,9 @@
 package observable.map;
 import java.util.ArrayList;
 
-import couleur.Couleur;
 import observable.int_Observable;
 import observer.int_Observer;
+import couleur.Couleur;
 
 public abstract class abstr_Case implements int_Observable{
 	private int hauteur;
@@ -51,5 +51,17 @@ public abstract class abstr_Case implements int_Observable{
 		for(int_Observer obs : this.listObserver)
 			obs.update(this);
 	}
+
+	public boolean isVoisine(abstr_Case cases){
+		return (((this.get_coordonnees().get_x() == cases.get_coordonnees().get_x() &&
+				(this.get_coordonnees().get_y()==cases.get_coordonnees().get_y()-1 ||
+				this.get_coordonnees().get_y() == cases.get_coordonnees().get_y()+1))||
+				(this.get_coordonnees().get_y()==cases.get_coordonnees().get_y() &&
+				this.get_coordonnees().get_x()==cases.get_coordonnees().get_x()-1 ||
+				this.get_coordonnees().get_x()==cases.get_coordonnees().get_x()+1)) &&
+				this.get_coordonnees().get_n()==cases.get_coordonnees().get_n()&&
+				this.get_hauteur()==cases.get_hauteur());
+	}
+
 	public abstract abstr_Case Clone();
 }

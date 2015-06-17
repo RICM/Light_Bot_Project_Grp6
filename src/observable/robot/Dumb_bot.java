@@ -36,6 +36,7 @@ public class Dumb_bot extends abstr_Robot {
 		this.set_tailleP2(taille_P2);
 		this.listObserver.add(controller);
 		this.user_actions = Fixed_main;
+		this.set_tailleMain(Fixed_main.size());
 		this.P1 = new Sequence_List(controller);
 		this.P2 = new Sequence_List(controller);
 		this.mainChangeAllowed = false;
