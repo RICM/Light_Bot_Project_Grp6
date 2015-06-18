@@ -40,19 +40,21 @@ public class TurnRIght implements int_Action, int_Observable{
 	 */
 	@Override
 	public void execute(abstr_Robot r) {
-		switch (r.getOrientation()) {
-		case  TOP :
-			r.setOrientation(Orientation.orientation.RIGHT);
-			break;
-		case  BOT :
-			r.setOrientation(Orientation.orientation.LEFT);
-			break;
-		case  LEFT :
-			r.setOrientation(Orientation.orientation.TOP);
-			break;
-		case  RIGHT :
-			r.setOrientation(Orientation.orientation.BOT);
-			break;
+		if(this.isPossible(r,r.getCurrent_Case())){
+			switch (r.getOrientation()) {
+			case  TOP :
+				r.setOrientation(Orientation.orientation.RIGHT);
+				break;
+			case  BOT :
+				r.setOrientation(Orientation.orientation.LEFT);
+				break;
+			case  LEFT :
+				r.setOrientation(Orientation.orientation.TOP);
+				break;
+			case  RIGHT :
+				r.setOrientation(Orientation.orientation.BOT);
+				break;
+			}
 		}
 		World.currentWorld.basic_print_world();
 	}

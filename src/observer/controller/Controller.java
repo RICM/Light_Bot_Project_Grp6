@@ -62,7 +62,7 @@ public class Controller implements int_Observer {
 			this.setNotificationUpdateCase();
 			break;
 		case "Ordonnanceur" :
-			this.runnable = false;
+			//this.runnable = false;
 			break;
 		default:
 			break;
@@ -570,6 +570,11 @@ public class Controller implements int_Observer {
 		this.isRunning = false;
 		Jeu.victory();
 
+	}
+
+	public void getNotificationStopRun(){
+		this.runnable = false;
+		this.isRunning = false;
 	}
 }
 
