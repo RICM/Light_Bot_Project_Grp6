@@ -20,6 +20,7 @@ public class Sequence_List implements int_Action_List, int_Observable{
 	}
 
 	public void addActionSubSequence(int_Action act){
+		System.out.println("j'ajoute : "+act);
 		this.actions_list_seq.add(act);
 	}
 

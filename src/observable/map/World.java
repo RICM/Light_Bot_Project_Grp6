@@ -1,15 +1,14 @@
 package observable.map;
 import java.util.ArrayList;
 
-import observable.int_Observable;
-import observable.robot.Position;
-import observable.robot.abstr_Robot;
-import observer.int_Observer;
-import observer.controller.Controller;
 import Ordonnanceur.Ordonnanceur;
 import exception.ActionEx;
 import exception.MouvementEx;
 import exception.UnreachableCase;
+import observable.int_Observable;
+import observable.robot.Position;
+import observable.robot.abstr_Robot;
+import observer.int_Observer;
 
 public class World implements int_Observable {
 
@@ -39,6 +38,10 @@ public class World implements int_Observable {
 		return this.ordo;
 	}
 
+	public void resetOrdonanceur(){
+		this.ordo = new Ordonnanceur();
+	}
+
 	public void set_ordonnanceur(Ordonnanceur new_ord){
 		this.ordo = new_ord;
 	}
@@ -50,6 +53,7 @@ public class World implements int_Observable {
 			System.out.println("this shouldn't have heppened, WTH was done");
 			e.printStackTrace();
 		}
+		//this.ordo = new Ordonnanceur();
 		for(int i =0; i< this.liste_robot.length;i++){
 			this.liste_robot[i].run();
 			//	System.out.println("taille de la liste " + this.liste_robot[i].get_run().size());
@@ -150,7 +154,6 @@ public class World implements int_Observable {
 	 */
 	public boolean is_cleared(){
 		if(this.nb_case_allumable == this.nb_case_allumees){
-			((Controller) this.getFirstObserver()).getNotificationVictory();
 			return true;
 		}
 		return false;

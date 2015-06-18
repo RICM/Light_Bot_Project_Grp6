@@ -22,13 +22,18 @@ public class Execution_list implements int_Observable{
 	}
 	public void addFirst(Sequence_List new_h){
 		this.Run_List.addFirst(new_h);
+		System.out.println(new_h);
+		System.out.println("RUN LIST ICI : "+this.Run_List);
 	}
+
 	public void initFirst(Sequence_List main){
 		Sequence_List temp = new Sequence_List(null);
+		System.out.println(main);
 		for(int i = 0; i < main.size(); i++){
-			temp.addActionSubSequence(main.get(i));
+			temp.addActionSubSequence(main.get(i).Clone());
 		}
 		this.addFirst(temp);
+		System.out.println("RUN LIST LALALA : "+this.Run_List);
 	}
 
 	public void removeFirst(){
@@ -37,12 +42,15 @@ public class Execution_list implements int_Observable{
 
 	public void run(abstr_Robot r) throws MouvementEx, UnreachableCase, ActionEx{
 		System.out.println("Ich bin in run");
+		System.out.println(this.Run_List);
 		if(this.Run_List.size()>0){
 			System.out.println("Ich bin in run : first if");
 			System.out.println("taille run list : "+this.Run_List.size());
+			System.out.println("taille de la première liste a run : "+ this.Run_List.getFirst().size());
 			if(this.Run_List.getFirst().size() > 0){
 				System.out.println("Ich bin in run : second if");
 				int_Action temp = this.Run_List.getFirst().removeFirst();
+				System.out.println(temp);
 				temp.execute(r);
 			}
 			else{

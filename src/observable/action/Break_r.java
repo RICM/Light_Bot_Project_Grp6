@@ -2,13 +2,13 @@ package observable.action;
 
 import java.util.ArrayList;
 
-import observable.map.abstr_Case;
-import observable.robot.abstr_Robot;
-import observer.int_Observer;
 import couleur.Couleur;
 import exception.ActionEx;
 import exception.MouvementEx;
 import exception.UnreachableCase;
+import observable.map.abstr_Case;
+import observable.robot.abstr_Robot;
+import observer.int_Observer;
 
 public class Break_r implements int_Action {
 
@@ -67,6 +67,12 @@ public class Break_r implements int_Action {
 	@Override
 	public boolean isPossible(abstr_Robot r, abstr_Case c) {
 		return this.getColor().equals(r.get_couleur()) || this.getColor().equals(Couleur.GRIS);
+	}
+	@Override
+	public int_Action Clone() {
+		Break_r temp;
+		temp = break_r(this.getColor());
+		return temp;
 	}
 
 

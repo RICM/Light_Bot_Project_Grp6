@@ -83,5 +83,11 @@ public class Call_P2 implements int_Action, int_Observable{
 	public boolean isPossible(abstr_Robot r, abstr_Case c) {
 		return (r.get_couleur().equals(this.color) || r.get_couleur().equals(Couleur.GRIS));
 	}
+	@Override
+	public int_Action Clone() {
+		Call_P2 temp;
+		temp = call_p2(this.color,this.listObserver.get(0));
+		return temp;
+	}
 
 }

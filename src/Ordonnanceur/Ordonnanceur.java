@@ -1,16 +1,24 @@
 package Ordonnanceur;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import exception.ActionEx;
 import exception.MouvementEx;
 import exception.UnreachableCase;
+import observable.int_Observable;
 import observable.robot.abstr_Robot;
+import observer.int_Observer;
 
-public class Ordonnanceur {
+public class Ordonnanceur implements int_Observable {
 	private LinkedList<abstr_Robot> list_robot = new LinkedList<abstr_Robot>();
+	private ArrayList<int_Observer> controller = new ArrayList<int_Observer>();
 	private int ind_ex = 0;
 	private boolean ready = true;
+
+	public int getNumberRobots(){
+		return this.list_robot.size();
+	}
 
 	public void addRobot(abstr_Robot r){
 		this.list_robot.add(r);
@@ -68,6 +76,29 @@ public class Ordonnanceur {
 	}
 	public void setReady(boolean ready) {
 		System.out.println("boolean mis a vrai");
+		this.notifyObserver();
 		this.ready = ready;
+	}
+
+	public void removeRobots() {
+		for (int i = 0; i < this.list_robot.size(); i++){
+			this.removeRobot(i);
+		}
+	}
+
+	@Override
+	public void addObserver(int_Observer obs) {
+		this.controller.add(obs);
+	}
+	@Override
+	public void removeObserver() {
+		this.controller = new ArrayList<int_Observer>();
+
+	}
+
+	@Override
+	public void notifyObserver() {
+		for(int_Observer obs : this.controller)
+			obs.update(this);
 	}
 }

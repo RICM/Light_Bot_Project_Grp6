@@ -688,7 +688,7 @@ public class Jeu {
 	}
 
 	public static void victory() {
-		JOptionPane.showMessageDialog(null, "Win");
+		//JOptionPane.showMessageDialog(null, "Win");
 		new Theme(controller);
 	}
 

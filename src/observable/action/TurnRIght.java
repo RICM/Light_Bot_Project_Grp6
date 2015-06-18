@@ -2,13 +2,13 @@ package observable.action;
 
 import java.util.ArrayList;
 
+import couleur.Couleur;
 import observable.int_Observable;
 import observable.map.World;
 import observable.map.abstr_Case;
 import observable.robot.Orientation;
 import observable.robot.abstr_Robot;
 import observer.int_Observer;
-import couleur.Couleur;
 
 public class TurnRIght implements int_Action, int_Observable{
 
@@ -75,6 +75,11 @@ public class TurnRIght implements int_Action, int_Observable{
 	public void notifyObserver() {
 		for(int_Observer obs : this.listObserver)
 			obs.update(this);
+	}
+	@Override
+	public int_Action Clone() {
+		int_Action temp = new TurnRIght(this.getColor());
+		return temp;
 	}
 
 }

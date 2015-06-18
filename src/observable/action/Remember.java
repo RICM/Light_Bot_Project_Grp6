@@ -2,13 +2,13 @@ package observable.action;
 
 import java.util.ArrayList;
 
-import observable.map.abstr_Case;
-import observable.robot.abstr_Robot;
-import observer.int_Observer;
 import couleur.Couleur;
 import exception.ActionEx;
 import exception.MouvementEx;
 import exception.UnreachableCase;
+import observable.map.abstr_Case;
+import observable.robot.abstr_Robot;
+import observer.int_Observer;
 
 public class Remember implements int_Action {
 
@@ -67,5 +67,10 @@ public class Remember implements int_Action {
 	public void notifyObserver() {
 		for(int_Observer obs : this.listObserver)
 			obs.update(this);
+	}
+	@Override
+	public int_Action Clone() {
+		int_Action temp = new Remember(this.getColor());
+		return temp;
 	}
 }

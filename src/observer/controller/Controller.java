@@ -61,6 +61,9 @@ public class Controller implements int_Observer {
 			System.out.println("JE SUIS ALLUME");
 			this.setNotificationUpdateCase();
 			break;
+		case "Ordonnanceur" :
+			this.runnable = false;
+			break;
 		default:
 			break;
 		}
@@ -105,29 +108,44 @@ public class Controller implements int_Observer {
 	 * Receive a notification from view to run program
 	 */
 	public void getNotificationRun(){
-
 		if (!this.isRunning){
 			this.isRunning = true;
-			if (World.currentWorld.get_ordonnanceur().size() == 0)
-				for(int j = 0; j < World.currentWorld.get_liste_robot().length;j++){
+			//if (World.currentWorld.get_ordonnanceur().size() == 0)
+			// RESET L'ORDO
+			for(int j = 0; j < World.currentWorld.get_liste_robot().length;j++){
+				if (World.currentWorld.get_robot(j).get_Main().size() > 0)
 					World.currentWorld.get_ordonnanceur().addRobot(World.currentWorld.get_robot(j));
-				}
+			}
 			World.currentWorld.prerun();
 			this.runnable = World.currentWorld.isOneRobotActive();
 			System.out.println("contenu de run " + World.currentWorld.get_robot(0).get_run());
-			while (this.runnable && !(World.currentWorld.is_cleared())){
+			System.out.println("statut du robot " + World.currentWorld.get_robot(0).get_activable());
+			System.out.println("nobmre de robot dans le monde : "+World.currentWorld.get_liste_robot().length);
+			System.out.println("nombre de robot dans l'ordo : "+World.currentWorld.get_ordonnanceur().getNumberRobots());
+			while (this.isRunning && this.runnable && !(World.currentWorld.is_cleared())){
+				System.out.println("Dans le while du controller");
 				try {
 					System.out.println("While getNotificationRun");
 					World.currentWorld.exec();
 				} catch (MouvementEx e) {
-					this.jeu.draw_popup("Vous ne pouvez pas effectuer le prochaine mouvement !");
+					//this.jeu.draw_popup("Vous ne pouvez pas effectuer le prochaine mouvement !");
 				} catch (UnreachableCase e) {
-					this.jeu.draw_popup("Vous venez de vous manger une segfault!! La case visÃ©e ne peut etre atteinte");
+					//this.jeu.draw_popup("Vous venez de vous manger une segfault!! La case visÃ©e ne peut etre atteinte");
 				} catch (ActionEx e) {
-					this.jeu.draw_popup("Une erreur est survenue lors de l'execution de l'actions");
+					//this.jeu.draw_popup("Une erreur est survenue lors de l'execution de l'actions");
+				}
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 			}
+			World.currentWorld.get_ordonnanceur().removeRobots();
+			System.out.println("NOMBRE DE ROBOT DANS ORDO A LA FIN : "+World.currentWorld.get_ordonnanceur().getNumberRobots());
 			System.out.println("sortie de la boucle de RUN FOREST RUN");
+			if (World.currentWorld.is_cleared())
+				this.getNotificationVictory();
 		}
 		else{
 			System.out.println("On ne peut pas relancer le robot sans redemarrer le niveau");
@@ -215,8 +233,8 @@ public class Controller implements int_Observer {
 	}
 
 	public void setNotificationUpdatedRobot(abstr_Robot rob){
-		if(rob.getCurrent_Case().isVoisine(rob.getPrevious_Case()))
-			System.out.println("");
+		//if(rob.getCurrent_Case().isVoisine(rob.getPrevious_Case()))
+		//System.out.println("");
 		this.jeu.setNotificationDrawForTime();
 	}
 
@@ -410,9 +428,9 @@ public class Controller implements int_Observer {
 			System.out.println(World.currentWorld.get_robot(0).get_run().toString());
 			this.isRunning = false;
 		} catch (UnreachableCase e) {
-			this.jeu.draw_popup("Désolé, une erreur inattendue s'est produite");
+			this.jeu.draw_popup("Dï¿½solï¿½, une erreur inattendue s'est produite");
 		} catch (ActionEx e) {
-			this.jeu.draw_popup("Désolé, une erreur inattendue s'est produite");
+			this.jeu.draw_popup("Dï¿½solï¿½, une erreur inattendue s'est produite");
 		}
 	}
 

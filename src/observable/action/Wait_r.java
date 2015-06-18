@@ -2,13 +2,13 @@ package observable.action;
 
 import java.util.ArrayList;
 
-import observable.map.abstr_Case;
-import observable.robot.abstr_Robot;
-import observer.int_Observer;
 import couleur.Couleur;
 import exception.ActionEx;
 import exception.MouvementEx;
 import exception.UnreachableCase;
+import observable.map.abstr_Case;
+import observable.robot.abstr_Robot;
+import observer.int_Observer;
 
 public class Wait_r implements int_Action {
 
@@ -69,6 +69,12 @@ public class Wait_r implements int_Action {
 	@Override
 	public void setColor(Couleur color) {
 		this.color = color;
+	}
+
+	@Override
+	public int_Action Clone() {
+		int_Action temp = new Wait_r(this.getColor());
+		return temp;
 	}
 
 

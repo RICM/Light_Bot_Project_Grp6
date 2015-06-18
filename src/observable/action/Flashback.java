@@ -2,15 +2,15 @@ package observable.action;
 
 import java.util.ArrayList;
 
+import couleur.Couleur;
+import exception.ActionEx;
+import exception.MouvementEx;
+import exception.UnreachableCase;
 import observable.map.World;
 import observable.map.abstr_Case;
 import observable.robot.Position;
 import observable.robot.abstr_Robot;
 import observer.int_Observer;
-import couleur.Couleur;
-import exception.ActionEx;
-import exception.MouvementEx;
-import exception.UnreachableCase;
 
 public class Flashback implements int_Action {
 
@@ -86,6 +86,13 @@ public class Flashback implements int_Action {
 	public boolean isPossible(abstr_Robot r, abstr_Case c) {
 		return ((r.get_size_pos()>0) &&
 				(r.get_couleur().equals(this.color) || this.color.equals(Couleur.GRIS)));
+	}
+
+	@Override
+	public int_Action Clone() {
+		Flashback temp;
+		temp = flashback(this.color);
+		return temp;
 	}
 
 }

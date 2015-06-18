@@ -1,15 +1,15 @@
 package observable.action;
 import java.util.ArrayList;
 
+import couleur.Couleur;
+import exception.MouvementEx;
+import exception.UnreachableCase;
 import observable.int_Observable;
 import observable.map.Coordonnees;
 import observable.map.World;
 import observable.map.abstr_Case;
 import observable.robot.abstr_Robot;
 import observer.int_Observer;
-import couleur.Couleur;
-import exception.MouvementEx;
-import exception.UnreachableCase;
 
 public class Jump implements int_Action, int_Observable{
 
@@ -90,6 +90,12 @@ public class Jump implements int_Action, int_Observable{
 	public void notifyObserver() {
 		for(int_Observer obs : this.listObserver)
 			obs.update(this);
+	}
+	@Override
+	public int_Action Clone() {
+		// TODO Auto-generated method stub
+		int_Action temp = new Jump(this.getColor());
+		return temp;
 	}
 
 

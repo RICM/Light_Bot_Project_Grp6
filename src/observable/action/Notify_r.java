@@ -2,12 +2,12 @@ package observable.action;
 
 import java.util.ArrayList;
 
+import couleur.Couleur;
+import exception.MouvementEx;
 import observable.map.World;
 import observable.map.abstr_Case;
 import observable.robot.abstr_Robot;
 import observer.int_Observer;
-import couleur.Couleur;
-import exception.MouvementEx;
 
 public class Notify_r implements int_Action {
 
@@ -66,5 +66,11 @@ public class Notify_r implements int_Action {
 	public void notifyObserver() {
 		for(int_Observer obs : this.listObserver)
 			obs.update(this);
+	}
+	@Override
+	public int_Action Clone() {
+		// TODO Auto-generated method stub
+		int_Action temp = new Notify_r(this.getColor());
+		return temp;
 	}
 }

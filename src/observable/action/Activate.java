@@ -117,5 +117,10 @@ public class Activate implements int_Action, int_Observable{
 		for(int_Observer obs : this.listObserver)
 			obs.update(this);
 	}
+	@Override
+	public int_Action Clone() {
+		Activate temp = activate(this.getColor());
+		return temp;
+	}
 }
 

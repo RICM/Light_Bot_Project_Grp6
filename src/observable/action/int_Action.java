@@ -1,12 +1,12 @@
 package observable.action;
 
-import observable.int_Observable;
-import observable.map.abstr_Case;
-import observable.robot.abstr_Robot;
 import couleur.Couleur;
 import exception.ActionEx;
 import exception.MouvementEx;
 import exception.UnreachableCase;
+import observable.int_Observable;
+import observable.map.abstr_Case;
+import observable.robot.abstr_Robot;
 
 public interface int_Action extends int_Observable {
 
@@ -30,5 +30,7 @@ public interface int_Action extends int_Observable {
 	public Couleur getColor();
 
 	public void setColor(Couleur color);
+
+	public int_Action Clone();
 
 }
