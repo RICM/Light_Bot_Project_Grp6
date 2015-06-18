@@ -3,6 +3,7 @@ package observable.action;
 import java.util.ArrayList;
 
 import couleur.Couleur;
+import exception.MouvementEx;
 import observable.int_Observable;
 import observable.map.World;
 import observable.map.abstr_Case;
@@ -37,9 +38,10 @@ public class TurnRIght implements int_Action, int_Observable{
 	}
 	/**
 	 * tourne le robot vers la droit (cycle : TOP,RIGHT,BOTTOM,LEFT)
+	 * @throws MouvementEx
 	 */
 	@Override
-	public void execute(abstr_Robot r) {
+	public void execute(abstr_Robot r) throws MouvementEx {
 		if(this.isPossible(r,r.getCurrent_Case())){
 			switch (r.getOrientation()) {
 			case  TOP :
@@ -56,7 +58,12 @@ public class TurnRIght implements int_Action, int_Observable{
 				break;
 			}
 		}
+		else{
+			throw (new MouvementEx("impossible de tourner"));
+		}
+		this.notifyObserver();
 		World.currentWorld.basic_print_world();
+		System.out.println("Couleur de l'action : "+this.color.toString());
 	}
 
 	@Override
