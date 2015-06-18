@@ -9,6 +9,14 @@ import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 
+import observable.action.int_Action;
+import observable.action_list.Sequence_List;
+import observable.map.Terrain;
+import observable.map.World;
+import observable.robot.Orientation.orientation;
+import observable.robot.abstr_Robot;
+import observer.controller.Controller;
+
 import org.jsfml.audio.Music;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.Sprite;
@@ -21,13 +29,6 @@ import org.jsfml.window.event.Event;
 import org.jsfml.window.event.Event.Type;
 
 import couleur.Couleur;
-import observable.action.int_Action;
-import observable.action_list.Sequence_List;
-import observable.map.Terrain;
-import observable.map.World;
-import observable.robot.Orientation.orientation;
-import observable.robot.abstr_Robot;
-import observer.controller.Controller;
 
 
 public class Jeu {
@@ -323,7 +324,6 @@ public class Jeu {
 		int compteur=0;
 		for(Sprite s: list_remove){
 			FloatRect rect = s.getGlobalBounds();
-			System.out.println("test "+rect);
 			if(x>=rect.left && x<=rect.left+rect.width && y>=rect.top && y<=rect.top+rect.height){
 				if(list_remove.get(compteur)!=null){
 					controller.getNotificationRemoveToRobotList(compteur);
@@ -695,6 +695,21 @@ public class Jeu {
 
 	public static void victory() {
 		//JOptionPane.showMessageDialog(null, "Win");
+		Texture textureTemp = new Texture();
+		Sprite spi = new Sprite();
+		try {
+			textureTemp.loadFromFile(Paths.get("Images/Jeu/Backgrounds/win.png"));
+			spi.setTexture(textureTemp);
+			Menu.app.draw(spi);
+			Menu.app.display();
+			Thread.sleep(200);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		new Theme(controller);
 	}
 
