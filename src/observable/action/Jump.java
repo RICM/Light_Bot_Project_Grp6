@@ -62,7 +62,7 @@ public class Jump implements int_Action, int_Observable{
 		}
 
 		if (! this.isPossible(r,c_prime)){
-			throw (new MouvementEx("impossible de sauter"));//saut sur place
+			System.out.println("Sauter pour rien , c'est bien");
 		} else {
 			r.setCurrent_Case(c_prime);
 			this.notifyObserver();

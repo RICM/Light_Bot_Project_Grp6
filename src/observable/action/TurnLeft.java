@@ -56,11 +56,9 @@ public class TurnLeft implements int_Action, int_Observable{
 				r.setOrientation(Orientation.orientation.TOP);
 				break;
 			}
+			this.notifyObserver();
 		}
-		else{
-			throw (new MouvementEx("impossible de tourner"));
-		}
-		this.notifyObserver();
+		r.setVoid();
 		World.currentWorld.basic_print_world();
 		System.out.println("Couleur de l'action : "+this.color.toString());
 	}

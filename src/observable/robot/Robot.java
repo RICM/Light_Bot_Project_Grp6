@@ -101,6 +101,11 @@ public class Robot extends abstr_Robot implements int_Observable {
 	//getteurs et setteurs
 
 	@Override
+	public void setVoid(){
+		this.notifyObserver();
+	}
+
+	@Override
 	public Orientation.orientation getOrientation(){
 		return this.current_orientation;
 	}

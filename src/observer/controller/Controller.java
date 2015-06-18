@@ -38,14 +38,16 @@ public class Controller implements int_Observer {
 	private int current_robot;
 	private int current_terrain;
 	private int current_program;
+	private int overflow;
 	private boolean runnable;
 	private boolean isRunning = false;
+	private boolean isPaused = false;
 
 	@Override
 	public void update(Object obj){
 		switch (obj.getClass().getSimpleName()){
 		case "Robot" :
-			//System.out.println("Mouvement détécté");
+			System.out.println("Mouvement détécté");
 			this.setNotificationUpdatedRobot((Robot)obj);
 			break;
 		case "Terrain" :
@@ -104,12 +106,20 @@ public class Controller implements int_Observer {
 
 	}
 
+	public void setNotificationGoOn(){
+		this.getNotificationRewind();
+	}
+
 	/**
 	 * Receive a notification from view to run program
 	 */
 	public void getNotificationRun(){
+		if (this.isPaused){
+			this.setNotificationGoOn();
+		}
 		if (!this.isRunning){
 			this.isRunning = true;
+			this.overflow = 0;
 			//if (World.currentWorld.get_ordonnanceur().size() == 0)
 			// RESET L'ORDO
 			for(int j = 0; j < World.currentWorld.get_liste_robot().length;j++){
@@ -122,11 +132,12 @@ public class Controller implements int_Observer {
 			System.out.println("statut du robot " + World.currentWorld.get_robot(0).get_activable());
 			System.out.println("nobmre de robot dans le monde : "+World.currentWorld.get_liste_robot().length);
 			System.out.println("nombre de robot dans l'ordo : "+World.currentWorld.get_ordonnanceur().getNumberRobots());
-			while (this.isRunning && this.runnable && !(World.currentWorld.is_cleared())){
+			while (this.overflow<200 && this.isRunning && this.runnable && !(World.currentWorld.is_cleared())){
 				System.out.println("Dans le while du controller");
 				try {
 					System.out.println("While getNotificationRun");
 					World.currentWorld.exec();
+					this.overflow++;
 				} catch (MouvementEx e) {
 					this.runnable = false;
 					//this.jeu.draw_popup("Vous ne pouvez pas effectuer le prochaine mouvement !");
@@ -137,10 +148,18 @@ public class Controller implements int_Observer {
 					this.runnable = false;
 					//this.jeu.draw_popup("Une erreur est survenue lors de l'execution de l'actions");
 				}
+				try {
+					Thread.sleep(1000);
+				}catch(Exception ex){
+					System.out.println(ex.getMessage());
+				}
 			}
 			World.currentWorld.get_ordonnanceur().removeRobots();
 			System.out.println("NOMBRE DE ROBOT DANS ORDO A LA FIN : "+World.currentWorld.get_ordonnanceur().getNumberRobots());
 			System.out.println("sortie de la boucle de RUN FOREST RUN");
+			if (this.overflow > 150)
+				System.out.println("Boucle infinie détéctée");
+			this.overflow = 0;
 			if (World.currentWorld.is_cleared())
 				this.getNotificationVictory();
 		}
@@ -575,6 +594,7 @@ public class Controller implements int_Observer {
 	public void getNotificationStopRun(){
 		this.runnable = false;
 		this.isRunning = false;
+		this.isPaused = true;
 	}
 }
 

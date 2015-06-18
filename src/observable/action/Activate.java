@@ -86,7 +86,7 @@ public class Activate implements int_Action, int_Observable{
 			}
 		}
 		else{
-			throw (new MouvementEx("impossible à utiliser"));
+			System.out.println("Impossible de faire ça");
 		}
 	}
 
