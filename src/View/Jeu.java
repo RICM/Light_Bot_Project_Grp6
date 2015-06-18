@@ -127,6 +127,12 @@ public class Jeu {
 			controller.setNotificationDrawAllProcedure();
 			Menu.app.display();
 			this.processEvent();
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			if(World.currentWorld.is_cleared()){
 				//				JOptionPane.showMessageDialog(null, "Fin");
 				//				Menu.app.close();
@@ -207,8 +213,9 @@ public class Jeu {
 				for(String actionCurrent : actionPossible){
 					if(action.equals(actionCurrent)){
 						int_Action actionToAdd = controller.getNotificationAddActionToUserList(action, couleur_active);
-						if (actionToAdd != null)
+						if (actionToAdd != null){
 							liste_sprite_Action.put(liste_sprite.get(action), actionToAdd);
+						}
 						break;
 					}
 				}
@@ -315,15 +322,14 @@ public class Jeu {
 
 	public static void remove_action_liste(LinkedList<Sprite> list_remove, float x, float y){
 		int compteur=0;
-		System.out.println("test "+list_remove.size());
 		for(Sprite s: list_remove){
 			FloatRect rect = s.getGlobalBounds();
-			if(x>=rect.left && x<=rect.left+rect.width && y>=rect.top && y<=rect.top+rect.height){System.out.println("juiffdujfrujfrujfjfjfjfjfj");
-			if(list_remove.get(compteur)!=null){
-				//JOptionPane.showMessageDialog(null, "J'ai clique sur le bouton "+compteur);
-				controller.getNotificationRemoveToRobotList(compteur);
-			}
-			break;
+			System.out.println("test "+rect);
+			if(x>=rect.left && x<=rect.left+rect.width && y>=rect.top && y<=rect.top+rect.height){
+				if(list_remove.get(compteur)!=null){
+					controller.getNotificationRemoveToRobotList(compteur);
+				}
+				break;
 			}
 			compteur++;
 		}
@@ -435,29 +441,32 @@ public class Jeu {
 		for(int x=0; x<nombre_bouton_max;x++){
 			if(x%4==0){	y++;}
 
-			if (x<class_name.size()){	to_get = class_name.get(x)+"_"+color_name.get(x);}
-			else{						to_get = "Fond_Bouton";}
+			if (x<class_name.size()){
+				to_get = class_name.get(x)+"_"+color_name.get(x);
+			}
+			else{
+				to_get = "Fond_Bouton";
+			}
 
 			textureTemp = textureBouton.get(to_get);
+			this.monSpriteActionChoisie = new Sprite();
 			this.monSpriteActionChoisie.setPosition(884+(x%4*(70+4)), (posY+37) + (y-1)*(70+10));
 			this.monSpriteActionChoisie.setTexture(textureTemp);
 			Menu.app.draw(this.monSpriteActionChoisie);
-			if(this.FirstLoop){
-				if(x<class_name.size() && name_proc=="Main"){
-					liste_main.add(this.monSpriteActionChoisie);
-				}
-				else if(x<class_name.size() && name_proc=="P1")
-				{
-					liste_P1.add(this.monSpriteActionChoisie);
-				}
-				else if(x<class_name.size() && name_proc=="P2")
-				{
-					liste_P2.add(this.monSpriteActionChoisie);
-				}
+
+			if(name_proc=="Main" && liste_main.size()<nombre_bouton_max){
+				liste_main.add(this.monSpriteActionChoisie);
 			}
+			else if(name_proc=="P1" && liste_P1.size()<nombre_bouton_max)
+			{
+				liste_P1.add(this.monSpriteActionChoisie);
+			}
+			else if(name_proc=="P2" && liste_P2.size()<nombre_bouton_max)
+			{
+				liste_P2.add(this.monSpriteActionChoisie);
+			}
+
 		}
-
-
 	}
 
 
