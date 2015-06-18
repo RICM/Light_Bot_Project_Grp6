@@ -74,6 +74,7 @@ public class Call_P2 implements int_Action, int_Observable{
 			World.currentWorld.get_ordonnanceur().setReady(true);
 		}
 		else{
+			r.setVoid();
 			System.out.println("Pas possible d exécuter P2");
 		}
 
@@ -81,7 +82,9 @@ public class Call_P2 implements int_Action, int_Observable{
 
 	@Override
 	public boolean isPossible(abstr_Robot r, abstr_Case c) {
-		return (r.get_couleur().equals(this.color) || r.get_couleur().equals(Couleur.GRIS));
+		return (r.get_couleur().equals(this.color)
+				|| r.get_couleur().equals(Couleur.GRIS)
+				|| this.getColor().equals(Couleur.GRIS));
 	}
 	@Override
 	public int_Action Clone() {

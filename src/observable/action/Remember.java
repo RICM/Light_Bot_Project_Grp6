@@ -44,6 +44,7 @@ public class Remember implements int_Action {
 	ActionEx {
 		if(this.isPossible(r, null)){
 			r.store_position();
+			r.setVoid();
 		}
 
 	}

@@ -9,6 +9,14 @@ import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 
+import observable.action.int_Action;
+import observable.action_list.Sequence_List;
+import observable.map.Terrain;
+import observable.map.World;
+import observable.robot.Orientation.orientation;
+import observable.robot.abstr_Robot;
+import observer.controller.Controller;
+
 import org.jsfml.audio.Music;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.Sprite;
@@ -21,13 +29,6 @@ import org.jsfml.window.event.Event;
 import org.jsfml.window.event.Event.Type;
 
 import couleur.Couleur;
-import observable.action.int_Action;
-import observable.action_list.Sequence_List;
-import observable.map.Terrain;
-import observable.map.World;
-import observable.robot.Orientation.orientation;
-import observable.robot.abstr_Robot;
-import observer.controller.Controller;
 
 
 public class Jeu {
@@ -38,6 +39,7 @@ public class Jeu {
 	protected static HashMap<String,Texture> textureBackground = new HashMap<String,Texture>();
 	protected static HashMap<String,Texture> textureBouton = new HashMap<String,Texture>();
 	protected static HashMap<String,Texture> textureBoutonInterface = new HashMap<String,Texture>();
+	protected Texture maTextureMenu = new Texture();
 
 	protected static int identificateur_robot = 0;
 	protected static String typeBackground[]=  {"Main","P1","P2"};
@@ -53,6 +55,7 @@ public class Jeu {
 	protected Sprite monSpriteActionChoisie = new Sprite();
 	protected Sprite monSpriteBackground = new Sprite();
 	protected Sprite monSpritePerso = new Sprite();
+	protected Sprite monSpriteMenu = new Sprite();
 
 	protected static HashMap<String, Sprite> liste_sprite = new HashMap<String, Sprite>();
 	protected static HashMap<String, Sprite> liste_background = new HashMap<String, Sprite>();
@@ -121,6 +124,11 @@ public class Jeu {
 		this.initTextureBackground();
 		this.initTextureBouton();
 		this.initTextureBoutonInterface();
+		try {
+			this.maTextureMenu.loadFromFile(Paths.get("Images/Jeu/Backgrounds/win.png"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 		while(Menu.app.isOpen()){
 			Menu.app.clear();
 			this.drawBackground();
@@ -129,7 +137,7 @@ public class Jeu {
 			controller.setNotificationDrawControle();
 			controller.setNotificationDrawAllProcedure();
 			Menu.app.display();
-			this.processEvent();
+			this.processEvent(false);
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
@@ -146,7 +154,7 @@ public class Jeu {
 	/**
 	 * D�tecte les entr�es claviers et souris
 	 */
-	public void processEvent(){
+	public void processEvent(boolean finish){
 		Menu.app.setKeyRepeatEnabled(false);
 		//Event e = Menu.app.waitEvent();
 		for(Event e : Menu.app.pollEvents()){
@@ -186,8 +194,12 @@ public class Jeu {
 				e.asMouseEvent();
 				Vector2i pos = Mouse.getPosition(Menu.app);
 				Vector2f click = Menu.app.mapPixelToCoords(pos);
-				Jeu.detect_move(click);
-				this.delete_button(e,click);
+				if(finish == false){
+					Jeu.detect_move(click);
+					this.delete_button(e,click);
+				}
+				else
+					this.retourMenu(e,click);
 			}
 
 			Vector2i pos = Mouse.getPosition(Menu.app);
@@ -209,6 +221,17 @@ public class Jeu {
 					}
 				}
 			}
+		}
+
+	}
+
+	public void retourMenu(Event e, Vector2f click) {
+		FloatRect rect = this.monSpriteMenu.getGlobalBounds();
+		float x = click.x;
+		float y = click.y;
+		if(x>=rect.left && x<=rect.left+rect.width && y>=rect.top && y<=rect.top+rect.height){
+			System.out.println("test");
+			new Theme(controller);
 		}
 
 	}
@@ -737,7 +760,7 @@ public class Jeu {
 			controller.setNotificationDrawControle();
 			controller.setNotificationDrawAllProcedure();
 			Menu.app.display();
-			this.processEvent();
+			this.processEvent(false);
 			if(World.currentWorld.is_cleared()){
 				//				JOptionPane.showMessageDialog(null, "Fin");
 				//				Menu.app.close();
@@ -751,9 +774,27 @@ public class Jeu {
 		System.out.println("j'ai updaté la sequence display");
 	}
 
-	public static void victory() {
+	public void victory() {
 		//JOptionPane.showMessageDialog(null, "Win");
-		new Theme(controller);
+		try {
+			this.maTextureMenu.loadFromFile(Paths.get("Images/Jeu/Backgrounds/win.png"));
+			this.monSpriteMenu.setTexture(this.maTextureMenu);
+			this.monSpriteMenu.setPosition(Menu.getWidth()/2-200, Menu.getHeight()/2-75);
+			Menu.app.draw(this.monSpriteMenu);
+			Menu.app.display();
+			while(Menu.app.isOpen())
+			{
+				this.processEvent(true);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	protected static void processEventVictory() {
+		// TODO Auto-generated method stub
+
 	}
 
 }
