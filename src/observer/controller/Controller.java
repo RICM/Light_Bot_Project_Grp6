@@ -190,6 +190,7 @@ public class Controller implements int_Observer {
 		 * Receive a notification from view to change robot to robot[i] from current
 		 */
 		robotCurrent++;
+		System.out.println("zev "+World.currentWorld.number_robots());
 		if (robotCurrent >= World.currentWorld.number_robots()){
 			robotCurrent=0;
 		}
@@ -479,13 +480,15 @@ public class Controller implements int_Observer {
 			this.jeu.updateDrawISO(PosX, PosY, hauteur_max, class_name, info_suppl );
 
 			abstr_Robot [] listeRobot = World.currentWorld.get_liste_robot();
+			int i=0;
 			for(abstr_Robot robotCurrent : listeRobot){
 				XRob = robotCurrent.getCurrent_Case().get_coordonnees().get_x();
 				YRob = robotCurrent.getCurrent_Case().get_coordonnees().get_y();
 				//Si le pingouin est sur cette case, alors on l'affiche à la hauteur maximale de celle-ci
 				if ((XRob == X) && (YRob == Y)){
-					this.setNotificationDrawPerso(robotCurrent);
+					this.setNotificationDrawPerso(robotCurrent, i);
 				}
+				i++;
 			}
 		} catch (UnreachableCase e) {
 			// TODO Auto-generated catch block
@@ -494,7 +497,7 @@ public class Controller implements int_Observer {
 
 	}
 
-	public void setNotificationDrawPerso(abstr_Robot robot){
+	public void setNotificationDrawPerso(abstr_Robot robot, int num_robot){
 		abstr_Case Ma_Case = robot.getCurrent_Case();
 		int X = Ma_Case.get_coordonnees().get_x();
 		int Y = Ma_Case.get_coordonnees().get_y();
@@ -506,7 +509,7 @@ public class Controller implements int_Observer {
 		orientation orientation = robot.getOrientation();
 		Couleur couleur = robot.get_couleur();
 
-		this.jeu.updateDrawPerso(PosX, PosY, H, orientation, couleur);
+		this.jeu.updateDrawPerso(PosX, PosY, H, orientation, couleur, num_robot);
 	}
 
 
