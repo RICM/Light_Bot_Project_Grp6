@@ -73,6 +73,7 @@ public class Jeu {
 	protected static LinkedList<int_Action> liste_P1_actions = new LinkedList<int_Action>();
 	protected static LinkedList<int_Action> liste_P2_actions = new LinkedList<int_Action>();
 
+
 	public void changeRobotActionsDisplay(abstr_Robot robot){
 		liste_main_actions = robot.get_Main().getListActions();
 		liste_P1_actions = robot.get_P1().getListActions();
@@ -678,7 +679,7 @@ public class Jeu {
 
 	public static void victory() {
 		JOptionPane.showMessageDialog(null, "Win");
-		new Theme(acontroller);
+		new Theme(controller);
 	}
 
 }
