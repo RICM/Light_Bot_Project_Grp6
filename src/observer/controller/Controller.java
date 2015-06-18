@@ -5,7 +5,6 @@ import java.util.LinkedList;
 
 import View.Jeu;
 import View.Menu;
-import View.Menu;
 import couleur.Couleur;
 import exception.ActionEx;
 import exception.MouvementEx;
@@ -31,6 +30,8 @@ import observable.robot.Orientation.orientation;
 import observable.robot.Robot;
 import observable.robot.abstr_Robot;
 import observer.int_Observer;
+import parser.parserJSON;
+
 public class Controller implements int_Observer {
 
 	private Jeu jeu;
@@ -38,11 +39,13 @@ public class Controller implements int_Observer {
 	private int current_terrain;
 	private int current_program;
 	private boolean runnable;
+	private boolean isRunning = false;
 
 	@Override
 	public void update(Object obj){
 		switch (obj.getClass().getSimpleName()){
 		case "Robot" :
+			//System.out.println("Mouvement détécté");
 			this.setNotificationUpdatedRobot((Robot)obj);
 			break;
 		case "Terrain" :
@@ -54,9 +57,17 @@ public class Controller implements int_Observer {
 		case "Execution_list" :
 			this.runnable = World.currentWorld.isOneRobotActive();
 			break;
+		case "Illuminated_Case" :
+			System.out.println("JE SUIS ALLUME");
+			this.setNotificationUpdateCase();
+			break;
 		default:
 			break;
 		}
+	}
+
+	public void setNotificationUpdateCase() {
+		this.jeu.setNotificationDrawForTime();
 	}
 
 	public void setNotificationUpdatedCurrentProgramList(Sequence_List seq){
@@ -73,11 +84,7 @@ public class Controller implements int_Observer {
 	}
 
 	private void getNotificationUpdatedTerrain(Terrain obj) {
-		try {
-			this.jeu.display_terrain(obj);
-		} catch (IOException e) {
-			this.jeu.draw_popup("Désolé une erreur est survenue lors de la création du terrain");
-		}
+		this.jeu.setNotificationDrawForTime();
 	}
 
 	public Controller(){
@@ -85,32 +92,45 @@ public class Controller implements int_Observer {
 		this.current_terrain = 0;
 		this.current_program = 0;
 		this.runnable = true;
+		World.currentWorld.addObserver(this);
 	}
-
+	/**
+	 * Receive a notification from model
+	 */
 	public void setNotification(){
-		/**
-		 * Receive a notification from model
-		 */
+
 	}
 
+	/**
+	 * Receive a notification from view to run program
+	 */
 	public void getNotificationRun(){
-		/**
-		 * Receive a notification from view to run program
-		 */
-		for(int j = 0; j < World.currentWorld.get_liste_robot().length;j++){
-			World.currentWorld.get_ordonnanceur().addRobot(World.currentWorld.get_robot(j));
-		}
-		World.currentWorld.prerun();
-		while (this.runnable && !(World.currentWorld.is_cleared())){
-			try {
-				World.currentWorld.exec();
-			} catch (MouvementEx e) {
-				this.jeu.draw_popup("Vous ne pouvez pas effectuer le prochaine mouvement !");
-			} catch (UnreachableCase e) {
-				this.jeu.draw_popup("Vous venez de vous manger une segfault!! La case visée ne peut etre atteinte");
-			} catch (ActionEx e) {
-				this.jeu.draw_popup("Une erreur est survenue lors de l'execution de l'actions");
+
+		if (!this.isRunning){
+			this.isRunning = true;
+			if (World.currentWorld.get_ordonnanceur().size() == 0)
+				for(int j = 0; j < World.currentWorld.get_liste_robot().length;j++){
+					World.currentWorld.get_ordonnanceur().addRobot(World.currentWorld.get_robot(j));
+				}
+			World.currentWorld.prerun();
+			this.runnable = World.currentWorld.isOneRobotActive();
+			System.out.println("contenu de run " + World.currentWorld.get_robot(0).get_run());
+			while (this.runnable && !(World.currentWorld.is_cleared())){
+				try {
+					System.out.println("While getNotificationRun");
+					World.currentWorld.exec();
+				} catch (MouvementEx e) {
+					this.jeu.draw_popup("Vous ne pouvez pas effectuer le prochaine mouvement !");
+				} catch (UnreachableCase e) {
+					this.jeu.draw_popup("Vous venez de vous manger une segfault!! La case visée ne peut etre atteinte");
+				} catch (ActionEx e) {
+					this.jeu.draw_popup("Une erreur est survenue lors de l'execution de l'actions");
+				}
 			}
+			System.out.println("sortie de la boucle de RUN FOREST RUN");
+		}
+		else{
+			System.out.println("On ne peut pas relancer le robot sans redemarrer le niveau");
 		}
 	}
 
@@ -195,10 +215,9 @@ public class Controller implements int_Observer {
 	}
 
 	public void setNotificationUpdatedRobot(abstr_Robot rob){
-		/**
-		 * Send a notification to view to display the robot
-		 */
-		//this.jeu.display_robot(rob);
+		if(rob.getCurrent_Case().isVoisine(rob.getPrevious_Case()))
+			System.out.println("");
+		this.jeu.setNotificationDrawForTime();
 	}
 
 	public void getNotificationUpdatedRobot(abstr_Robot rob){
@@ -380,9 +399,16 @@ public class Controller implements int_Observer {
 		System.out.println("switched program to : "+this.current_program);
 	}
 
+
+
 	public void getNotificationRewind(){
 		try {
 			World.currentWorld.rewind_status();
+			System.out.println("Rewind : "+World.currentWorld.get_robot(0).getCurrent_Case().get_coordonnees().get_x()
+					+" , "+World.currentWorld.get_robot(0).getCurrent_Case().get_coordonnees().get_y());
+			System.out.println("Liste actions main : "+World.currentWorld.get_robot(0).get_Main().getListActions().toString());
+			System.out.println(World.currentWorld.get_robot(0).get_run().toString());
+			this.isRunning = false;
 		} catch (UnreachableCase e) {
 			this.jeu.draw_popup("D�sol�, une erreur inattendue s'est produite");
 		} catch (ActionEx e) {
@@ -515,4 +541,20 @@ public class Controller implements int_Observer {
 			break;
 		}
 	}
+
+
+	public void setNotificationUpdatedRobotMouvement() {
+		System.out.println("envoie de la notification");
+		World.currentWorld.get_ordonnanceur().setReady(true);
+	}
+	public void getLevel(Controller controller, String level){
+		parserJSON.currentparser.lecture(controller,level);
+	}
+
+	public void getNotificationVictory(){
+		this.isRunning = false;
+		Jeu.victory();
+
+	}
 }
+

@@ -2,15 +2,16 @@ package observable.action;
 
 import java.util.ArrayList;
 
-import observable.int_Observable;
-import observable.action_list.Sequence_List;
-import observable.map.abstr_Case;
-import observable.robot.abstr_Robot;
-import observer.int_Observer;
 import couleur.Couleur;
 import exception.ActionEx;
 import exception.MouvementEx;
 import exception.UnreachableCase;
+import observable.int_Observable;
+import observable.action_list.Sequence_List;
+import observable.map.World;
+import observable.map.abstr_Case;
+import observable.robot.abstr_Robot;
+import observer.int_Observer;
 
 public class Call_P1 implements int_Action, int_Observable{
 
@@ -70,6 +71,7 @@ public class Call_P1 implements int_Action, int_Observable{
 				temp.addActionToList(r.get_P1().get(i));
 			}
 			r.add_execute(temp);
+			World.currentWorld.get_ordonnanceur().setReady(true);
 		}
 		else{
 			throw new ActionEx("impossible d'executer ");

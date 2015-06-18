@@ -28,6 +28,7 @@ import observable.robot.Orientation.orientation;
 import observable.robot.abstr_Robot;
 import observer.controller.Controller;
 
+
 public class Jeu {
 
 	protected static Controller controller;
@@ -78,6 +79,7 @@ public class Jeu {
 	protected static LinkedList<int_Action> liste_main_actions = new LinkedList<int_Action>();
 	protected static LinkedList<int_Action> liste_P1_actions = new LinkedList<int_Action>();
 	protected static LinkedList<int_Action> liste_P2_actions = new LinkedList<int_Action>();
+
 
 	public void changeRobotActionsDisplay(abstr_Robot robot){
 		liste_main_actions = robot.get_Main().getListActions();
@@ -658,8 +660,36 @@ public class Jeu {
 
 	}
 
+	public void setNotificationDrawForTime(){
+		long temps_depart = System.currentTimeMillis();
+		long duree = 300; // en millisecondes
+		while((System.currentTimeMillis() - temps_depart ) < duree)
+		{
+			System.out.println("in while");
+			Menu.app.clear();
+			this.drawBackground();
+			controller.setNotificationDrawGrilleISO();
+			controller.setNotificationDrawButton();
+			controller.setNotificationDrawControle();
+			controller.setNotificationDrawAllProcedure();
+			Menu.app.display();
+			//this.processEvent();
+			if(World.currentWorld.is_cleared()){
+				//				JOptionPane.showMessageDialog(null, "Fin");
+				//				Menu.app.close();
+			}
+		}
+		System.out.println("sortie du while");
+		controller.setNotificationUpdatedRobotMouvement();
+	}
+
 	public void updateSequenceList(Sequence_List seq) {
 		System.out.println("j'ai updaté la sequence display");
+	}
+
+	public static void victory() {
+		JOptionPane.showMessageDialog(null, "Win");
+		new Theme(controller);
 	}
 
 }

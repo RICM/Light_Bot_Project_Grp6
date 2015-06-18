@@ -1,7 +1,10 @@
 package observable.map;
 
+import java.util.ArrayList;
+
 import couleur.Couleur;
 import exception.UnreachableCase;
+import observer.int_Observer;
 
 public class Event_Case extends abstr_Case{
 
@@ -10,13 +13,16 @@ public class Event_Case extends abstr_Case{
 	private boolean status;
 	private abstr_Case replaced;
 
-	public Event_Case(int h, Couleur col, Coordonnees pos, Coordonnees dest, abstr_Case type,boolean stat){
+	private ArrayList<int_Observer> listObserver = new ArrayList<int_Observer>();
+
+	public Event_Case(int h, Couleur col, Coordonnees pos, abstr_Case type,boolean stat){
 		this.set_coordonnees(pos);
 		this.set_couleur(col);
 		this.set_hauteur(h);
-		this.setDest_add(dest);
+		this.setDest_add(type.get_coordonnees());
 		this.setTo_add(type);
 		this.setStatus(stat);
+		this.addObserver(World.currentWorld.getFirstObserver());
 	}
 
 	public abstr_Case getTo_add() {
@@ -67,8 +73,26 @@ public class Event_Case extends abstr_Case{
 
 	@Override
 	public abstr_Case Clone() {
-		return new Event_Case(this.get_hauteur(),this.get_couleur(),this.get_coordonnees().
-				Clone(),this.getDest_add().Clone(),this.getTo_add().Clone(), this.getStatus());
+		Event_Case temp = new Event_Case(this.get_hauteur(),this.get_couleur(),this.get_coordonnees().
+				Clone(),this.getTo_add().Clone(), this.getStatus());
+		temp.addObserver(this.listObserver.get(0));
+		return temp;
+	}
+
+
+	@Override
+	public void addObserver(int_Observer obs) {
+		this.listObserver.add(obs);
+	}
+	@Override
+	public void removeObserver() {
+		this.listObserver = new ArrayList<int_Observer>();
+
+	}
+	@Override
+	public void notifyObserver() {
+		for(int_Observer obs : this.listObserver)
+			obs.update(this);
 	}
 
 	/**

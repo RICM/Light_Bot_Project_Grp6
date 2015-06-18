@@ -10,7 +10,7 @@ public abstract class abstr_Case implements int_Observable{
 	private Couleur couleur;
 	private Coordonnees coordonnees;
 
-	private ArrayList<int_Observer> listObserver = new ArrayList<int_Observer>();
+	protected ArrayList<int_Observer> listObserver = new ArrayList<int_Observer>();
 
 	public Couleur get_couleur(){
 		return this.couleur;
@@ -51,5 +51,17 @@ public abstract class abstr_Case implements int_Observable{
 		for(int_Observer obs : this.listObserver)
 			obs.update(this);
 	}
+
+	public boolean isVoisine(abstr_Case cases){
+		return (((this.get_coordonnees().get_x() == cases.get_coordonnees().get_x() &&
+				(this.get_coordonnees().get_y()==cases.get_coordonnees().get_y()-1 ||
+				this.get_coordonnees().get_y() == cases.get_coordonnees().get_y()+1))||
+				(this.get_coordonnees().get_y()==cases.get_coordonnees().get_y() &&
+				this.get_coordonnees().get_x()==cases.get_coordonnees().get_x()-1 ||
+				this.get_coordonnees().get_x()==cases.get_coordonnees().get_x()+1)) &&
+				this.get_coordonnees().get_n()==cases.get_coordonnees().get_n()&&
+				this.get_hauteur()==cases.get_hauteur());
+	}
+
 	public abstract abstr_Case Clone();
 }

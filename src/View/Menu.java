@@ -34,22 +34,30 @@ public class Menu {
 	public Menu(Controller acontroller){
 		app.setVerticalSyncEnabled(true);
 		controller = acontroller;
-		Menu.reset_cam();
+		Menu.app.setVerticalSyncEnabled(true);
 		try {
+			this.texture_Background.loadFromFile(Paths.get("Images/menu/back1.png"));
+			this.texture_Play.loadFromFile(Paths.get("Images/menu/play.png"));
 			this.song.openFromFile(Paths.get("Song/theme.ogg"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//this.song.play();
+		Menu.reset_cam();
+		//		this.song.play();
 		this.song.setLoop(true);
-		//while(Menu.app.isOpen()){
-		Menu.app.clear();
-		//this.displayBackground();
-		this.displayBtn();
-		Menu.app.display();
-		this.processEvent();
-		//}
+		while(Menu.app.isOpen()){
+			Menu.app.clear();
+			this.displayBackground();
+			this.displayBtn();
+			Menu.app.display();
+			this.processEvent();
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public void addController(Controller acontroller){
@@ -60,18 +68,10 @@ public class Menu {
 	 * Affiche le bouton Jouer
 	 */
 	private void displayBtn() {
-		// TODO Auto-generated method stub
-		try {
-			this.texture_Play.loadFromFile(Paths.get("Images/menu/play.png"));
-			this.sprite_Play = new Sprite();
-			this.sprite_Play.setTexture(this.texture_Play);
-			this.sprite_Play.setPosition(Menu.app.getSize().x/2-75, Menu.app.getSize().y/2-75);
-			Menu.app.draw(this.sprite_Play);
+		this.sprite_Play.setTexture(this.texture_Play);
+		this.sprite_Play.setPosition(Menu.app.getSize().x/2-75, Menu.app.getSize().y/2-75);
+		Menu.app.draw(this.sprite_Play);
 
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	/**
@@ -79,69 +79,54 @@ public class Menu {
 	 */
 	private void displayBackground() {
 		// TODO Auto-generated method stub
-		try {
-			this.texture_Background.loadFromFile(Paths.get("Images/menu/back1.png"));
-			this.sprite_Background.setTexture(this.texture_Background);
-
-			Menu.app.draw(this.sprite_Background);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		this.sprite_Background.setTexture(this.texture_Background);
+		Menu.app.draw(this.sprite_Background);
 	}
 
 	/**
 	 * D�tecte les entr�es claviers et souris
 	 */
 	private void processEvent() {
-		// TODO Auto-generated method stub
 		Menu.app.setKeyRepeatEnabled(false);
-		Event e = Menu.app.waitEvent();
-		//for(Event e : Menu.app.pollEvents()){
+		for(Event e : Menu.app.pollEvents()){
+			if(e.type == Type.CLOSED){
+				System.out.println("test");
+				Menu.app.close();
+			}
 
-		if(e.type == Type.CLOSED){
-			Menu.app.close();
+			else if(e.type == Event.Type.RESIZED){
+				Menu.reset_cam();
+			}
+
+			//		if (Keyboard.isKeyPressed(Key.DOWN)){
+			//			Menu.camera.zoom(0.5f);
+			//			Menu.app.setView(Menu.camera);
+			//		}
+			//
+			//		if (Keyboard.isKeyPressed(Key.UP)){
+			//			Menu.camera.zoom(2f);
+			//			Menu.app.setView(Menu.camera);
+			//		}
+			//
+			//		if (Keyboard.isKeyPressed(Key.RIGHT)){
+			//			Menu.camera.rotate(-45);;
+			//			Menu.app.setView(Menu.camera);
+			//		}
+			//
+			//		if (Keyboard.isKeyPressed(Key.LEFT)){
+			//			Menu.camera.rotate(45);;
+			//			Menu.app.setView(Menu.camera);
+			//		}
+
+			else if (e.type == Event.Type.MOUSE_BUTTON_RELEASED) {
+				e.asMouseEvent();
+				Vector2i pos = Mouse.getPosition(Menu.app);
+				Vector2f poss = Menu.app.mapPixelToCoords(pos);
+				System.out.println(poss.x+" "+poss.y);
+				this.btnClick(poss);
+			}
+
 		}
-		else if(e.type == Event.Type.RESIZED){
-			Menu.reset_cam();
-			Menu.app.clear();
-			this.displayBackground();
-			this.displayBtn();
-			Menu.app.display();
-			this.processEvent();
-		}
-
-		//		if (Keyboard.isKeyPressed(Key.DOWN)){
-		//			Menu.camera.zoom(0.5f);
-		//			Menu.app.setView(Menu.camera);
-		//		}
-		//
-		//		if (Keyboard.isKeyPressed(Key.UP)){
-		//			Menu.camera.zoom(2f);
-		//			Menu.app.setView(Menu.camera);
-		//		}
-		//
-		//		if (Keyboard.isKeyPressed(Key.RIGHT)){
-		//			Menu.camera.rotate(-45);;
-		//			Menu.app.setView(Menu.camera);
-		//		}
-		//
-		//		if (Keyboard.isKeyPressed(Key.LEFT)){
-		//			Menu.camera.rotate(45);;
-		//			Menu.app.setView(Menu.camera);
-		//		}
-
-		else if (e.type == Event.Type.MOUSE_BUTTON_RELEASED) {
-			e.asMouseEvent();
-			Vector2i pos = Mouse.getPosition(Menu.app);
-			Vector2f poss = Menu.app.mapPixelToCoords(pos);
-			System.out.println(poss.x+" "+poss.y);
-			this.btnClick(poss);
-		}
-		else
-			this.processEvent();
-
-		//		}
 	}
 
 	/**
@@ -168,8 +153,6 @@ public class Menu {
 				y>=rect.top && y<=rect.top+rect.height){
 			Theme niv = new Theme(controller);
 		}
-		else
-			this.processEvent();
 	}
 
 	public static int getWidth() {

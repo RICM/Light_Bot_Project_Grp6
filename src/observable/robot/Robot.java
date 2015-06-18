@@ -1,6 +1,8 @@
 package observable.robot;
 import java.util.ArrayList;
 
+import couleur.Couleur;
+import exception.UnreachableCase;
 import observable.int_Observable;
 import observable.action.int_Action;
 import observable.action_list.Possible_List;
@@ -8,8 +10,6 @@ import observable.action_list.Sequence_List;
 import observable.map.World;
 import observable.map.abstr_Case;
 import observer.int_Observer;
-import couleur.Couleur;
-import exception.UnreachableCase;
 
 public class Robot extends abstr_Robot implements int_Observable {
 
@@ -166,9 +166,9 @@ public class Robot extends abstr_Robot implements int_Observable {
 
 	@Override
 	public void setFromPosition(Position new_pos) throws UnreachableCase{
-		this.setCurrent_Case(World.currentWorld.get_case(new_pos.get_coordonnees()));
-		this.set_couleur(new_pos.get_couleur());
-		this.setOrientation(new_pos.get_orientation());
+		this.presetCurrent_Case(World.currentWorld.get_case(new_pos.get_coordonnees()));
+		this.preset_couleur(new_pos.get_couleur());
+		this.presetOrientation(new_pos.get_orientation());
 		this.notifyObserver();
 	}
 

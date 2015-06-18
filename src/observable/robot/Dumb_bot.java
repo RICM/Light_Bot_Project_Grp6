@@ -36,6 +36,7 @@ public class Dumb_bot extends abstr_Robot {
 		this.set_tailleP2(taille_P2);
 		this.listObserver.add(controller);
 		this.user_actions = Fixed_main;
+		this.set_tailleMain(Fixed_main.size());
 		this.P1 = new Sequence_List(controller);
 		this.P2 = new Sequence_List(controller);
 		this.mainChangeAllowed = false;
@@ -64,6 +65,7 @@ public class Dumb_bot extends abstr_Robot {
 		this.set_tailleP2(taille_P2);
 		this.listObserver.add(controller);
 		this.P1 = Fixed_P1;
+		this.set_tailleP1(Fixed_P1.size());
 		this.user_actions = new Sequence_List(controller);
 		this.P2 = new Sequence_List(controller);
 		this.mainChangeAllowed = true;
@@ -93,7 +95,9 @@ public class Dumb_bot extends abstr_Robot {
 		this.listObserver.add(controller);
 		this.user_actions = Fixed_main;
 		this.user_actions.addObserver(controller);
+		this.set_tailleMain(Fixed_main.size());
 		this.P1 = Fixed_P1;
+		this.set_tailleP1(Fixed_P1.size());
 		this.P1.addObserver(controller);
 		this.P2 = new Sequence_List(controller);
 		this.mainChangeAllowed = false;
@@ -120,8 +124,10 @@ public class Dumb_bot extends abstr_Robot {
 		this.set_tailleMain(taille_Main);
 		this.listObserver.add(controller);
 		this.P2 = Fixed_P2;
+		this.set_tailleP2(Fixed_P2.size());
 		this.P2.addObserver(controller);
 		this.P1 = Fixed_P1;
+		this.set_tailleP1(Fixed_P1.size());
 		this.P1.addObserver(controller);
 		this.P2 = new Sequence_List(controller);
 		this.mainChangeAllowed = true;
@@ -137,11 +143,14 @@ public class Dumb_bot extends abstr_Robot {
 		this.setOrientation(or_init);
 		this.set_couleur(color);
 		this.listObserver.add(controller);
-		this.user_actions = Fixed_P2;
+		this.user_actions = Fixed_Main;
+		this.set_tailleMain(Fixed_Main.size());
 		this.user_actions.addObserver(controller);
 		this.P2 = Fixed_P2;
+		this.set_tailleP1(Fixed_P1.size());
 		this.P2.addObserver(controller);
 		this.P1 = Fixed_P1;
+		this.set_tailleP2(Fixed_P2.size());
 		this.P1.addObserver(controller);
 		this.P2 = new Sequence_List(controller);
 		this.mainChangeAllowed = false;

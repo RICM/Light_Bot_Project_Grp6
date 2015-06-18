@@ -5,6 +5,7 @@ import observable.int_Observable;
 import observable.robot.Position;
 import observable.robot.abstr_Robot;
 import observer.int_Observer;
+import observer.controller.Controller;
 import Ordonnanceur.Ordonnanceur;
 import exception.ActionEx;
 import exception.MouvementEx;
@@ -13,6 +14,10 @@ import exception.UnreachableCase;
 public class World implements int_Observable {
 
 	private ArrayList<int_Observer> listObserver = new ArrayList<int_Observer>();
+
+	public int_Observer getFirstObserver(){
+		return this.listObserver.get(0);
+	}
 
 	private World(){
 	}
@@ -40,9 +45,8 @@ public class World implements int_Observable {
 
 	public void prerun(){
 		try {
-			this.store_status();
 			this.init_World();
-		} catch (UnreachableCase | ActionEx e) {
+		} catch (UnreachableCase e) {
 			System.out.println("this shouldn't have heppened, WTH was done");
 			e.printStackTrace();
 		}
@@ -54,7 +58,10 @@ public class World implements int_Observable {
 	}
 
 	public void exec() throws MouvementEx, UnreachableCase, ActionEx{
-		this.ordo.execute();
+		if (this.ordo.isReady()){
+			System.out.println("Ich bin in ordo");
+			this.ordo.execute_next();
+		}
 	}
 
 	public Terrain get_terrain(int n){
@@ -142,7 +149,11 @@ public class World implements int_Observable {
 	 * @return true ssi toutes les cases sont allumées
 	 */
 	public boolean is_cleared(){
-		return this.nb_case_allumable == this.nb_case_allumees;
+		if(this.nb_case_allumable == this.nb_case_allumees){
+			((Controller) this.getFirstObserver()).getNotificationVictory();
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -186,6 +197,7 @@ public class World implements int_Observable {
 	}
 
 	public void store_status() throws UnreachableCase, ActionEx{
+		System.out.println("je me sauvegarde");
 		int size_t = World.currentWorld.get_liste_terrain().length;
 		Terrain temp[] = new Terrain[size_t];
 		World.currentWorld.save_robot = new Position[World.currentWorld.liste_robot.length];
@@ -197,6 +209,7 @@ public class World implements int_Observable {
 			World.currentWorld.liste_robot[i].store_position();
 			World.currentWorld.save_robot[i] = World.currentWorld.liste_robot[i].get_last_pos();
 		}
+		System.out.println("j'ai fini de me sauvegarder : world");
 	}
 
 	public boolean isOneRobotActive(){
