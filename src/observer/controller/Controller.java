@@ -149,7 +149,8 @@ public class Controller implements int_Observer {
 					//this.jeu.draw_popup("Une erreur est survenue lors de l'execution de l'actions");
 				}
 				try {
-					Thread.sleep(1000);
+					Thread.sleep(0);
+					System.out.println("B I : "+this.overflow);
 				}catch(Exception ex){
 					System.out.println(ex.getMessage());
 				}
