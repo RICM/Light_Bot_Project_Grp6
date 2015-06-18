@@ -128,10 +128,13 @@ public class Controller implements int_Observer {
 					System.out.println("While getNotificationRun");
 					World.currentWorld.exec();
 				} catch (MouvementEx e) {
+					this.runnable = false;
 					//this.jeu.draw_popup("Vous ne pouvez pas effectuer le prochaine mouvement !");
 				} catch (UnreachableCase e) {
+					this.runnable = false;
 					//this.jeu.draw_popup("Vous venez de vous manger une segfault!! La case visée ne peut etre atteinte");
 				} catch (ActionEx e) {
+					this.runnable = false;
 					//this.jeu.draw_popup("Une erreur est survenue lors de l'execution de l'actions");
 				}
 			}
