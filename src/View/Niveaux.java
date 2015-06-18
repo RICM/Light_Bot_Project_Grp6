@@ -5,6 +5,8 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import observer.controller.Controller;
+
 import org.jsfml.graphics.Color;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.Font;
@@ -16,8 +18,6 @@ import org.jsfml.system.Vector2i;
 import org.jsfml.window.Mouse;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.Event.Type;
-
-import observer.controller.Controller;
 
 public class Niveaux {
 
@@ -78,7 +78,7 @@ public class Niveaux {
 	}
 
 	/**
-	 * D�tecte les entr�es claviers et souris
+	 * Detecte les entrees claviers et souris
 	 */
 	public void processEvent(){
 		for(Event e : Menu.app.pollEvents()){
@@ -101,8 +101,8 @@ public class Niveaux {
 	}
 
 	/**
-	 * Regarde si le clique pass� en param�tre est sur l'un des boutons
-	 * @param pos Coordonn�es du clique souris
+	 * Regarde si le clique en parametre est sur l'un des boutons
+	 * @param pos Coordonnees du clique souris
 	 */
 	private void btnClick(Vector2f pos) {
 		float x = pos.x;

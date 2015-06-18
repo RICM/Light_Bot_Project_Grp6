@@ -9,6 +9,15 @@ import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 
+import observable.action.int_Action;
+import observable.action_list.Sequence_List;
+import observable.map.Terrain;
+import observable.map.World;
+import observable.robot.Orientation.orientation;
+import observable.robot.abstr_Robot;
+import observer.controller.Controller;
+
+import org.jsfml.audio.Music;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
@@ -20,13 +29,6 @@ import org.jsfml.window.event.Event;
 import org.jsfml.window.event.Event.Type;
 
 import couleur.Couleur;
-import observable.action.int_Action;
-import observable.action_list.Sequence_List;
-import observable.map.Terrain;
-import observable.map.World;
-import observable.robot.Orientation.orientation;
-import observable.robot.abstr_Robot;
-import observer.controller.Controller;
 
 
 public class Jeu {
@@ -125,6 +127,12 @@ public class Jeu {
 			controller.setNotificationDrawAllProcedure();
 			Menu.app.display();
 			this.processEvent();
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			if(World.currentWorld.is_cleared()){
 				//				JOptionPane.showMessageDialog(null, "Fin");
 				//				Menu.app.close();
@@ -140,29 +148,29 @@ public class Jeu {
 		//Event e = Menu.app.waitEvent();
 		for(Event e : Menu.app.pollEvents()){
 			if(e.type == Type.CLOSED){
-				//			Texture te = new Texture();
-				//			Sprite sp = new Sprite();
-				//			Music song_close = new Music();
-				//			try {
-				//				te.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/whale.png"));
-				//				song_close.openFromFile(Paths.get("Song/close.ogg"));
-				//			} catch (IOException e1) {
-				//				// TODO Auto-generated catch block
-				//				e1.printStackTrace();
-				//			}
-				//			song_close.play();
-				//			sp.setTexture(te);
-				//			while(Jeu.x_whale < 1200){
-				//				sp.setPosition(Jeu.x_whale,Jeu.y_whale);
-				//				this.drawBackground();
-				//				if(x_whale < Menu.WIDTH/3-200)
-				//					this.drawGrilleISO();
-				//				this.draw_bouton();
-				//				Menu.app.draw(sp);
-				//				Menu.app.display();
-				//				Jeu.x_whale += 20;
-				//				Menu.app.clear();
-				//			}
+				Texture te = new Texture();
+				Sprite sp = new Sprite();
+				Music song_close = new Music();
+				try {
+					te.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/whale.png"));
+					song_close.openFromFile(Paths.get("Song/close.ogg"));
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				song_close.play();
+				sp.setTexture(te);
+				while(Jeu.x_whale < 1200){
+					sp.setPosition(Jeu.x_whale,Jeu.y_whale);
+					this.drawBackground();
+					if(x_whale < Menu.getWidth()/3-200)
+						controller.setNotificationDrawGrilleISO();
+					controller.setNotificationDrawButton();
+					Menu.app.draw(sp);
+					Menu.app.display();
+					Jeu.x_whale += 20;
+					Menu.app.clear();
+				}
 				Menu.app.close();
 
 			}
@@ -205,8 +213,9 @@ public class Jeu {
 				for(String actionCurrent : actionPossible){
 					if(action.equals(actionCurrent)){
 						int_Action actionToAdd = controller.getNotificationAddActionToUserList(action, couleur_active);
-						if (actionToAdd != null)
+						if (actionToAdd != null){
 							liste_sprite_Action.put(liste_sprite.get(action), actionToAdd);
+						}
 						break;
 					}
 				}
@@ -313,15 +322,14 @@ public class Jeu {
 
 	public static void remove_action_liste(LinkedList<Sprite> list_remove, float x, float y){
 		int compteur=0;
-		System.out.println("test "+list_remove.size());
 		for(Sprite s: list_remove){
 			FloatRect rect = s.getGlobalBounds();
-			if(x>=rect.left && x<=rect.left+rect.width && y>=rect.top && y<=rect.top+rect.height){System.out.println("juiffdujfrujfrujfjfjfjfjfj");
-			if(list_remove.get(compteur)!=null){
-				//JOptionPane.showMessageDialog(null, "J'ai clique sur le bouton "+compteur);
-				controller.getNotificationRemoveToRobotList(compteur);
-			}
-			break;
+			System.out.println("test "+rect);
+			if(x>=rect.left && x<=rect.left+rect.width && y>=rect.top && y<=rect.top+rect.height){
+				if(list_remove.get(compteur)!=null){
+					controller.getNotificationRemoveToRobotList(compteur);
+				}
+				break;
 			}
 			compteur++;
 		}
@@ -347,7 +355,7 @@ public class Jeu {
 		textureTemp = textureRobot.get(to_get);
 
 		this.monSpritePerso.setTexture(textureTemp);
-		this.monSpritePerso.setPosition((float) ((X+30+10)*0.8),(float) (0.8*(Y-HAUTEUR_CASE*H+25)));
+		this.monSpritePerso.setPosition((float) ((X+30+10)*0.8),(float) (0.8*(Y-HAUTEUR_CASE*H+50)));
 		this.monSpritePerso.setScale(0.9f,0.9f);
 		Menu.app.draw(this.monSpritePerso);
 	}
@@ -433,29 +441,32 @@ public class Jeu {
 		for(int x=0; x<nombre_bouton_max;x++){
 			if(x%4==0){	y++;}
 
-			if (x<class_name.size()){	to_get = class_name.get(x)+"_"+color_name.get(x);}
-			else{						to_get = "Fond_Bouton";}
+			if (x<class_name.size()){
+				to_get = class_name.get(x)+"_"+color_name.get(x);
+			}
+			else{
+				to_get = "Fond_Bouton";
+			}
 
 			textureTemp = textureBouton.get(to_get);
+			this.monSpriteActionChoisie = new Sprite();
 			this.monSpriteActionChoisie.setPosition(884+(x%4*(70+4)), (posY+37) + (y-1)*(70+10));
 			this.monSpriteActionChoisie.setTexture(textureTemp);
 			Menu.app.draw(this.monSpriteActionChoisie);
-			if(this.FirstLoop){
-				if(x<class_name.size() && name_proc=="Main"){
-					liste_main.add(this.monSpriteActionChoisie);
-				}
-				else if(x<class_name.size() && name_proc=="P1")
-				{
-					liste_P1.add(this.monSpriteActionChoisie);
-				}
-				else if(x<class_name.size() && name_proc=="P2")
-				{
-					liste_P2.add(this.monSpriteActionChoisie);
-				}
+
+			if(name_proc=="Main" && liste_main.size()<nombre_bouton_max){
+				liste_main.add(this.monSpriteActionChoisie);
 			}
+			else if(name_proc=="P1" && liste_P1.size()<nombre_bouton_max)
+			{
+				liste_P1.add(this.monSpriteActionChoisie);
+			}
+			else if(name_proc=="P2" && liste_P2.size()<nombre_bouton_max)
+			{
+				liste_P2.add(this.monSpriteActionChoisie);
+			}
+
 		}
-
-
 	}
 
 
@@ -642,21 +653,17 @@ public class Jeu {
 		String to_get;
 		Texture textureTemp;
 
-		for(int hauteur=1; hauteur<H;hauteur++){
-			to_get = "Square_empile";
+		for(int hauteur=0; hauteur<H;hauteur++){
+			to_get = class_name + info_suppl;
+
 			textureTemp = textureCase.get(to_get);
 			this.monSprite.setTexture(textureTemp);
-			this.monSprite.setPosition(X,Y-HAUTEUR_CASE*hauteur);
+			this.monSprite.setScale(0.8f, 0.8f);
+			this.monSprite.setPosition((float) (X*0.8),(float) ((Y-HAUTEUR_CASE*hauteur)*0.8));
 			Menu.app.draw(this.monSprite);
 		}
 
-		to_get = class_name + info_suppl;
 
-		textureTemp = textureCase.get(to_get);
-		this.monSprite.setTexture(textureTemp);
-		this.monSprite.setScale(0.8f, 0.8f);
-		this.monSprite.setPosition((float) (X*0.8),(float) ((Y-HAUTEUR_CASE*H)*0.8));
-		Menu.app.draw(this.monSprite);
 
 	}
 
