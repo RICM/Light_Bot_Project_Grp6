@@ -3,12 +3,6 @@ package observer.controller;
 import java.io.IOException;
 import java.util.LinkedList;
 
-import View.Jeu;
-import View.Menu;
-import couleur.Couleur;
-import exception.ActionEx;
-import exception.MouvementEx;
-import exception.UnreachableCase;
 import observable.action.Activate;
 import observable.action.Break_r;
 import observable.action.Call_P1;
@@ -31,6 +25,12 @@ import observable.robot.Robot;
 import observable.robot.abstr_Robot;
 import observer.int_Observer;
 import parser.parserJSON;
+import View.Jeu;
+import View.Menu;
+import couleur.Couleur;
+import exception.ActionEx;
+import exception.MouvementEx;
+import exception.UnreachableCase;
 
 public class Controller implements int_Observer {
 
@@ -588,7 +588,7 @@ public class Controller implements int_Observer {
 
 	public void getNotificationVictory(){
 		this.isRunning = false;
-		Jeu.victory();
+		this.jeu.victory();
 
 	}
 
