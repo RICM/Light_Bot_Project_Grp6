@@ -43,7 +43,7 @@
     						{"max_p1": 4},
     						{"max_p2": 8},
     						{"orientation": "top"},
-    						{"actions" :["MoveForward" ,"TurnLeft","Jump","TurnRight","Activate"]}
+    						{"actions" :["MoveForward" ,"TurnLeft","Jump","TurnRight","Activate","P1","P2"]}
     			]
     		}
     ]  

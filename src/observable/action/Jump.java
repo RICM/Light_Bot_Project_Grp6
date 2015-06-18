@@ -1,15 +1,15 @@
 package observable.action;
 import java.util.ArrayList;
 
-import couleur.Couleur;
-import exception.MouvementEx;
-import exception.UnreachableCase;
 import observable.int_Observable;
 import observable.map.Coordonnees;
 import observable.map.World;
 import observable.map.abstr_Case;
 import observable.robot.abstr_Robot;
 import observer.int_Observer;
+import couleur.Couleur;
+import exception.MouvementEx;
+import exception.UnreachableCase;
 
 public class Jump implements int_Action, int_Observable{
 
@@ -72,9 +72,9 @@ public class Jump implements int_Action, int_Observable{
 	@Override
 	public boolean isPossible(abstr_Robot r, abstr_Case c) {
 		return ((!c.getClass().getSimpleName().equals("Empty_Case"))
-				&& (r.get_couleur().equals(this.color) || Couleur.GRIS.equals(this.color))
-				&& (r.getCurrent_Case().get_hauteur()+1 == c.get_hauteur())
-				|| (c.get_hauteur() < r.getCurrent_Case().get_hauteur()));
+				&& (r.get_couleur().equals(this.color) || this.getColor().equals(Couleur.GRIS))
+				&& (r.getCurrent_Case().get_hauteur()+1 == c.get_hauteur()
+				|| (c.get_hauteur() < r.getCurrent_Case().get_hauteur())));
 	}
 
 	@Override

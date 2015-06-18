@@ -74,6 +74,7 @@ public class Call_P2 implements int_Action, int_Observable{
 			World.currentWorld.get_ordonnanceur().setReady(true);
 		}
 		else{
+			r.setVoid();
 			System.out.println("Pas possible d exécuter P2");
 		}
 
