@@ -45,10 +45,11 @@ public class Jeu {
 	protected static String typeBackground[]=  {"Main","P1","P2"};
 	protected static String typeCouleur [] = {"_ROUGE","_VERT","_GRIS"};
 	protected static String typeOrientation [] = {"_BOT","_LEFT","_RIGHT","_TOP"};
+	protected static String typeBoutonInterfaceMenu [] = {"Fond","Sound","Home"};
 	protected static String typeBouton [] = {"Activate","Break_r", "Call_P1","Call_P2", "Flashback", "Jump", "MoveForward", "Notify_r", "Pause", "Remember","tache","TurnLeft", "TurnRIght"};
 	protected static String typeCase [] = {"Normal_Case","Painted_Case_ROUGE", "Painted_Case_VERT","Teleporter_Case", "Illuminated_Case_Active", "Illuminated_Case_Inactive", "Event_Case", "Empty_Case", "Destination_Case", "Empile_Case"};
 	protected static String typeRobot[]={"pingouin_GRIS","requin_GRIS"};
-	protected static String typeBoutonInterface[]={typeRobot[identificateur_robot],"play","stop","rewind"};
+	protected static String typeBoutonInterface[]={"pingouin_GRIS","play","stop","rewind"};
 
 	protected Sprite monSprite = new Sprite();
 	protected Sprite monSpriteActionChoisie = new Sprite();
@@ -69,7 +70,10 @@ public class Jeu {
 	protected static final int TAILLE_MAX_P1 = 8;
 	protected static final int TAILLE_MAX_P2 = 8;
 
-	protected int indice_tele=1;
+	protected static int indiceInterface=-40;
+	protected static boolean deroule = false;
+	protected static boolean renroule = false;
+	protected static boolean IsPlaying = true;
 	protected boolean FirstLoop = true;
 	protected static Couleur couleur_active = Couleur.GRIS;
 	protected static float x_whale = -600;
@@ -198,8 +202,27 @@ public class Jeu {
 					this.retourMenu(e,click);
 			}
 
+			Vector2i pos = Mouse.getPosition(Menu.app);
+			float x = pos.x;
+			float y = pos.y;
+			Iterator<String> keySetIterator = Jeu.liste_sprite.keySet().iterator();
+			while(keySetIterator.hasNext()){
 
+				String action = keySetIterator.next();
+				FloatRect rect = liste_sprite.get(action).getGlobalBounds();
+
+				if(action.equals("Fond")){
+					if(x>=rect.left && x<=rect.left+rect.width && y>=rect.top && y<=rect.top+rect.height){
+						deroule = true;
+						break;
+					}else{
+						renroule = true;
+						break;
+					}
+				}
+			}
 		}
+
 	}
 
 	public void retourMenu(Event e, Vector2f click) {
@@ -215,6 +238,8 @@ public class Jeu {
 
 	public void updateRobot(int new_robot){
 		identificateur_robot = new_robot;
+		typeBoutonInterface[0] = typeRobot[identificateur_robot];
+		System.out.println(identificateur_robot);
 	}
 	/**
 	 *
@@ -282,6 +307,22 @@ public class Jeu {
 					controller.getNotificationStopRun();
 					break;
 				}
+				else if(action.equals("Home")){
+					System.out.println("Home");
+					new Theme(controller);
+					break;
+				}
+				else if(action.equals("Sound")){
+					System.out.println("Sound");
+					if(IsPlaying){
+						Menu.song.pause();
+						IsPlaying = false;
+					}else{
+						Menu.song.play();
+						IsPlaying = true;
+					}
+					break;
+				}
 			}
 		}
 
@@ -298,34 +339,10 @@ public class Jeu {
 				controller.setNotificationSwitchProgram(backgroundCurrent);
 				break;
 			}
-
 		}
-		//		int i=0;
-		//		for(Sprite s: liste_background){
-		//			FloatRect rect = s.getGlobalBounds();
-		//			if(x>=rect.left && x<=rect.left+rect.width && y>=rect.top && y<=rect.top+rect.height){
-		//				activate = typeBackground[i];
-		//				controller.setNotificationSwitchProgram(i);
-		//				break;
-		//			}
-		//			i++;
-		//		}
-
-		//		//Remove actions personnage Main
-		//		int cpt=0;
-		//		for(Sprite s: liste_main){
-		//			FloatRect rect = s.getGlobalBounds();
-		//			if(x>=rect.left && x<=rect.left+rect.width &&
-		//					y>=rect.top && y<=rect.top+rect.height){
-		//				System.out.println("CLICK "+cpt);
-		//				liste_main.remove(cpt);
-		//				r.get_Main().removeIndice(cpt);
-		//				break;
-		//			}
-		//			cpt++;
-		//		}
-
 	}
+
+
 	public void delete_button(Event e, Vector2f click){
 		float x = click.x;
 		float y = click.y;
@@ -369,10 +386,10 @@ public class Jeu {
 	 * @param X la position en x du personnage
 	 * @param Y la position en y du personnage
 	 */
-	public void updateDrawPerso(int X, int Y, int H, orientation O, Couleur C){
+	public void updateDrawPerso(int X, int Y, int H, orientation O, Couleur C,int Robot){
 		Texture textureTemp;
 
-		String to_get = identificateur_robot+"_"+O.toString()+"_"+C.toString();
+		String to_get = Robot+"_"+O.toString()+"_"+C.toString();
 		textureTemp = textureRobot.get(to_get);
 
 		this.monSpritePerso.setTexture(textureTemp);
@@ -429,6 +446,32 @@ public class Jeu {
 			monSpriteBouton.setTexture(textureTemp);
 			monSpriteBouton.setPosition(700+50*i,540);
 			Jeu.liste_sprite.replace(couleurCurrent,monSpriteBouton);
+			Menu.app.draw(monSpriteBouton);
+			i++;
+		}
+
+		i = 0;
+		for(String boutonMenuCurrent : typeBoutonInterfaceMenu){
+
+			textureTemp = textureBoutonInterface.get(boutonMenuCurrent);
+			Sprite monSpriteBouton = liste_sprite.get(boutonMenuCurrent);
+			monSpriteBouton.setTexture(textureTemp);
+			if(deroule){
+				if(indiceInterface>=0){
+					deroule = false;
+				}else{
+					indiceInterface ++;
+				}
+			}
+			if(renroule && !deroule){
+				if(indiceInterface>-40){
+					indiceInterface --;
+				}else{
+					renroule = false;
+				}
+			}
+			monSpriteBouton.setPosition(400+50*i,indiceInterface);
+			Jeu.liste_sprite.replace(boutonMenuCurrent,monSpriteBouton);
 			Menu.app.draw(monSpriteBouton);
 			i++;
 		}
@@ -535,21 +578,37 @@ public class Jeu {
 	public void initTextureBoutonInterface(){
 		try{
 			Texture textureTemp;
+			Sprite monSpriteBouton;
 			for(String boutonCurrent : typeBoutonInterface){
 				textureTemp = new Texture();
 				textureTemp.loadFromFile(Paths.get("Images/Jeu/Boutons/"+boutonCurrent+".png"));
 				textureBoutonInterface.put(boutonCurrent,textureTemp);
 
-				Sprite monSpriteBouton = new Sprite();
+				monSpriteBouton = new Sprite();
 				liste_sprite.put(boutonCurrent, monSpriteBouton);
 			}
+			textureTemp = new Texture();
+			textureTemp.loadFromFile(Paths.get("Images/Jeu/Boutons/requin_GRIS.png"));
+			textureBoutonInterface.put("requin_GRIS",textureTemp);
+
+			monSpriteBouton = new Sprite();
+			liste_sprite.put("requin_GRIS", monSpriteBouton);
+
 			for(String couleurCurrent : typeCouleur){
 				textureTemp = new Texture();
 				textureTemp.loadFromFile(Paths.get("Images/Jeu/Boutons/tache"+couleurCurrent+".png"));
 				textureBoutonInterface.put("tache"+couleurCurrent,textureTemp);
 
-				Sprite monSpriteBouton = new Sprite();
+				monSpriteBouton = new Sprite();
 				liste_sprite.put(couleurCurrent, monSpriteBouton);
+			}
+			for(String boutonCurrent : typeBoutonInterfaceMenu){
+				textureTemp = new Texture();
+				textureTemp.loadFromFile(Paths.get("Images/Jeu/BoutonsInterface/Interface_"+boutonCurrent+".png"));
+				textureBoutonInterface.put(boutonCurrent,textureTemp);
+
+				monSpriteBouton = new Sprite();
+				liste_sprite.put(boutonCurrent, monSpriteBouton);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
