@@ -134,12 +134,6 @@ public class Controller implements int_Observer {
 				} catch (ActionEx e) {
 					//this.jeu.draw_popup("Une erreur est survenue lors de l'execution de l'actions");
 				}
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 			}
 			World.currentWorld.get_ordonnanceur().removeRobots();
 			System.out.println("NOMBRE DE ROBOT DANS ORDO A LA FIN : "+World.currentWorld.get_ordonnanceur().getNumberRobots());
