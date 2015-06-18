@@ -1,14 +1,15 @@
 package observable.map;
 import java.util.ArrayList;
 
-import Ordonnanceur.Ordonnanceur;
-import exception.ActionEx;
-import exception.MouvementEx;
-import exception.UnreachableCase;
 import observable.int_Observable;
 import observable.robot.Position;
 import observable.robot.abstr_Robot;
 import observer.int_Observer;
+import observer.controller.Controller;
+import Ordonnanceur.Ordonnanceur;
+import exception.ActionEx;
+import exception.MouvementEx;
+import exception.UnreachableCase;
 
 public class World implements int_Observable {
 
@@ -148,7 +149,11 @@ public class World implements int_Observable {
 	 * @return true ssi toutes les cases sont allumées
 	 */
 	public boolean is_cleared(){
-		return this.nb_case_allumable == this.nb_case_allumees;
+		if(this.nb_case_allumable == this.nb_case_allumees){
+			((Controller) this.getFirstObserver()).getNotificationVictory();
+			return true;
+		}
+		return false;
 	}
 
 	/**

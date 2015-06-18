@@ -10,6 +10,17 @@ import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 
+import observable.action.MoveForward;
+import observable.action.int_Action;
+import observable.action_list.Sequence_List;
+import observable.map.Illuminated_Case;
+import observable.map.Terrain;
+import observable.map.World;
+import observable.map.abstr_Case;
+import observable.robot.Orientation;
+import observable.robot.abstr_Robot;
+import observer.controller.Controller;
+
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
@@ -25,16 +36,6 @@ import org.jsfml.window.event.Event.Type;
 import couleur.Couleur;
 import exception.MouvementEx;
 import exception.UnreachableCase;
-import observable.action.MoveForward;
-import observable.action.int_Action;
-import observable.action_list.Sequence_List;
-import observable.map.Illuminated_Case;
-import observable.map.Terrain;
-import observable.map.World;
-import observable.map.abstr_Case;
-import observable.robot.Orientation;
-import observable.robot.abstr_Robot;
-import observer.controller.Controller;
 
 public class Jeu {
 
@@ -673,6 +674,11 @@ public class Jeu {
 
 	public void updateSequenceList(Sequence_List seq) {
 		System.out.println("j'ai updaté la sequence display");
+	}
+
+	public static void victory() {
+		JOptionPane.showMessageDialog(null, "Win");
+		new Theme(acontroller);
 	}
 
 }

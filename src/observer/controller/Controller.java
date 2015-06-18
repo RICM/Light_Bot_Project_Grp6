@@ -348,6 +348,9 @@ public class Controller implements int_Observer {
 	}
 	public void getLevel(Controller controller, String level){
 		parserJSON.currentparser.lecture(controller,level);
+	}
 
+	public void getNotificationVictory(){
+		Jeu.victory();
 	}
 }

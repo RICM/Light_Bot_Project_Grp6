@@ -5,13 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
-import couleur.Couleur;
-import exception.UnreachableCase;
 import observable.action.Activate;
 import observable.action.Break_r;
 import observable.action.Call_P1;
@@ -45,6 +38,15 @@ import observable.robot.Robot;
 import observable.robot.abstr_Robot;
 import observer.int_Observer;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import couleur.Couleur;
+import exception.ActionEx;
+import exception.UnreachableCase;
+
 
 
 public class parserJSON {
@@ -56,7 +58,7 @@ public class parserJSON {
 	public void lecture (int_Observer acontroller,String s){
 		try {
 			//reader
-			FileReader reader = new FileReader(filePath+s);
+			FileReader reader = new FileReader(filePath+s+".json");
 			JSONParser jsonParser = new JSONParser();
 			JSONObject jsonObject = (JSONObject) jsonParser.parse(reader);
 
@@ -372,6 +374,8 @@ public class parserJSON {
 			}
 			World.currentWorld.set_liste_robot(robotlist);
 			World.currentWorld.set_liste_terrain(terrainlist);
+			World.currentWorld.store_status();
+			World.currentWorld.init_World();
 			//                      try {
 			//                              World.currentWorld.store_status();
 			//                      } catch (ActionEx e) {
@@ -389,6 +393,8 @@ public class parserJSON {
 		} catch (NullPointerException ex) {
 			ex.printStackTrace();
 		} catch (UnreachableCase e) {
+			e.printStackTrace();
+		} catch (ActionEx e) {
 			e.printStackTrace();
 		}
 	}
