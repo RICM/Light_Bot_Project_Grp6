@@ -76,8 +76,7 @@ public class MoveForward implements int_Action, int_Observable{
 		c_prime = World.currentWorld.get_terrain(pos.get_n()).get_case(i,j);
 		System.out.println("couleur de l'action : "+this.color.toString());
 		if (! this.isPossible(r,c_prime)){
-			//System.out.println("impossible d'avancer bitch");
-			throw (new MouvementEx("impossible d'avancer"));
+			//System.out.println("impossible d'avancer");
 		} else {
 			r.setCurrent_Case(c_prime);
 			World.currentWorld.basic_print_world();

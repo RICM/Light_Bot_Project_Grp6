@@ -74,7 +74,7 @@ public class Call_P1 implements int_Action, int_Observable{
 			World.currentWorld.get_ordonnanceur().setReady(true);
 		}
 		else{
-			throw new ActionEx("impossible d'executer ");
+			System.out.println("Impossible d'éxécuter P1");
 		}
 
 	}

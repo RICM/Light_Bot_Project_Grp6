@@ -276,6 +276,9 @@ public abstract class abstr_Robot {
 	public Execution_list get_run(){
 		return this.order_exec;
 	}
+	public void setVoid() {
+		this.notifyObserver();
+	}
 
 }
 
