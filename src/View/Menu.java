@@ -3,6 +3,8 @@ package View;
 import java.io.IOException;
 import java.nio.file.Paths;
 
+import observer.controller.Controller;
+
 import org.jsfml.audio.Music;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.RenderWindow;
@@ -15,8 +17,6 @@ import org.jsfml.window.Mouse;
 import org.jsfml.window.VideoMode;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.Event.Type;
-
-import observer.controller.Controller;
 
 public class Menu {
 
@@ -84,7 +84,7 @@ public class Menu {
 	}
 
 	/**
-	 * D�tecte les entr�es claviers et souris
+	 * Detecte les entrees claviers et souris
 	 */
 	private void processEvent() {
 		Menu.app.setKeyRepeatEnabled(false);
@@ -98,26 +98,6 @@ public class Menu {
 				Menu.reset_cam();
 			}
 
-			//		if (Keyboard.isKeyPressed(Key.DOWN)){
-			//			Menu.camera.zoom(0.5f);
-			//			Menu.app.setView(Menu.camera);
-			//		}
-			//
-			//		if (Keyboard.isKeyPressed(Key.UP)){
-			//			Menu.camera.zoom(2f);
-			//			Menu.app.setView(Menu.camera);
-			//		}
-			//
-			//		if (Keyboard.isKeyPressed(Key.RIGHT)){
-			//			Menu.camera.rotate(-45);;
-			//			Menu.app.setView(Menu.camera);
-			//		}
-			//
-			//		if (Keyboard.isKeyPressed(Key.LEFT)){
-			//			Menu.camera.rotate(45);;
-			//			Menu.app.setView(Menu.camera);
-			//		}
-
 			else if (e.type == Event.Type.MOUSE_BUTTON_RELEASED) {
 				e.asMouseEvent();
 				Vector2i pos = Mouse.getPosition(Menu.app);
@@ -130,7 +110,7 @@ public class Menu {
 	}
 
 	/**
-	 *	R�initialise la cam�ra
+	 *	Reinitialise la camera
 	 */
 	protected static void reset_cam() {
 		int x = Menu.app.getSize().x;
@@ -141,8 +121,8 @@ public class Menu {
 	}
 
 	/**
-	 * Regarde si le clique pass� en param�tre est sur le bouton Jouer
-	 * @param pos Coordonn�es du clique souris
+	 * Regarde si le clique en parametre est sur le bouton Jouer
+	 * @param pos : Coordonnees du clique souris
 	 */
 	private void btnClick(Vector2f pos) {
 		// TODO Auto-generated method stub
@@ -155,6 +135,7 @@ public class Menu {
 		}
 	}
 
+	/****Getters****/
 	public static int getWidth() {
 		return WIDTH;
 	}

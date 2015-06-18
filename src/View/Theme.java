@@ -5,6 +5,8 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import observer.controller.Controller;
+
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
@@ -13,8 +15,6 @@ import org.jsfml.system.Vector2i;
 import org.jsfml.window.Mouse;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.Event.Type;
-
-import observer.controller.Controller;
 
 public class Theme {
 
@@ -63,6 +63,9 @@ public class Theme {
 
 	}
 
+	/**
+	 * Detecte les entrees claviers et souris
+	 */
 	protected void processEvent() {
 		for(Event e : Menu.app.pollEvents()){
 			if(e.type == Type.CLOSED){
@@ -87,8 +90,8 @@ public class Theme {
 
 
 	/**
-	 * Regarde si le clique pass� en param�tre est sur l'un des boutons
-	 * @param pos Coordonn�es du clique souris
+	 * Regarde si le clique en parametre est sur l'un des boutons
+	 * @param pos : Coordonnees du clique souris
 	 */
 	private void btnClick(Vector2f pos) {
 		float x = pos.x;
@@ -145,6 +148,9 @@ public class Theme {
 		this.listSprite.put(this.sprite_btnMenu, "Menu");
 	}
 
+	/**
+	 * Affiche les themes possibles
+	 */
 	protected void displayTheme() {
 		for(int i = 0;i<this.tab.length;i++){
 			this.sprite_Theme.setTexture(this.texture_Theme[i]);
