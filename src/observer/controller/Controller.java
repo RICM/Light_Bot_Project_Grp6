@@ -351,6 +351,8 @@ public class Controller implements int_Observer {
 	}
 
 	public void getNotificationVictory(){
+		this.isRunning = false;
 		Jeu.victory();
+
 	}
 }
