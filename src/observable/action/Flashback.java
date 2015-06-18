@@ -77,6 +77,7 @@ public class Flashback implements int_Action {
 			}
 		}
 		else{
+			r.setVoid();
 			System.out.println("Pas de position en mémoire");
 		}
 
