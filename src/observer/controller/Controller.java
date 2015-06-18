@@ -41,6 +41,7 @@ public class Controller implements int_Observer {
 	private int overflow;
 	private boolean runnable;
 	private boolean isRunning = false;
+	private boolean isPaused = false;
 
 	@Override
 	public void update(Object obj){
@@ -105,10 +106,17 @@ public class Controller implements int_Observer {
 
 	}
 
+	public void setNotificationGoOn(){
+		this.getNotificationRewind();
+	}
+
 	/**
 	 * Receive a notification from view to run program
 	 */
 	public void getNotificationRun(){
+		if (this.isPaused){
+			this.setNotificationGoOn();
+		}
 		if (!this.isRunning){
 			this.isRunning = true;
 			this.overflow = 0;
@@ -586,6 +594,7 @@ public class Controller implements int_Observer {
 	public void getNotificationStopRun(){
 		this.runnable = false;
 		this.isRunning = false;
+		this.isPaused = true;
 	}
 }
 
