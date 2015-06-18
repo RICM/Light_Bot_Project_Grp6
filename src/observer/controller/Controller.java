@@ -3,6 +3,12 @@ package observer.controller;
 import java.io.IOException;
 import java.util.LinkedList;
 
+import View.Jeu;
+import View.Menu;
+import couleur.Couleur;
+import exception.ActionEx;
+import exception.MouvementEx;
+import exception.UnreachableCase;
 import observable.action.Activate;
 import observable.action.Break_r;
 import observable.action.Call_P1;
@@ -25,12 +31,6 @@ import observable.robot.Robot;
 import observable.robot.abstr_Robot;
 import observer.int_Observer;
 import parser.parserJSON;
-import View.Jeu;
-import View.Menu;
-import couleur.Couleur;
-import exception.ActionEx;
-import exception.MouvementEx;
-import exception.UnreachableCase;
 
 public class Controller implements int_Observer {
 
@@ -42,6 +42,7 @@ public class Controller implements int_Observer {
 	private boolean runnable;
 	private boolean isRunning = false;
 	private boolean isPaused = false;
+	private boolean savedPrerun = false;
 
 	@Override
 	public void update(Object obj){
@@ -127,6 +128,7 @@ public class Controller implements int_Observer {
 					World.currentWorld.get_ordonnanceur().addRobot(World.currentWorld.get_robot(j));
 			}
 			World.currentWorld.prerun();
+			this.savedPrerun = true;
 			this.runnable = World.currentWorld.isOneRobotActive();
 			System.out.println("contenu de run " + World.currentWorld.get_robot(0).get_run());
 			System.out.println("statut du robot " + World.currentWorld.get_robot(0).get_activable());

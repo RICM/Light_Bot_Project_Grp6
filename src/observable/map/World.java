@@ -178,17 +178,22 @@ public class World implements int_Observable {
 	 * @throws UnreachableCase
 	 */
 	public void init_World() throws UnreachableCase{
+		//this.liste_terrain = this.save_terr.clone();
 		this.nb_case_allumable = 0;
 		this.nb_case_allumees = 0;
 		for(int i = 0; i<this.liste_terrain.length; i++){
 			for(int j = 0; j<this.liste_terrain[i].get_terrain().length;j++ ){
 				for(int k = 0; k<this.liste_terrain[i].get_terrain()[j].length; k++){
+					abstr_Case temp = this.save_terr[i].get_case(k, j).Clone();
+					this.liste_terrain[i].set_case(temp,k,j);
 					//	System.out.println(" type de la case " +this.liste_terrain[i].get_case(j, k).getClass().getSimpleName() + "et coordonnees" + j + "   "+ k );
 					if (this.liste_terrain[i].get_case(k, j).getClass().getSimpleName().equals("Event_Case")){
 						((Event_Case)this.liste_terrain[i].get_case(k, j)).init();
 						((Event_Case)this.liste_terrain[i].get_case(k, j)).refresh();
 					}
 					if (this.liste_terrain[i].get_case(k, j).getClass().getSimpleName().equals("Illuminated_Case")){
+						System.out.println("CASE ILLUMINEE SAVE : "+((Illuminated_Case)this.save_terr[i].get_case(k, j)).get_active());
+						System.out.println("CASE ILLUMINEE : "+((Illuminated_Case)this.liste_terrain[i].get_case(k, j)).get_active());
 						this.nb_case_allumable++;
 						if (((Illuminated_Case)this.liste_terrain[i].get_case(k, j)).get_active()){
 							this.nb_case_allumees++;

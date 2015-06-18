@@ -2,11 +2,11 @@ package observable.map;
 
 import java.util.ArrayList;
 
+import couleur.Couleur;
+import exception.UnreachableCase;
 import observable.int_Observable;
 import observable.robot.abstr_Robot;
 import observer.int_Observer;
-import couleur.Couleur;
-import exception.UnreachableCase;
 
 public class Terrain implements int_Observable{
 
@@ -140,10 +140,20 @@ public class Terrain implements int_Observable{
 		i = this.terrain[j-1].length;
 		for(int k = 0; k<j; k++){
 			for(int l = 0;l<i ; l++){
+				System.out.println("aaaaaaaaaaaaaaa");
 				to_return.add_case(l, k, this.get_case(l, k).Clone());
+				System.out.println(this.get_case(l, k).getClass().getSimpleName());
+				if (this.get_case(l, k).getClass().getSimpleName().equals("Illuminated_Case")){
+					System.out.println("aaaaaaaaaaaaaaa");
+					System.out.println("CASE ILLUMINEE : "+((Illuminated_Case)to_return.get_case(l, k)).get_active());
+				}
 			}
 		}
 		to_return.listObserver=(ArrayList<int_Observer>) this.listObserver.clone();
 		return to_return;
+	}
+
+	public void set_case(abstr_Case temp, int i, int j) {
+		this.terrain[j][i]=temp;
 	}
 }
