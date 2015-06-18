@@ -5,8 +5,6 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import observer.controller.Controller;
-
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
@@ -15,6 +13,8 @@ import org.jsfml.system.Vector2i;
 import org.jsfml.window.Mouse;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.Event.Type;
+
+import observer.controller.Controller;
 
 public class Theme {
 
@@ -34,7 +34,7 @@ public class Theme {
 		controller = acontroller;
 		Menu.reset_cam();
 		Menu.app.clear();
-		this.displayBackground();
+		//this.displayBackground();
 		this.displayBtn();
 		this.displayTheme();
 		Menu.app.display();

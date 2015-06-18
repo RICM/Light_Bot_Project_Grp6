@@ -3,8 +3,6 @@ package View;
 import java.io.IOException;
 import java.nio.file.Paths;
 
-import observer.controller.Controller;
-
 import org.jsfml.audio.Music;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.RenderWindow;
@@ -18,6 +16,8 @@ import org.jsfml.window.VideoMode;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.Event.Type;
 
+import observer.controller.Controller;
+
 public class Menu {
 
 	protected static RenderWindow app = new RenderWindow(new VideoMode(Niveaux.WIDTH, Niveaux.HEIGHT),"Lightbot");
@@ -26,12 +26,13 @@ public class Menu {
 	protected Texture texture_Play= new Texture();
 	protected Sprite sprite_Play = new Sprite();
 	protected static View camera = new View();
-	protected static final int WIDTH = 1200;
-	protected static final int HEIGHT = 700;
+	private static final int WIDTH = 1200;
+	private static final int HEIGHT = 700;
 	protected static Controller controller;
 	protected Music song = new Music();
 
 	public Menu(Controller acontroller){
+		app.setVerticalSyncEnabled(true);
 		controller = acontroller;
 		Menu.reset_cam();
 		try {
@@ -44,7 +45,7 @@ public class Menu {
 		this.song.setLoop(true);
 		//while(Menu.app.isOpen()){
 		Menu.app.clear();
-		this.displayBackground();
+		//this.displayBackground();
 		this.displayBtn();
 		Menu.app.display();
 		this.processEvent();
@@ -169,5 +170,13 @@ public class Menu {
 		}
 		else
 			this.processEvent();
+	}
+
+	public static int getWidth() {
+		return WIDTH;
+	}
+
+	public static int getHeight() {
+		return HEIGHT;
 	}
 }
