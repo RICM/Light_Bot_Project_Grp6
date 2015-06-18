@@ -9,6 +9,7 @@ import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 
+import org.jsfml.audio.Music;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
@@ -43,7 +44,7 @@ public class Jeu {
 	protected static String typeCouleur [] = {"_ROUGE","_VERT","_GRIS"};
 	protected static String typeOrientation [] = {"_BOT","_LEFT","_RIGHT","_TOP"};
 	protected static String typeBouton [] = {"Activate","Break_r", "Call_P1","Call_P2", "Flashback", "Jump", "MoveForward", "Notify_r", "Pause", "Remember","tache","TurnLeft", "TurnRIght"};
-	protected static String typeCase [] = {"Normal_Case","Painted_Case_ROUGE", "Painted_Case_VERT","Teleporter_Case", "Illuminated_Case_Active", "Illuminated_Case_Inactive", "Event_Case", "Empty_Case", "Destination_Case", "Empile_Case"};
+	protected static String typeCase [] = {"Normal_Case","Painted_Case_ROUGE", "Painted_Case_VERT","Teleporter_Case", "Illuminated_Case_Active", "Illuminated_Case_Inactive", "Event_Case", "Empty_Case", "Destination_Case", "Empile_Case",""};
 	protected static String typeRobot[]={"pingouin_GRIS","requin_GRIS"};
 	protected static String typeBoutonInterface[]={typeRobot[identificateur_robot],"play","stop","rewind"};
 
@@ -140,29 +141,29 @@ public class Jeu {
 		//Event e = Menu.app.waitEvent();
 		for(Event e : Menu.app.pollEvents()){
 			if(e.type == Type.CLOSED){
-				//			Texture te = new Texture();
-				//			Sprite sp = new Sprite();
-				//			Music song_close = new Music();
-				//			try {
-				//				te.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/whale.png"));
-				//				song_close.openFromFile(Paths.get("Song/close.ogg"));
-				//			} catch (IOException e1) {
-				//				// TODO Auto-generated catch block
-				//				e1.printStackTrace();
-				//			}
-				//			song_close.play();
-				//			sp.setTexture(te);
-				//			while(Jeu.x_whale < 1200){
-				//				sp.setPosition(Jeu.x_whale,Jeu.y_whale);
-				//				this.drawBackground();
-				//				if(x_whale < Menu.WIDTH/3-200)
-				//					this.drawGrilleISO();
-				//				this.draw_bouton();
-				//				Menu.app.draw(sp);
-				//				Menu.app.display();
-				//				Jeu.x_whale += 20;
-				//				Menu.app.clear();
-				//			}
+				Texture te = new Texture();
+				Sprite sp = new Sprite();
+				Music song_close = new Music();
+				try {
+					te.loadFromFile(Paths.get("Images/Jeu/gif/images_fixes/whale.png"));
+					song_close.openFromFile(Paths.get("Song/close.ogg"));
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				song_close.play();
+				sp.setTexture(te);
+				while(Jeu.x_whale < 1200){
+					sp.setPosition(Jeu.x_whale,Jeu.y_whale);
+					this.drawBackground();
+					if(x_whale < Menu.getWidth()/3-200)
+						controller.setNotificationDrawGrilleISO();
+					controller.setNotificationDrawButton();
+					Menu.app.draw(sp);
+					Menu.app.display();
+					Jeu.x_whale += 20;
+					Menu.app.clear();
+				}
 				Menu.app.close();
 
 			}
@@ -347,7 +348,7 @@ public class Jeu {
 		textureTemp = textureRobot.get(to_get);
 
 		this.monSpritePerso.setTexture(textureTemp);
-		this.monSpritePerso.setPosition((float) ((X+30+10)*0.8),(float) (0.8*(Y-HAUTEUR_CASE*H+25)));
+		this.monSpritePerso.setPosition((float) ((X+30+10)*0.8),(float) (0.8*(Y-HAUTEUR_CASE*H+50)));
 		this.monSpritePerso.setScale(0.9f,0.9f);
 		Menu.app.draw(this.monSpritePerso);
 	}
@@ -642,21 +643,17 @@ public class Jeu {
 		String to_get;
 		Texture textureTemp;
 
-		for(int hauteur=1; hauteur<H;hauteur++){
-			to_get = "Square_empile";
+		for(int hauteur=0; hauteur<H;hauteur++){
+			to_get = class_name + info_suppl;
+
 			textureTemp = textureCase.get(to_get);
 			this.monSprite.setTexture(textureTemp);
-			this.monSprite.setPosition(X,Y-HAUTEUR_CASE*hauteur);
+			this.monSprite.setScale(0.8f, 0.8f);
+			this.monSprite.setPosition((float) (X*0.8),(float) ((Y-HAUTEUR_CASE*hauteur)*0.8));
 			Menu.app.draw(this.monSprite);
 		}
 
-		to_get = class_name + info_suppl;
 
-		textureTemp = textureCase.get(to_get);
-		this.monSprite.setTexture(textureTemp);
-		this.monSprite.setScale(0.8f, 0.8f);
-		this.monSprite.setPosition((float) (X*0.8),(float) ((Y-HAUTEUR_CASE*H)*0.8));
-		Menu.app.draw(this.monSprite);
 
 	}
 
