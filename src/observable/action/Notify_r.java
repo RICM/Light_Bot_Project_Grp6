@@ -43,6 +43,7 @@ public class Notify_r implements int_Action {
 		if (this.isPossible(r, null)){
 			for(int i =0; i< World.currentWorld.get_liste_robot().length;i++){
 				World.currentWorld.get_robot(i).set_activable(true);
+				r.setVoid();
 			}
 		}
 	}

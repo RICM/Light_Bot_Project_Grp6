@@ -91,6 +91,7 @@ public class Ordonnanceur implements int_Observable {
 		abstr_Robot robot;
 		robot = this.list_robot.get(this.ind_ex);
 		System.out.println("CURRENT ROBOT : "+robot.getClass().getSimpleName()+robot.toString());
+		System.out.println("ROBOT IS ACTIVABLE ?"+robot.get_activable());
 		if(robot.get_activable()){
 			this.ready = false;
 			this.list_robot.get(this.ind_ex).execute();

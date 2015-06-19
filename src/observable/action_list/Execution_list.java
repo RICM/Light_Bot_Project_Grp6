@@ -49,9 +49,14 @@ public class Execution_list implements int_Observable{
 			System.out.println("taille de la première liste a run : "+ this.Run_List.getFirst().size());
 			if(this.Run_List.getFirst().size() > 0){
 				System.out.println("Ich bin in run : second if");
-				int_Action temp = this.Run_List.getFirst().removeFirst();
-				System.out.println(temp);
-				temp.execute(r);
+				System.out.println("EXEC LIST ROBOT EST : "+r.get_activable());
+				if (r.get_activable()){
+					int_Action temp = this.Run_List.getFirst().removeFirst();
+					System.out.println(temp);
+					temp.execute(r);
+				}else{
+					System.out.println("Je passe mon tour je suis pas actif");
+				}
 			}
 			else{
 				this.Run_List.removeFirst();

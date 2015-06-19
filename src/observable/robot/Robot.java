@@ -140,6 +140,18 @@ public class Robot extends abstr_Robot implements int_Observable {
 	}
 
 	@Override
+	public boolean get_activable(){
+		return this.activable;
+	}
+
+	@Override
+	public void set_activable( boolean activ){
+		this.activable = activ;
+		System.out.println("SET ACTIVABLE A : "+this.activable);
+		this.notifyObserver();
+	}
+
+	@Override
 	public Possible_List get_possible(){
 		return this.allowed_actions;
 	}

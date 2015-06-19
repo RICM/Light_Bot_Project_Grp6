@@ -262,6 +262,17 @@ public class Dumb_bot extends abstr_Robot {
 	}
 
 	@Override
+	public boolean get_activable(){
+		return this.activable;
+	}
+
+	@Override
+	public void set_activable( boolean activ){
+		this.activable = activ;
+		this.notifyObserver();
+	}
+
+	@Override
 	public void setCurrent_Case(abstr_Case c){
 		this.prev_case = this.current_case;
 		this.current_case = c;
