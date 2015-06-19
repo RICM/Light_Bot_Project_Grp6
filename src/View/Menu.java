@@ -30,6 +30,9 @@ public class Menu {
 	private static final int HEIGHT = 700;
 	protected static Controller controller;
 	protected static Music song = new Music();
+	protected static boolean IsPlaying = true;
+
+
 
 	public Menu(Controller acontroller){
 		app.setVerticalSyncEnabled(true);
@@ -43,7 +46,7 @@ public class Menu {
 			e.printStackTrace();
 		}
 		Menu.reset_cam();
-		this.song.play();
+		//this.song.play();
 		this.song.setLoop(true);
 		while(Menu.app.isOpen()){
 			Menu.app.clear();
@@ -105,6 +108,7 @@ public class Menu {
 				System.out.println(poss.x+" "+poss.y);
 				this.btnClick(poss);
 			}
+
 
 		}
 	}

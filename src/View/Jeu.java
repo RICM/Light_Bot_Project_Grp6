@@ -9,14 +9,6 @@ import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 
-import observable.action.int_Action;
-import observable.action_list.Sequence_List;
-import observable.map.Terrain;
-import observable.map.World;
-import observable.robot.Orientation.orientation;
-import observable.robot.abstr_Robot;
-import observer.controller.Controller;
-
 import org.jsfml.audio.Music;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.Sprite;
@@ -28,6 +20,13 @@ import org.jsfml.window.event.Event;
 import org.jsfml.window.event.Event.Type;
 
 import couleur.Couleur;
+import observable.action.int_Action;
+import observable.action_list.Sequence_List;
+import observable.map.Terrain;
+import observable.map.World;
+import observable.robot.Orientation.orientation;
+import observable.robot.abstr_Robot;
+import observer.controller.Controller;
 
 
 public class Jeu {
@@ -72,7 +71,6 @@ public class Jeu {
 	protected static int indiceInterface=-40;
 	protected static boolean deroule = false;
 	protected static boolean renroule = false;
-	protected static boolean IsPlaying = true;
 	protected boolean FirstLoop = true;
 	protected static Couleur couleur_active = Couleur.GRIS;
 	protected static float x_whale = -600;
@@ -319,12 +317,12 @@ public class Jeu {
 				}
 				else if(action.equals("Sound")){
 					System.out.println("Sound");
-					if(IsPlaying){
+					if(Menu.IsPlaying){
 						Menu.song.pause();
-						IsPlaying = false;
+						Menu.IsPlaying = false;
 					}else{
 						Menu.song.play();
-						IsPlaying = true;
+						Menu.IsPlaying = true;
 					}
 					break;
 				}
@@ -396,7 +394,7 @@ public class Jeu {
 		textureTemp = textureRobot.get(to_get);
 
 		this.monSpritePerso.setTexture(textureTemp);
-		this.monSpritePerso.setPosition((float) ((X+30+10)*0.8),(float) (0.8*(Y-HAUTEUR_CASE*H+50)));
+		this.monSpritePerso.setPosition((float) ((X+30+10)*0.8),(float) (0.8*(Y-HAUTEUR_CASE*H+18)));
 		this.monSpritePerso.setScale(0.9f,0.9f);
 		Menu.app.draw(this.monSpritePerso);
 	}
@@ -736,7 +734,7 @@ public class Jeu {
 		String to_get;
 		Texture textureTemp;
 
-		for(int hauteur=0; hauteur<H;hauteur++){
+		for(int hauteur=1; hauteur<=H;hauteur++){
 			to_get = class_name + info_suppl;
 
 			textureTemp = textureCase.get(to_get);

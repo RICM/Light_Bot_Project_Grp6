@@ -5,8 +5,6 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import observer.controller.Controller;
-
 import org.jsfml.graphics.Color;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.Font;
@@ -19,6 +17,8 @@ import org.jsfml.window.Mouse;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.Event.Type;
 
+import observer.controller.Controller;
+
 public class Niveaux {
 
 	protected Texture texture_Background = new Texture();
@@ -27,10 +27,16 @@ public class Niveaux {
 	protected Sprite sprite_btnNext= new Sprite();
 	protected Texture texture_btnPrec = new Texture();
 	protected Sprite sprite_btnPrec= new Sprite();
-	protected Texture texture_btnMenu = new Texture();
-	protected Sprite sprite_btnMenu= new Sprite();
 	protected Texture texture_btnLevel = new Texture();
 	protected Sprite sprite_btnLevel = new Sprite();
+
+	protected Texture texture_btnFond = new Texture();
+	protected Sprite sprite_btnFond = new Sprite();
+	protected Texture texture_btnHome = new Texture();
+	protected Sprite sprite_btnHome = new Sprite();
+	protected Texture texture_btnSound = new Texture();
+	protected Sprite sprite_btnSound = new Sprite();
+
 	protected HashMap<Sprite,String> listSprite = new HashMap<Sprite, String>();
 	protected int level = 1;
 	protected static final int WIDTH = 1200;
@@ -39,6 +45,10 @@ public class Niveaux {
 	protected String theme;
 	protected Font f = new Font();
 	protected boolean first_round = true;
+
+	protected static int indiceInterface=-40;
+	protected static boolean deroule = false;
+	protected static boolean renroule = false;
 
 
 	public Niveaux(Controller acontroller,String current_theme){
@@ -49,14 +59,16 @@ public class Niveaux {
 			this.texture_Background.loadFromFile(Paths.get("Images/selectLvl/back.jpg"));
 			this.texture_btnNext.loadFromFile(Paths.get("Images/selectLvl/next100x100.png"));
 			this.texture_btnPrec.loadFromFile(Paths.get("Images/selectLvl/prec100x100.png"));
-			this.texture_btnMenu.loadFromFile(Paths.get("Images/selectLvl/Back.png"));
+			this.texture_btnSound.loadFromFile(Paths.get("Images/selectLvl/Sound.png"));
 			this.texture_btnLevel.loadFromFile(Paths.get("Images/selectLvl/level.png"));
 			this.f.loadFromFile(Paths.get("Fonts/BRUSHSCI.ttf"));
+			this.texture_btnFond.loadFromFile(Paths.get("Images/Jeu/BoutonsInterface/Interface_Fond.png"));
+			this.texture_btnHome.loadFromFile(Paths.get("Images/Jeu/BoutonsInterface/Interface_Home.png"));
+			this.texture_btnSound.loadFromFile(Paths.get("Images/Jeu/BoutonsInterface/Interface_Sound.png"));
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-
 		Menu.reset_cam();
 		while(Menu.app.isOpen()){
 			Menu.app.clear();
@@ -97,6 +109,26 @@ public class Niveaux {
 				System.out.println(pos.x+" "+pos.y);
 				this.btnClick(click);
 			}
+
+			Vector2i pos = Mouse.getPosition(Menu.app);
+			float x = pos.x;
+			float y = pos.y;
+			Iterator<Sprite> keySetIterator = this.listSprite.keySet().iterator();
+			while(keySetIterator.hasNext()){
+
+				Sprite action = keySetIterator.next();
+				FloatRect rect = action.getGlobalBounds();
+
+				if(this.listSprite.get(action).equals("Fond")){
+					if(x>=rect.left && x<=rect.left+rect.width && y>=rect.top && y<=rect.top+rect.height){
+						deroule = true;
+						break;
+					}else{
+						renroule = true;
+						break;
+					}
+				}
+			}
 		}
 	}
 
@@ -123,8 +155,18 @@ public class Niveaux {
 					if(this.level>4)
 						this.level = 4;
 				}
-				else if(this.listSprite.get(s).equals("Menu")){
+				else if(this.listSprite.get(s).equals("Home")){
 					new Theme(controller);
+				}
+				else if(this.listSprite.get(s).equals("Sound")){
+					if(Menu.IsPlaying){
+						Menu.song.pause();
+						Menu.IsPlaying = false;
+					}else{
+						Menu.song.play();
+						Menu.IsPlaying = true;
+					}
+					break;
 				}
 				else if(this.listSprite.get(s).equals("Level")){
 					String lvl = this.theme+this.level;
@@ -158,15 +200,43 @@ public class Niveaux {
 		this.sprite_btnPrec.setPosition(150,700/2);
 		Menu.app.draw(this.sprite_btnPrec);
 
-		//Affichage bouton Back
-		this.sprite_btnMenu.setTexture(this.texture_btnMenu);
-		this.sprite_btnMenu.setPosition(30,5);
-		Menu.app.draw(this.sprite_btnMenu);
+		if(deroule){
+			if(indiceInterface>=0){
+				deroule = false;
+			}else{
+				indiceInterface ++;
+			}
+		}
+		if(renroule && !deroule){
+			if(indiceInterface>-40){
+				indiceInterface --;
+			}else{
+				renroule = false;
+			}
+		}
+
+		//Affichage bouton Fond
+		this.sprite_btnFond.setTexture(this.texture_btnFond);
+		this.sprite_btnFond.setPosition(WIDTH/2-100,indiceInterface);
+		Menu.app.draw(this.sprite_btnFond);
+
+		//Affichage bouton Son
+		this.sprite_btnSound.setTexture(this.texture_btnSound);
+		this.sprite_btnSound.setPosition(WIDTH/2-100+50,indiceInterface);
+		Menu.app.draw(this.sprite_btnSound);
+
+		//Affichage bouton Home
+		this.sprite_btnHome.setTexture(this.texture_btnHome);
+		this.sprite_btnHome.setPosition(WIDTH/2-100+100,indiceInterface);
+		Menu.app.draw(this.sprite_btnHome);
+
 
 		//Affichage bouton Jouer
 		this.sprite_btnLevel.setTexture(this.texture_btnLevel);
 		this.sprite_btnLevel.setPosition(Niveaux.WIDTH/2-330,700/2+210);
 		Menu.app.draw(this.sprite_btnLevel);
+
+
 
 		Text t = new Text(""+this.level,this.f,72);
 		t.setColor(Color.BLACK);
@@ -176,7 +246,9 @@ public class Niveaux {
 		if(this.first_round){
 			this.listSprite.put(this.sprite_btnPrec,"Previous");
 			this.listSprite.put(this.sprite_btnNext,"Next");
-			this.listSprite.put(this.sprite_btnMenu,"Menu");
+			this.listSprite.put(this.sprite_btnFond,"Fond");
+			this.listSprite.put(this.sprite_btnHome,"Home");
+			this.listSprite.put(this.sprite_btnSound,"Sound");
 			this.listSprite.put(this.sprite_btnLevel, "Level");
 			this.first_round = false;
 		}

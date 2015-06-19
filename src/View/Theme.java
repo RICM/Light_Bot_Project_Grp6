@@ -5,8 +5,6 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import observer.controller.Controller;
-
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
@@ -16,6 +14,8 @@ import org.jsfml.window.Mouse;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.Event.Type;
 
+import observer.controller.Controller;
+
 public class Theme {
 
 	protected static Controller controller;
@@ -24,20 +24,39 @@ public class Theme {
 
 	protected Sprite sprite_btnMenu = new Sprite();
 	protected Sprite sprite_Background = new Sprite();
-	protected Sprite sprite_Theme = new Sprite();
+	protected Sprite spriteTab[] = {new Sprite(),new Sprite(),new Sprite(),new Sprite()};
+
+	protected Texture texture_btnFond = new Texture();
+	protected Sprite sprite_btnFond = new Sprite();
+	protected Texture texture_btnCredit = new Texture();
+	protected Sprite sprite_btnCredit = new Sprite();
+	protected Texture texture_btnCreditFond = new Texture();
+	protected Sprite sprite_btnCreditFond = new Sprite();
+	protected Texture texture_btnSound = new Texture();
+	protected Sprite sprite_btnSound = new Sprite();
 
 	protected String tab [] = {"Tutoriels","Conditions","Pointeurs","Dual_mode"};
 	protected Texture texture_Theme [] = new Texture[4];
 
-	protected HashMap<Sprite,String> listSprite = new HashMap<Sprite, String>();
+	protected HashMap<String,Sprite> listSprite = new HashMap<String,Sprite>();
 
+
+	protected static int indiceInterface=-40;
+	protected static boolean deroule = false;
+	protected static boolean renroule = false;
+	protected boolean first_round = true;
+	protected boolean afficheCredit = false;
 
 	public Theme(Controller acontroller){
 		controller = acontroller;
 		Menu.reset_cam();
 		try {
 			this.texture_Background.loadFromFile(Paths.get("Images/selectLvl/back.jpg"));
-			this.texture_btnMenu.loadFromFile(Paths.get("Images/selectLvl/menu.png"));
+			this.texture_btnMenu.loadFromFile(Paths.get("Images/selectLvl/Back.png"));
+			this.texture_btnFond.loadFromFile(Paths.get("Images/Jeu/BoutonsInterface/Interface_Fond.png"));
+			this.texture_btnCredit.loadFromFile(Paths.get("Images/selectLvl/Credit.png"));
+			this.texture_btnCreditFond.loadFromFile(Paths.get("Images/selectLvl/CreditFond.png"));
+			this.texture_btnSound.loadFromFile(Paths.get("Images/Jeu/BoutonsInterface/Interface_Sound.png"));
 			for(int i=0; i<this.tab.length;i++){
 				this.texture_Theme[i] = new Texture();
 				this.texture_Theme[i].loadFromFile(Paths.get("Images/selectLvl/"+this.tab[i]+".png"));
@@ -50,7 +69,13 @@ public class Theme {
 			Menu.app.clear();
 			this.displayBackground();
 			this.displayBtn();
-			this.displayTheme();
+			if(!this.afficheCredit){
+				this.displayTheme();
+			}else{
+				for(int i = 0;i<this.tab.length;i++){
+					this.listSprite.remove(this.tab[i]);
+				}
+			}
 			Menu.app.display();
 			this.processEvent();
 			try {
@@ -84,6 +109,26 @@ public class Theme {
 				System.out.println(pos.x+" "+pos.y);
 				this.btnClick(click);
 			}
+
+			Vector2i pos = Mouse.getPosition(Menu.app);
+			float x = pos.x;
+			float y = pos.y;
+			Iterator<String> keySetIterator = this.listSprite.keySet().iterator();
+			while(keySetIterator.hasNext()){
+
+				String action = keySetIterator.next();
+				FloatRect rect = this.listSprite.get(action).getGlobalBounds();
+
+				if(action.equals("Fond")){
+					if(x>=rect.left && x<=rect.left+rect.width && y>=rect.top && y<=rect.top+rect.height){
+						deroule = true;
+						break;
+					}else{
+						renroule = true;
+						break;
+					}
+				}
+			}
 		}
 
 	}
@@ -96,33 +141,50 @@ public class Theme {
 	private void btnClick(Vector2f pos) {
 		float x = pos.x;
 		float y = pos.y;
-		Iterator<Sprite> keySetIterator = this.listSprite.keySet().iterator();
+		Iterator<String> keySetIterator = this.listSprite.keySet().iterator();
 		while(keySetIterator.hasNext()){
-			Sprite s = keySetIterator.next();
-			FloatRect rect = s.getGlobalBounds();
+			String s = keySetIterator.next();
+			FloatRect rect = this.listSprite.get(s).getGlobalBounds();
 			if(x>=rect.left && x<=rect.left+rect.width &&
 					y>=rect.top && y<=rect.top+rect.height){
 
-				if(this.listSprite.get(s).equals("Menu")){
+				if(s.equals("Menu")){
 					new Menu(controller);
 					break;
 				}
-				else if(this.listSprite.get(s).equals("Tutoriels")){
+				else if(s.equals("Tutoriels")){
 					new Niveaux(controller,"T");
 					break;
 				}
-				else if(this.listSprite.get(s).equals("Conditions")){
+				else if(s.equals("Conditions")){
 					new Niveaux(controller,"C");
 					break;
 				}
-				else if(this.listSprite.get(s).equals("Dual_mode")){
+				else if(s.equals("Dual_mode")){
 					new Niveaux(controller,"D");
 					break;
 				}
-				else if(this.listSprite.get(s).equals("Pointeurs")){
+				else if(s.equals("Pointeurs")){
 					new Niveaux(controller,"P");
 					break;
 				}
+				else if(s.equals("Credit")){
+					this.afficheCredit = true;
+				}
+				else if(s.equals("Sound")){
+					if(Menu.IsPlaying){
+						Menu.song.pause();
+						Menu.IsPlaying = false;
+					}else{
+						Menu.song.play();
+						Menu.IsPlaying = true;
+					}
+					break;
+				}
+				else if(s.equals("CreditFond")){
+					this.afficheCredit = false;
+				}
+
 			}
 		}
 	}
@@ -141,11 +203,51 @@ public class Theme {
 	 * Affiche les boutons
 	 */
 	protected void displayBtn() {
-		//Affichage bouton menu
-		this.sprite_btnMenu.setTexture(this.texture_btnMenu);
-		this.sprite_btnMenu.setPosition(30,5);
-		Menu.app.draw(this.sprite_btnMenu);
-		this.listSprite.put(this.sprite_btnMenu, "Menu");
+
+		if(deroule){
+			if(indiceInterface>=0){
+				deroule = false;
+			}else{
+				indiceInterface ++;
+			}
+		}
+		if(renroule && !deroule){
+			if(indiceInterface>-40){
+				indiceInterface --;
+			}else{
+				renroule = false;
+			}
+		}
+
+		//Affichage bouton Fond
+		this.sprite_btnFond.setTexture(this.texture_btnFond);
+		this.sprite_btnFond.setPosition( Menu.getWidth()/2-100,indiceInterface);
+		Menu.app.draw(this.sprite_btnFond);
+
+		//Affichage bouton Son
+		this.sprite_btnSound.setTexture(this.texture_btnSound);
+		this.sprite_btnSound.setPosition( Menu.getWidth()/2-100+50,indiceInterface);
+		Menu.app.draw(this.sprite_btnSound);
+
+		//Affichage bouton Credit
+		this.sprite_btnCredit.setTexture(this.texture_btnCredit);
+		this.sprite_btnCredit.setPosition( Menu.getWidth()/2-100+100,indiceInterface);
+		Menu.app.draw(this.sprite_btnCredit);
+
+		//Affichage bouton Credit
+		if(this.afficheCredit){
+			this.sprite_btnCreditFond.setTexture(this.texture_btnCreditFond);
+			this.sprite_btnCreditFond.setPosition( 350, 50);
+			Menu.app.draw(this.sprite_btnCreditFond);
+		}
+
+		if(this.first_round){
+			this.listSprite.put("Fond",this.sprite_btnFond);
+			this.listSprite.put("Credit",this.sprite_btnCredit);
+			this.listSprite.put("Sound",this.sprite_btnSound);
+			this.listSprite.put("CreditFond",this.sprite_btnCreditFond);
+			this.first_round = false;
+		}
 	}
 
 	/**
@@ -153,11 +255,10 @@ public class Theme {
 	 */
 	protected void displayTheme() {
 		for(int i = 0;i<this.tab.length;i++){
-			this.sprite_Theme.setTexture(this.texture_Theme[i]);
-			this.sprite_Theme.setPosition(250+(150+50)*i,350);
-			this.listSprite.put(this.sprite_Theme,this.tab[i]);
-			Menu.app.draw(this.sprite_Theme);
-			this.sprite_Theme = new Sprite();
+			this.spriteTab[i].setTexture(this.texture_Theme[i]);
+			this.spriteTab[i].setPosition(250+(150+50)*i,350);
+			this.listSprite.putIfAbsent(this.tab[i],this.spriteTab[i]);
+			Menu.app.draw(this.spriteTab[i]);
 		}
 	}
 
