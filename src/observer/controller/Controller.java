@@ -524,8 +524,14 @@ public class Controller implements int_Observer {
 			abstr_Robot [] listeRobot = World.currentWorld.get_liste_robot();
 			int i=0;
 			for(abstr_Robot robotCurrent : listeRobot){
-				XRob = robotCurrent.getCurrent_Case().get_coordonnees().get_x();
-				YRob = robotCurrent.getCurrent_Case().get_coordonnees().get_y();
+				if(this.getCpt()<8 && robotCurrent.getPrevious_Case()!=null){
+					XRob = robotCurrent.getPrevious_Case().get_coordonnees().get_x();
+					YRob = robotCurrent.getPrevious_Case().get_coordonnees().get_y();
+				}
+				else{
+					XRob = robotCurrent.getCurrent_Case().get_coordonnees().get_x();
+					YRob = robotCurrent.getCurrent_Case().get_coordonnees().get_y();
+				}
 				//Si le pingouin est sur cette case, alors on l'affiche à la hauteur maximale de celle-ci
 				if ((XRob == X) && (YRob == Y)){
 					this.setNotificationDrawPerso(robotCurrent, i);

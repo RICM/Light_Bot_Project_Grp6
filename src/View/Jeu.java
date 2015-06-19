@@ -396,7 +396,7 @@ public class Jeu {
 		textureTemp = textureRobot.get(to_get);
 
 		this.monSpritePerso.setTexture(textureTemp);
-		this.monSpritePerso.setPosition((float) ((X+30+10)*0.8),(float) (0.8*(Y-HAUTEUR_CASE*H+50)));
+		this.monSpritePerso.setPosition((float) ((X+30+10)*0.8),(float) (0.8*(Y-HAUTEUR_CASE*H+25)));
 		this.monSpritePerso.setScale(0.9f,0.9f);
 		Menu.app.draw(this.monSpritePerso);
 	}
@@ -736,7 +736,7 @@ public class Jeu {
 		String to_get;
 		Texture textureTemp;
 
-		for(int hauteur=0; hauteur<H;hauteur++){
+		for(int hauteur=0; hauteur<=H;hauteur++){
 			to_get = class_name + info_suppl;
 
 			textureTemp = textureCase.get(to_get);

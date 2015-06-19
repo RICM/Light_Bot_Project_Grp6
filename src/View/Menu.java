@@ -3,6 +3,8 @@ package View;
 import java.io.IOException;
 import java.nio.file.Paths;
 
+import observer.controller.Controller;
+
 import org.jsfml.audio.Music;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.RenderWindow;
@@ -15,8 +17,6 @@ import org.jsfml.window.Mouse;
 import org.jsfml.window.VideoMode;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.Event.Type;
-
-import observer.controller.Controller;
 
 public class Menu {
 
@@ -43,7 +43,7 @@ public class Menu {
 			e.printStackTrace();
 		}
 		Menu.reset_cam();
-		this.song.play();
+		//this.song.play();
 		this.song.setLoop(true);
 		while(Menu.app.isOpen()){
 			Menu.app.clear();
