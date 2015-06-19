@@ -26,6 +26,7 @@ import observable.map.Illuminated_Case;
 import observable.map.Terrain;
 import observable.map.World;
 import observable.map.abstr_Case;
+import observable.robot.Dumb_bot;
 import observable.robot.Orientation.orientation;
 import observable.robot.Robot;
 import observable.robot.abstr_Robot;
@@ -43,6 +44,7 @@ public class Controller implements int_Observer {
 	private boolean isRunning = false;
 	private boolean isPaused = false;
 	private boolean savedPrerun = false;
+	protected int cpt = 1;
 
 	@Override
 	public void update(Object obj){
@@ -50,6 +52,10 @@ public class Controller implements int_Observer {
 		case "Robot" :
 			System.out.println("Mouvement détécté");
 			this.setNotificationUpdatedRobot((Robot)obj);
+			break;
+		case "Dumb_bot" :
+			System.out.println("Mouvement détécté");
+			this.setNotificationUpdatedRobot((Dumb_bot)obj);
 			break;
 		case "Terrain" :
 			this.setNotificationUpdatedTerrain((Terrain)obj);
@@ -169,18 +175,26 @@ public class Controller implements int_Observer {
 					System.out.println(ex.getMessage());
 				}
 			}
-			World.currentWorld.get_ordonnanceur().removeRobots();
-			System.out.println("NOMBRE DE ROBOT DANS ORDO A LA FIN : "+World.currentWorld.get_ordonnanceur().getNumberRobots());
-			System.out.println("sortie de la boucle de RUN FOREST RUN");
 			this.isRunning = false;
 			if (programm_vide){
+				World.currentWorld.get_ordonnanceur().removeRobots();
+				System.out.println("NOMBRE DE ROBOT DANS ORDO A LA FIN : "+World.currentWorld.get_ordonnanceur().getNumberRobots());
+				System.out.println("sortie de la boucle de RUN FOREST RUN");
 				this.getNotificationRewind();
 			}
-			if (this.overflow > 150)
+			if (this.overflow > 150){
+				World.currentWorld.get_ordonnanceur().removeRobots();
+				System.out.println("NOMBRE DE ROBOT DANS ORDO A LA FIN : "+World.currentWorld.get_ordonnanceur().getNumberRobots());
+				System.out.println("sortie de la boucle de RUN FOREST RUN");
 				System.out.println("Boucle infinie détéctée");
-			this.overflow = 0;
-			if (World.currentWorld.is_cleared())
+				this.overflow = 0;
+			}
+			if (World.currentWorld.is_cleared()){
+				World.currentWorld.get_ordonnanceur().removeRobots();
+				System.out.println("NOMBRE DE ROBOT DANS ORDO A LA FIN : "+World.currentWorld.get_ordonnanceur().getNumberRobots());
+				System.out.println("sortie de la boucle de RUN FOREST RUN");
 				this.getNotificationVictory();
+			}
 		}
 		else{
 			System.out.println("On ne peut pas relancer le robot sans redemarrer le niveau");
@@ -237,6 +251,13 @@ public class Controller implements int_Observer {
 		}
 		this.current_robot = robotCurrent;
 		this.jeu.updateRobot(robotCurrent);
+	}
+
+	public void getNotificationInitRobot(){
+		/**
+		 * Receive a notification from view to init robot
+		 */
+		this.jeu.updateRobot(this.current_robot);
 	}
 
 	public void getNotificationDisplayWorld(){
@@ -523,8 +544,14 @@ public class Controller implements int_Observer {
 			abstr_Robot [] listeRobot = World.currentWorld.get_liste_robot();
 			int i=0;
 			for(abstr_Robot robotCurrent : listeRobot){
-				XRob = robotCurrent.getCurrent_Case().get_coordonnees().get_x();
-				YRob = robotCurrent.getCurrent_Case().get_coordonnees().get_y();
+				if(this.getCpt()<8 && robotCurrent.getPrevious_Case()!=null){
+					XRob = robotCurrent.getPrevious_Case().get_coordonnees().get_x();
+					YRob = robotCurrent.getPrevious_Case().get_coordonnees().get_y();
+				}
+				else{
+					XRob = robotCurrent.getCurrent_Case().get_coordonnees().get_x();
+					YRob = robotCurrent.getCurrent_Case().get_coordonnees().get_y();
+				}
 				//Si le pingouin est sur cette case, alors on l'affiche à la hauteur maximale de celle-ci
 				if ((XRob == X) && (YRob == Y)){
 					this.setNotificationDrawPerso(robotCurrent, i);
@@ -540,16 +567,31 @@ public class Controller implements int_Observer {
 
 	public void setNotificationDrawPerso(abstr_Robot robot, int num_robot){
 		abstr_Case Ma_Case = robot.getCurrent_Case();
+		abstr_Case Ma_Case_Prev = robot.getPrevious_Case();
 		int X = Ma_Case.get_coordonnees().get_x();
 		int Y = Ma_Case.get_coordonnees().get_y();
 		int taille_abs =  World.currentWorld.get_terrain(0).get_terrain()[0].length;
 		int taille_ord =  World.currentWorld.get_terrain(0).get_terrain().length;
 		int PosX = Menu.getWidth()/2 +59*(Y+X)-taille_abs*60;
 		int PosY = Menu.getHeight()/2 +18*(Y-X)-taille_ord*18+200;
+		if(Ma_Case_Prev != null){
+			int X2 = Ma_Case_Prev.get_coordonnees().get_x();
+			int Y2 = Ma_Case_Prev.get_coordonnees().get_y();
+			int PosX2 = Menu.getWidth()/2 +59*(Y2+X2)-taille_abs*60;
+			int PosY2 = Menu.getHeight()/2 +18*(Y2-X2)-taille_ord*18+200;
+			System.out.println(PosY2+" "+PosY);
+			PosX = PosX2 + ((PosX-PosX2)/10)*this.cpt;
+			PosY = PosY2 + ((PosY-PosY2)/10)*this.cpt;
+
+			this.cpt++;
+			if (this.cpt>10){
+				this.cpt=1;
+				robot.setPrevious_Case(null);
+			}
+		}
 		int H = Ma_Case.get_hauteur();
 		orientation orientation = robot.getOrientation();
 		Couleur couleur = robot.get_couleur();
-
 		this.jeu.updateDrawPerso(PosX, PosY, H, orientation, couleur, num_robot);
 	}
 
@@ -620,6 +662,10 @@ public class Controller implements int_Observer {
 		this.runnable = false;
 		this.isRunning = false;
 		this.isPaused = true;
+	}
+
+	public int getCpt() {
+		return this.cpt;
 	}
 }
 

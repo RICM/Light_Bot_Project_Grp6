@@ -1,13 +1,15 @@
 package observable.robot;
 
+import java.util.ArrayList;
+
+import couleur.Couleur;
+import exception.ActionEx;
 import observable.action.int_Action;
 import observable.action_list.Possible_List;
 import observable.action_list.Sequence_List;
 import observable.map.abstr_Case;
 import observable.robot.Orientation.orientation;
 import observer.int_Observer;
-import couleur.Couleur;
-import exception.ActionEx;
 
 public class Dumb_bot extends abstr_Robot {
 
@@ -239,6 +241,31 @@ public class Dumb_bot extends abstr_Robot {
 
 		}
 		else throw new ActionEx("Impossible de retirer une action");
+	}
+
+	@Override
+	public void addObserver(int_Observer obs) {
+		this.listObserver.add(obs);
+	}
+	@Override
+	public void removeObserver() {
+		this.listObserver = new ArrayList<int_Observer>();
+
+	}
+	@Override
+	public void notifyObserver() {
+		for(int_Observer obs : this.listObserver){
+			System.out.println("Controller du robot :"+this);
+			System.out.println("Est : "+ obs);
+			obs.update(this);
+		}
+	}
+
+	@Override
+	public void setCurrent_Case(abstr_Case c){
+		this.prev_case = this.current_case;
+		this.current_case = c;
+		this.notifyObserver();
 	}
 
 

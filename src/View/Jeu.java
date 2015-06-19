@@ -121,6 +121,7 @@ public class Jeu {
 		this.initTextureBackground();
 		this.initTextureBouton();
 		this.initTextureBoutonInterface();
+		controller.getNotificationInitRobot();
 		try {
 			this.maTextureMenu.loadFromFile(Paths.get("Images/Jeu/Backgrounds/win.png"));
 		} catch (IOException e1) {
@@ -494,43 +495,43 @@ public class Jeu {
 		Texture textureTemp;
 		if(name_proc==activate){ 	to_get = name_proc + "_Activate";}
 		else{						to_get = name_proc;}
+		if(nombre_bouton_max>0){
+			textureTemp = textureBackground.get(to_get);
+			Sprite monSpriteBackground = liste_background.get(name_proc);
+			monSpriteBackground.setPosition(881, posY);
+			monSpriteBackground.setTexture(textureTemp);
+			liste_background.replace(name_proc, monSpriteBackground);
+			Menu.app.draw(monSpriteBackground);
 
-		textureTemp = textureBackground.get(to_get);
-		Sprite monSpriteBackground = liste_background.get(name_proc);
-		monSpriteBackground.setPosition(881, posY);
-		monSpriteBackground.setTexture(textureTemp);
-		liste_background.replace(name_proc, monSpriteBackground);
-		Menu.app.draw(monSpriteBackground);
+			int y=0;
+			for(int x=0; x<nombre_bouton_max;x++){
+				if(x%4==0){	y++;}
 
-		int y=0;
-		for(int x=0; x<nombre_bouton_max;x++){
-			if(x%4==0){	y++;}
+				if (x<class_name.size()){
+					to_get = class_name.get(x)+"_"+color_name.get(x);
+				}
+				else{
+					to_get = "Fond_Bouton";
+				}
 
-			if (x<class_name.size()){
-				to_get = class_name.get(x)+"_"+color_name.get(x);
+				textureTemp = textureBouton.get(to_get);
+				this.monSpriteActionChoisie = new Sprite();
+				this.monSpriteActionChoisie.setPosition(884+(x%4*(70+4)), (posY+37) + (y-1)*(70+10));
+				this.monSpriteActionChoisie.setTexture(textureTemp);
+				Menu.app.draw(this.monSpriteActionChoisie);
+
+				if(name_proc=="Main" && liste_main.size()<nombre_bouton_max){
+					liste_main.add(this.monSpriteActionChoisie);
+				}
+				else if(name_proc=="P1" && liste_P1.size()<nombre_bouton_max)
+				{
+					liste_P1.add(this.monSpriteActionChoisie);
+				}
+				else if(name_proc=="P2" && liste_P2.size()<nombre_bouton_max)
+				{
+					liste_P2.add(this.monSpriteActionChoisie);
+				}
 			}
-			else{
-				to_get = "Fond_Bouton";
-			}
-
-			textureTemp = textureBouton.get(to_get);
-			this.monSpriteActionChoisie = new Sprite();
-			this.monSpriteActionChoisie.setPosition(884+(x%4*(70+4)), (posY+37) + (y-1)*(70+10));
-			this.monSpriteActionChoisie.setTexture(textureTemp);
-			Menu.app.draw(this.monSpriteActionChoisie);
-
-			if(name_proc=="Main" && liste_main.size()<nombre_bouton_max){
-				liste_main.add(this.monSpriteActionChoisie);
-			}
-			else if(name_proc=="P1" && liste_P1.size()<nombre_bouton_max)
-			{
-				liste_P1.add(this.monSpriteActionChoisie);
-			}
-			else if(name_proc=="P2" && liste_P2.size()<nombre_bouton_max)
-			{
-				liste_P2.add(this.monSpriteActionChoisie);
-			}
-
 		}
 	}
 
@@ -750,10 +751,10 @@ public class Jeu {
 
 	public void setNotificationDrawForTime(){
 		long temps_depart = System.currentTimeMillis();
-		long duree = 150; // en millisecondes
-		while((System.currentTimeMillis() - temps_depart ) < duree)
+		long duree = 300; // en millisecondes
+		while((System.currentTimeMillis() - temps_depart ) < duree )
 		{
-			System.out.println("in while");
+			System.out.println("in while******"+controller.getCpt());
 			Menu.app.clear();
 			this.drawBackground();
 			controller.setNotificationDrawGrilleISO();

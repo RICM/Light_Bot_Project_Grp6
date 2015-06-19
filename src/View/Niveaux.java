@@ -51,6 +51,11 @@ public class Niveaux {
 	protected static boolean renroule = false;
 
 
+	/**
+	 * Constructeur
+	 * @param acontroller
+	 * @param current_theme le theme choisi par l'utilisateur: T(tuto), D(dual), C(conditions), P(pointeurs)
+	 */
 	public Niveaux(Controller acontroller,String current_theme){
 		this.theme = current_theme;
 		controller = acontroller;
@@ -66,7 +71,6 @@ public class Niveaux {
 			this.texture_btnHome.loadFromFile(Paths.get("Images/Jeu/BoutonsInterface/Interface_Home.png"));
 			this.texture_btnSound.loadFromFile(Paths.get("Images/Jeu/BoutonsInterface/Interface_Sound.png"));
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		Menu.reset_cam();
@@ -79,12 +83,15 @@ public class Niveaux {
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 	}
 
+	/**
+	 * setters
+	 * @param acontroller le controlleur
+	 */
 	public void addController(Controller acontroller){
 		controller = acontroller;
 	}

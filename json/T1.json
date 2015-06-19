@@ -24,11 +24,11 @@
     						{"coorX" : 0},
     						{"coorY" : 0},
     						{"indice_tableau": 0},
-    						{"max_main": 12},
+    						{"max_main": 2},
     						{"max_p1": 0},
     						{"max_p2": 0},
     						{"orientation": "bot"},
-    						{"actions" :["MoveForward" ,"TurnLeft","Jump","TurnRight","Activate"]}
+    						{"actions" :["MoveForward","Activate"]}
     			]
     		}
     ]  

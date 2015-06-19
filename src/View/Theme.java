@@ -81,7 +81,6 @@ public class Theme {
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -94,7 +93,6 @@ public class Theme {
 	protected void processEvent() {
 		for(Event e : Menu.app.pollEvents()){
 			if(e.type == Type.CLOSED){
-				System.out.println("test");
 				Menu.app.close();
 			}
 
@@ -106,7 +104,6 @@ public class Theme {
 				Vector2i pos = Mouse.getPosition(Menu.app);
 				Vector2f click = Menu.app.mapPixelToCoords(pos);
 				e.asMouseEvent();
-				System.out.println(pos.x+" "+pos.y);
 				this.btnClick(click);
 			}
 

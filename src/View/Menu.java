@@ -41,7 +41,7 @@ public class Menu {
 		try {
 			this.texture_Background.loadFromFile(Paths.get("Images/menu/back1.png"));
 			this.texture_Play.loadFromFile(Paths.get("Images/menu/play.png"));
-			this.song.openFromFile(Paths.get("Song/theme.ogg"));
+			Menu.song.openFromFile(Paths.get("Song/theme.ogg"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -57,7 +57,6 @@ public class Menu {
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -74,14 +73,12 @@ public class Menu {
 		this.sprite_Play.setTexture(this.texture_Play);
 		this.sprite_Play.setPosition(Menu.app.getSize().x/2-75, Menu.app.getSize().y/2-75);
 		Menu.app.draw(this.sprite_Play);
-
 	}
 
 	/**
 	 * Affiche le background
 	 */
 	private void displayBackground() {
-		// TODO Auto-generated method stub
 		this.sprite_Background.setTexture(this.texture_Background);
 		Menu.app.draw(this.sprite_Background);
 	}
@@ -104,6 +101,7 @@ public class Menu {
 			else if (e.type == Event.Type.MOUSE_BUTTON_RELEASED) {
 				e.asMouseEvent();
 				Vector2i pos = Mouse.getPosition(Menu.app);
+				//Transforme les coordonnees ecran en coordonnees fenetre
 				Vector2f poss = Menu.app.mapPixelToCoords(pos);
 				System.out.println(poss.x+" "+poss.y);
 				this.btnClick(poss);
@@ -129,13 +127,12 @@ public class Menu {
 	 * @param pos : Coordonnees du clique souris
 	 */
 	private void btnClick(Vector2f pos) {
-		// TODO Auto-generated method stub
 		float x = pos.x;
 		float y = pos.y;
 		FloatRect rect = this.sprite_Play.getGlobalBounds();
 		if(x>=rect.left && x<=rect.left+rect.width &&
 				y>=rect.top && y<=rect.top+rect.height){
-			Theme niv = new Theme(controller);
+			new Theme(controller);
 		}
 	}
 
