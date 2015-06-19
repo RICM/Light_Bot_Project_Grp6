@@ -752,10 +752,10 @@ public class Jeu {
 
 	public void setNotificationDrawForTime(){
 		long temps_depart = System.currentTimeMillis();
-		long duree = 150; // en millisecondes
-		while((System.currentTimeMillis() - temps_depart ) < duree)
+		long duree = 300; // en millisecondes
+		while((System.currentTimeMillis() - temps_depart ) < duree )
 		{
-			System.out.println("in while");
+			System.out.println("in while******"+controller.getCpt());
 			Menu.app.clear();
 			this.drawBackground();
 			controller.setNotificationDrawGrilleISO();

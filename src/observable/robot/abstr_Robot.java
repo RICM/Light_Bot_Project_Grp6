@@ -3,10 +3,6 @@ package observable.robot;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import couleur.Couleur;
-import exception.ActionEx;
-import exception.MouvementEx;
-import exception.UnreachableCase;
 import observable.action.int_Action;
 import observable.action_list.Execution_list;
 import observable.action_list.Possible_List;
@@ -14,6 +10,10 @@ import observable.action_list.Sequence_List;
 import observable.map.World;
 import observable.map.abstr_Case;
 import observer.int_Observer;
+import couleur.Couleur;
+import exception.ActionEx;
+import exception.MouvementEx;
+import exception.UnreachableCase;
 
 public abstract class abstr_Robot {
 	protected ArrayList<int_Observer> listObserver = new ArrayList<int_Observer>();
@@ -156,6 +156,10 @@ public abstract class abstr_Robot {
 
 	public abstr_Case getPrevious_Case(){
 		return this.prev_case;
+	}
+
+	public void setPrevious_Case(abstr_Case c){
+		this.prev_case = c;
 	}
 
 	public abstr_Case getCurrent_Case(){

@@ -3,12 +3,6 @@ package observer.controller;
 import java.io.IOException;
 import java.util.LinkedList;
 
-import View.Jeu;
-import View.Menu;
-import couleur.Couleur;
-import exception.ActionEx;
-import exception.MouvementEx;
-import exception.UnreachableCase;
 import observable.action.Activate;
 import observable.action.Break_r;
 import observable.action.Call_P1;
@@ -31,6 +25,12 @@ import observable.robot.Robot;
 import observable.robot.abstr_Robot;
 import observer.int_Observer;
 import parser.parserJSON;
+import View.Jeu;
+import View.Menu;
+import couleur.Couleur;
+import exception.ActionEx;
+import exception.MouvementEx;
+import exception.UnreachableCase;
 
 public class Controller implements int_Observer {
 
@@ -43,6 +43,7 @@ public class Controller implements int_Observer {
 	private boolean isRunning = false;
 	private boolean isPaused = false;
 	private boolean savedPrerun = false;
+	protected int cpt = 1;
 
 	@Override
 	public void update(Object obj){
@@ -537,16 +538,31 @@ public class Controller implements int_Observer {
 
 	public void setNotificationDrawPerso(abstr_Robot robot, int num_robot){
 		abstr_Case Ma_Case = robot.getCurrent_Case();
+		abstr_Case Ma_Case_Prev = robot.getPrevious_Case();
 		int X = Ma_Case.get_coordonnees().get_x();
 		int Y = Ma_Case.get_coordonnees().get_y();
 		int taille_abs =  World.currentWorld.get_terrain(0).get_terrain()[0].length;
 		int taille_ord =  World.currentWorld.get_terrain(0).get_terrain().length;
 		int PosX = Menu.getWidth()/2 +59*(Y+X)-taille_abs*60;
 		int PosY = Menu.getHeight()/2 +18*(Y-X)-taille_ord*18+200;
+		if(Ma_Case_Prev != null){
+			int X2 = Ma_Case_Prev.get_coordonnees().get_x();
+			int Y2 = Ma_Case_Prev.get_coordonnees().get_y();
+			int PosX2 = Menu.getWidth()/2 +59*(Y2+X2)-taille_abs*60;
+			int PosY2 = Menu.getHeight()/2 +18*(Y2-X2)-taille_ord*18+200;
+			System.out.println(PosY2+" "+PosY);
+			PosX = PosX2 + ((PosX-PosX2)/10)*this.cpt;
+			PosY = PosY2 + ((PosY-PosY2)/10)*this.cpt;
+
+			this.cpt++;
+			if (this.cpt>10){
+				this.cpt=1;
+				robot.setPrevious_Case(null);
+			}
+		}
 		int H = Ma_Case.get_hauteur();
 		orientation orientation = robot.getOrientation();
 		Couleur couleur = robot.get_couleur();
-
 		this.jeu.updateDrawPerso(PosX, PosY, H, orientation, couleur, num_robot);
 	}
 
@@ -617,6 +633,10 @@ public class Controller implements int_Observer {
 		this.runnable = false;
 		this.isRunning = false;
 		this.isPaused = true;
+	}
+
+	public int getCpt() {
+		return this.cpt;
 	}
 }
 
