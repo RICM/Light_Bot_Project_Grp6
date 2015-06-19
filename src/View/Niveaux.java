@@ -41,6 +41,11 @@ public class Niveaux {
 	protected boolean first_round = true;
 
 
+	/**
+	 * Constructeur
+	 * @param acontroller
+	 * @param current_theme le theme choisi par l'utilisateur: T(tuto), D(dual), C(conditions), P(pointeurs)
+	 */
 	public Niveaux(Controller acontroller,String current_theme){
 		this.theme = current_theme;
 		controller = acontroller;
@@ -53,7 +58,6 @@ public class Niveaux {
 			this.texture_btnLevel.loadFromFile(Paths.get("Images/selectLvl/level.png"));
 			this.f.loadFromFile(Paths.get("Fonts/BRUSHSCI.ttf"));
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
@@ -67,12 +71,15 @@ public class Niveaux {
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 	}
 
+	/**
+	 * setters
+	 * @param acontroller le controlleur
+	 */
 	public void addController(Controller acontroller){
 		controller = acontroller;
 	}
