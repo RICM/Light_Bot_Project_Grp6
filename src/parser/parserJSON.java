@@ -122,7 +122,7 @@ public class parserJSON {
 						//                                              Number hauteur = (Number) ObcaseCurrent.get("hauteur");
 						//
 						//                                              Couleur coul = this.parserCouleur((String)ObcaseCurrent.get("couleur"));
-						abstr_Case carre = this.parserCase(ObcaseCurrent,x,y,i);
+						abstr_Case carre = this.parserCase(ObcaseCurrent,x,y,i,acontroller);
 						terrainlist[i].add_case(x, y, carre);
 					}
 				}
@@ -492,7 +492,7 @@ public class parserJSON {
 		return coul;
 	}
 
-	public abstr_Case parserCase(JSONObject o, int x, int y, int i){
+	public abstr_Case parserCase(JSONObject o, int x, int y, int i,int_Observer c){
 
 		System.out.println("DDDDDDDDDDDDD");
 
@@ -516,8 +516,9 @@ public class parserJSON {
 			default: break;
 			}
 			System.out.println("CCCCCCCCCCC"+o.get("case"));
-			abstr_Case carretype = this.parserCaseEvent((JSONObject)o.get("case"));
+			abstr_Case carretype = this.parserCaseEvent((JSONObject)o.get("case"),c);
 			carre = new Event_Case(hauteur.intValue(), coul, coor, carretype, s);
+			carre.addObserver(c);
 			break;
 
 		case "case_destination" :
@@ -564,7 +565,7 @@ public class parserJSON {
 
 	}
 
-	public abstr_Case parserCaseEvent (JSONObject o){
+	public abstr_Case parserCaseEvent (JSONObject o,int_Observer c){
 
 		Couleur coul = this.parserCouleur((String) o.get("couleur"));
 		System.out.println("BBBBBBBBB"+(String) o.get("couleur"));
@@ -600,7 +601,8 @@ public class parserJSON {
 			default: break;
 			}
 
-			carre = new Event_Case(h, coul, coor,this.parserCaseEvent((JSONObject)o.get("case")), s);
+			carre = new Event_Case(h, coul, coor,this.parserCaseEvent((JSONObject)o.get("case"),c), s);
+			carre.addObserver(c);
 			break;
 
 		case "case_destination" :
