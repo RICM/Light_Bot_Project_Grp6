@@ -71,6 +71,7 @@ public class Call_P1 implements int_Action, int_Observable{
 				temp.addActionToList(r.get_P1().get(i));
 			}
 			r.add_execute(temp);
+			r.setVoid();
 			World.currentWorld.get_ordonnanceur().setReady(true);
 		}
 		else{

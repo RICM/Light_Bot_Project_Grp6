@@ -8,6 +8,7 @@ import exception.MouvementEx;
 import exception.UnreachableCase;
 import observable.int_Observable;
 import observable.action.int_Action;
+import observable.map.World;
 import observable.robot.abstr_Robot;
 import observer.int_Observer;
 
@@ -24,6 +25,7 @@ public class Execution_list implements int_Observable{
 		this.Run_List.addFirst(new_h);
 		System.out.println(new_h);
 		System.out.println("RUN LIST ICI : "+this.Run_List);
+		World.currentWorld.get_ordonnanceur().increment_ind();
 	}
 
 	public void initFirst(Sequence_List main){
