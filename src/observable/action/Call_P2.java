@@ -83,7 +83,7 @@ public class Call_P2 implements int_Action, int_Observable{
 	@Override
 	public boolean isPossible(abstr_Robot r, abstr_Case c) {
 		return (r.get_couleur().equals(this.color)
-				|| r.get_couleur().equals(Couleur.GRIS)
+				|| r.get_couleur().equals(c.get_couleur())
 				|| this.getColor().equals(Couleur.GRIS));
 	}
 	@Override
