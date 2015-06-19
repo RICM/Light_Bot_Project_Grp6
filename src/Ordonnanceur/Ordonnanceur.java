@@ -3,12 +3,12 @@ package Ordonnanceur;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import observable.int_Observable;
-import observable.robot.abstr_Robot;
-import observer.int_Observer;
 import exception.ActionEx;
 import exception.MouvementEx;
 import exception.UnreachableCase;
+import observable.int_Observable;
+import observable.robot.abstr_Robot;
+import observer.int_Observer;
 
 public class Ordonnanceur implements int_Observable {
 	private LinkedList<abstr_Robot> list_robot = new LinkedList<abstr_Robot>();
@@ -57,9 +57,11 @@ public class Ordonnanceur implements int_Observable {
 	}
 
 	public void execute_next() throws MouvementEx, UnreachableCase, ActionEx, IndexOutOfBoundsException{
+		System.out.println("ORDO LIST : "+this.list_robot);
 		System.out.println("Ich bin in execute-next");
 		abstr_Robot robot;
 		robot = this.list_robot.get(this.ind_ex);
+		System.out.println("CURRENT ROBOT : "+robot.getClass().getSimpleName()+robot.toString());
 		if(robot.get_activable()){
 			this.ready = false;
 			this.list_robot.get(this.ind_ex).execute();
