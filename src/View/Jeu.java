@@ -9,18 +9,6 @@ import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 
-import org.jsfml.audio.Music;
-import org.jsfml.graphics.FloatRect;
-import org.jsfml.graphics.Sprite;
-import org.jsfml.graphics.Texture;
-import org.jsfml.system.Vector2f;
-import org.jsfml.system.Vector2i;
-import org.jsfml.window.Mouse;
-import org.jsfml.window.Mouse.Button;
-import org.jsfml.window.event.Event;
-import org.jsfml.window.event.Event.Type;
-
-import couleur.Couleur;
 import observable.action.int_Action;
 import observable.action_list.Sequence_List;
 import observable.map.Terrain;
@@ -28,6 +16,18 @@ import observable.map.World;
 import observable.robot.Orientation.orientation;
 import observable.robot.abstr_Robot;
 import observer.controller.Controller;
+
+import org.jsfml.audio.Music;
+import org.jsfml.graphics.FloatRect;
+import org.jsfml.graphics.Sprite;
+import org.jsfml.graphics.Texture;
+import org.jsfml.system.Vector2f;
+import org.jsfml.system.Vector2i;
+import org.jsfml.window.Mouse;
+import org.jsfml.window.event.Event;
+import org.jsfml.window.event.Event.Type;
+
+import couleur.Couleur;
 
 
 public class Jeu {
@@ -189,7 +189,7 @@ public class Jeu {
 				Menu.reset_cam();
 			}
 
-			if (e.type == Event.Type.MOUSE_BUTTON_PRESSED ) {
+			if (e.type == Event.Type.MOUSE_BUTTON_RELEASED ) {
 				e.asMouseEvent();
 				Vector2i pos = Mouse.getPosition(Menu.app);
 				Vector2f click = Menu.app.mapPixelToCoords(pos);
@@ -351,16 +351,14 @@ public class Jeu {
 	public void delete_button(Event e, Vector2f click){
 		float x = click.x;
 		float y = click.y;
-		if(Mouse.isButtonPressed(Button.LEFT)){
-			System.out.println(activate);
-			if(activate.equals("Main"))
-				remove_action_liste(liste_main,x,y);
-			else if(activate.equals("P1")){
-				remove_action_liste(liste_P1,x,y);
-			}
-			else if(activate.equals("P2")){
-				remove_action_liste(liste_P2,x,y);
-			}
+		System.out.println(activate);
+		if(activate.equals("Main"))
+			remove_action_liste(liste_main,x,y);
+		else if(activate.equals("P1")){
+			remove_action_liste(liste_P1,x,y);
+		}
+		else if(activate.equals("P2")){
+			remove_action_liste(liste_P2,x,y);
 		}
 	}
 
