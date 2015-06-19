@@ -54,6 +54,7 @@ public class World implements int_Observable {
 			e.printStackTrace();
 		}
 		//this.ordo = new Ordonnanceur();
+		System.out.println("Taille de la liste de robot dans le monde : "+this.liste_robot.length);
 		for(int i =0; i< this.liste_robot.length;i++){
 			this.liste_robot[i].run();
 			//	System.out.println("taille de la liste " + this.liste_robot[i].get_run().size());
@@ -62,6 +63,7 @@ public class World implements int_Observable {
 	}
 
 	public void exec() throws MouvementEx, UnreachableCase, ActionEx, IndexOutOfBoundsException{
+		System.out.println("Je suis dans exec");
 		if (this.ordo.isReady()){
 			System.out.println("Ich bin in ordo");
 			this.ordo.execute_next();
