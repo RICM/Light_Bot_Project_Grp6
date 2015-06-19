@@ -7,13 +7,13 @@
                 {"nb_case_hauteur": 4},
                 {"nb_case_largeur": 3},
                 { "lignes" : [ 
-                	 {"ligne1" : [{"type_case": "case_normale","hauteur": 1,"couleur": "GRIS"},{"type_case": 									"case_empty","hauteur": 1,"couleur": "GRIS"},{"type_case": "case_normale","hauteur": 1,"couleur": "GRIS"} ]},
+                	 {"ligne1" : [{"type_case": "case_normale","hauteur": 0,"couleur": "GRIS"},{"type_case": 									"case_empty","hauteur": 0,"couleur": "GRIS"},{"type_case": "case_normale","hauteur": 0,"couleur": "GRIS"} ]},
                 	 
-                	 {"ligne2" : [{"type_case": "case_empty","hauteur": 1,"couleur": "GRIS"},{"type_case": 									"case_empty","hauteur": 1,"couleur": "GRIS"},{"type_case": "case_event","hauteur": 1,"couleur": "GRIS","case":{"type_case": "case_normale","hauteur": 1,"couleur": "GRIS","coorX":0,"corrY":1,"indice":0}, "stat":"false"} ]},
+                	 {"ligne2" : [{"type_case": "case_empty","hauteur": 0,"couleur": "GRIS"},{"type_case": 									"case_empty","hauteur": 0,"couleur": "GRIS"},{"type_case": "case_event","hauteur": 0,"couleur": "GRIS","case":{"type_case": "case_normale","hauteur": 0,"couleur": "GRIS","coorX":0,"coorY":1,"indice":0}, "stat":"false"} ]},
                 	  
-                	 {"ligne3" : [{"type_case": "case_normale","hauteur": 1,"couleur": "GRIS"},{"type_case": 									"case_empty","hauteur": 1,"couleur": "GRIS"},{"type_case": "case_empty","hauteur": 1,"couleur": "GRIS"} ]},
+                	 {"ligne3" : [{"type_case": "case_normale","hauteur": 0,"couleur": "GRIS"},{"type_case": 									"case_empty","hauteur": 0,"couleur": "GRIS"},{"type_case": "case_empty","hauteur": 0,"couleur": "GRIS"} ]},
                 	   
-                	 {"ligne4" : [{"type_case": "case_illuminated","hauteur": 1,"couleur": "GRIS"},{"type_case": 									"case_empty","hauteur": 1,"couleur": "GRIS"},{"type_case": "case_empty","hauteur": 1,"couleur": "GRIS"} ]},
+                	 {"ligne4" : [{"type_case": "case_illuminated","hauteur": 0,"couleur": "GRIS"},{"type_case": 									"case_empty","hauteur": 0,"couleur": "GRIS"},{"type_case": "case_empty","hauteur": 0,"couleur": "GRIS"} ]},
 		              
 		              
 		            ]}
