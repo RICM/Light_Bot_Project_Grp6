@@ -1,5 +1,5 @@
 {
-	"ordo_modif": "false",
+		"ordo_modif": "false",
     "nb_terrain": 1,
     "terrains": [
         {
@@ -21,11 +21,11 @@
         }
         
     ],
-    "nb_robot" : 1,
+    "nb_robot" : 2,
     "robots" :[
     		{ 
     			"robot1" : [
-    						{"type_robot" : ""},
+    						{"type_robot" : "Robot"},
     						{"couleur" : "GRIS"},
     						{"coorX" : 0},
     						{"coorY" : 0},
@@ -33,8 +33,8 @@
     						{"max_main": 6},
     						{"max_p1": 0},
     						{"max_p2": 0},
-    						{"orientation": "left"},
-    						{"actions" :["MoveForward","Activate","Wait"]}
+    						{"orientation": "bot"},
+    						{"actions" :["MoveForward","Activate","Wait","Notify"]}
     						
     			]
     		},
@@ -48,8 +48,8 @@
     						{"max_main": 6},
     						{"max_p1": 0},
     						{"max_p2": 0},
-    						{"orientation": "left"},
-    						{"actions" :["MoveForward","Activate","Wait"]}
+    						{"orientation": "bot"},
+    						{"actions" :["MoveForward","Activate","Wait","Notify"]}
     						
     			]
     		}
