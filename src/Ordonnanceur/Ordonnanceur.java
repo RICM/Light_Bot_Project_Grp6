@@ -48,9 +48,11 @@ public class Ordonnanceur implements int_Observable {
 
 	}
 
-	public void execute_next() throws MouvementEx, UnreachableCase, ActionEx{
+	public void execute_next() throws MouvementEx, UnreachableCase, ActionEx, IndexOutOfBoundsException{
 		System.out.println("Ich bin in execute-next");
-		if(this.list_robot.get(this.ind_ex).get_activable()){
+		abstr_Robot robot;
+		robot = this.list_robot.get(this.ind_ex);
+		if(robot.get_activable()){
 			this.ready = false;
 			this.list_robot.get(this.ind_ex).execute();
 		}

@@ -115,6 +115,7 @@ public class Controller implements int_Observer {
 	 * Receive a notification from view to run program
 	 */
 	public void getNotificationRun(){
+		boolean programm_vide = false;
 		if (this.isPaused){
 			this.setNotificationGoOn();
 		}
@@ -149,6 +150,10 @@ public class Controller implements int_Observer {
 				} catch (ActionEx e) {
 					this.runnable = false;
 					//this.jeu.draw_popup("Une erreur est survenue lors de l'execution de l'actions");
+				} catch (IndexOutOfBoundsException ex){
+					//this.jeu.draw_popup("Monsieur, vous devez rentrer au moins une action pour pouvoir exécuter le programme !");
+					this.runnable = false;
+					programm_vide = true;
 				}
 				try {
 					Thread.sleep(0);
@@ -160,6 +165,9 @@ public class Controller implements int_Observer {
 			World.currentWorld.get_ordonnanceur().removeRobots();
 			System.out.println("NOMBRE DE ROBOT DANS ORDO A LA FIN : "+World.currentWorld.get_ordonnanceur().getNumberRobots());
 			System.out.println("sortie de la boucle de RUN FOREST RUN");
+			if (programm_vide){
+				this.getNotificationRewind();
+			}
 			if (this.overflow > 150)
 				System.out.println("Boucle infinie détéctée");
 			this.overflow = 0;
