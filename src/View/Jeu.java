@@ -45,7 +45,7 @@ public class Jeu {
 	protected static String typeCouleur [] = {"_ROUGE","_VERT","_GRIS"};
 	protected static String typeOrientation [] = {"_BOT","_LEFT","_RIGHT","_TOP"};
 	protected static String typeBoutonInterfaceMenu [] = {"Fond","Sound","Home"};
-	protected static String typeBouton [] = {"Activate","Break_r", "Call_P1","Call_P2", "Flashback", "Jump", "MoveForward", "Notify_r", "Pause", "Remember","tache","TurnLeft", "TurnRIght"};
+	protected static String typeBouton [] = {"Activate","Break_r", "Call_P1","Call_P2", "Flashback", "Jump", "MoveForward", "Notify_r", "Wait_r", "Remember","tache","TurnLeft", "TurnRIght"};
 	protected static String typeCase [] = {"Normal_Case","Painted_Case_ROUGE", "Painted_Case_VERT","Teleporter_Case", "Illuminated_Case_Active", "Illuminated_Case_Inactive", "Event_Case", "Empty_Case", "Destination_Case", "Empile_Case"};
 	protected static String typeRobot[]={"pingouin_GRIS","requin_GRIS"};
 	protected static String typeBoutonInterface[]={"pingouin_GRIS","play","stop","rewind"};
