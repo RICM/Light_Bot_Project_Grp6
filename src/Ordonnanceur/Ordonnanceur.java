@@ -3,19 +3,27 @@ package Ordonnanceur;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import exception.ActionEx;
-import exception.MouvementEx;
-import exception.UnreachableCase;
 import observable.int_Observable;
 import observable.robot.abstr_Robot;
 import observer.int_Observer;
+import exception.ActionEx;
+import exception.MouvementEx;
+import exception.UnreachableCase;
 
 public class Ordonnanceur implements int_Observable {
 	private LinkedList<abstr_Robot> list_robot = new LinkedList<abstr_Robot>();
 	private ArrayList<int_Observer> controller = new ArrayList<int_Observer>();
 	private int ind_ex = 0;
 	private boolean ready = true;
+	private boolean modifiable = false;
 
+	public boolean getModifiable(){
+		return this.modifiable;
+	}
+
+	public void setModifiable(boolean b){
+		this.modifiable = b;
+	}
 	public int getNumberRobots(){
 		return this.list_robot.size();
 	}
