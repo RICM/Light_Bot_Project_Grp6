@@ -2,13 +2,13 @@ package observable.action;
 
 import java.util.ArrayList;
 
+import observable.map.abstr_Case;
+import observable.robot.abstr_Robot;
+import observer.int_Observer;
 import couleur.Couleur;
 import exception.ActionEx;
 import exception.MouvementEx;
 import exception.UnreachableCase;
-import observable.map.abstr_Case;
-import observable.robot.abstr_Robot;
-import observer.int_Observer;
 
 public class Break_r implements int_Action {
 
