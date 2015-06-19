@@ -3,6 +3,12 @@ package observer.controller;
 import java.io.IOException;
 import java.util.LinkedList;
 
+import View.Jeu;
+import View.Menu;
+import couleur.Couleur;
+import exception.ActionEx;
+import exception.MouvementEx;
+import exception.UnreachableCase;
 import observable.action.Activate;
 import observable.action.Break_r;
 import observable.action.Call_P1;
@@ -20,17 +26,12 @@ import observable.map.Illuminated_Case;
 import observable.map.Terrain;
 import observable.map.World;
 import observable.map.abstr_Case;
+import observable.robot.Dumb_bot;
 import observable.robot.Orientation.orientation;
 import observable.robot.Robot;
 import observable.robot.abstr_Robot;
 import observer.int_Observer;
 import parser.parserJSON;
-import View.Jeu;
-import View.Menu;
-import couleur.Couleur;
-import exception.ActionEx;
-import exception.MouvementEx;
-import exception.UnreachableCase;
 
 public class Controller implements int_Observer {
 
@@ -51,6 +52,10 @@ public class Controller implements int_Observer {
 		case "Robot" :
 			System.out.println("Mouvement détécté");
 			this.setNotificationUpdatedRobot((Robot)obj);
+			break;
+		case "Dumb_bot" :
+			System.out.println("Mouvement détécté");
+			this.setNotificationUpdatedRobot((Dumb_bot)obj);
 			break;
 		case "Terrain" :
 			this.setNotificationUpdatedTerrain((Terrain)obj);
@@ -170,18 +175,26 @@ public class Controller implements int_Observer {
 					System.out.println(ex.getMessage());
 				}
 			}
-			World.currentWorld.get_ordonnanceur().removeRobots();
-			System.out.println("NOMBRE DE ROBOT DANS ORDO A LA FIN : "+World.currentWorld.get_ordonnanceur().getNumberRobots());
-			System.out.println("sortie de la boucle de RUN FOREST RUN");
 			this.isRunning = false;
 			if (programm_vide){
+				World.currentWorld.get_ordonnanceur().removeRobots();
+				System.out.println("NOMBRE DE ROBOT DANS ORDO A LA FIN : "+World.currentWorld.get_ordonnanceur().getNumberRobots());
+				System.out.println("sortie de la boucle de RUN FOREST RUN");
 				this.getNotificationRewind();
 			}
-			if (this.overflow > 150)
+			if (this.overflow > 150){
+				World.currentWorld.get_ordonnanceur().removeRobots();
+				System.out.println("NOMBRE DE ROBOT DANS ORDO A LA FIN : "+World.currentWorld.get_ordonnanceur().getNumberRobots());
+				System.out.println("sortie de la boucle de RUN FOREST RUN");
 				System.out.println("Boucle infinie détéctée");
-			this.overflow = 0;
-			if (World.currentWorld.is_cleared())
+				this.overflow = 0;
+			}
+			if (World.currentWorld.is_cleared()){
+				World.currentWorld.get_ordonnanceur().removeRobots();
+				System.out.println("NOMBRE DE ROBOT DANS ORDO A LA FIN : "+World.currentWorld.get_ordonnanceur().getNumberRobots());
+				System.out.println("sortie de la boucle de RUN FOREST RUN");
 				this.getNotificationVictory();
+			}
 		}
 		else{
 			System.out.println("On ne peut pas relancer le robot sans redemarrer le niveau");

@@ -254,8 +254,11 @@ public class Dumb_bot extends abstr_Robot {
 	}
 	@Override
 	public void notifyObserver() {
-		for(int_Observer obs : this.listObserver)
+		for(int_Observer obs : this.listObserver){
+			System.out.println("Controller du robot :"+this);
+			System.out.println("Est : "+ obs);
 			obs.update(this);
+		}
 	}
 
 	@Override
