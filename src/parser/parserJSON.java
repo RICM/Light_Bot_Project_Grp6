@@ -63,6 +63,12 @@ public class parserJSON {
 			JSONObject jsonObject = (JSONObject) jsonParser.parse(reader);
 
 
+			if ((String)jsonObject.get("ordo_modif") == "true" ){
+				World.currentWorld.get_ordonnanceur().setModifiable(true);
+			}else{
+				World.currentWorld.get_ordonnanceur().setModifiable(false);
+			}
+
 			Number nb_terrain_prime = (Number) jsonObject.get("nb_terrain");
 			System.out.println(nb_terrain_prime);
 			int nb_terrain = nb_terrain_prime.intValue();
