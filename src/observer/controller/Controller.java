@@ -3,12 +3,6 @@ package observer.controller;
 import java.io.IOException;
 import java.util.LinkedList;
 
-import View.Jeu;
-import View.Menu;
-import couleur.Couleur;
-import exception.ActionEx;
-import exception.MouvementEx;
-import exception.UnreachableCase;
 import observable.action.Activate;
 import observable.action.Break_r;
 import observable.action.Call_P1;
@@ -20,6 +14,7 @@ import observable.action.Notify_r;
 import observable.action.Remember;
 import observable.action.TurnLeft;
 import observable.action.TurnRIght;
+import observable.action.Wait_r;
 import observable.action.int_Action;
 import observable.action_list.Sequence_List;
 import observable.map.Illuminated_Case;
@@ -32,6 +27,12 @@ import observable.robot.Robot;
 import observable.robot.abstr_Robot;
 import observer.int_Observer;
 import parser.parserJSON;
+import View.Jeu;
+import View.Menu;
+import couleur.Couleur;
+import exception.ActionEx;
+import exception.MouvementEx;
+import exception.UnreachableCase;
 
 public class Controller implements int_Observer {
 
@@ -473,6 +474,20 @@ public class Controller implements int_Observer {
 					return action;
 				}else{
 					Break_r action = Break_r.break_r(color);
+					World.currentWorld.get_robot(this.current_robot).add_Action_User_Actions(action);
+					return action;
+				}
+			case "Wait_r" :
+				if (this.current_program == 2){
+					Wait_r action = Wait_r.wait_r(color);
+					World.currentWorld.get_robot(this.current_robot).add_Action_User_ActionsP2(action);
+					return action;
+				}else if (this.current_program == 1){
+					Wait_r action = Wait_r.wait_r(color);
+					World.currentWorld.get_robot(this.current_robot).add_Action_User_ActionsP1(action);
+					return action;
+				}else{
+					Wait_r action = Wait_r.wait_r(color);
 					World.currentWorld.get_robot(this.current_robot).add_Action_User_Actions(action);
 					return action;
 				}
