@@ -138,4 +138,6 @@ public class Ordonnanceur implements int_Observable {
 		for(int_Observer obs : this.controller)
 			obs.update(this);
 	}
+
+
 }

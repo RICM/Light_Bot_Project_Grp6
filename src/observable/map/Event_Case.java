@@ -11,7 +11,7 @@ public class Event_Case extends abstr_Case{
 	private abstr_Case to_add;
 	private Coordonnees dest_add;
 	private boolean status;
-	private abstr_Case replaced;
+	private abstr_Case replaced;//la case remplacée
 
 	private ArrayList<int_Observer> listObserver = new ArrayList<int_Observer>();
 
@@ -20,7 +20,7 @@ public class Event_Case extends abstr_Case{
 		this.set_couleur(col);
 		this.set_hauteur(h);
 		this.setDest_add(type.get_coordonnees());
-		this.setTo_add(type);
+		this.setTo_add(type);//la case qui remplace
 		this.setStatus(stat);
 		this.addObserver(World.currentWorld.getFirstObserver());
 	}
@@ -57,9 +57,15 @@ public class Event_Case extends abstr_Case{
 	public void refresh(){
 		if (this.status){
 			World.currentWorld.set_Case(this.dest_add, this.to_add);
+			System.out.println("Refreshing replacing case");
+			System.out.println(this.to_add);
+			this.notifyObserver();
 		}
 		else{
 			World.currentWorld.set_Case(this.dest_add, this.replaced);
+			System.out.println("Refreshing normal case");
+			System.out.println(this.dest_add);
+			this.notifyObserver();
 		}
 
 	}
@@ -91,6 +97,8 @@ public class Event_Case extends abstr_Case{
 	}
 	@Override
 	public void notifyObserver() {
+		System.out.println("Je suis dans le notify d'une case event");
+		System.out.println("Liste des observateur de l'event case : "+this.listObserver.size());
 		for(int_Observer obs : this.listObserver)
 			obs.update(this);
 	}
