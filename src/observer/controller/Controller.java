@@ -111,6 +111,13 @@ public class Controller implements int_Observer {
 		this.getNotificationRewind();
 	}
 
+	public void getNotificationRewindAndRUn(){
+		if (!this.isRunning){
+			this.isRunning = true;
+			this.getNotificationRewind();
+			this.getNotificationRun();
+		}
+	}
 	/**
 	 * Receive a notification from view to run program
 	 */
@@ -165,6 +172,7 @@ public class Controller implements int_Observer {
 			World.currentWorld.get_ordonnanceur().removeRobots();
 			System.out.println("NOMBRE DE ROBOT DANS ORDO A LA FIN : "+World.currentWorld.get_ordonnanceur().getNumberRobots());
 			System.out.println("sortie de la boucle de RUN FOREST RUN");
+			this.isRunning = false;
 			if (programm_vide){
 				this.getNotificationRewind();
 			}
