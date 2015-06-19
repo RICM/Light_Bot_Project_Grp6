@@ -80,6 +80,7 @@ public class Event_Case extends abstr_Case{
 	public abstr_Case Clone() {
 		Event_Case temp = new Event_Case(this.get_hauteur(),this.get_couleur(),this.get_coordonnees().
 				Clone(),this.getTo_add().Clone(), this.getStatus());
+		System.out.println("Cloning Event Case : "+this.listObserver.get(0));
 		temp.addObserver(this.listObserver.get(0));
 		return temp;
 	}

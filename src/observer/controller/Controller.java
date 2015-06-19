@@ -182,6 +182,7 @@ public class Controller implements int_Observer {
 				}
 			}
 			this.isRunning = false;
+			World.currentWorld.get_ordonnanceur().removeRobots();
 			if (programm_vide){
 				World.currentWorld.get_ordonnanceur().removeRobots();
 				System.out.println("NOMBRE DE ROBOT DANS ORDO A LA FIN : "+World.currentWorld.get_ordonnanceur().getNumberRobots());
