@@ -98,7 +98,8 @@ public class Activate implements int_Action, int_Observable{
 		return (((c.getClass().getSimpleName().equals("Teleporter_Case")
 				|| c.getClass().getSimpleName().equals("Painted_Case"))
 				|| c.getClass().getSimpleName().equals("Illuminated_Case")
-				|| c.getClass().getSimpleName().equals("Event_Case"))
+				|| c.getClass().getSimpleName().equals("Event_Case")
+				|| c.getClass().getSimpleName().equals("Normal_Case"))
 
 				&&(this.color.equals(r.get_couleur())||
 						this.color.equals(Couleur.GRIS))) ;
