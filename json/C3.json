@@ -23,9 +23,9 @@
 		                
 		                {"ligne8" : [{"type_case": "case_empty","hauteur": 0,"couleur": "GRIS"},{"type_case": 									"case_empty","hauteur": 0,"couleur": "GRIS"},{"type_case": "case_empty","hauteur": 0,"couleur": "GRIS"},{"type_case": "case_empty","hauteur": 0,"couleur": "GRIS"},{"type_case": "case_normale","hauteur": 0,"couleur": "GRIS"} ]},
 		                
-		                {"ligne9" : [{"type_case": "case_empty","hauteur": 1,"couleur": "GRIS"},{"type_case": 									"case_empty","hauteur": 1,"couleur": "GRIS"},{"type_case": "case_painted","hauteur": 1,"couleur": "ROUGE"},{"type_case": "case_normale","hauteur": 1,"couleur": "GRIS"},{"type_case": "case_normale","hauteur": 1,"couleur": "GRIS"} ]},
+		                {"ligne9" : [{"type_case": "case_empty","hauteur": 0,"couleur": "GRIS"},{"type_case": 									"case_empty","hauteur": 0,"couleur": "GRIS"},{"type_case": "case_painted","hauteur": 0,"couleur": "ROUGE"},{"type_case": "case_normale","hauteur": 0,"couleur": "GRIS"},{"type_case": "case_normale","hauteur": 0,"couleur": "GRIS"} ]},
 		              
-		              	{"ligne10" : [{"type_case": "case_empty","hauteur": 1,"couleur": "GRIS"},{"type_case": 									"case_empty","hauteur": 1,"couleur": "GRIS"},{"type_case": "case_normale","hauteur": 1,"couleur": "GRIS"},{"type_case": "case_empty","hauteur": 1,"couleur": "GRIS"},{"type_case": "case_empty","hauteur": 1,"couleur": "GRIS"} ]}
+		              	{"ligne10" : [{"type_case": "case_empty","hauteur": 0,"couleur": "GRIS"},{"type_case": 									"case_empty","hauteur": 0,"couleur": "GRIS"},{"type_case": "case_normale","hauteur": 0,"couleur": "GRIS"},{"type_case": "case_empty","hauteur": 0,"couleur": "GRIS"},{"type_case": "case_empty","hauteur": 0,"couleur": "GRIS"} ]}
 		            ]}
             ]
         }

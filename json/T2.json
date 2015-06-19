@@ -7,8 +7,8 @@
                 {"nb_case_hauteur": 2},
                 {"nb_case_largeur": 2},
                 { "lignes" : [ 
-		              {"ligne1" : [{"type_case": "case_normale","hauteur": 1,"couleur": "GRIS"},{"type_case": "case_normale","hauteur": 1,"couleur": "GRIS"}]},
-		              {"ligne2" : [{"type_case": "case_illuminated","hauteur": 1,"couleur": "GRIS"},{"type_case": "case_empty","hauteur": 1,"couleur": "GRIS"}]}
+		              {"ligne1" : [{"type_case": "case_normale","hauteur": 0,"couleur": "GRIS"},{"type_case": "case_normale","hauteur": 0,"couleur": "GRIS"}]},
+		              {"ligne2" : [{"type_case": "case_illuminated","hauteur": 0,"couleur": "GRIS"},{"type_case": "case_empty","hauteur": 0,"couleur": "GRIS"}]}
 		              
 		            ]}
             ]
