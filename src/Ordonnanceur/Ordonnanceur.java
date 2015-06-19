@@ -3,12 +3,12 @@ package Ordonnanceur;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import observable.int_Observable;
-import observable.robot.abstr_Robot;
-import observer.int_Observer;
 import exception.ActionEx;
 import exception.MouvementEx;
 import exception.UnreachableCase;
+import observable.int_Observable;
+import observable.robot.abstr_Robot;
+import observer.int_Observer;
 
 public class Ordonnanceur implements int_Observable {
 
@@ -62,8 +62,8 @@ public class Ordonnanceur implements int_Observable {
 	}
 
 	// Suppression de l'élément d'indice "indice" de la linkedlist.
-	public void removeRobot(int indice){
-		this.list_robot.remove(indice);
+	public void removeRobot(){
+		this.list_robot.remove(0);
 	}
 
 	//Verifie que le robot d'indice 0 de la liste soit activable puis l'execute
@@ -111,9 +111,13 @@ public class Ordonnanceur implements int_Observable {
 
 	// Supprime tous les robots de la linkedlist
 	public void removeRobots() {
-		for (int i = 0; i < this.list_robot.size(); i++){
-			this.removeRobot(i);
+		System.out.println("TAILLE DE LA LISTE DE ROBOT DE L'ORDO : "+this.list_robot.size());
+		int taille_liste = this.list_robot.size();
+		for (int i = 0; i < taille_liste; i++){
+			System.out.println("REMOVE ROBOT DE L'ORDO : "+i);
+			this.removeRobot();
 		}
+		this.ready = true;
 	}
 
 	@Override

@@ -180,6 +180,7 @@ public class Controller implements int_Observer {
 				World.currentWorld.get_ordonnanceur().removeRobots();
 				System.out.println("NOMBRE DE ROBOT DANS ORDO A LA FIN : "+World.currentWorld.get_ordonnanceur().getNumberRobots());
 				System.out.println("sortie de la boucle de RUN FOREST RUN");
+				this.resetRobotAfterGame();
 				this.getNotificationRewind();
 			}
 			if (this.overflow > 150){
@@ -187,18 +188,26 @@ public class Controller implements int_Observer {
 				System.out.println("NOMBRE DE ROBOT DANS ORDO A LA FIN : "+World.currentWorld.get_ordonnanceur().getNumberRobots());
 				System.out.println("sortie de la boucle de RUN FOREST RUN");
 				System.out.println("Boucle infinie détéctée");
+				this.resetRobotAfterGame();
 				this.overflow = 0;
 			}
 			if (World.currentWorld.is_cleared()){
 				World.currentWorld.get_ordonnanceur().removeRobots();
 				System.out.println("NOMBRE DE ROBOT DANS ORDO A LA FIN : "+World.currentWorld.get_ordonnanceur().getNumberRobots());
 				System.out.println("sortie de la boucle de RUN FOREST RUN");
+				this.resetRobotAfterGame();
 				this.getNotificationVictory();
 			}
 		}
 		else{
 			System.out.println("On ne peut pas relancer le robot sans redemarrer le niveau");
 		}
+	}
+
+	public void resetRobotAfterGame(){
+		this.current_robot = 0;
+		this.current_program = 0;
+		this.current_terrain = 0;
 	}
 
 	public void getNotificationAddToRobotList(int_Action act){
