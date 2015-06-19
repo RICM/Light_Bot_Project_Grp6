@@ -178,13 +178,14 @@ public class World implements int_Observable {
 	 * @throws UnreachableCase
 	 */
 	public void init_World() throws UnreachableCase{
-		//this.liste_terrain = this.save_terr.clone();
 		this.nb_case_allumable = 0;
 		this.nb_case_allumees = 0;
 		for(int i = 0; i<this.liste_terrain.length; i++){
 			for(int j = 0; j<this.liste_terrain[i].get_terrain().length;j++ ){
 				for(int k = 0; k<this.liste_terrain[i].get_terrain()[j].length; k++){
 					abstr_Case temp = this.save_terr[i].get_case(k, j).Clone();
+					System.out.println(temp);
+					System.out.println(this.save_terr[i].get_case(k,j));
 					this.liste_terrain[i].set_case(temp,k,j);
 					//	System.out.println(" type de la case " +this.liste_terrain[i].get_case(j, k).getClass().getSimpleName() + "et coordonnees" + j + "   "+ k );
 					if (this.liste_terrain[i].get_case(k, j).getClass().getSimpleName().equals("Event_Case")){
@@ -230,9 +231,12 @@ public class World implements int_Observable {
 		return false;
 	}
 
+
+	//ICI LA ICI//
+
 	public void rewind_status() throws UnreachableCase, ActionEx{
-		for(int i =0; i < this.liste_terrain.length; i++){
-			World.currentWorld.liste_terrain[i] = World.currentWorld.save_terr[i];
+		for(int i =0; i < currentWorld.save_terr.length; i++){
+			World.currentWorld.liste_terrain[i] = World.currentWorld.save_terr[i].Clone();
 		}
 		for(int i =0; i < this.liste_robot.length; i++){
 			World.currentWorld.liste_robot[i].setFromPosition(World.currentWorld.save_robot[i]);
