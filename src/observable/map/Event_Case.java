@@ -65,7 +65,6 @@ public class Event_Case extends abstr_Case{
 			World.currentWorld.set_Case(this.dest_add, this.replaced);
 			System.out.println("Refreshing normal case");
 			System.out.println(this.dest_add);
-			this.notifyObserver();
 		}
 
 	}

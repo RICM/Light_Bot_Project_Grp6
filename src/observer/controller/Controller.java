@@ -76,6 +76,9 @@ public class Controller implements int_Observer {
 		case "abstr_Case" :
 			System.out.println("Controlleur a recu notification d'une abstr_Case");
 			this.setNotificationUpdateCase();
+		case "Event_Case" :
+			System.out.println("Controlleur a recu notification d'une Event_Case");
+			this.setNotificationUpdateCase();
 		default:
 			break;
 		}
