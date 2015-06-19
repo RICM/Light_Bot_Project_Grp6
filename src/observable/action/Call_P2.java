@@ -71,8 +71,6 @@ public class Call_P2 implements int_Action, int_Observable{
 				temp.addActionToList(r.get_P2().get(i));
 			}
 			r.add_execute(temp);
-			r.setVoid();
-			System.out.println("SETTE A VOID POUR LE ROBOT");
 			World.currentWorld.get_ordonnanceur().setReady(true);
 		}
 		else{

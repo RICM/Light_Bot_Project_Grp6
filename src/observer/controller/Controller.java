@@ -148,8 +148,6 @@ public class Controller implements int_Observer {
 				try {
 					System.out.println("While getNotificationRun");
 					World.currentWorld.exec();
-					World.currentWorld.get_ordonnanceur().increment_ind();
-					System.out.println("JE SUIS SORTI DE LA BOUCLE");
 					this.overflow++;
 				} catch (MouvementEx e) {
 					this.runnable = false;
@@ -238,7 +236,6 @@ public class Controller implements int_Observer {
 		if (robotCurrent >= World.currentWorld.number_robots()){
 			robotCurrent=0;
 		}
-		System.out.println("current ROBOT : IL EST LA : "+World.currentWorld.get_robot(this.current_robot));
 		this.current_robot = robotCurrent;
 		this.jeu.updateRobot(robotCurrent);
 	}

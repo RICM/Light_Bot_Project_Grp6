@@ -77,7 +77,7 @@ public class Ordonnanceur implements int_Observable {
 	}
 
 	//Incrémente ind_ex en verifiant que ind_ex ne dépasse pas la taille de la liste de robot.
-	public void increment_ind() {
+	private void increment_ind() {
 		this.ind_ex++;
 		if (this.ind_ex >= this.list_robot.size()){
 			this.ind_ex = 0;
@@ -96,8 +96,6 @@ public class Ordonnanceur implements int_Observable {
 			this.list_robot.get(this.ind_ex).execute();
 		}
 		this.increment_ind();
-		System.out.println("INDEX ORDO : "+ this.ind_ex);
-		//this.list_robot.get(this.ind_ex).setVoid();
 	}
 
 	//Execute tous les robots de la linkedlist.
