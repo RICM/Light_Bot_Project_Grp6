@@ -3,6 +3,7 @@ package View;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -54,6 +55,7 @@ public class Jeu {
 	protected Sprite monSpriteBackground = new Sprite();
 	protected Sprite monSpritePerso = new Sprite();
 	protected Sprite monSpriteMenu = new Sprite();
+	protected Sprite monSpriteFond = new Sprite();
 
 	protected static HashMap<String, Sprite> liste_sprite = new HashMap<String, Sprite>();
 	protected static HashMap<String, Sprite> liste_background = new HashMap<String, Sprite>();
@@ -69,8 +71,14 @@ public class Jeu {
 	protected static final int TAILLE_MAX_P2 = 8;
 
 	protected static int indiceInterface=-40;
-	protected static boolean deroule = false;
-	protected static boolean renroule = false;
+	protected static boolean derouleInterface = false;
+	protected static boolean renrouleInterface = false;
+	protected static int indiceOrdonnanceur=0;
+	protected static boolean derouleOrdonnanceur = false;
+	protected static boolean renrouleOrdonnanceur = false;
+	protected static boolean isDeroule = false;
+
+	protected static int sizeOrdonnanceur=0;
 	protected boolean FirstLoop = true;
 	protected static Couleur couleur_active = Couleur.GRIS;
 	protected static float x_whale = -600;
@@ -128,13 +136,7 @@ public class Jeu {
 			e1.printStackTrace();
 		}
 		while(Menu.app.isOpen()){
-			Menu.app.clear();
-			this.drawBackground();
-			controller.setNotificationDrawGrilleISO();
-			controller.setNotificationDrawButton();
-			controller.setNotificationDrawControle();
-			controller.setNotificationDrawAllProcedure();
-			Menu.app.display();
+			this.draw();
 			this.processEvent(false);
 			try {
 				Thread.sleep(10);
@@ -147,6 +149,23 @@ public class Jeu {
 				//				Menu.app.close();
 			}
 		}
+	}
+
+
+	public void draw(){
+		Menu.app.clear();
+		this.drawBackground();
+		controller.setNotificationDrawGrilleISO();
+		if(isDeroule){
+			controller.setNotificationDrawBoutonOrdonnance();
+		}
+		else{
+			controller.setNotificationDrawButton();
+		}
+		controller.setNotificationDrawControle();
+		controller.setNotificationDrawAllProcedure();
+		controller.setNotificationGetListeOrdo();
+		Menu.app.display();
 	}
 
 	/**
@@ -193,8 +212,9 @@ public class Jeu {
 				Vector2i pos = Mouse.getPosition(Menu.app);
 				Vector2f click = Menu.app.mapPixelToCoords(pos);
 				if(finish == false){
+					this.delete_button(click);
+					delete_button_ordonnanceur(click);
 					Jeu.detect_move(click);
-					this.delete_button(e,click);
 				}
 				else
 					this.retourMenu(e,click);
@@ -211,10 +231,10 @@ public class Jeu {
 
 				if(action.equals("Fond")){
 					if(x>=rect.left && x<=rect.left+rect.width && y>=rect.top && y<=rect.top+rect.height){
-						deroule = true;
+						derouleInterface = true;
 						break;
 					}else{
-						renroule = true;
+						renrouleInterface = true;
 						break;
 					}
 				}
@@ -236,8 +256,12 @@ public class Jeu {
 
 	public void updateRobot(int new_robot){
 		identificateur_robot = new_robot;
-		typeBoutonInterface[0] = typeRobot[identificateur_robot];
+		typeBoutonInterface[0] = this.typeRobot[identificateur_robot];
 		System.out.println(identificateur_robot);
+	}
+
+	public void updateSizeOrdonnanceur(int new_size){
+		sizeOrdonnanceur = new_size;
 	}
 	/**
 	 *
@@ -256,7 +280,7 @@ public class Jeu {
 			if(x>=rect.left && x<=rect.left+rect.width && y>=rect.top && y<=rect.top+rect.height){
 
 				for(String actionCurrent : actionPossible){
-					if(action.equals(actionCurrent)){
+					if(action.equals(actionCurrent) && !isDeroule){
 						int_Action actionToAdd = controller.getNotificationAddActionToUserList(action, couleur_active);
 						if (actionToAdd != null){
 							liste_sprite_Action.put(liste_sprite.get(action), actionToAdd);
@@ -327,6 +351,28 @@ public class Jeu {
 					}
 					break;
 				}
+				else if(action.equals("ordonnanceur")){
+					System.out.println("ordonnanceur");
+					if(!isDeroule){
+						derouleOrdonnanceur = true;
+					}else{
+						renrouleOrdonnanceur = true;
+					}
+
+					break;
+				}
+				else if(action.equals("pingouin_GRIS_Ordo") && isDeroule){
+					System.out.println("pingouin_GRIS");
+					controller.getNotificationAddToOrdonnanceurList(0);
+					derouleOrdonnanceur = true;
+					break;
+				}
+				else if(action.equals("requin_GRIS_Ordo") && isDeroule){
+					System.out.println("requin_GRIS");
+					controller.getNotificationAddToOrdonnanceurList(1);
+					derouleOrdonnanceur = true;
+					break;
+				}
 			}
 		}
 
@@ -347,7 +393,7 @@ public class Jeu {
 	}
 
 
-	public void delete_button(Event e, Vector2f click){
+	public void delete_button( Vector2f click){
 		float x = click.x;
 		float y = click.y;
 		System.out.println(activate);
@@ -361,6 +407,7 @@ public class Jeu {
 		}
 	}
 
+
 	public static void remove_action_liste(LinkedList<Sprite> list_remove, float x, float y){
 		int compteur=0;
 		for(Sprite s: list_remove){
@@ -372,6 +419,29 @@ public class Jeu {
 				break;
 			}
 			compteur++;
+		}
+	}
+
+	public static void delete_button_ordonnanceur(Vector2f click){
+		float x = click.x;
+		float y = click.y;
+		Iterator<String> keySetIterator = Jeu.liste_sprite.keySet().iterator();
+		while(keySetIterator.hasNext()){
+
+			String action = keySetIterator.next();
+			FloatRect rect = liste_sprite.get(action).getGlobalBounds();
+
+			if(x>=rect.left && x<=rect.left+rect.width && y>=rect.top && y<=rect.top+rect.height){
+				for(int i = 0; i<sizeOrdonnanceur;i++){
+					for(String boutonOrdoCurrent : typeRobot){
+						System.out.println("Voulu: "+boutonOrdoCurrent+"_Ordo_"+i);
+						if (action.equals(boutonOrdoCurrent+"_Ordo_"+i)){
+							System.out.println(action);
+							controller.getNotificationRemoveToOrdonnanceurList(i);
+						}
+					}
+				}
+			}
 		}
 	}
 
@@ -421,6 +491,22 @@ public class Jeu {
 	}
 
 
+	public void updateDrawBoutonOrdonnance(){
+		int i =0;
+		for(String robotOrdo : typeRobot){
+
+			Texture textureTemp = textureBouton.get(robotOrdo);
+			Sprite monSpriteBouton = liste_sprite.get(robotOrdo+"_Ordo");
+			monSpriteBouton.setTexture(textureTemp);
+			monSpriteBouton.setPosition(10+80*i,610);
+			Jeu.liste_sprite.replace(robotOrdo+"_Ordo",monSpriteBouton);//(actionCurrent,monSpriteBouton);
+			Menu.app.draw(monSpriteBouton);
+			i++;
+		}
+
+	}
+
+
 	/*
 	 * Affiche bouton play,retour etc
 	 *
@@ -428,11 +514,12 @@ public class Jeu {
 	 */
 	public void updateDrawControle(){
 		Texture textureTemp;
+		Sprite monSpriteBouton;
 		int i = 0;
 		for(String boutonCurrent : typeBoutonInterface){
 
 			textureTemp = textureBoutonInterface.get(boutonCurrent);
-			Sprite monSpriteBouton = liste_sprite.get(boutonCurrent);
+			monSpriteBouton = liste_sprite.get(boutonCurrent);
 			monSpriteBouton.setTexture(textureTemp);
 			monSpriteBouton.setPosition(10,10+80*i);
 			Jeu.liste_sprite.replace(boutonCurrent,monSpriteBouton);
@@ -444,7 +531,7 @@ public class Jeu {
 		for(String couleurCurrent : typeCouleur){
 
 			textureTemp = textureBoutonInterface.get("tache"+couleurCurrent);
-			Sprite monSpriteBouton = liste_sprite.get(couleurCurrent);
+			monSpriteBouton = liste_sprite.get(couleurCurrent);
 			monSpriteBouton.setTexture(textureTemp);
 			monSpriteBouton.setPosition(700+50*i,540);
 			Jeu.liste_sprite.replace(couleurCurrent,monSpriteBouton);
@@ -453,25 +540,26 @@ public class Jeu {
 		}
 
 		i = 0;
+		if(derouleInterface){
+			if(indiceInterface>=0){
+				derouleInterface = false;
+			}else{
+				indiceInterface +=2;
+			}
+		}
+		if(renrouleInterface && !derouleInterface){
+			if(indiceInterface>-40){
+				indiceInterface -=2;
+			}else{
+				renrouleInterface = false;
+			}
+		}
+
 		for(String boutonMenuCurrent : typeBoutonInterfaceMenu){
 
 			textureTemp = textureBoutonInterface.get(boutonMenuCurrent);
-			Sprite monSpriteBouton = liste_sprite.get(boutonMenuCurrent);
+			monSpriteBouton = liste_sprite.get(boutonMenuCurrent);
 			monSpriteBouton.setTexture(textureTemp);
-			if(deroule){
-				if(indiceInterface>=0){
-					deroule = false;
-				}else{
-					indiceInterface ++;
-				}
-			}
-			if(renroule && !deroule){
-				if(indiceInterface>-40){
-					indiceInterface --;
-				}else{
-					renroule = false;
-				}
-			}
 			monSpriteBouton.setPosition(400+50*i,indiceInterface);
 			Jeu.liste_sprite.replace(boutonMenuCurrent,monSpriteBouton);
 			Menu.app.draw(monSpriteBouton);
@@ -537,6 +625,56 @@ public class Jeu {
 
 
 
+	public void updateDrawListeOrdo(ArrayList<String> listeOrdo){
+
+		Texture textureTemp;
+		Sprite monSpriteBouton;
+
+		//System.out.println("listeOrdo "+listeOrdo);
+		textureTemp = textureBoutonInterface.get("ordonnanceur");
+		monSpriteBouton = liste_sprite.get("ordonnanceur");
+		monSpriteBouton.setTexture(textureTemp);
+		monSpriteBouton.setPosition(indiceOrdonnanceur-670,500);
+		Jeu.liste_sprite.replace("ordonnanceur",monSpriteBouton);
+		Menu.app.draw(monSpriteBouton);
+
+
+		if(derouleOrdonnanceur){
+			if(indiceOrdonnanceur>=100+listeOrdo.size()*85){
+				derouleOrdonnanceur = false;
+				isDeroule = true;
+			}else{
+				indiceOrdonnanceur +=3;
+			}
+		}
+		if(renrouleOrdonnanceur && !derouleOrdonnanceur){
+			if(indiceOrdonnanceur>0){
+				indiceOrdonnanceur -=3;
+			}else{
+				renrouleOrdonnanceur = false;
+				isDeroule = false;
+			}
+		}
+
+		textureTemp = textureBouton.get("Fond_Bouton");
+		this.monSpriteFond.setTexture(textureTemp);
+		this.monSpriteFond.setPosition(indiceOrdonnanceur-80*(listeOrdo.size()+1),505);
+		Menu.app.draw(this.monSpriteFond);
+
+		int i = 0;
+		for(String boutonOrdoCurrent : listeOrdo){
+			textureTemp = textureBouton.get(boutonOrdoCurrent);
+			monSpriteBouton = new Sprite();
+			monSpriteBouton.setTexture(textureTemp);
+			monSpriteBouton.setPosition(indiceOrdonnanceur-80*(i+1),505);
+			liste_sprite.putIfAbsent(boutonOrdoCurrent+"_Ordo_"+i, monSpriteBouton);
+			Menu.app.draw(monSpriteBouton);
+			i++;
+		}
+
+
+	}
+
 
 
 	/**
@@ -559,19 +697,37 @@ public class Jeu {
 	public void initTextureBouton(){
 		try{
 			Texture textureTemp;
+			Sprite monSpriteBouton;
 			for(String boutonCurrent : typeBouton){
 				for(String couleurCurrent : typeCouleur){
 					textureTemp = new Texture();
 					textureTemp.loadFromFile(Paths.get("Images/Jeu/Boutons/"+boutonCurrent+couleurCurrent+".png"));
 					textureBouton.put(boutonCurrent+couleurCurrent,textureTemp);
 
-					Sprite monSpriteBouton = new Sprite();
+					monSpriteBouton = new Sprite();
 					liste_sprite.put(boutonCurrent, monSpriteBouton);
 				}
 			}
+
+			for(String boutonRobCurrent : typeRobot){
+				System.out.println("type_robot"+ typeRobot);
+				textureTemp = new Texture();
+				textureTemp.loadFromFile(Paths.get("Images/Jeu/Boutons/"+boutonRobCurrent+".png"));
+				textureBouton.put(boutonRobCurrent,textureTemp);
+
+				monSpriteBouton = new Sprite();
+				liste_sprite.put(boutonRobCurrent, monSpriteBouton);
+
+				monSpriteBouton = new Sprite();
+				liste_sprite.put(boutonRobCurrent+"_Ordo", monSpriteBouton);
+			}
+
+
+
 			textureTemp = new Texture();
 			textureTemp.loadFromFile(Paths.get("Images/Jeu/Backgrounds/Fond_Bouton.png"));
 			textureBouton.put("Fond_Bouton",textureTemp);
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -612,6 +768,14 @@ public class Jeu {
 				monSpriteBouton = new Sprite();
 				liste_sprite.put(boutonCurrent, monSpriteBouton);
 			}
+
+			textureTemp = new Texture();
+			textureTemp.loadFromFile(Paths.get("Images/Jeu/BoutonsInterface/ordonnanceur.png"));
+			textureBoutonInterface.put("ordonnanceur",textureTemp);
+
+			monSpriteBouton = new Sprite();
+			liste_sprite.put("ordonnanceur", monSpriteBouton);
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -621,7 +785,7 @@ public class Jeu {
 		try {
 			int i = 0;
 			Texture textureTemp;
-			for(String robotCurrent : typeRobot){
+			for(String robotCurrent : this.typeRobot){
 				for(String orientationCurrent : typeOrientation){
 					for(String couleurCurrent : typeCouleur){
 						textureTemp = new Texture();
@@ -755,13 +919,7 @@ public class Jeu {
 		while((System.currentTimeMillis() - temps_depart ) < duree )
 		{
 			System.out.println("in while******"+controller.getCpt());
-			Menu.app.clear();
-			this.drawBackground();
-			controller.setNotificationDrawGrilleISO();
-			controller.setNotificationDrawButton();
-			controller.setNotificationDrawControle();
-			controller.setNotificationDrawAllProcedure();
-			Menu.app.display();
+			this.draw();
 			this.processEvent(false);
 			if(World.currentWorld.is_cleared()){
 				//				JOptionPane.showMessageDialog(null, "Fin");

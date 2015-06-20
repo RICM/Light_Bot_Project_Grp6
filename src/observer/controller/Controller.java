@@ -1,10 +1,12 @@
 package observer.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import View.Jeu;
 import View.Menu;
+import View.Niveaux;
 import couleur.Couleur;
 import exception.ActionEx;
 import exception.MouvementEx;
@@ -45,6 +47,7 @@ public class Controller implements int_Observer {
 	private boolean isPaused = false;
 	private boolean savedPrerun = false;
 	protected int cpt = 1;
+	protected static String typeRobot[]={"pingouin_GRIS","requin_GRIS"};
 
 	@Override
 	public void update(Object obj){
@@ -137,10 +140,6 @@ public class Controller implements int_Observer {
 			this.overflow = 0;
 			//if (World.currentWorld.get_ordonnanceur().size() == 0)
 			// RESET L'ORDO
-			for(int j = 0; j < World.currentWorld.get_liste_robot().length;j++){
-				if (World.currentWorld.get_robot(j).get_Main().size() > 0)
-					World.currentWorld.get_ordonnanceur().addRobot(World.currentWorld.get_robot(j));
-			}
 			World.currentWorld.prerun();
 			this.savedPrerun = true;
 			this.runnable = World.currentWorld.isOneRobotActive();
@@ -243,6 +242,7 @@ public class Controller implements int_Observer {
 					rob.get_P2().removeIndice(position);
 				break;
 			}
+			System.out.println("P1 "+World.currentWorld.get_robot(0).get_P1());
 		}
 		/**
 		 * La vue aura besoin d'avoir un hashmap de boutons|actions
@@ -273,6 +273,30 @@ public class Controller implements int_Observer {
 		/**
 		 * Receive a notification from view to change the view and display all "terrain"
 		 */
+	}
+
+
+	public void setNotificationGetListeOrdo(){
+		/**
+		 * Receive a notification from view to get liste ordo
+		 */
+		if(Niveaux.getTheme().equals("D")){
+			this.getNotificationGetListeOrdo();
+		}
+	}
+
+	public void getNotificationGetListeOrdo(){
+		ArrayList<String> listeOrdo = new ArrayList<String>();
+		for (abstr_Robot robOrdo : World.currentWorld.get_ordonnanceur().getListeRobotOrdonnanceur()){
+			int i=0;
+			for(abstr_Robot robList : World.currentWorld.get_liste_robot()){
+				if(robOrdo == robList){
+					listeOrdo.add(typeRobot[i]);
+				}
+				i++;
+			}
+		}
+		this.jeu.updateDrawListeOrdo(listeOrdo);
 	}
 
 	public void getNotificationDisplayTerrain(int i){
@@ -517,6 +541,11 @@ public class Controller implements int_Observer {
 	}
 
 
+	public void setNotificationDrawBoutonOrdonnance() {
+		this.jeu.updateDrawBoutonOrdonnance();
+	}
+
+
 	public void setNotificationDrawGrilleISO(){
 		int taille_abs =  World.currentWorld.get_terrain(0).get_terrain()[0].length;
 		int taille_ord =  World.currentWorld.get_terrain(0).get_terrain().length;
@@ -675,6 +704,18 @@ public class Controller implements int_Observer {
 
 	public int getCpt() {
 		return this.cpt;
+	}
+
+	public void getNotificationAddToOrdonnanceurList(int robot){
+		World.currentWorld.get_ordonnanceur().addRobot(World.currentWorld.get_robot(robot));
+	}
+
+	public void getNotificationRemoveToOrdonnanceurList(int robot){
+		World.currentWorld.get_ordonnanceur().removeRobot(robot);
+	}
+
+	public void getNotificationSizeOrdonnanceurList(){
+		this.jeu.updateSizeOrdonnanceur(World.currentWorld.get_ordonnanceur().size());
 	}
 }
 

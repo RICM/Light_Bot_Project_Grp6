@@ -42,7 +42,7 @@ public class Niveaux {
 	protected static final int WIDTH = 1200;
 	protected static final int HEIGHT = 700;
 	protected static Controller controller;
-	protected String theme;
+	protected static String theme;
 	protected Font f = new Font();
 	protected boolean first_round = true;
 
@@ -57,7 +57,7 @@ public class Niveaux {
 	 * @param current_theme le theme choisi par l'utilisateur: T(tuto), D(dual), C(conditions), P(pointeurs)
 	 */
 	public Niveaux(Controller acontroller,String current_theme){
-		this.theme = current_theme;
+		this.setTheme(current_theme);
 		controller = acontroller;
 
 		try {
@@ -159,8 +159,14 @@ public class Niveaux {
 				}
 				else if(this.listSprite.get(s).equals("Next")){
 					this.level++;
-					if(this.level>4)
-						this.level = 4;
+					int level_max;
+					if (this.getTheme().equals("D")){
+						level_max=7;
+					}else{
+						level_max=4;
+					}
+					if(this.level>level_max)
+						this.level = level_max;
 				}
 				else if(this.listSprite.get(s).equals("Home")){
 					new Theme(controller);
@@ -176,7 +182,7 @@ public class Niveaux {
 					break;
 				}
 				else if(this.listSprite.get(s).equals("Level")){
-					String lvl = this.theme+this.level;
+					String lvl = this.getTheme()+this.level;
 					controller.getLevel(controller,lvl);
 					new Jeu(this.level, controller);
 				}
@@ -211,12 +217,12 @@ public class Niveaux {
 			if(indiceInterface>=0){
 				deroule = false;
 			}else{
-				indiceInterface ++;
+				indiceInterface +=2;
 			}
 		}
 		if(renroule && !deroule){
 			if(indiceInterface>-40){
-				indiceInterface --;
+				indiceInterface -=2;
 			}else{
 				renroule = false;
 			}
@@ -260,6 +266,14 @@ public class Niveaux {
 			this.first_round = false;
 		}
 
+	}
+
+	public static String getTheme() {
+		return theme;
+	}
+
+	public void setTheme(String theme) {
+		this.theme = theme;
 	}
 
 }

@@ -20,9 +20,9 @@ public class Ordonnanceur implements int_Observable {
 	private boolean ready = true;
 	private boolean modifiable = false;
 
-
-
-	/* Getters & setters */
+	public LinkedList<abstr_Robot> getListeRobotOrdonnanceur(){
+		return this.list_robot;
+	}
 
 	public boolean getModifiable(){
 		return this.modifiable;
@@ -57,13 +57,13 @@ public class Ordonnanceur implements int_Observable {
 	}
 
 	//Suppression du premier élément de la linkedlist.
-	public void removeFirst(abstr_Robot r){
+	public void removeFirst(){
 		this.list_robot.removeFirst();
 	}
 
 	// Suppression de l'élément d'indice "indice" de la linkedlist.
-	public void removeRobot(){
-		this.list_robot.remove(0);
+	public void removeRobot(int i){
+		this.list_robot.remove(i);
 	}
 
 	//Verifie que le robot d'indice 0 de la liste soit activable puis l'execute
@@ -115,7 +115,7 @@ public class Ordonnanceur implements int_Observable {
 		int taille_liste = this.list_robot.size();
 		for (int i = 0; i < taille_liste; i++){
 			System.out.println("REMOVE ROBOT DE L'ORDO : "+i);
-			this.removeRobot();
+			this.removeRobot(0);
 		}
 		this.ready = true;
 	}

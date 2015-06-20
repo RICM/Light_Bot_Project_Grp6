@@ -205,12 +205,12 @@ public class Theme {
 			if(indiceInterface>=0){
 				deroule = false;
 			}else{
-				indiceInterface ++;
+				indiceInterface +=2;
 			}
 		}
 		if(renroule && !deroule){
 			if(indiceInterface>-40){
-				indiceInterface --;
+				indiceInterface -=2;
 			}else{
 				renroule = false;
 			}
