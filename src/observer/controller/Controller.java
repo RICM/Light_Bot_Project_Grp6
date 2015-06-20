@@ -265,18 +265,22 @@ public class Controller implements int_Observer {
 				break;
 			}
 		}else if (rob.getClass().getSimpleName().equals("Dumb_bot")){
+			System.out.println("CURRENT PROGRAMME : "+this.current_program);
 			switch (this.current_program){
 			case 0 :
 				if (position < rob.get_Main().size())
 					((Dumb_bot)rob).remove_Action_User_Actions(position);
+				System.out.println("LALA JE SUIS DANS LE CAS 1");
 				break;
 			case 1 :
 				if (position < rob.get_P1().size())
-					((Dumb_bot)rob).remove_Action_P1(position);
+					((Dumb_bot)rob).get_P1().removeIndice(position);
+				System.out.println("LALA JE SUIS DANS LE CAS 2");
 				break;
 			case 2 :
 				if (position < rob.get_P2().size())
 					((Dumb_bot)rob).get_P2().removeIndice(position);
+				System.out.println("LALA JE SUIS DANS LE CAS 3");
 				break;
 			}
 			System.out.println("P1 "+World.currentWorld.get_robot(0).get_P1());
