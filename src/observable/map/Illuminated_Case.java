@@ -22,8 +22,8 @@ public class Illuminated_Case extends abstr_Case {
 
 	public void set_active(boolean act){
 		if (this.listObserver.isEmpty())
-			System.out.println("T'es trop fort mec t'as compris que j'avais pas d'observeur");
-		this.active = act;
+			//System.out.println("T'es trop fort mec t'as compris que j'avais pas d'observeur");
+			this.active = act;
 		this.notifyObserver();
 	}
 

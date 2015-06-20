@@ -49,7 +49,7 @@ public class Event_Case extends abstr_Case{
 		try {
 			this.setReplaced(World.currentWorld.get_case(this.dest_add));
 		} catch (UnreachableCase e) {
-			System.out.println("this World is corrupted");
+			//System.out.println("this World is corrupted");
 			e.printStackTrace();
 		}
 	}
@@ -57,14 +57,14 @@ public class Event_Case extends abstr_Case{
 	public void refresh(){
 		if (this.status){
 			World.currentWorld.set_Case(this.dest_add, this.to_add);
-			System.out.println("Refreshing replacing case");
-			System.out.println(this.to_add);
+			//System.out.println("Refreshing replacing case");
+			//System.out.println(this.to_add);
 			this.notifyObserver();
 		}
 		else{
 			World.currentWorld.set_Case(this.dest_add, this.replaced);
-			System.out.println("Refreshing normal case");
-			System.out.println(this.dest_add);
+			//System.out.println("Refreshing normal case");
+			//System.out.println(this.dest_add);
 		}
 
 	}
@@ -80,7 +80,7 @@ public class Event_Case extends abstr_Case{
 	public abstr_Case Clone() {
 		Event_Case temp = new Event_Case(this.get_hauteur(),this.get_couleur(),this.get_coordonnees().
 				Clone(),this.getTo_add().Clone(), this.getStatus());
-		System.out.println("Cloning Event Case : "+this.listObserver.get(0));
+		//System.out.println("Cloning Event Case : "+this.listObserver.get(0));
 		temp.addObserver(this.listObserver.get(0));
 		return temp;
 	}
@@ -97,8 +97,8 @@ public class Event_Case extends abstr_Case{
 	}
 	@Override
 	public void notifyObserver() {
-		System.out.println("Je suis dans le notify d'une case event");
-		System.out.println("Liste des observateur de l'event case : "+this.listObserver.size());
+		//System.out.println("Je suis dans le notify d'une case event");
+		//System.out.println("Liste des observateur de l'event case : "+this.listObserver.size());
 		for(int_Observer obs : this.listObserver)
 			obs.update(this);
 	}

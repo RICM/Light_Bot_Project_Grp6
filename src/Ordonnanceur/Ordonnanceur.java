@@ -91,11 +91,11 @@ public class Ordonnanceur implements int_Observable {
 
 	//Si le robot d'indice ind_ex est activable, il est execute.
 	public void execute_next() throws MouvementEx, UnreachableCase, ActionEx, IndexOutOfBoundsException{
-		System.out.println("ORDO LIST : "+this.list_robot);
+		//System.out.println("ORDO LIST : "+this.list_robot);
 		abstr_Robot robot;
 		robot = this.list_robot.get(this.ind_ex);
-		System.out.println("CURRENT ROBOT : "+robot.getClass().getSimpleName()+robot.toString());
-		System.out.println("ROBOT IS ACTIVABLE ?"+robot.get_activable());
+		//System.out.println("CURRENT ROBOT : "+robot.getClass().getSimpleName()+robot.toString());
+		//System.out.println("ROBOT IS ACTIVABLE ?"+robot.get_activable());
 		if(robot.get_activable()){
 			this.ready = false;
 			this.list_robot.get(this.ind_ex).execute();
@@ -106,7 +106,7 @@ public class Ordonnanceur implements int_Observable {
 	//Execute tous les robots de la linkedlist.
 	public void execute() throws MouvementEx, UnreachableCase, ActionEx{
 		for (int i =0 ; i < this.list_robot.size() ; i++){
-			System.out.println("taille list exec rob : " + this.list_robot.get(i).get_run().size());
+			//System.out.println("taille list exec rob : " + this.list_robot.get(i).get_run().size());
 			if (this.list_robot.get(i).get_activable()){
 				this.setReady(false);
 				this.list_robot.get(i).execute();
@@ -116,10 +116,10 @@ public class Ordonnanceur implements int_Observable {
 
 	// Supprime tous les robots de la linkedlist
 	public void removeRobots() {
-		System.out.println("TAILLE DE LA LISTE DE ROBOT DE L'ORDO : "+this.list_robot.size());
+		//System.out.println("TAILLE DE LA LISTE DE ROBOT DE L'ORDO : "+this.list_robot.size());
 		int taille_liste = this.list_robot.size();
 		for (int i = 0; i < taille_liste; i++){
-			System.out.println("REMOVE ROBOT DE L'ORDO : "+i);
+			//System.out.println("REMOVE ROBOT DE L'ORDO : "+i);
 			this.removeRobot(0);
 		}
 		this.ready = true;

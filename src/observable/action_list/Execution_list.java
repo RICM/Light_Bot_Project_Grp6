@@ -23,18 +23,18 @@ public class Execution_list implements int_Observable{
 	}
 	public void addFirst(Sequence_List new_h){
 		this.Run_List.addFirst(new_h);
-		System.out.println(new_h);
-		System.out.println("RUN LIST ICI : "+this.Run_List);
+		//System.out.println(new_h);
+		//System.out.println("RUN LIST ICI : "+this.Run_List);
 	}
 
 	public void initFirst(Sequence_List main){
 		Sequence_List temp = new Sequence_List(null);
-		System.out.println(main);
+		//System.out.println(main);
 		for(int i = 0; i < main.size(); i++){
 			temp.addActionSubSequence(main.get(i).Clone());
 		}
 		this.addFirst(temp);
-		System.out.println("RUN LIST LALALA : "+this.Run_List);
+		//System.out.println("RUN LIST LALALA : "+this.Run_List);
 	}
 
 	public void removeFirst(){
@@ -42,21 +42,21 @@ public class Execution_list implements int_Observable{
 	}
 
 	public void run(abstr_Robot r) throws MouvementEx, UnreachableCase, ActionEx{
-		System.out.println("Ich bin in run");
-		System.out.println(this.Run_List);
+		//System.out.println("Ich bin in run");
+		//System.out.println(this.Run_List);
 		if(this.Run_List.size()>0){
-			System.out.println("Ich bin in run : first if");
-			System.out.println("taille run list : "+this.Run_List.size());
-			System.out.println("taille de la première liste a run : "+ this.Run_List.getFirst().size());
+			//System.out.println("Ich bin in run : first if");
+			//System.out.println("taille run list : "+this.Run_List.size());
+			//System.out.println("taille de la première liste a run : "+ this.Run_List.getFirst().size());
 			if(this.Run_List.getFirst().size() > 0){
-				System.out.println("Ich bin in run : second if");
-				System.out.println("EXEC LIST ROBOT EST : "+r.get_activable());
+				//System.out.println("Ich bin in run : second if");
+				//System.out.println("EXEC LIST ROBOT EST : "+r.get_activable());
 				if (r.get_activable()){
 					int_Action temp = this.Run_List.getFirst().removeFirst();
-					System.out.println(temp);
+					//System.out.println(temp);
 					temp.execute(r);
 				}else{
-					System.out.println("Je passe mon tour je suis pas actif");
+					//System.out.println("Je passe mon tour je suis pas actif");
 				}
 			}
 			else{
@@ -65,7 +65,7 @@ public class Execution_list implements int_Observable{
 			}
 		}
 		else{
-			System.out.println("J'AI FINIS TA RACE");
+			//System.out.println("J'AI FINIS TA RACE");
 			r.set_activable(false);
 			World.currentWorld.get_ordonnanceur().removeRobotFromOrdo(r);
 			this.notifyObserver();
@@ -100,7 +100,7 @@ public class Execution_list implements int_Observable{
 	}
 	@Override
 	public void notifyObserver() {
-		//System.out.println(this.listObserver.toString());
+		////System.out.println(this.listObserver.toString());
 		for(int_Observer obs : this.listObserver)
 			obs.update(this);
 	}

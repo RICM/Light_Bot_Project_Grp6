@@ -68,7 +68,7 @@ public class Robot extends abstr_Robot implements int_Observable {
 	}
 
 	public void print_allowed_act(){
-		System.out.println(this.get_possible().toString());
+		//System.out.println(this.get_possible().toString());
 	}
 
 
@@ -95,8 +95,8 @@ public class Robot extends abstr_Robot implements int_Observable {
 
 	@Override
 	public void printPosition(){
-		System.out.println("position x : "+this.current_case.get_coordonnees().get_x());
-		System.out.println("position y : "+this.current_case.get_coordonnees().get_y());
+		//System.out.println("position x : "+this.current_case.get_coordonnees().get_x());
+		//System.out.println("position y : "+this.current_case.get_coordonnees().get_y());
 	}
 
 	//getteurs et setteurs
@@ -147,7 +147,7 @@ public class Robot extends abstr_Robot implements int_Observable {
 	@Override
 	public void set_activable( boolean activ){
 		this.activable = activ;
-		System.out.println("SET ACTIVABLE A : "+this.activable);
+		//System.out.println("SET ACTIVABLE A : "+this.activable);
 		this.notifyObserver();
 	}
 

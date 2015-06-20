@@ -253,7 +253,7 @@ public class Jeu {
 		float x = click.x;
 		float y = click.y;
 		if(x>=rect.left && x<=rect.left+rect.width && y>=rect.top && y<=rect.top+rect.height){
-			System.out.println("test");
+			//System.out.println("test");
 			new Theme(controller);
 		}
 
@@ -262,7 +262,7 @@ public class Jeu {
 	public void updateRobot(int new_robot){
 		identificateur_robot = new_robot;
 		typeBoutonInterface[0] = this.typeRobot[identificateur_robot];
-		System.out.println(identificateur_robot);
+		//System.out.println(identificateur_robot);
 	}
 
 	public void updateSizeOrdonnanceur(int new_size){
@@ -295,32 +295,32 @@ public class Jeu {
 				}
 
 				if((action.equals("pingouin_GRIS")) && (identificateur_robot == 0)){
-					System.out.println("pingouin_blanc -> requin_blanc");
+					//System.out.println("pingouin_blanc -> requin_blanc");
 					controller.getNotificationChangeRobot(identificateur_robot);
 					break;
 				}
 				else if((action.equals("requin_GRIS")) && (identificateur_robot == 1)){
-					System.out.println("requin_blanc -> pingouin_blanc");
+					//System.out.println("requin_blanc -> pingouin_blanc");
 					controller.getNotificationChangeRobot(identificateur_robot);
 					break;
 				}
 				else if(action.equals("_GRIS")){
-					System.out.println("couleur GRIS");
+					//System.out.println("couleur GRIS");
 					couleur_active =  Couleur.GRIS;
 					break;
 				}
 				else if(action.equals("_ROUGE")){
-					System.out.println("couleur ROUGE");
+					//System.out.println("couleur ROUGE");
 					couleur_active =  Couleur.ROUGE;
 					break;
 				}
 				else if(action.equals("_VERT")){
-					System.out.println("couleur VERT");
+					//System.out.println("couleur VERT");
 					couleur_active =  Couleur.VERT;
 					break;
 				}
 				else if(action.equals("play")){
-					System.out.println("play");
+					//System.out.println("play");
 					controller.getNotificationRewindAndRUn();
 					try {
 						Thread.sleep(100);
@@ -331,22 +331,22 @@ public class Jeu {
 					break;
 				}
 				else if(action.equals("rewind")){
-					System.out.println("rewind");
+					//System.out.println("rewind");
 					controller.getNotificationRewind();
 					break;
 				}
 				else if(action.equals("stop")){
-					System.out.println("stop");
+					//System.out.println("stop");
 					controller.getNotificationStopRun();
 					break;
 				}
 				else if(action.equals("Home")){
-					System.out.println("Home");
+					//System.out.println("Home");
 					new Theme(controller);
 					break;
 				}
 				else if(action.equals("Sound")){
-					System.out.println("Sound");
+					//System.out.println("Sound");
 					if(Menu.IsPlaying){
 						Menu.song.pause();
 						Menu.IsPlaying = false;
@@ -357,7 +357,7 @@ public class Jeu {
 					break;
 				}
 				else if(action.equals("ordonnanceur") && !suprime){
-					System.out.println("ordonnanceur");
+					//System.out.println("ordonnanceur");
 					if(!isDeroule){
 						derouleOrdonnanceur = true;
 					}else{
@@ -367,13 +367,13 @@ public class Jeu {
 					break;
 				}
 				else if(action.equals("pingouin_GRIS_Ordo") && isDeroule){
-					System.out.println("pingouin_GRIS");
+					//System.out.println("pingouin_GRIS");
 					controller.getNotificationAddToOrdonnanceurList(0);
 					derouleOrdonnanceur = true;
 					break;
 				}
 				else if(action.equals("requin_GRIS_Ordo") && isDeroule){
-					System.out.println("requin_GRIS");
+					//System.out.println("requin_GRIS");
 					controller.getNotificationAddToOrdonnanceurList(1);
 					derouleOrdonnanceur = true;
 					break;
@@ -390,7 +390,7 @@ public class Jeu {
 			FloatRect rect = liste_background.get(backgroundCurrent).getGlobalBounds();
 			if(x>=rect.left && x<=rect.left+rect.width && y>=rect.top && y<=rect.top+rect.height){
 				activate = backgroundCurrent;
-				System.out.println("Active :"+ activate);
+				//System.out.println("Active :"+ activate);
 				controller.setNotificationSwitchProgram(backgroundCurrent);
 				break;
 			}
@@ -401,7 +401,7 @@ public class Jeu {
 	public void delete_button( Vector2f click){
 		float x = click.x;
 		float y = click.y;
-		System.out.println(activate);
+		//System.out.println(activate);
 		if(activate.equals("Main"))
 			remove_action_liste(liste_main,x,y);
 		else if(activate.equals("P1")){
@@ -441,7 +441,7 @@ public class Jeu {
 					if (action.equals("Ordo_"+i)){
 						suprime = true;
 						renrouleOrdonnanceur = true;
-						System.out.println("a supprimer : "+i+" venant de : "+action);
+						//System.out.println("a supprimer : "+i+" venant de : "+action);
 						controller.getNotificationRemoveToOrdonnanceurList(i);
 						return;
 					}
@@ -635,7 +635,7 @@ public class Jeu {
 		Texture textureTemp;
 		Sprite monSpriteBouton;
 
-		//System.out.println("listeOrdo "+listeOrdo);
+		////System.out.println("listeOrdo "+listeOrdo);
 		textureTemp = textureBoutonInterface.get("ordonnanceur");
 		monSpriteBouton = liste_sprite.get("ordonnanceur");
 		monSpriteBouton.setTexture(textureTemp);
@@ -659,7 +659,7 @@ public class Jeu {
 			}
 		}
 		if(renrouleOrdonnanceur && !derouleOrdonnanceur){
-			System.out.println(" indiceOrdonnanceur "+indiceOrdonnanceur+" limite "+limite);
+			//System.out.println(" indiceOrdonnanceur "+indiceOrdonnanceur+" limite "+limite);
 			if(indiceOrdonnanceur>limite){
 				indiceOrdonnanceur -=3;
 				if (indiceOrdonnanceur<=limite)
@@ -731,7 +731,7 @@ public class Jeu {
 			}
 
 			for(String boutonRobCurrent : typeRobot){
-				System.out.println("type_robot"+ typeRobot);
+				//System.out.println("type_robot"+ typeRobot);
 				textureTemp = new Texture();
 				textureTemp.loadFromFile(Paths.get("Images/Jeu/Boutons/"+boutonRobCurrent+".png"));
 				textureBouton.put(boutonRobCurrent,textureTemp);
@@ -944,7 +944,7 @@ public class Jeu {
 		long duree = 300; // en millisecondes
 		while((System.currentTimeMillis() - temps_depart ) < duree )
 		{
-			System.out.println("in while******"+controller.getCpt());
+			//System.out.println("in while******"+controller.getCpt());
 			this.draw();
 			this.processEvent(false);
 			if(World.currentWorld.is_cleared()){
@@ -952,12 +952,12 @@ public class Jeu {
 				//				Menu.app.close();
 			}
 		}
-		System.out.println("sortie du while");
+		//System.out.println("sortie du while");
 		controller.setNotificationUpdatedRobotMouvement();
 	}
 
 	public void updateSequenceList(Sequence_List seq) {
-		System.out.println("j'ai updaté la sequence display");
+		//System.out.println("j'ai updaté la sequence display");
 	}
 
 	public void victory() {

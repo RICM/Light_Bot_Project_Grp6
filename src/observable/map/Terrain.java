@@ -25,7 +25,7 @@ public class Terrain implements int_Observable{
 	}
 
 	public abstr_Case get_case (int x, int y) throws UnreachableCase{
-		//System.out.println(x+" , "+y);
+		////System.out.println(x+" , "+y);
 		if (y >= 0 && y < this.terrain.length){
 			if (x >= 0 && x < this.terrain[y].length){
 				return this.terrain[y][x];
@@ -40,7 +40,7 @@ public class Terrain implements int_Observable{
 			for (int y = 0; y < this.terrain[i].length; y++){
 				horizontal_separator = horizontal_separator + "________________";
 			}
-			System.out.println(horizontal_separator);
+			//System.out.println(horizontal_separator);
 			for (int y = 0; y < this.terrain[i].length; y++){
 				boolean caserobot = false;
 				for (int j = 0; j < liste_robot.length; j++){
@@ -52,64 +52,64 @@ public class Terrain implements int_Observable{
 					}
 				}
 				if (y == 0){
-					System.out.print("|");
+					//System.out.print("|");
 				}
 				if (!caserobot){
-					System.out.print("\t");
+					//System.out.print("\t");
 					switch (this.terrain[i][y].getClass().getSimpleName()){
 					case "Painted_Case":
-						System.out.print("P");
+						//System.out.print("P");
 						break;
 					case "Empty_Case":
-						System.out.print("E");
+						//System.out.print("E");
 						break;
 					case "Normal_Case":
-						System.out.print("N");
+						//System.out.print("N");
 						break;
 					case "Illuminated_Case":
-						System.out.print("I");
+						//System.out.print("I");
 						break;
 					case "Teleporter_Case":
-						System.out.print("T");
+						//System.out.print("T");
 						break;
 					}
 					if(this.terrain[i][y].get_couleur()==Couleur.VERT){
-						System.out.print("B");
+						//System.out.print("B");
 					}
 					else if(this.terrain[i][y].get_couleur()==Couleur.ROUGE){
-						System.out.print("J");
+						//System.out.print("J");
 					}
-					System.out.print("\t");
+					//System.out.print("\t");
 
 				}else{
 					switch (liste_robot[0].getOrientation()){
 					case TOP :
-						System.out.print("\t^");
+						//System.out.print("\t^");
 						break;
 					case RIGHT :
-						System.out.print("\t>");
+						//System.out.print("\t>");
 						break;
 					case LEFT:
-						System.out.print("\t<");
+						//System.out.print("\t<");
 						break;
 					case BOT:
-						System.out.print("\tv");
+						//System.out.print("\tv");
 						break;
 					}
-					System.out.print("ROBERT\t");
+					//System.out.print("ROBERT\t");
 				}
-				System.out.print("|");
+				//System.out.print("|");
 			}
-			System.out.println("");
+			//System.out.println("");
 		}
 		String horizontal_separator = " ";
 		for (int a = 0; a < this.terrain[this.terrain.length-1].length; a++){
 			horizontal_separator = horizontal_separator + "________________";
 		}
-		System.out.println(horizontal_separator);
+		//System.out.println(horizontal_separator);
 		if (World.currentWorld.is_cleared()) {
 
-			System.out.println("le jeu est cleared");
+			//System.out.println("le jeu est cleared");
 		}
 	}
 
@@ -140,12 +140,12 @@ public class Terrain implements int_Observable{
 		i = this.terrain[j-1].length;
 		for(int k = 0; k<j; k++){
 			for(int l = 0;l<i ; l++){
-				System.out.println("aaaaaaaaaaaaaaa");
+				//System.out.println("aaaaaaaaaaaaaaa");
 				to_return.add_case(l, k, this.get_case(l, k).Clone());
-				System.out.println(this.get_case(l, k).getClass().getSimpleName());
+				//System.out.println(this.get_case(l, k).getClass().getSimpleName());
 				if (this.get_case(l, k).getClass().getSimpleName().equals("Illuminated_Case")){
-					System.out.println("aaaaaaaaaaaaaaa");
-					System.out.println("CASE ILLUMINEE : "+((Illuminated_Case)to_return.get_case(l, k)).get_active());
+					//System.out.println("aaaaaaaaaaaaaaa");
+					//System.out.println("CASE ILLUMINEE : "+((Illuminated_Case)to_return.get_case(l, k)).get_active());
 				}
 			}
 		}

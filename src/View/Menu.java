@@ -90,7 +90,7 @@ public class Menu {
 		Menu.app.setKeyRepeatEnabled(false);
 		for(Event e : Menu.app.pollEvents()){
 			if(e.type == Type.CLOSED){
-				System.out.println("test");
+				//System.out.println("test");
 				Menu.app.close();
 			}
 
@@ -103,7 +103,7 @@ public class Menu {
 				Vector2i pos = Mouse.getPosition(Menu.app);
 				//Transforme les coordonnees ecran en coordonnees fenetre
 				Vector2f poss = Menu.app.mapPixelToCoords(pos);
-				System.out.println(poss.x+" "+poss.y);
+				//System.out.println(poss.x+" "+poss.y);
 				this.btnClick(poss);
 			}
 

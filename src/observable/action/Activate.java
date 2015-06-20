@@ -48,7 +48,7 @@ public class Activate implements int_Action, int_Observable{
 	 * si c'est une case peinet, r prend a couleur de celle ci
 	 */
 	public void execute(abstr_Robot r) throws MouvementEx, UnreachableCase, ActionEx {
-		System.out.println("Ich bin in activate");
+		//System.out.println("Ich bin in activate");
 		abstr_Case cprime = r.getCurrent_Case();
 		if (this.isPossible(r,cprime)){
 			if(cprime.getClass().getSimpleName().equals("Teleporter_Case")){
@@ -67,7 +67,7 @@ public class Activate implements int_Action, int_Observable{
 				}
 			}
 			else if(cprime.getClass().getSimpleName().equals("Illuminated_Case")){
-				System.out.println("Ich bin in activate : là ou tu veux aller");
+				//System.out.println("Ich bin in activate : là ou tu veux aller");
 				((Illuminated_Case)cprime).set_active(!((Illuminated_Case)cprime).get_active());
 				if (((Illuminated_Case)cprime).get_active()){
 					World.currentWorld.increment_allume();
@@ -78,7 +78,7 @@ public class Activate implements int_Action, int_Observable{
 
 			}
 			else if(cprime.getClass().getSimpleName().equals("Event_Case")){
-				System.out.println("Je suis dans le activate de event case");
+				//System.out.println("Je suis dans le activate de event case");
 				((Event_Case)cprime).setStatus(!((Event_Case)cprime).getStatus());
 				((Event_Case)cprime).refresh();
 			}
@@ -88,7 +88,7 @@ public class Activate implements int_Action, int_Observable{
 			}
 		}
 		else{
-			System.out.println("Impossible de faire ça");
+			//System.out.println("Impossible de faire ça");
 		}
 	}
 
