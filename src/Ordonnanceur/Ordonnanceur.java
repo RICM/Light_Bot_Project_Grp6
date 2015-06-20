@@ -14,6 +14,7 @@ public class Ordonnanceur implements int_Observable {
 
 	//creation d'une liste de Robot qui permet de déterminer leurs ordres de passages
 	private LinkedList<abstr_Robot> list_robot = new LinkedList<abstr_Robot>();
+	private LinkedList<abstr_Robot> list_robot_save = new LinkedList<abstr_Robot>();
 	// creation d'un tableau d'objet
 	private ArrayList<int_Observer> controller = new ArrayList<int_Observer>();
 	private int ind_ex = 0;
@@ -103,6 +104,10 @@ public class Ordonnanceur implements int_Observable {
 		//this.increment_ind();
 	}
 
+	public int getNombreRobotsSave(){
+		return this.list_robot_save.size();
+	}
+
 	//Execute tous les robots de la linkedlist.
 	public void execute() throws MouvementEx, UnreachableCase, ActionEx{
 		for (int i =0 ; i < this.list_robot.size() ; i++){
@@ -142,6 +147,34 @@ public class Ordonnanceur implements int_Observable {
 	public void notifyObserver() {
 		for(int_Observer obs : this.controller)
 			obs.update(this);
+	}
+
+	public void clearOrdoSave(){
+		for (int i = 0; i < this.list_robot_save.size(); i++){
+			this.list_robot_save.remove(i);
+		}
+	}
+
+	public void restoreOrdo() {
+		for (abstr_Robot rob : this.list_robot_save){
+			this.list_robot.add(rob);
+		}
+	}
+
+	public void clearSaveOrdo(){
+		for (int i = 0; i < this.list_robot_save.size(); i++)
+			this.list_robot_save.remove(i);
+	}
+
+	public void saveOrdoOnceCleared(){
+		for (abstr_Robot rob : this.list_robot){
+			this.list_robot_save.add(rob);
+		}
+	}
+
+	public void saveOrdo(){
+		this.clearSaveOrdo();
+		this.saveOrdoOnceCleared();
 	}
 
 

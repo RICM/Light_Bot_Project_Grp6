@@ -131,6 +131,10 @@ public class Controller implements int_Observer {
 		this.getNotificationRewind();
 	}
 
+	public void getNotificationClearOrdo(){
+		World.currentWorld.get_ordonnanceur().clearOrdoSave();
+	}
+
 	public void getNotificationRewindAndRUn(){
 		if (!this.isRunning){
 			this.isRunning = true;
@@ -193,29 +197,61 @@ public class Controller implements int_Observer {
 				}catch(Exception ex){
 					System.out.println(ex.getMessage());
 				}
+				this.overflow++;
 			}
 			this.isRunning = false;
-			World.currentWorld.get_ordonnanceur().removeRobots();
+			//World.currentWorld.get_ordonnanceur().removeRobots();
 			if (programm_vide){
-				World.currentWorld.get_ordonnanceur().removeRobots();
-				System.out.println("NOMBRE DE ROBOT DANS ORDO A LA FIN : "+World.currentWorld.get_ordonnanceur().getNumberRobots());
-				System.out.println("sortie de la boucle de RUN FOREST RUN");
-				this.resetRobotAfterGame();
+				//World.currentWorld.get_ordonnanceur().removeRobots();
+				//System.out.println("NOMBRE DE ROBOT DANS ORDO A LA FIN : "+World.currentWorld.get_ordonnanceur().getNumberRobots());
+				//System.out.println("sortie de la boucle de RUN FOREST RUN");
+				if(Niveaux.getTheme().equals("D")){
+					System.out.println("Current State of ordo : "+World.currentWorld.get_ordonnanceur().getListeRobotOrdonnanceur());
+					World.currentWorld.get_ordonnanceur().saveOrdo();
+					//this.resetRobotAfterGame();
+					World.currentWorld.get_ordonnanceur().restoreOrdo();
+					try {
+						Thread.sleep(5000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}else{
+					this.resetRobotAfterGame();
+				}
 				//this.getNotificationRewind();
 			}
 			if (this.overflow > 150){
-				World.currentWorld.get_ordonnanceur().removeRobots();
-				System.out.println("NOMBRE DE ROBOT DANS ORDO A LA FIN : "+World.currentWorld.get_ordonnanceur().getNumberRobots());
-				System.out.println("sortie de la boucle de RUN FOREST RUN");
-				System.out.println("Boucle infinie détéctée");
-				this.resetRobotAfterGame();
+				//World.currentWorld.get_ordonnanceur().removeRobots();
+				//System.out.println("NOMBRE DE ROBOT DANS ORDO A LA FIN : "+World.currentWorld.get_ordonnanceur().getNumberRobots());
+				//System.out.println("sortie de la boucle de RUN FOREST RUN");
+				//System.out.println("Boucle infinie détéctée");
+				if(Niveaux.getTheme().equals("D")){
+					System.out.println("HAHAHAHHAAHHAHAAHAHAHAHAHAHAHAHAHA");
+					World.currentWorld.get_ordonnanceur().saveOrdo();
+					System.out.println("NOmbre de robot du save : "+World.currentWorld.get_ordonnanceur().getNombreRobotsSave());
+					this.resetRobotAfterGame();
+					System.out.println("NOmbre de robot de l'ordo apres clear : "+World.currentWorld.get_ordonnanceur().getNombreRobotsSave());
+					//World.currentWorld.get_ordonnanceur().restoreOrdo();
+					System.out.println("NOmbre de robot de l'ordo apres le restore : "+World.currentWorld.get_ordonnanceur().getNombreRobotsSave());
+					System.out.println("Liste des robots : "+World.currentWorld.get_ordonnanceur().getListeRobotOrdonnanceur());
+				}else{
+					System.out.println("HOHOHOHOHOHOHOHOHOHHOHOHO");
+					this.resetRobotAfterGame();
+				}
 				this.overflow = 0;
 			}
 			if (World.currentWorld.is_cleared()){
-				World.currentWorld.get_ordonnanceur().removeRobots();
-				System.out.println("NOMBRE DE ROBOT DANS ORDO A LA FIN : "+World.currentWorld.get_ordonnanceur().getNumberRobots());
-				System.out.println("sortie de la boucle de RUN FOREST RUN");
-				this.resetRobotAfterGame();
+				//World.currentWorld.get_ordonnanceur().removeRobots();
+				//System.out.println("NOMBRE DE ROBOT DANS ORDO A LA FIN : "+World.currentWorld.get_ordonnanceur().getNumberRobots());
+				//System.out.println("sortie de la boucle de RUN FOREST RUN");
+				if(Niveaux.getTheme().equals("D")){
+					World.currentWorld.get_ordonnanceur().saveOrdo();
+					this.resetRobotAfterGame();
+					World.currentWorld.get_ordonnanceur().restoreOrdo();
+				}else{
+					this.resetRobotAfterGame();
+				}
 				this.getNotificationVictory();
 			}
 		}
@@ -775,6 +811,10 @@ public class Controller implements int_Observer {
 
 	public void getNotificationSizeOrdonnanceurList(){
 		this.jeu.updateSizeOrdonnanceur(World.currentWorld.get_ordonnanceur().size());
+	}
+
+	public void getNotificationClearOrdoLeft() {
+		World.currentWorld.get_ordonnanceur().removeRobots();
 	}
 }
 

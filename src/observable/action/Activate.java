@@ -65,17 +65,18 @@ public class Activate implements int_Action, int_Observable{
 				else {
 					throw new ActionEx("la case destination est occupée");
 				}
+				r.setVoid();
 			}
 			else if(cprime.getClass().getSimpleName().equals("Illuminated_Case")){
 				System.out.println("Ich bin in activate : là ou tu veux aller");
 				((Illuminated_Case)cprime).set_active(!((Illuminated_Case)cprime).get_active());
+				this.notifyObserver();
 				if (((Illuminated_Case)cprime).get_active()){
 					World.currentWorld.increment_allume();
 				}
 				else {
 					World.currentWorld.decrement_allume();
 				}
-
 			}
 			else if(cprime.getClass().getSimpleName().equals("Event_Case")){
 				System.out.println("Je suis dans le activate de event case");
