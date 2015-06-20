@@ -130,6 +130,9 @@ public class Jeu {
 		this.initTextureBackground();
 		this.initTextureBouton();
 		this.initTextureBoutonInterface();
+		indiceOrdonnanceur = 0;
+		indiceInterface = 0;
+		isDeroule = false;
 		controller.getNotificationInitRobot();
 		try {
 			this.maTextureMenu.loadFromFile(Paths.get("Images/Jeu/Backgrounds/win.png"));
