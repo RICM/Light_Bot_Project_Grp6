@@ -142,6 +142,10 @@ public class Controller implements int_Observer {
 	 * Receive a notification from view to run program
 	 */
 	public void getNotificationRun(){
+		if(World.currentWorld.get_ordonnanceur().getNumberRobots() == 0){
+			System.out.println("JE SUIS PASSE PAR LA");
+			this.jeu.getNotificationEmptyOrdo();
+		}
 		boolean programm_vide = false;
 		World.currentWorld.setAllRobotsActive();
 		if (this.isPaused){
@@ -197,7 +201,7 @@ public class Controller implements int_Observer {
 				System.out.println("NOMBRE DE ROBOT DANS ORDO A LA FIN : "+World.currentWorld.get_ordonnanceur().getNumberRobots());
 				System.out.println("sortie de la boucle de RUN FOREST RUN");
 				this.resetRobotAfterGame();
-				this.getNotificationRewind();
+				//this.getNotificationRewind();
 			}
 			if (this.overflow > 150){
 				World.currentWorld.get_ordonnanceur().removeRobots();
