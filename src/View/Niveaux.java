@@ -5,8 +5,6 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import observer.controller.Controller;
-
 import org.jsfml.graphics.Color;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.Font;
@@ -18,6 +16,8 @@ import org.jsfml.system.Vector2i;
 import org.jsfml.window.Mouse;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.Event.Type;
+
+import observer.controller.Controller;
 
 public class Niveaux {
 
@@ -42,7 +42,7 @@ public class Niveaux {
 	protected static final int WIDTH = 1200;
 	protected static final int HEIGHT = 700;
 	protected static Controller controller;
-	protected String theme;
+	protected static String theme;
 	protected Font f = new Font();
 	protected boolean first_round = true;
 
@@ -57,7 +57,7 @@ public class Niveaux {
 	 * @param current_theme le theme choisi par l'utilisateur: T(tuto), D(dual), C(conditions), P(pointeurs)
 	 */
 	public Niveaux(Controller acontroller,String current_theme){
-		this.theme = current_theme;
+		this.setTheme(current_theme);
 		controller = acontroller;
 
 		try {
@@ -159,6 +159,7 @@ public class Niveaux {
 				}
 				else if(this.listSprite.get(s).equals("Next")){
 					this.level++;
+
 					int nb_max;
 					if (this.theme.equals("D")){
 						nb_max =7;
@@ -184,7 +185,7 @@ public class Niveaux {
 					break;
 				}
 				else if(this.listSprite.get(s).equals("Level")){
-					String lvl = this.theme+this.level;
+					String lvl = this.getTheme()+this.level;
 					controller.getLevel(controller,lvl);
 					new Jeu(this.level, controller);
 				}
@@ -219,12 +220,12 @@ public class Niveaux {
 			if(indiceInterface>=0){
 				deroule = false;
 			}else{
-				indiceInterface ++;
+				indiceInterface +=2;
 			}
 		}
 		if(renroule && !deroule){
 			if(indiceInterface>-40){
-				indiceInterface --;
+				indiceInterface -=2;
 			}else{
 				renroule = false;
 			}
@@ -268,6 +269,14 @@ public class Niveaux {
 			this.first_round = false;
 		}
 
+	}
+
+	public static String getTheme() {
+		return theme;
+	}
+
+	public void setTheme(String theme) {
+		this.theme = theme;
 	}
 
 }

@@ -1,10 +1,12 @@
 package observer.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import View.Jeu;
 import View.Menu;
+import View.Niveaux;
 import couleur.Couleur;
 import exception.ActionEx;
 import exception.MouvementEx;
@@ -46,6 +48,11 @@ public class Controller implements int_Observer {
 	private boolean isPaused = false;
 	private boolean savedPrerun = false;
 	protected int cpt = 1;
+	protected static String typeRobot[]={"pingouin_GRIS","requin_GRIS"};
+
+	public void updateVoidAbstr_Rob(){
+		this.setNotificationUpdatedRobotMouvement();
+	}
 
 	@Override
 	public void update(Object obj){
@@ -145,13 +152,16 @@ public class Controller implements int_Observer {
 			this.overflow = 0;
 			//if (World.currentWorld.get_ordonnanceur().size() == 0)
 			// RESET L'ORDO
-			for(int j = 0; j < World.currentWorld.get_liste_robot().length;j++){
-				if (World.currentWorld.get_robot(j).get_Main().size() > 0)
-					World.currentWorld.get_ordonnanceur().addRobot(World.currentWorld.get_robot(j));
-			}
 			World.currentWorld.prerun();
 			this.savedPrerun = true;
 			this.runnable = World.currentWorld.isOneRobotActive();
+			if(!Niveaux.getTheme().equals("D")){
+				this.getNotificationAddToOrdonnanceurList(0);
+			}
+			if(World.currentWorld.get_ordonnanceur().getNumberRobots() == 0){
+				System.out.println("JE SUIS PASSE PAR LA");
+				//this.jeu.getNotificationEmptyOrdo();
+			}
 			System.out.println("contenu de run " + World.currentWorld.get_robot(0).get_run());
 			System.out.println("statut du robot " + World.currentWorld.get_robot(0).get_activable());
 			System.out.println("nobmre de robot dans le monde : "+World.currentWorld.get_liste_robot().length);
@@ -191,7 +201,7 @@ public class Controller implements int_Observer {
 				System.out.println("NOMBRE DE ROBOT DANS ORDO A LA FIN : "+World.currentWorld.get_ordonnanceur().getNumberRobots());
 				System.out.println("sortie de la boucle de RUN FOREST RUN");
 				this.resetRobotAfterGame();
-				this.getNotificationRewind();
+				//this.getNotificationRewind();
 			}
 			if (this.overflow > 150){
 				World.currentWorld.get_ordonnanceur().removeRobots();
@@ -236,6 +246,7 @@ public class Controller implements int_Observer {
 		/**
 		 * Receive a notification from view to remove an action to the robot list
 		 */
+		System.out.println("AU MOINS JE PASSE DANS LE CONTROLLER");
 		abstr_Robot rob = World.currentWorld.get_robot(this.current_robot);
 		if (!rob.getClass().getSimpleName().equals("Dumb_bot")){
 
@@ -253,6 +264,26 @@ public class Controller implements int_Observer {
 					rob.get_P2().removeIndice(position);
 				break;
 			}
+		}else if (rob.getClass().getSimpleName().equals("Dumb_bot")){
+			System.out.println("CURRENT PROGRAMME : "+this.current_program);
+			switch (this.current_program){
+			case 0 :
+				if (position < rob.get_Main().size())
+					((Dumb_bot)rob).remove_Action_User_Actions(position);
+				System.out.println("LALA JE SUIS DANS LE CAS 1");
+				break;
+			case 1 :
+				if (position < rob.get_P1().size())
+					((Dumb_bot)rob).get_P1().removeIndice(position);
+				System.out.println("LALA JE SUIS DANS LE CAS 2");
+				break;
+			case 2 :
+				if (position < rob.get_P2().size())
+					((Dumb_bot)rob).get_P2().removeIndice(position);
+				System.out.println("LALA JE SUIS DANS LE CAS 3");
+				break;
+			}
+			System.out.println("P1 "+World.currentWorld.get_robot(0).get_P1());
 		}
 		/**
 		 * La vue aura besoin d'avoir un hashmap de boutons|actions
@@ -283,6 +314,30 @@ public class Controller implements int_Observer {
 		/**
 		 * Receive a notification from view to change the view and display all "terrain"
 		 */
+	}
+
+
+	public void setNotificationGetListeOrdo(){
+		/**
+		 * Receive a notification from view to get liste ordo
+		 */
+		if(Niveaux.getTheme().equals("D")){
+			this.getNotificationGetListeOrdo();
+		}
+	}
+
+	public void getNotificationGetListeOrdo(){
+		ArrayList<String> listeOrdo = new ArrayList<String>();
+		for (abstr_Robot robOrdo : World.currentWorld.get_ordonnanceur().getListeRobotOrdonnanceur()){
+			int i=0;
+			for(abstr_Robot robList : World.currentWorld.get_liste_robot()){
+				if(robOrdo == robList){
+					listeOrdo.add(typeRobot[i]);
+				}
+				i++;
+			}
+		}
+		this.jeu.updateDrawListeOrdo(listeOrdo);
 	}
 
 	public void getNotificationDisplayTerrain(int i){
@@ -541,6 +596,11 @@ public class Controller implements int_Observer {
 	}
 
 
+	public void setNotificationDrawBoutonOrdonnance() {
+		this.jeu.updateDrawBoutonOrdonnance();
+	}
+
+
 	public void setNotificationDrawGrilleISO(){
 		int taille_abs =  World.currentWorld.get_terrain(0).get_terrain()[0].length;
 		int taille_ord =  World.currentWorld.get_terrain(0).get_terrain().length;
@@ -699,6 +759,22 @@ public class Controller implements int_Observer {
 
 	public int getCpt() {
 		return this.cpt;
+	}
+
+	public void getNotificationAddToOrdonnanceurList(int robot){
+		if (World.currentWorld.get_ordonnanceur().size()<6){
+			World.currentWorld.get_ordonnanceur().addRobot(World.currentWorld.get_robot(robot));
+		}
+		this.getNotificationSizeOrdonnanceurList();
+	}
+
+	public void getNotificationRemoveToOrdonnanceurList(int robot){
+		World.currentWorld.get_ordonnanceur().removeRobot(robot);
+		this.getNotificationSizeOrdonnanceurList();
+	}
+
+	public void getNotificationSizeOrdonnanceurList(){
+		this.jeu.updateSizeOrdonnanceur(World.currentWorld.get_ordonnanceur().size());
 	}
 }
 

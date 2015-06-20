@@ -84,6 +84,7 @@ public class Activate implements int_Action, int_Observable{
 			}
 			else {
 				r.set_couleur(cprime.get_couleur());
+				r.setVoid();
 			}
 		}
 		else{

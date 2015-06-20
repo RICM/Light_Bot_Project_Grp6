@@ -10,6 +10,7 @@ import observable.action_list.Sequence_List;
 import observable.map.abstr_Case;
 import observable.robot.Orientation.orientation;
 import observer.int_Observer;
+import observer.controller.Controller;
 
 public class Dumb_bot extends abstr_Robot {
 
@@ -45,6 +46,7 @@ public class Dumb_bot extends abstr_Robot {
 		this.P1ChangeAllowed = true;
 		this.P2ChangeAllowed = true;
 		this.user_actions.addObserver(controller);
+		System.out.println("Constructeur false true true");
 	}
 
 	/**
@@ -74,6 +76,7 @@ public class Dumb_bot extends abstr_Robot {
 		this.P1ChangeAllowed = false;
 		this.P2ChangeAllowed = true;
 		this.P1.addObserver(controller);
+		System.out.println("Constructeur true false true");
 	}
 
 
@@ -102,6 +105,7 @@ public class Dumb_bot extends abstr_Robot {
 		this.set_tailleP1(Fixed_P1.size());
 		this.P1.addObserver(controller);
 		this.P2 = new Sequence_List(controller);
+		System.out.println("Constructeur false false true");
 		this.mainChangeAllowed = false;
 		this.P1ChangeAllowed = false;
 		this.P2ChangeAllowed = true;
@@ -133,6 +137,7 @@ public class Dumb_bot extends abstr_Robot {
 		this.P1.addObserver(controller);
 		this.P2 = new Sequence_List(controller);
 		this.mainChangeAllowed = true;
+		System.out.println("Constructeur main allowed");
 		this.P1ChangeAllowed = false;
 		this.P2ChangeAllowed = false;
 	}
@@ -155,6 +160,7 @@ public class Dumb_bot extends abstr_Robot {
 		this.set_tailleP2(Fixed_P2.size());
 		this.P1.addObserver(controller);
 		this.P2 = new Sequence_List(controller);
+		System.out.println("Constructeur tout faux");
 		this.mainChangeAllowed = false;
 		this.P1ChangeAllowed = false;
 		this.P2ChangeAllowed = false;
@@ -223,7 +229,18 @@ public class Dumb_bot extends abstr_Robot {
 		if(this.mainChangeAllowed){
 			this.user_actions.removeActionFromList(twas_too_long);
 		}
-		else throw new ActionEx("Impossible de retirer une action");
+		else{
+			//throw new ActionEx("Impossible de retirer une action");
+		}
+	}
+
+	public void remove_Action_User_Actions(int twas_too_long) {
+		if(this.mainChangeAllowed){
+			this.user_actions.removeIndice(twas_too_long);
+		}
+		else{
+			//throw new ActionEx("Impossible de retirer une action");
+		}
 	}
 
 	@Override
@@ -231,7 +248,14 @@ public class Dumb_bot extends abstr_Robot {
 		if (this.P1ChangeAllowed){
 			this.user_actions.removeActionFromList(twas_too_long);
 		}
-		else throw new ActionEx("Impossible de retirer une action");
+		//else throw new ActionEx("Impossible de retirer une action");
+	}
+
+	public void remove_Action_P1(int twas_too_long){
+		if (this.P1ChangeAllowed){
+			this.user_actions.removeIndice(twas_too_long);
+		}
+		//else throw new ActionEx("Impossible de retirer une action");
 	}
 
 	@Override
@@ -240,7 +264,15 @@ public class Dumb_bot extends abstr_Robot {
 			this.user_actions.removeActionFromList(twas_too_long);
 
 		}
-		else throw new ActionEx("Impossible de retirer une action");
+		//else throw new ActionEx("Impossible de retirer une action");
+	}
+
+	public void remove_Action_P2(int twas_too_long){
+		if (this.P2ChangeAllowed){
+			this.user_actions.removeIndice(twas_too_long);
+
+		}
+		//else throw new ActionEx("Impossible de retirer une action");
 	}
 
 	@Override
@@ -277,6 +309,11 @@ public class Dumb_bot extends abstr_Robot {
 		this.prev_case = this.current_case;
 		this.current_case = c;
 		this.notifyObserver();
+	}
+
+	@Override
+	public void setVoid() {
+		((Controller)this.listObserver.get(0)).updateVoidAbstr_Rob();
 	}
 
 

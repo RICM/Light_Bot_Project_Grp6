@@ -32,15 +32,15 @@
     "robots" :[
     		{ 
     			"robot1" : [
-    						{"type_robot" : "Robot"},
+    						{"type_robot" : "Dumb1"},
     						{"couleur" : "GRIS"},
-    						{"coorX" : 5},
+    						{"coorX" : 6},
     						{"coorY" : 0},
     						{"indice_tableau": 0},
-    						{"max_main": 4},
+    						{"liste_main": ["P1","P1","P1","P1"]},
     						{"max_p1": 8},
     						{"max_p2": 0},
-    						{"orientation": "right"},
+    						{"orientation": "bot"},
     						{"actions" :["MoveForward" ,"TurnLeft","Jump","TurnRight","Activate","P1"]}
     			]
     		}
