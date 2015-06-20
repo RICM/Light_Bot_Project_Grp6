@@ -10,14 +10,6 @@ import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 
-import observable.action.int_Action;
-import observable.action_list.Sequence_List;
-import observable.map.Terrain;
-import observable.map.World;
-import observable.robot.Orientation.orientation;
-import observable.robot.abstr_Robot;
-import observer.controller.Controller;
-
 import org.jsfml.audio.Music;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.Sprite;
@@ -29,6 +21,13 @@ import org.jsfml.window.event.Event;
 import org.jsfml.window.event.Event.Type;
 
 import couleur.Couleur;
+import observable.action.int_Action;
+import observable.action_list.Sequence_List;
+import observable.map.Terrain;
+import observable.map.World;
+import observable.robot.Orientation.orientation;
+import observable.robot.abstr_Robot;
+import observer.controller.Controller;
 
 
 public class Jeu {
@@ -639,9 +638,15 @@ public class Jeu {
 		Jeu.liste_sprite.replace("ordonnanceur",monSpriteBouton);
 		Menu.app.draw(monSpriteBouton);
 
+		int limite;
+		if(listeOrdo.size()<6){
+			limite = 100+listeOrdo.size()*85;
+		}else{
+			limite = listeOrdo.size()*85;
+		}
 
 		if(derouleOrdonnanceur){
-			if(indiceOrdonnanceur>=100+listeOrdo.size()*85){
+			if(indiceOrdonnanceur>=limite){
 				derouleOrdonnanceur = false;
 				isDeroule = true;
 			}else{
@@ -657,10 +662,12 @@ public class Jeu {
 			}
 		}
 
-		textureTemp = textureBouton.get("Fond_Bouton");
-		this.monSpriteFond.setTexture(textureTemp);
-		this.monSpriteFond.setPosition(indiceOrdonnanceur-80*(listeOrdo.size()+1),505);
-		Menu.app.draw(this.monSpriteFond);
+		if(listeOrdo.size()<6){
+			textureTemp = textureBouton.get("Fond_Bouton");
+			this.monSpriteFond.setTexture(textureTemp);
+			this.monSpriteFond.setPosition(indiceOrdonnanceur-80*(listeOrdo.size()+1),505);
+			Menu.app.draw(this.monSpriteFond);
+		}
 
 		int i = 0;
 		for(String boutonOrdoCurrent : listeOrdo){
