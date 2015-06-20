@@ -10,6 +10,7 @@ import observable.action_list.Sequence_List;
 import observable.map.abstr_Case;
 import observable.robot.Orientation.orientation;
 import observer.int_Observer;
+import observer.controller.Controller;
 
 public class Dumb_bot extends abstr_Robot {
 
@@ -308,6 +309,11 @@ public class Dumb_bot extends abstr_Robot {
 		this.prev_case = this.current_case;
 		this.current_case = c;
 		this.notifyObserver();
+	}
+
+	@Override
+	public void setVoid() {
+		((Controller)this.listObserver.get(0)).updateVoidAbstr_Rob();
 	}
 
 

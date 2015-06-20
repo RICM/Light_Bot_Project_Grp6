@@ -10,6 +10,7 @@ import observable.action_list.Sequence_List;
 import observable.map.World;
 import observable.map.abstr_Case;
 import observer.int_Observer;
+import observer.controller.Controller;
 
 public class Robot extends abstr_Robot implements int_Observable {
 
@@ -101,10 +102,9 @@ public class Robot extends abstr_Robot implements int_Observable {
 	//getteurs et setteurs
 
 	@Override
-	public void setVoid(){
-		this.notifyObserver();
+	public void setVoid() {
+		((Controller)this.listObserver.get(0)).updateVoidAbstr_Rob();
 	}
-
 	@Override
 	public Orientation.orientation getOrientation(){
 		return this.current_orientation;
