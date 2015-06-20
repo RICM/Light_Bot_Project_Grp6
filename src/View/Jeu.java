@@ -645,9 +645,9 @@ public class Jeu {
 
 		int limite;
 		if(listeOrdo.size()<6){
-			limite = 100+listeOrdo.size()*85;
+			limite = 80+listeOrdo.size()*80;
 		}else{
-			limite = listeOrdo.size()*85;
+			limite = listeOrdo.size()*80;
 		}
 
 		if(derouleOrdonnanceur){
@@ -659,6 +659,7 @@ public class Jeu {
 			}
 		}
 		if(renrouleOrdonnanceur && !derouleOrdonnanceur){
+			System.out.println(" indiceOrdonnanceur "+indiceOrdonnanceur+" limite "+limite);
 			if(indiceOrdonnanceur>limite){
 				indiceOrdonnanceur -=3;
 				if (indiceOrdonnanceur<=limite)
@@ -992,7 +993,7 @@ public class Jeu {
 			Menu.app.display();
 			while(Menu.app.isOpen())
 			{
-				this.processEvent(true);
+				this.processEvent(false);
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
