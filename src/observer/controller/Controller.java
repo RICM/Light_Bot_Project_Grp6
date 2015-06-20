@@ -50,6 +50,10 @@ public class Controller implements int_Observer {
 	protected int cpt = 1;
 	protected static String typeRobot[]={"pingouin_GRIS","requin_GRIS"};
 
+	public void updateVoidAbstr_Rob(){
+		this.setNotificationUpdatedRobotMouvement();
+	}
+
 	@Override
 	public void update(Object obj){
 		switch (obj.getClass().getSimpleName()){
