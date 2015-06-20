@@ -37,7 +37,7 @@
     						{"coorY" : 0},
     						{"indice_tableau": 0},
     						{"max_main": 4},
-    						{"liste_p1": ["MoveForward","MoveForward","Activate","Wait"]},
+    						{"liste_p1": ["MoveForward","MoveForward","Activate","Notify","Wait"]},
     						{"max_p2": 0},
     						{"orientation": "bot"},
     						{"actions" :["P1","Notify","Wait"]}
@@ -51,7 +51,7 @@
     						{"coorY" : 1},
     						{"indice_tableau": 0},
     						{"max_main": 8},
-    						{"liste_p1": ["MoveForward","MoveForward","Activate","Wait"]},
+    						{"liste_p1": ["MoveForward","MoveForward","Activate","Notify","Wait"]},
     						{"max_p2": 0},
     						{"orientation": "bot"},
     						{"actions" :["P1","Notify","Wait"]}
