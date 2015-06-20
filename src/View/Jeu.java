@@ -435,12 +435,12 @@ public class Jeu {
 
 			if(x>=rect.left && x<=rect.left+rect.width && y>=rect.top && y<=rect.top+rect.height){
 				for(int i = 0; i<sizeOrdonnanceur;i++){
-					for(String boutonOrdoCurrent : typeRobot){
-						if (action.equals(boutonOrdoCurrent+"_Ordo_"+i)){
-							suprime = true;
-							renrouleOrdonnanceur = true;
-							controller.getNotificationRemoveToOrdonnanceurList(i);
-						}
+					if (action.equals("Ordo_"+i)){
+						suprime = true;
+						renrouleOrdonnanceur = true;
+						System.out.println("a supprimer : "+i+" venant de : "+action);
+						controller.getNotificationRemoveToOrdonnanceurList(i);
+						return;
 					}
 				}
 			}
@@ -684,7 +684,7 @@ public class Jeu {
 			monSpriteBouton = new Sprite();
 			monSpriteBouton.setTexture(textureTemp);
 			monSpriteBouton.setPosition(indiceOrdonnanceur-80*(i+1),505);
-			liste_sprite.put(boutonOrdoCurrent+"_Ordo_"+i, monSpriteBouton);
+			liste_sprite.put("Ordo_"+i, monSpriteBouton);
 			Menu.app.draw(monSpriteBouton);
 			i++;
 		}
