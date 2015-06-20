@@ -10,6 +10,14 @@ import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 
+import observable.action.int_Action;
+import observable.action_list.Sequence_List;
+import observable.map.Terrain;
+import observable.map.World;
+import observable.robot.Orientation.orientation;
+import observable.robot.abstr_Robot;
+import observer.controller.Controller;
+
 import org.jsfml.audio.Music;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.Sprite;
@@ -21,13 +29,6 @@ import org.jsfml.window.event.Event;
 import org.jsfml.window.event.Event.Type;
 
 import couleur.Couleur;
-import observable.action.int_Action;
-import observable.action_list.Sequence_List;
-import observable.map.Terrain;
-import observable.map.World;
-import observable.robot.Orientation.orientation;
-import observable.robot.abstr_Robot;
-import observer.controller.Controller;
 
 
 public class Jeu {
@@ -45,7 +46,7 @@ public class Jeu {
 	protected static String typeCouleur [] = {"_ROUGE","_VERT","_GRIS"};
 	protected static String typeOrientation [] = {"_BOT","_LEFT","_RIGHT","_TOP"};
 	protected static String typeBoutonInterfaceMenu [] = {"Fond","Sound","Home"};
-	protected static String typeBouton [] = {"Activate","Break_r", "Call_P1","Call_P2", "Flashback", "Jump", "MoveForward", "Notify_r", "Pause", "Remember","tache","TurnLeft", "TurnRIght"};
+	protected static String typeBouton [] = {"Activate","Break_r", "Call_P1","Call_P2", "Flashback", "Jump", "MoveForward", "Notify_r", "Wait_r", "Remember","tache","TurnLeft", "TurnRIght"};
 	protected static String typeCase [] = {"Normal_Case","Painted_Case_ROUGE", "Painted_Case_VERT","Teleporter_Case", "Illuminated_Case_Active", "Illuminated_Case_Inactive", "Event_Case", "Empty_Case", "Destination_Case", "Empile_Case"};
 	protected static String typeRobot[]={"pingouin_GRIS","requin_GRIS"};
 	protected static String typeBoutonInterface[]={"pingouin_GRIS","play","stop","rewind"};
@@ -899,15 +900,20 @@ public class Jeu {
 		String to_get;
 		Texture textureTemp;
 
-		for(int hauteur=1; hauteur<=H;hauteur++){
-			to_get = class_name + info_suppl;
-
-			textureTemp = textureCase.get(to_get);
+		for(int hauteur=0; hauteur<H;hauteur++){
+			textureTemp = textureCase.get("Normal_Case");
 			this.monSprite.setTexture(textureTemp);
 			this.monSprite.setScale(0.8f, 0.8f);
 			this.monSprite.setPosition((float) (X*0.8),(float) ((Y-HAUTEUR_CASE*hauteur)*0.8));
 			Menu.app.draw(this.monSprite);
 		}
+		to_get = class_name + info_suppl;
+
+		textureTemp = textureCase.get(to_get);
+		this.monSprite.setTexture(textureTemp);
+		this.monSprite.setScale(0.8f, 0.8f);
+		this.monSprite.setPosition((float) (X*0.8),(float) ((Y-HAUTEUR_CASE*H)*0.8));
+		Menu.app.draw(this.monSprite);
 
 
 

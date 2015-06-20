@@ -42,7 +42,7 @@
     						{"indice_tableau": 0},
     						{"max_main": 1},
     						{"max_p1": 7},
-    						{"max_p2": 7},
+    						{"max_p2": 6},
     						{"orientation": "left"},
     						{"actions" :["MoveForward" ,"TurnLeft","Jump","TurnRight","Activate","P1","P2"]}
     			]

@@ -8,24 +8,24 @@
                 {"nb_case_largeur": 3},
                 { "lignes" : [ 
                 
-                		{"ligne1" : [{"type_case": "case_normale","hauteur": 1,"couleur": "GRIS"},{"type_case": 									"case_empty","hauteur": 1,"couleur": "GRIS"},{"type_case": "case_normale","hauteur": 1,"couleur": "GRIS"} ]},
+                		{"ligne1" : [{"type_case": "case_normale","hauteur": 0,"couleur": "GRIS"},{"type_case": 									"case_empty","hauteur": 0,"couleur": "GRIS"},{"type_case": "case_normale","hauteur": 0,"couleur": "GRIS"} ]},
                 
-                	 {"ligne2" : [{"type_case": "case_event","hauteur": 1,"couleur": "GRIS","case":{"type_case": "case_normale","hauteur": 1,"couleur": "GRIS","coorX":2,"corrY":1,"indice":0}, "stat":"false"},{"type_case":"case_empty","hauteur": 1,"couleur": "GRIS"},{"type_case":"case_empty","hauteur": 1,"couleur": "GRIS"} ]},
+                	 {"ligne2" : [{"type_case": "case_event","hauteur": 0,"couleur": "GRIS","case":{"type_case": "case_normale","hauteur": 0,"couleur": "GRIS","coorX":2,"coorY":1,"indice":0}, "stat":"false"},{"type_case":"case_empty","hauteur": 0,"couleur": "GRIS"},{"type_case":"case_empty","hauteur": 0,"couleur": "GRIS"} ]},
                 	 
-                	 {"ligne3" : [{"type_case":"case_empty","hauteur": 1,"couleur": "GRIS"},{"type_case":"case_empty","hauteur": 1,"couleur": "GRIS"},{"type_case": "case_event","hauteur": 1,"couleur": "GRIS","case":{"type_case": "case_normale","hauteur": 1,"couleur":"GRIS","coorX":0,"corrY":2,"indice":0}, "stat":"false"} ]},
+                	 {"ligne3" : [{"type_case":"case_empty","hauteur": 0,"couleur": "GRIS"},{"type_case":"case_empty","hauteur": 0,"couleur": "GRIS"},{"type_case": "case_event","hauteur": 0,"couleur": "GRIS","case":{"type_case": "case_normale","hauteur": 0,"couleur":"GRIS","coorX":0,"coorY":2,"indice":0}, "stat":"false"} ]},
                 	 
-                	 {"ligne4" : [{"type_case": "case_event","hauteur": 1,"couleur": "GRIS","case":{"type_case": "case_normale","hauteur": 1,"couleur": "GRIS","coorX":2,"corrY":3,"indice":0}, "stat":"false"},{"type_case":"case_empty","hauteur": 1,"couleur": "GRIS"},{"type_case":"case_empty","hauteur": 1,"couleur": "GRIS"} ]},
+                	 {"ligne4" : [{"type_case": "case_event","hauteur": 0,"couleur": "GRIS","case":{"type_case": "case_normale","hauteur": 0,"couleur": "GRIS","coorX":2,"coorY":3,"indice":0}, "stat":"false"},{"type_case":"case_empty","hauteur": 0,"couleur": "GRIS"},{"type_case":"case_empty","hauteur": 0,"couleur": "GRIS"} ]},
                 	 
-                	 {"ligne3" : [{"type_case":"case_empty","hauteur": 1,"couleur": "GRIS"},{"type_case":"case_empty","hauteur": 1,"couleur": "GRIS"},{"type_case": "case_event","hauteur": 1,"couleur": "GRIS","case":{"type_case": "case_normale","hauteur": 1,"couleur":"GRIS","coorX":0,"corrY":4,"indice":0}, "stat":"false"} ]},
+                	 {"ligne5" : [{"type_case":"case_empty","hauteur": 0,"couleur": "GRIS"},{"type_case":"case_empty","hauteur": 0,"couleur": "GRIS"},{"type_case": "case_event","hauteur": 0,"couleur": "GRIS","case":{"type_case": "case_normale","hauteur": 0,"couleur":"GRIS","coorX":0,"coorY":4,"indice":0}, "stat":"false"} ]},
                 	 
-                	 {"ligne6" : [{"type_case": "case_illuminated","hauteur": 1,"couleur": "GRIS"},{"type_case": 									"case_empty","hauteur": 1,"couleur": "GRIS"},{"type_case": "case_illuminated","hauteur": 1,"couleur": "GRIS"} ]},
+                	 {"ligne6" : [{"type_case": "case_illuminated","hauteur": 0,"couleur": "GRIS"},{"type_case": 									"case_empty","hauteur": 0,"couleur": "GRIS"},{"type_case": "case_illuminated","hauteur": 0,"couleur": "GRIS"} ]},
 		              
 		            ]}
             ]
         }
         
     ],
-    "nb_robot" : 1,
+    "nb_robot" : 2,
     "robots" :[
     		{ 
     			"robot1" : [
@@ -34,10 +34,10 @@
     						{"coorX" : 0},
     						{"coorY" : 0},
     						{"indice_tableau": 0},
-    						{"max_main": 8},
-    						{"max_p1": 0},
+    						{"max_main": 12},
+    						{"max_p1": 4},
     						{"max_p2": 0},
-    						{"orientation": "left"},
+    						{"orientation": "bot"},
     						{"actions" :["MoveForward","Activate","Wait","Notify"]}
     			]
     		},
@@ -48,10 +48,10 @@
     						{"coorX" : 2},
     						{"coorY" : 0},
     						{"indice_tableau": 0},
-    						{"max_main": 8},
+    						{"max_main": 12},
     						{"max_p1": 0},
     						{"max_p2": 0},
-    						{"orientation": "left"},
+    						{"orientation": "bot"},
     						{"actions" :["MoveForward","Activate","Wait","Notify"]}
     						
     			]

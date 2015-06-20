@@ -2,16 +2,16 @@ package observable.action;
 
 import java.util.ArrayList;
 
-import couleur.Couleur;
-import exception.ActionEx;
-import exception.MouvementEx;
-import exception.UnreachableCase;
 import observable.int_Observable;
 import observable.action_list.Sequence_List;
 import observable.map.World;
 import observable.map.abstr_Case;
 import observable.robot.abstr_Robot;
 import observer.int_Observer;
+import couleur.Couleur;
+import exception.ActionEx;
+import exception.MouvementEx;
+import exception.UnreachableCase;
 
 public class Call_P1 implements int_Action, int_Observable{
 
@@ -83,7 +83,7 @@ public class Call_P1 implements int_Action, int_Observable{
 	@Override
 	public boolean isPossible(abstr_Robot r, abstr_Case c) {
 		return (r.get_couleur().equals(this.color)
-				|| r.get_couleur().equals(Couleur.GRIS)
+				//|| r.get_couleur().equals(Couleur.GRIS)
 				|| this.getColor().equals(Couleur.GRIS));
 	}
 	@Override

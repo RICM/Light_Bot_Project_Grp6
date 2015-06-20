@@ -22,6 +22,7 @@ import observable.action.Notify_r;
 import observable.action.Remember;
 import observable.action.TurnLeft;
 import observable.action.TurnRIght;
+import observable.action.Wait_r;
 import observable.action.int_Action;
 import observable.action_list.Sequence_List;
 import observable.map.Illuminated_Case;
@@ -76,6 +77,12 @@ public class Controller implements int_Observer {
 		case "Ordonnanceur" :
 			//this.runnable = false;
 			break;
+		case "abstr_Case" :
+			System.out.println("Controlleur a recu notification d'une abstr_Case");
+			this.setNotificationUpdateCase();
+		case "Event_Case" :
+			System.out.println("Controlleur a recu notification d'une Event_Case");
+			this.setNotificationUpdateCase();
 		default:
 			break;
 		}
@@ -132,6 +139,7 @@ public class Controller implements int_Observer {
 	 */
 	public void getNotificationRun(){
 		boolean programm_vide = false;
+		World.currentWorld.setAllRobotsActive();
 		if (this.isPaused){
 			this.setNotificationGoOn();
 		}
@@ -152,6 +160,7 @@ public class Controller implements int_Observer {
 				try {
 					System.out.println("While getNotificationRun");
 					World.currentWorld.exec();
+					World.currentWorld.get_ordonnanceur().increment_ind();
 					this.overflow++;
 				} catch (MouvementEx e) {
 					this.runnable = false;
@@ -175,6 +184,7 @@ public class Controller implements int_Observer {
 				}
 			}
 			this.isRunning = false;
+			World.currentWorld.get_ordonnanceur().removeRobots();
 			if (programm_vide){
 				World.currentWorld.get_ordonnanceur().removeRobots();
 				System.out.println("NOMBRE DE ROBOT DANS ORDO A LA FIN : "+World.currentWorld.get_ordonnanceur().getNumberRobots());
@@ -490,6 +500,20 @@ public class Controller implements int_Observer {
 					return action;
 				}else{
 					Break_r action = Break_r.break_r(color);
+					World.currentWorld.get_robot(this.current_robot).add_Action_User_Actions(action);
+					return action;
+				}
+			case "Wait_r" :
+				if (this.current_program == 2){
+					Wait_r action = Wait_r.wait_r(color);
+					World.currentWorld.get_robot(this.current_robot).add_Action_User_ActionsP2(action);
+					return action;
+				}else if (this.current_program == 1){
+					Wait_r action = Wait_r.wait_r(color);
+					World.currentWorld.get_robot(this.current_robot).add_Action_User_ActionsP1(action);
+					return action;
+				}else{
+					Wait_r action = Wait_r.wait_r(color);
 					World.currentWorld.get_robot(this.current_robot).add_Action_User_Actions(action);
 					return action;
 				}

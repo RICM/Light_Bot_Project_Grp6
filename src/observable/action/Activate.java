@@ -78,8 +78,9 @@ public class Activate implements int_Action, int_Observable{
 
 			}
 			else if(cprime.getClass().getSimpleName().equals("Event_Case")){
+				System.out.println("Je suis dans le activate de event case");
 				((Event_Case)cprime).setStatus(!((Event_Case)cprime).getStatus());
-				((Event_Case)cprime).notifyObserverfrom();
+				((Event_Case)cprime).refresh();
 			}
 			else {
 				r.set_couleur(cprime.get_couleur());

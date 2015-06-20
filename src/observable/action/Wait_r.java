@@ -52,9 +52,11 @@ public class Wait_r implements int_Action {
 	@Override
 	public void execute(abstr_Robot r) throws MouvementEx, UnreachableCase,
 	ActionEx {
-		if(this.isPossible(r,null))
+		if(this.isPossible(r,null)){
+			System.out.println("I AM WAITING");
 			r.set_activable(false);
-
+			r.setVoid();
+		}
 	}
 
 	@Override

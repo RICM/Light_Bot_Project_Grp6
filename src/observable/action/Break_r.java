@@ -61,12 +61,12 @@ public class Break_r implements int_Action {
 		if (this.isPossible(r,null)){
 			r.removeFirstRunable();
 		}
-
+		r.setVoid();
 	}
 
 	@Override
 	public boolean isPossible(abstr_Robot r, abstr_Case c) {
-		return this.getColor().equals(r.get_couleur()) || this.getColor().equals(Couleur.GRIS);
+		return (this.getColor().equals(r.get_couleur()) || this.getColor().equals(Couleur.GRIS));
 	}
 	@Override
 	public int_Action Clone() {

@@ -5,6 +5,8 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import observer.controller.Controller;
+
 import org.jsfml.graphics.Color;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.Font;
@@ -16,8 +18,6 @@ import org.jsfml.system.Vector2i;
 import org.jsfml.window.Mouse;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.Event.Type;
-
-import observer.controller.Controller;
 
 public class Niveaux {
 
@@ -159,6 +159,7 @@ public class Niveaux {
 				}
 				else if(this.listSprite.get(s).equals("Next")){
 					this.level++;
+<<<<<<< HEAD
 					int level_max;
 					if (this.getTheme().equals("D")){
 						level_max=7;
@@ -167,6 +168,18 @@ public class Niveaux {
 					}
 					if(this.level>level_max)
 						this.level = level_max;
+=======
+					int nb_max;
+					if (this.theme.equals("D")){
+						nb_max =7;
+					} else if (this.theme.equals("C")){
+						nb_max=5;
+					}else{
+						nb_max =4;
+					}
+					if(this.level>nb_max)
+						this.level = nb_max;
+>>>>>>> 5d23f9d86fe2c87205402a199b281dc5d3795135
 				}
 				else if(this.listSprite.get(s).equals("Home")){
 					new Theme(controller);

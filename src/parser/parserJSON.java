@@ -122,7 +122,7 @@ public class parserJSON {
 						//                                              Number hauteur = (Number) ObcaseCurrent.get("hauteur");
 						//
 						//                                              Couleur coul = this.parserCouleur((String)ObcaseCurrent.get("couleur"));
-						abstr_Case carre = this.parserCase(ObcaseCurrent,x,y,i);
+						abstr_Case carre = this.parserCase(ObcaseCurrent,x,y,i,acontroller);
 						terrainlist[i].add_case(x, y, carre);
 					}
 				}
@@ -378,6 +378,7 @@ public class parserJSON {
 				}
 
 			}
+
 			World.currentWorld.set_liste_robot(robotlist);
 			World.currentWorld.set_liste_terrain(terrainlist);
 			World.currentWorld.store_status();
@@ -407,7 +408,7 @@ public class parserJSON {
 
 
 	public Sequence_List parserListDUM(JSONObject o, int_Observer c,String s){
-		//System.out.println(Oblistmain);
+		//System.out.println("EEEEEEEEEEEEEE"+s);
 		JSONArray lmain = (JSONArray) o.get(s);
 		Sequence_List sequencelist = new Sequence_List(c);
 
@@ -492,9 +493,9 @@ public class parserJSON {
 		return coul;
 	}
 
-	public abstr_Case parserCase(JSONObject o, int x, int y, int i){
+	public abstr_Case parserCase(JSONObject o, int x, int y, int i,int_Observer c){
 
-		System.out.println("DDDDDDDDDDDDD");
+		//System.out.println("DDDDDDDDDDDDD");
 
 		Coordonnees coor = new Coordonnees(x, y, i);
 		Number hauteur = (Number) o.get("hauteur");
@@ -515,9 +516,10 @@ public class parserJSON {
 				break;
 			default: break;
 			}
-			System.out.println("CCCCCCCCCCC"+o.get("case"));
-			abstr_Case carretype = this.parserCaseEvent((JSONObject)o.get("case"));
+			//System.out.println("CCCCCCCCCCC"+o.get("case"));
+			abstr_Case carretype = this.parserCaseEvent((JSONObject)o.get("case"),c);
 			carre = new Event_Case(hauteur.intValue(), coul, coor, carretype, s);
+			carre.addObserver(c);
 			break;
 
 		case "case_destination" :
@@ -564,15 +566,15 @@ public class parserJSON {
 
 	}
 
-	public abstr_Case parserCaseEvent (JSONObject o){
+	public abstr_Case parserCaseEvent (JSONObject o,int_Observer c){
 
 		Couleur coul = this.parserCouleur((String) o.get("couleur"));
-		System.out.println("BBBBBBBBB"+(String) o.get("couleur"));
+		//System.out.println("BBBBBBBBB"+o.get("coorX"));
 		Number coorX = (Number)o.get("coorX");
 		int x = coorX.intValue();
 
 		Number coorY = (Number)o.get("coorY");
-		System.out.println("AAAAAAAAA"+o.get("coorY"));
+		//System.out.println("AAAAAAAAA"+o.get("coorY"));
 		int y = coorY.intValue();
 
 		Number indice = (Number)o.get("indice");
@@ -600,7 +602,8 @@ public class parserJSON {
 			default: break;
 			}
 
-			carre = new Event_Case(h, coul, coor,this.parserCaseEvent((JSONObject)o.get("case")), s);
+			carre = new Event_Case(h, coul, coor,this.parserCaseEvent((JSONObject)o.get("case"),c), s);
+			carre.addObserver(c);
 			break;
 
 		case "case_destination" :

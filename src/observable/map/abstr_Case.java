@@ -1,9 +1,9 @@
 package observable.map;
 import java.util.ArrayList;
 
+import couleur.Couleur;
 import observable.int_Observable;
 import observer.int_Observer;
-import couleur.Couleur;
 
 public abstract class abstr_Case implements int_Observable{
 	private int hauteur;
@@ -48,8 +48,8 @@ public abstract class abstr_Case implements int_Observable{
 	}
 	@Override
 	public void notifyObserver() {
-		for(int_Observer obs : this.listObserver)
-			obs.update(this);
+		System.out.println("Je suis dans le notify d'une abstr_Case");
+		World.currentWorld.getFirstObserver().update(this);
 	}
 
 	public boolean isVoisine(abstr_Case cases){
