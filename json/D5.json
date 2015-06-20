@@ -23,7 +23,7 @@
         }
         
     ],
-    "nb_robot" : 1,
+    "nb_robot" : 2,
     "robots" :[
     		{ 
     			"robot1" : [
@@ -32,10 +32,10 @@
     						{"coorX" : 0},
     						{"coorY" : 0},
     						{"indice_tableau": 0},
-    						{"max_main": 8},
+    						{"max_main": 12},
     						{"max_p1": 0},
     						{"max_p2": 0},
-    						{"orientation": "left"},
+    						{"orientation": "bot"},
     						{"actions" :["MoveForward","Activate","Wait","Notify"]}
     			]
     		},
@@ -46,10 +46,10 @@
     						{"coorX" : 2},
     						{"coorY" : 0},
     						{"indice_tableau": 0},
-    						{"max_main": 8},
+    						{"max_main": 12},
     						{"max_p1": 0},
     						{"max_p2": 0},
-    						{"orientation": "left"},
+    						{"orientation": "bot"},
     						{"actions" :["MoveForward","Activate","Wait","Notify"]}
     						
     			]
