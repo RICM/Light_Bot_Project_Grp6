@@ -253,6 +253,7 @@ public class Dumb_bot extends abstr_Robot {
 
 	public void remove_Action_P1(int twas_too_long){
 		if (this.P1ChangeAllowed){
+			System.out.println("ordre main, p1, p2"+this.mainChangeAllowed+";"+this.P1ChangeAllowed+";"+this.P2ChangeAllowed);
 			this.user_actions.removeIndice(twas_too_long);
 		}
 		//else throw new ActionEx("Impossible de retirer une action");

@@ -405,6 +405,7 @@ public class Jeu {
 		if(activate.equals("Main"))
 			remove_action_liste(liste_main,x,y);
 		else if(activate.equals("P1")){
+			System.out.println("dans deletebutton");
 			remove_action_liste(liste_P1,x,y);
 		}
 		else if(activate.equals("P2")){
@@ -414,8 +415,10 @@ public class Jeu {
 
 
 	public static void remove_action_liste(LinkedList<Sprite> list_remove, float x, float y){
+		System.out.println("dans remove action liste");
 		int compteur=0;
 		for(Sprite s: list_remove){
+			System.out.println("dans la boucle");
 			FloatRect rect = s.getGlobalBounds();
 			if(x>=rect.left && x<=rect.left+rect.width && y>=rect.top && y<=rect.top+rect.height){
 				if(list_remove.get(compteur)!=null){

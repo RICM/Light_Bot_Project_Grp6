@@ -310,12 +310,12 @@ public class Controller implements int_Observer {
 				break;
 			case 1 :
 				if (position < rob.get_P1().size())
-					((Dumb_bot)rob).get_P1().removeIndice(position);
+					((Dumb_bot)rob).remove_Action_P1(position);
 				System.out.println("LALA JE SUIS DANS LE CAS 2");
 				break;
 			case 2 :
 				if (position < rob.get_P2().size())
-					((Dumb_bot)rob).get_P2().removeIndice(position);
+					((Dumb_bot)rob).remove_Action_P2(position);
 				System.out.println("LALA JE SUIS DANS LE CAS 3");
 				break;
 			}
