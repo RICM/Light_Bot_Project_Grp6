@@ -77,6 +77,7 @@ public class Jeu {
 	protected static boolean derouleOrdonnanceur = false;
 	protected static boolean renrouleOrdonnanceur = false;
 	protected static boolean isDeroule = false;
+	protected static boolean suprime = false;
 
 	protected static int sizeOrdonnanceur=0;
 	protected boolean FirstLoop = true;
@@ -215,6 +216,7 @@ public class Jeu {
 					this.delete_button(click);
 					delete_button_ordonnanceur(click);
 					Jeu.detect_move(click);
+					suprime = false;
 				}
 				else
 					this.retourMenu(e,click);
@@ -351,7 +353,7 @@ public class Jeu {
 					}
 					break;
 				}
-				else if(action.equals("ordonnanceur")){
+				else if(action.equals("ordonnanceur") && !suprime){
 					System.out.println("ordonnanceur");
 					if(!isDeroule){
 						derouleOrdonnanceur = true;
@@ -434,9 +436,9 @@ public class Jeu {
 			if(x>=rect.left && x<=rect.left+rect.width && y>=rect.top && y<=rect.top+rect.height){
 				for(int i = 0; i<sizeOrdonnanceur;i++){
 					for(String boutonOrdoCurrent : typeRobot){
-						System.out.println("Voulu: "+boutonOrdoCurrent+"_Ordo_"+i);
 						if (action.equals(boutonOrdoCurrent+"_Ordo_"+i)){
-							System.out.println(action);
+							suprime = true;
+							renrouleOrdonnanceur = true;
 							controller.getNotificationRemoveToOrdonnanceurList(i);
 						}
 					}
@@ -654,11 +656,18 @@ public class Jeu {
 			}
 		}
 		if(renrouleOrdonnanceur && !derouleOrdonnanceur){
-			if(indiceOrdonnanceur>0){
+			if(indiceOrdonnanceur>limite){
 				indiceOrdonnanceur -=3;
-			}else{
-				renrouleOrdonnanceur = false;
-				isDeroule = false;
+				if (indiceOrdonnanceur<=limite)
+					renrouleOrdonnanceur = false;
+			}
+			else{
+				if(indiceOrdonnanceur>0){
+					indiceOrdonnanceur -=3;
+				}else{
+					renrouleOrdonnanceur = false;
+					isDeroule = false;
+				}
 			}
 		}
 
@@ -675,7 +684,7 @@ public class Jeu {
 			monSpriteBouton = new Sprite();
 			monSpriteBouton.setTexture(textureTemp);
 			monSpriteBouton.setPosition(indiceOrdonnanceur-80*(i+1),505);
-			liste_sprite.putIfAbsent(boutonOrdoCurrent+"_Ordo_"+i, monSpriteBouton);
+			liste_sprite.put(boutonOrdoCurrent+"_Ordo_"+i, monSpriteBouton);
 			Menu.app.draw(monSpriteBouton);
 			i++;
 		}
