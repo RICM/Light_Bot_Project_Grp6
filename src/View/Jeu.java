@@ -979,4 +979,22 @@ public class Jeu {
 
 	}
 
+	public void getNotificationEmptyOrdo() {
+		// TODO Auto-generated method stub
+		try {
+			this.maTextureMenu.loadFromFile(Paths.get("Images/Jeu/Backgrounds/emptyord.png"));
+			this.monSpriteMenu.setTexture(this.maTextureMenu);
+			this.monSpriteMenu.setPosition(Menu.getWidth()/2-200, Menu.getHeight()/2-75);
+			Menu.app.draw(this.monSpriteMenu);
+			Menu.app.display();
+			while(Menu.app.isOpen())
+			{
+				this.processEvent(true);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 }
