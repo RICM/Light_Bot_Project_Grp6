@@ -142,10 +142,6 @@ public class Controller implements int_Observer {
 	 * Receive a notification from view to run program
 	 */
 	public void getNotificationRun(){
-		if(World.currentWorld.get_ordonnanceur().getNumberRobots() == 0){
-			System.out.println("JE SUIS PASSE PAR LA");
-			this.jeu.getNotificationEmptyOrdo();
-		}
 		boolean programm_vide = false;
 		World.currentWorld.setAllRobotsActive();
 		if (this.isPaused){
@@ -161,6 +157,10 @@ public class Controller implements int_Observer {
 			this.runnable = World.currentWorld.isOneRobotActive();
 			if(!Niveaux.getTheme().equals("D")){
 				this.getNotificationAddToOrdonnanceurList(0);
+			}
+			if(World.currentWorld.get_ordonnanceur().getNumberRobots() == 0){
+				System.out.println("JE SUIS PASSE PAR LA");
+				//this.jeu.getNotificationEmptyOrdo();
 			}
 			System.out.println("contenu de run " + World.currentWorld.get_robot(0).get_run());
 			System.out.println("statut du robot " + World.currentWorld.get_robot(0).get_activable());
