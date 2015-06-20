@@ -8,7 +8,6 @@ import exception.MouvementEx;
 import exception.UnreachableCase;
 import observable.int_Observable;
 import observable.action.int_Action;
-import observable.map.World;
 import observable.robot.abstr_Robot;
 import observer.int_Observer;
 
@@ -67,7 +66,7 @@ public class Execution_list implements int_Observable{
 		else{
 			System.out.println("J'AI FINIS TA RACE");
 			r.set_activable(false);
-			World.currentWorld.get_ordonnanceur().removeRobotFromOrdo(r);
+			//World.currentWorld.get_ordonnanceur().removeRobotFromOrdo(r); MODIF ICI
 			this.notifyObserver();
 			//throw new ActionEx("Liste robot vide");
 		}

@@ -59,7 +59,10 @@ public class Niveaux {
 	public Niveaux(Controller acontroller,String current_theme){
 		this.setTheme(current_theme);
 		controller = acontroller;
-
+		if (current_theme == "D"){
+			controller.getNotificationClearOrdo();
+		}
+		controller.getNotificationClearOrdoLeft();
 		try {
 			this.texture_Background.loadFromFile(Paths.get("Images/selectLvl/back.jpg"));
 			this.texture_btnNext.loadFromFile(Paths.get("Images/selectLvl/next100x100.png"));
