@@ -1,29 +1,27 @@
 {
-	"ordo_modif": "false",
+		"ordo_modif": "false",
     "nb_terrain": 1,
     "terrains": [
         {
             "terrain1": [
-                {"nb_case_hauteur": 5},
-                {"nb_case_largeur": 2},
+                {"nb_case_hauteur": 4},
+                {"nb_case_largeur": 3},
                 { "lignes" : [ 
-                	{"ligne1" : [{"type_case": "case_normale","hauteur": 0,"couleur": "GRIS"},{"type_case": "case_illuminated","hauteur": 5,"couleur": "GRIS"}]},
-                	
-                	{"ligne2" : [{"type_case": "case_event","hauteur": 0,"couleur": "GRIS","case":{"type_case": "case_normale","hauteur": 4,"couleur": "GRIS","coorX":1,"coorY":1,"indice":0}, "stat":"false"}, {"type_case": "case_normale","hauteur": 7,"couleur": "GRIS"}]},
-                	
-                	{"ligne3" : [{"type_case": "case_event","hauteur": 0,"couleur": "GRIS","case":{"type_case": "case_normale","hauteur": 3,"couleur": "GRIS","coorX":1,"coorY":2,"indice":0}, "stat":"false"}, {"type_case": "case_normale","hauteur": 5,"couleur": "GRIS"}]},
-                	
-                	{"ligne4" : [{"type_case": "case_event","hauteur": 0,"couleur": "GRIS","case":{"type_case": "case_normale","hauteur": 2,"couleur": "GRIS","coorX":1,"coorY":3,"indice":0}, "stat":"false"}, {"type_case": "case_normale","hauteur": 3,"couleur": "GRIS"}]},
-                
-                	{"ligne5" : [{"type_case": "case_normale","hauteur": 0,"couleur": "GRIS"},{"type_case": "case_normale","hauteur": 1,"couleur": "GRIS"}]}
-                           
+                	 {"ligne1" : [{"type_case": "case_normale","hauteur": 0,"couleur": "GRIS"},{"type_case": 									"case_empty","hauteur": 0,"couleur": "GRIS"},{"type_case": "case_normale","hauteur": 0,"couleur": "GRIS"} ]},
+                	 
+                	 {"ligne2" : [{"type_case": "case_empty","hauteur": 0,"couleur": "GRIS"},{"type_case": 									"case_empty","hauteur": 0,"couleur": "GRIS"},{"type_case": "case_event","hauteur": 0,"couleur": "GRIS","case":{"type_case": "case_normale","hauteur": 0,"couleur": "GRIS","coorX":0,"coorY":1,"indice":0}, "stat":"false"} ]},
+                	  
+                	 {"ligne3" : [{"type_case": "case_normale","hauteur": 0,"couleur": "GRIS"},{"type_case": 									"case_empty","hauteur": 0,"couleur": "GRIS"},{"type_case": "case_empty","hauteur": 0,"couleur": "GRIS"} ]},
+                	   
+                	 {"ligne4" : [{"type_case": "case_illuminated","hauteur": 0,"couleur": "GRIS"},{"type_case": 									"case_empty","hauteur": 0,"couleur": "GRIS"},{"type_case": "case_empty","hauteur": 0,"couleur": "GRIS"} ]},
+		              
 		              
 		            ]}
             ]
         }
         
     ],
-    "nb_robot" : 1,
+    "nb_robot" : 2,
     "robots" :[
     		{ 
     			"robot1" : [
@@ -33,10 +31,26 @@
     						{"coorY" : 0},
     						{"indice_tableau": 0},
     						{"max_main": 6},
-    						{"max_p1": 6},
-    						{"max_p2": 6},
+    						{"max_p1": 0},
+    						{"max_p2": 0},
     						{"orientation": "bot"},
-    						{"actions" :["MoveForward" ,"TurnLeft","Jump","TurnRight","Activate","P1","P2"]}
+    						{"actions" :["MoveForward","Activate","Wait","Notify"]}
+    						
+    			]
+    		},
+    		{ 
+    			"robot2" : [
+    						{"type_robot" : "Robot"},
+    						{"couleur" : "GRIS"},
+    						{"coorX" : 2},
+    						{"coorY" : 0},
+    						{"indice_tableau": 0},
+    						{"max_main": 6},
+    						{"max_p1": 0},
+    						{"max_p2": 0},
+    						{"orientation": "bot"},
+    						{"actions" :["MoveForward","Activate","Wait","Notify"]}
+    						
     			]
     		}
     ]  

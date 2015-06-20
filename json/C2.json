@@ -14,7 +14,7 @@
 		              
 		              {"ligne3" : [{"type_case": "case_painted","hauteur": 4,"couleur": "ROUGE"},{"type_case": "case_illuminated","hauteur":3,"couleur": "GRIS"},{"type_case": "case_normale","hauteur": 3,"couleur": "GRIS"},{"type_case": "case_illuminated","hauteur": 3,"couleur": "GRIS"},{"type_case": "case_normale","hauteur": 3,"couleur": "GRIS"},{"type_case": "case_normale","hauteur": 3,"couleur": "GRIS"} ]},
 		              
-		              {"ligne4" : [{"type_case": "case_normale","hauteur": 1,"couleur": "GRIS"},{"type_case": "case_illuminated","hauteur":1,"couleur": "GRIS"},{"type_case": "case_normale","hauteur": 1,"couleur": "GRIS"},{"type_case": "case_illuminated","hauteur": 1,"couleur": "GRIS"},{"type_case": "case_normale","hauteur":1,"couleur": "GRIS"},{"type_case": "case_painted","hauteur": 0,"couleur": "VERT"} ]},
+		              {"ligne4" : [{"type_case": "case_normale","hauteur": 2,"couleur": "GRIS"},{"type_case": "case_illuminated","hauteur":2,"couleur": "GRIS"},{"type_case": "case_normale","hauteur": 2,"couleur": "GRIS"},{"type_case": "case_illuminated","hauteur": 2,"couleur": "GRIS"},{"type_case": "case_normale","hauteur":2,"couleur": "GRIS"},{"type_case": "case_painted","hauteur": 1,"couleur": "VERT"} ]},
 		            ]}
             ]
         }
