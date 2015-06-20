@@ -20,7 +20,7 @@ public class Sequence_List implements int_Action_List, int_Observable{
 	}
 
 	public void addActionSubSequence(int_Action act){
-		//System.out.println("j'ajoute : "+act);
+		System.out.println("j'ajoute : "+act);
 		this.actions_list_seq.add(act);
 	}
 
@@ -76,7 +76,7 @@ public class Sequence_List implements int_Action_List, int_Observable{
 	}
 	@Override
 	public void notifyObserver() {
-		////System.out.println(this.listObserver.toString());
+		//System.out.println(this.listObserver.toString());
 		for(int_Observer obs : this.listObserver)
 			obs.update(this);
 	}

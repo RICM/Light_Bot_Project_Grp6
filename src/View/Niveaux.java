@@ -113,7 +113,7 @@ public class Niveaux {
 				e.asMouseEvent();
 				Vector2i pos = Mouse.getPosition(Menu.app);
 				Vector2f click = Menu.app.mapPixelToCoords(pos);
-				//System.out.println(pos.x+" "+pos.y);
+				System.out.println(pos.x+" "+pos.y);
 				this.btnClick(click);
 			}
 

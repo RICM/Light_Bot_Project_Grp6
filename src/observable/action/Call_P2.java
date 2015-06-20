@@ -2,16 +2,16 @@ package observable.action;
 
 import java.util.ArrayList;
 
-import couleur.Couleur;
-import exception.ActionEx;
-import exception.MouvementEx;
-import exception.UnreachableCase;
 import observable.int_Observable;
 import observable.action_list.Sequence_List;
 import observable.map.World;
 import observable.map.abstr_Case;
 import observable.robot.abstr_Robot;
 import observer.int_Observer;
+import couleur.Couleur;
+import exception.ActionEx;
+import exception.MouvementEx;
+import exception.UnreachableCase;
 
 public class Call_P2 implements int_Action, int_Observable{
 
@@ -75,7 +75,7 @@ public class Call_P2 implements int_Action, int_Observable{
 		}
 		else{
 			r.setVoid();
-			//System.out.println("Pas possible d exécuter P2");
+			System.out.println("Pas possible d exécuter P2");
 		}
 
 	}

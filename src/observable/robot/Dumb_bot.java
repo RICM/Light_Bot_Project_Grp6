@@ -46,7 +46,7 @@ public class Dumb_bot extends abstr_Robot {
 		this.P1ChangeAllowed = true;
 		this.P2ChangeAllowed = true;
 		this.user_actions.addObserver(controller);
-		//System.out.println("Constructeur false true true");
+		System.out.println("Constructeur false true true");
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class Dumb_bot extends abstr_Robot {
 		this.P1ChangeAllowed = false;
 		this.P2ChangeAllowed = true;
 		this.P1.addObserver(controller);
-		//System.out.println("Constructeur true false true");
+		System.out.println("Constructeur true false true");
 	}
 
 
@@ -105,7 +105,7 @@ public class Dumb_bot extends abstr_Robot {
 		this.set_tailleP1(Fixed_P1.size());
 		this.P1.addObserver(controller);
 		this.P2 = new Sequence_List(controller);
-		//System.out.println("Constructeur false false true");
+		System.out.println("Constructeur false false true");
 		this.mainChangeAllowed = false;
 		this.P1ChangeAllowed = false;
 		this.P2ChangeAllowed = true;
@@ -137,7 +137,7 @@ public class Dumb_bot extends abstr_Robot {
 		this.P1.addObserver(controller);
 		this.P2 = new Sequence_List(controller);
 		this.mainChangeAllowed = true;
-		//System.out.println("Constructeur main allowed");
+		System.out.println("Constructeur main allowed");
 		this.P1ChangeAllowed = false;
 		this.P2ChangeAllowed = false;
 	}
@@ -160,7 +160,7 @@ public class Dumb_bot extends abstr_Robot {
 		this.set_tailleP2(Fixed_P2.size());
 		this.P1.addObserver(controller);
 		this.P2 = new Sequence_List(controller);
-		//System.out.println("Constructeur tout faux");
+		System.out.println("Constructeur tout faux");
 		this.mainChangeAllowed = false;
 		this.P1ChangeAllowed = false;
 		this.P2ChangeAllowed = false;
@@ -169,7 +169,7 @@ public class Dumb_bot extends abstr_Robot {
 	@Override
 	public void add_Action_User_Actions(int_Action act) throws ActionEx{
 		boolean added = false;
-		////System.out.println("trying to add : "+act.getClass().getCanonicalName());
+		//System.out.println("trying to add : "+act.getClass().getCanonicalName());
 		String str = act.getClass().getSimpleName();
 		if (this.mainChangeAllowed && this.user_actions.size() < this.get_tailleMain()){
 			for(int i =0; i<this.allowed_actions.size(); i++){
@@ -188,13 +188,13 @@ public class Dumb_bot extends abstr_Robot {
 	@Override
 	public void add_Action_User_ActionsP1(int_Action act) throws ActionEx{
 		boolean added = false;
-		////System.out.println("trying to add : "+act.getClass().getCanonicalName());
+		//System.out.println("trying to add : "+act.getClass().getCanonicalName());
 		String str = act.getClass().getSimpleName();
 		if (this.P1ChangeAllowed && this.P1.size() < this.get_tailleP1()){
 			for(int i =0; i<this.allowed_actions.size(); i++){
 				if(str.equals(this.allowed_actions.get_name(i))){
 					this.P1.addActionToList(act);
-					//System.out.println("Action ajoutée au robot");
+					System.out.println("Action ajoutée au robot");
 					added = true;
 					break;
 				}
@@ -208,13 +208,13 @@ public class Dumb_bot extends abstr_Robot {
 	@Override
 	public void add_Action_User_ActionsP2(int_Action act) throws ActionEx{
 		boolean added = false;
-		////System.out.println("trying to add : "+act.getClass().getCanonicalName());
+		//System.out.println("trying to add : "+act.getClass().getCanonicalName());
 		String str = act.getClass().getSimpleName();
 		if (this.P2ChangeAllowed && this.P2.size() < this.get_tailleP2()){
 			for(int i =0; i<this.allowed_actions.size(); i++){
 				if(str.equals(this.allowed_actions.get_name(i))){
 					this.P2.addActionToList(act);
-					//System.out.println("Action ajoutée au robot");
+					System.out.println("Action ajoutée au robot");
 					added = true;
 					break;
 				}
@@ -287,8 +287,8 @@ public class Dumb_bot extends abstr_Robot {
 	@Override
 	public void notifyObserver() {
 		for(int_Observer obs : this.listObserver){
-			//System.out.println("Controller du robot :"+this);
-			//System.out.println("Est : "+ obs);
+			System.out.println("Controller du robot :"+this);
+			System.out.println("Est : "+ obs);
 			obs.update(this);
 		}
 	}

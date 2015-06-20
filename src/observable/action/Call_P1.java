@@ -70,13 +70,13 @@ public class Call_P1 implements int_Action, int_Observable{
 			for (int i =0; i<r.get_P1().size(); i++){
 				temp.addActionToList(r.get_P1().get(i));
 			}
-			//System.out.println("j'execute P1");
+			System.out.println("j'execute P1");
 			r.add_execute(temp);
 			World.currentWorld.get_ordonnanceur().setReady(true);
 		}
 		else{
 			r.setVoid();
-			//System.out.println("Impossible d'éxécuter P1");
+			System.out.println("Impossible d'éxécuter P1");
 		}
 
 	}

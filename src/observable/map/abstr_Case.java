@@ -48,7 +48,7 @@ public abstract class abstr_Case implements int_Observable{
 	}
 	@Override
 	public void notifyObserver() {
-		//System.out.println("Je suis dans le notify d'une abstr_Case");
+		System.out.println("Je suis dans le notify d'une abstr_Case");
 		World.currentWorld.getFirstObserver().update(this);
 	}
 

@@ -5,14 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
-import couleur.Couleur;
-import exception.ActionEx;
-import exception.UnreachableCase;
 import observable.action.Activate;
 import observable.action.Break_r;
 import observable.action.Call_P1;
@@ -46,6 +38,15 @@ import observable.robot.Robot;
 import observable.robot.abstr_Robot;
 import observer.int_Observer;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import couleur.Couleur;
+import exception.ActionEx;
+import exception.UnreachableCase;
+
 
 
 public class parserJSON {
@@ -69,9 +70,9 @@ public class parserJSON {
 			}
 
 			Number nb_terrain_prime = (Number) jsonObject.get("nb_terrain");
-			//System.out.println(nb_terrain_prime);
+			System.out.println(nb_terrain_prime);
 			int nb_terrain = nb_terrain_prime.intValue();
-			//System.out.println(nb_terrain);
+			System.out.println(nb_terrain);
 			JSONArray terrains= (JSONArray) jsonObject.get("terrains");
 
 			Number nb_robot_prime = (Number) jsonObject.get("nb_robot");
@@ -85,37 +86,37 @@ public class parserJSON {
 				JSONObject ObterrainCurrent =  (JSONObject) terrains.get(i);
 				JSONArray terrainCurrent = (JSONArray) ObterrainCurrent.get(("terrain"+(i+1)));
 
-				////System.out.println(terrainCurrent);
-				////System.out.println(terrainCurrent.get(1));
+				//System.out.println(terrainCurrent);
+				//System.out.println(terrainCurrent.get(1));
 
 				JSONObject ObnumY = (JSONObject) terrainCurrent.get(0);
-				////System.out.println(ObnumY);
+				//System.out.println(ObnumY);
 				Number numY = (Number) ObnumY.get("nb_case_hauteur");
-				////System.out.println(numY);
+				//System.out.println(numY);
 				int dimY = numY.intValue();
 
 				JSONObject ObnumX = (JSONObject) terrainCurrent.get(1);
-				////System.out.println(ObnumX);
+				//System.out.println(ObnumX);
 				Number numX = (Number) ObnumX.get("nb_case_largeur");
-				////System.out.println(numX);
+				//System.out.println(numX);
 				int dimX = numX.intValue();
 
 				terrainlist[i] = new Terrain(dimX,dimY);
 
-				////System.out.println(terrainCurrent.get(2));
+				//System.out.println(terrainCurrent.get(2));
 				JSONObject Obtabligne = (JSONObject) terrainCurrent.get(2);
 				JSONArray lignes = (JSONArray) Obtabligne.get("lignes");
-				////System.out.println(lignes);
+				//System.out.println(lignes);
 
 				for(int y = 0; y < dimY; y++ ){
 					//test taille ligne
 					JSONObject Obtabcase = (JSONObject) lignes.get(y);
-					////System.out.println(Obtabcase);
+					//System.out.println(Obtabcase);
 					JSONArray ligneCurrent = (JSONArray) Obtabcase.get("ligne"+(y+1));
-					//System.out.println(ligneCurrent);
+					System.out.println(ligneCurrent);
 					for (int x =0; x < dimX; x++){
 						JSONObject ObcaseCurrent = (JSONObject) ligneCurrent.get(x);
-						////System.out.println(ObcaseCurrent);
+						//System.out.println(ObcaseCurrent);
 
 						//                                              Coordonnees coor = new Coordonnees(x, y, i);
 						//                                              Number hauteur = (Number) ObcaseCurrent.get("hauteur");
@@ -128,10 +129,10 @@ public class parserJSON {
 			}
 
 
-			//System.out.println("nb de terrain: "+terrainlist.length);
-			//System.out.println("nb de robot: "+nb_robot);
-			////System.out.println(terrainlist[0].get_terrain());
-			////System.out.println(terrainlist[1].get_terrain().length);
+			System.out.println("nb de terrain: "+terrainlist.length);
+			System.out.println("nb de robot: "+nb_robot);
+			//System.out.println(terrainlist[0].get_terrain());
+			//System.out.println(terrainlist[1].get_terrain().length);
 			//World.currentWorld.set_liste_terrain(terrainlist);
 
 			JSONArray robots= (JSONArray) jsonObject.get("robots");
@@ -139,32 +140,32 @@ public class parserJSON {
 			for (int i=0; i < nb_robot ; i++){
 				JSONObject ObrobotCurrent =  (JSONObject) robots.get(i);
 				JSONArray robotCurrent = (JSONArray) ObrobotCurrent.get(("robot"+(i+1)));
-				//System.out.println(robotCurrent);
+				System.out.println(robotCurrent);
 				JSONObject Obcouleur = (JSONObject) robotCurrent.get(1);
-				////System.out.println(Obcouleur);
+				//System.out.println(Obcouleur);
 
 				//String Scouleur = (String) Obcouleur.get("couleur");
 				Couleur cool = this.parserCouleur((String) Obcouleur.get("couleur"));
 
 				JSONObject ObcoorX = (JSONObject) robotCurrent.get(2);
-				////System.out.println(ObcoorX);
+				//System.out.println(ObcoorX);
 				Number numrobX = (Number) ObcoorX.get("coorX");
-				//System.out.println("robX: "+numrobX);
+				System.out.println("robX: "+numrobX);
 				int robX = numrobX.intValue();
 
 				JSONObject ObcoorY = (JSONObject) robotCurrent.get(3);
-				////System.out.println(ObcoorY);
+				//System.out.println(ObcoorY);
 				Number numrobY = (Number) ObcoorY.get("coorY");
-				//System.out.println("robY: "+numrobY);
+				System.out.println("robY: "+numrobY);
 				int robY = numrobY.intValue();
 
 				JSONObject Obindice = (JSONObject) robotCurrent.get(4);
-				////System.out.println(Obindice);
+				//System.out.println(Obindice);
 				Number numindice = (Number) Obindice.get("indice_tableau");
-				//System.out.println("indice robot: "+numindice.intValue());
+				System.out.println("indice robot: "+numindice.intValue());
 				int indice = numindice.intValue();
 
-				////System.out.println(terrainlist[indice].get_case(robX, robY));
+				//System.out.println(terrainlist[indice].get_case(robX, robY));
 				abstr_Case robotcase =  terrainlist[indice].get_case(robX, robY);
 
 
@@ -261,17 +262,17 @@ public class parserJSON {
 				switch ((String) Obtyperob.get("type_robot")){
 				case "Robot":
 					JSONObject Obmaxmain = (JSONObject) robotCurrent.get(5);
-					////System.out.println(Obmaxmain);
+					//System.out.println(Obmaxmain);
 					Number nummain = (Number) Obmaxmain.get("max_main");
 					int main = nummain.intValue();
 
 					JSONObject Obmaxp1 = (JSONObject) robotCurrent.get(6);
-					////System.out.println(Obmaxp1);
+					//System.out.println(Obmaxp1);
 					Number nump1 = (Number) Obmaxp1.get("max_p1");
 					int p1 = nump1.intValue();
 
 					JSONObject Obmaxp2 = (JSONObject) robotCurrent.get(7);
-					////System.out.println(Obmaxp2);
+					//System.out.println(Obmaxp2);
 					Number nump2 = (Number) Obmaxp2.get("max_p2");
 					int p2 = nump2.intValue();
 					Robot robert = new Robot(robotcase, actionlist, o, main, p1, p2, acontroller, cool);
@@ -283,15 +284,15 @@ public class parserJSON {
 					Sequence_List d1main = this.parserListDUM(Obmaind1, acontroller,"liste_main");
 
 					JSONObject Obmaxp1d1 = (JSONObject) robotCurrent.get(6);
-					////System.out.println(Obmaxp1d1);
+					//System.out.println(Obmaxp1d1);
 					Number nump1d1 = (Number) Obmaxp1d1.get("max_p1");
-					//System.out.println("max taille p1: "+nump1d1.intValue());
+					System.out.println("max taille p1: "+nump1d1.intValue());
 					int d1p1 = nump1d1.intValue();
 
 					JSONObject Obmaxp2d1 = (JSONObject) robotCurrent.get(7);
-					////System.out.println(Obmaxp2d1);
+					//System.out.println(Obmaxp2d1);
 					Number nump2d1 = (Number) Obmaxp2d1.get("max_p2");
-					//System.out.println("max taille p2: "+nump2d1.intValue());
+					System.out.println("max taille p2: "+nump2d1.intValue());
 					int d1p2 = nump2d1.intValue();
 
 					Dumb_bot robert_d1 = new Dumb_bot(robotcase, o, actionlist, cool, acontroller, d1main, d1p1, d1p2);
@@ -301,18 +302,18 @@ public class parserJSON {
 				case "Dumb2":
 
 					JSONObject Obmaind2 = (JSONObject) robotCurrent.get(5);
-					////System.out.println(Obmaind2);
+					//System.out.println(Obmaind2);
 					Number nummaind2 = (Number) Obmaind2.get("max_main");
-					//System.out.println("max taille main: "+nummaind2.intValue());
+					System.out.println("max taille main: "+nummaind2.intValue());
 					int d2main = nummaind2.intValue();
 
 					JSONObject Obmaxp1d2 = (JSONObject) robotCurrent.get(6);
 					Sequence_List d2p1 = this.parserListDUM(Obmaxp1d2, acontroller, "liste_p1");
 
 					JSONObject Obmaxp2d2 = (JSONObject) robotCurrent.get(7);
-					////System.out.println(Obmaxp2d2);
+					//System.out.println(Obmaxp2d2);
 					Number nump2d2 = (Number) Obmaxp2d2.get("max_p2");
-					//System.out.println("max taille p2: "+nump2d2.intValue());
+					System.out.println("max taille p2: "+nump2d2.intValue());
 					int d2p2 = nump2d2.intValue();
 					Dumb_bot robert_d2 = new Dumb_bot(robotcase, o, actionlist, cool, acontroller, d2main, d2p1, d2p2);
 					robotlist[i]=robert_d2;
@@ -328,9 +329,9 @@ public class parserJSON {
 
 
 					JSONObject Obmaxp2d3 = (JSONObject) robotCurrent.get(7);
-					////System.out.println(Obmaxp2d3);
+					//System.out.println(Obmaxp2d3);
 					Number nump2d3 = (Number) Obmaxp2d3.get("max_p2");
-					//System.out.println("max taille p2: "+nump2d3.intValue());
+					System.out.println("max taille p2: "+nump2d3.intValue());
 					int d3p2 = nump2d3.intValue();
 
 					Dumb_bot robert_d3 = new Dumb_bot(robotcase, o, actionlist, cool, acontroller, d3main, d3p1, d3p2);
@@ -340,9 +341,9 @@ public class parserJSON {
 				case "Dumb4":
 
 					JSONObject Obmaind4 = (JSONObject) robotCurrent.get(5);
-					////System.out.println(Obmaind4);
+					//System.out.println(Obmaind4);
 					Number nummaind4 = (Number) Obmaind4.get("max_main");
-					//System.out.println("max taille main: "+nummaind4.intValue());
+					System.out.println("max taille main: "+nummaind4.intValue());
 					int d4main = nummaind4.intValue();
 
 					JSONObject Obmaxp1d4 = (JSONObject) robotCurrent.get(6);
@@ -407,7 +408,7 @@ public class parserJSON {
 
 
 	public Sequence_List parserListDUM(JSONObject o, int_Observer c,String s){
-		////System.out.println("EEEEEEEEEEEEEE"+s);
+		//System.out.println("EEEEEEEEEEEEEE"+s);
 		JSONArray lmain = (JSONArray) o.get(s);
 		Sequence_List sequencelist = new Sequence_List(c);
 
@@ -494,7 +495,7 @@ public class parserJSON {
 
 	public abstr_Case parserCase(JSONObject o, int x, int y, int i,int_Observer c){
 
-		////System.out.println("DDDDDDDDDDDDD");
+		//System.out.println("DDDDDDDDDDDDD");
 
 		Coordonnees coor = new Coordonnees(x, y, i);
 		Number hauteur = (Number) o.get("hauteur");
@@ -515,7 +516,7 @@ public class parserJSON {
 				break;
 			default: break;
 			}
-			////System.out.println("CCCCCCCCCCC"+o.get("case"));
+			//System.out.println("CCCCCCCCCCC"+o.get("case"));
 			abstr_Case carretype = this.parserCaseEvent((JSONObject)o.get("case"),c);
 			carre = new Event_Case(hauteur.intValue(), coul, coor, carretype, s);
 			carre.addObserver(c);
@@ -523,12 +524,12 @@ public class parserJSON {
 
 		case "case_destination" :
 			carre = new Destination_Case(hauteur.intValue(), coul, coor);
-			//System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
+			System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
 			break;
 
 		case "case_painted" :
 			carre = new Painted_Case(hauteur.intValue(), coul, coor);
-			//System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
+			System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
 			break;
 
 		case "case_teleporter" :
@@ -538,27 +539,27 @@ public class parserJSON {
 			Coordonnees dest = new Coordonnees(destX.intValue(), destY.intValue(),indice.intValue());
 			//new Teleporter_Case(h, Color, cord, destination)
 			carre = new Teleporter_Case(hauteur.intValue(), coul, coor, dest);
-			////System.out.println("terrain"+i+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
+			//System.out.println("terrain"+i+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
 			break;
 
 		case "case_normale" :
 			carre = new Normal_Case(hauteur.intValue(),coor);
-			//System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
+			System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
 			break;
 
 		case "case_empty" :
 			carre = new Empty_Case();
-			////System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
+			//System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
 			break;
 
 		case "case_illuminated" :
 			carre = new Illuminated_Case(hauteur.intValue(), coul, coor);
-			//System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
+			System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
 			break;
 
 		default :
 			carre = new Normal_Case(hauteur.intValue(),coor);
-			//System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
+			System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
 			break;
 		}
 		return carre;
@@ -568,12 +569,12 @@ public class parserJSON {
 	public abstr_Case parserCaseEvent (JSONObject o,int_Observer c){
 
 		Couleur coul = this.parserCouleur((String) o.get("couleur"));
-		////System.out.println("BBBBBBBBB"+o.get("coorX"));
+		//System.out.println("BBBBBBBBB"+o.get("coorX"));
 		Number coorX = (Number)o.get("coorX");
 		int x = coorX.intValue();
 
 		Number coorY = (Number)o.get("coorY");
-		////System.out.println("AAAAAAAAA"+o.get("coorY"));
+		//System.out.println("AAAAAAAAA"+o.get("coorY"));
 		int y = coorY.intValue();
 
 		Number indice = (Number)o.get("indice");
@@ -607,12 +608,12 @@ public class parserJSON {
 
 		case "case_destination" :
 			carre = new Destination_Case(h,coul,coor);
-			//System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
+			System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
 			break;
 
 		case "case_painted" :
 			carre = new Painted_Case(h, coul, coor);
-			//System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
+			System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
 			break;
 
 		case "case_teleporter" :
@@ -622,27 +623,27 @@ public class parserJSON {
 			Coordonnees dest = new Coordonnees(destX.intValue(), destY.intValue(),indicedest.intValue());
 			//new Teleporter_Case(h, Color, cord, destination)
 			carre = new Teleporter_Case(hauteur.intValue(), coul, coor, dest);
-			////System.out.println("terrain"+i+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
+			//System.out.println("terrain"+i+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
 			break;
 
 		case "case_normale" :
 			carre = new Normal_Case(hauteur.intValue(),coor);
-			//System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
+			System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
 			break;
 
 		case "case_empty" :
 			carre = new Empty_Case();
-			////System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
+			//System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
 			break;
 
 		case "case_illuminated" :
 			carre = new Illuminated_Case(hauteur.intValue(), coul, coor);
-			//System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
+			System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
 			break;
 
 		default :
 			carre = new Normal_Case(hauteur.intValue(),coor);
-			//System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
+			System.out.println("terrain"+(i+1)+" case: "+"coordX "+carre.get_coordonnees().get_x()+" coordY "+carre.get_coordonnees().get_y()+" hauteur "+carre.get_hauteur());
 			break;
 		}
 		return carre;

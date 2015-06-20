@@ -50,22 +50,22 @@ public class World implements int_Observable {
 		try {
 			this.init_World();
 		} catch (UnreachableCase e) {
-			//System.out.println("this shouldn't have heppened, WTH was done");
+			System.out.println("this shouldn't have heppened, WTH was done");
 			e.printStackTrace();
 		}
 		//this.ordo = new Ordonnanceur();
-		//System.out.println("Taille de la liste de robot dans le monde : "+this.liste_robot.length);
+		System.out.println("Taille de la liste de robot dans le monde : "+this.liste_robot.length);
 		for(int i =0; i< this.liste_robot.length;i++){
 			this.liste_robot[i].run();
-			//	//System.out.println("taille de la liste " + this.liste_robot[i].get_run().size());
+			//	System.out.println("taille de la liste " + this.liste_robot[i].get_run().size());
 		}
-		//System.out.println("nb cases a allumer : " + this.nb_case_allumable + "et allumé" + this.nb_case_allumees);
+		System.out.println("nb cases a allumer : " + this.nb_case_allumable + "et allumé" + this.nb_case_allumees);
 	}
 
 	public void exec() throws MouvementEx, UnreachableCase, ActionEx, IndexOutOfBoundsException{
-		//System.out.println("Je suis dans exec");
+		System.out.println("Je suis dans exec");
 		if (this.ordo.isReady()){
-			//System.out.println("Ich bin in ordo");
+			System.out.println("Ich bin in ordo");
 			this.ordo.execute_next();
 		}
 	}
@@ -186,17 +186,17 @@ public class World implements int_Observable {
 			for(int j = 0; j<this.liste_terrain[i].get_terrain().length;j++ ){
 				for(int k = 0; k<this.liste_terrain[i].get_terrain()[j].length; k++){
 					abstr_Case temp = this.save_terr[i].get_case(k, j).Clone();
-					//System.out.println(temp);
-					//System.out.println(this.save_terr[i].get_case(k,j));
+					System.out.println(temp);
+					System.out.println(this.save_terr[i].get_case(k,j));
 					this.liste_terrain[i].set_case(temp,k,j);
-					//	//System.out.println(" type de la case " +this.liste_terrain[i].get_case(j, k).getClass().getSimpleName() + "et coordonnees" + j + "   "+ k );
+					//	System.out.println(" type de la case " +this.liste_terrain[i].get_case(j, k).getClass().getSimpleName() + "et coordonnees" + j + "   "+ k );
 					if (this.liste_terrain[i].get_case(k, j).getClass().getSimpleName().equals("Event_Case")){
 						((Event_Case)this.liste_terrain[i].get_case(k, j)).init();
 						((Event_Case)this.liste_terrain[i].get_case(k, j)).refresh();
 					}
 					if (this.liste_terrain[i].get_case(k, j).getClass().getSimpleName().equals("Illuminated_Case")){
-						//System.out.println("CASE ILLUMINEE SAVE : "+((Illuminated_Case)this.save_terr[i].get_case(k, j)).get_active());
-						//System.out.println("CASE ILLUMINEE : "+((Illuminated_Case)this.liste_terrain[i].get_case(k, j)).get_active());
+						System.out.println("CASE ILLUMINEE SAVE : "+((Illuminated_Case)this.save_terr[i].get_case(k, j)).get_active());
+						System.out.println("CASE ILLUMINEE : "+((Illuminated_Case)this.liste_terrain[i].get_case(k, j)).get_active());
 						this.nb_case_allumable++;
 						if (((Illuminated_Case)this.liste_terrain[i].get_case(k, j)).get_active()){
 							this.nb_case_allumees++;
@@ -208,7 +208,7 @@ public class World implements int_Observable {
 	}
 
 	public void store_status() throws UnreachableCase, ActionEx{
-		//System.out.println("je me sauvegarde");
+		System.out.println("je me sauvegarde");
 		int size_t = World.currentWorld.get_liste_terrain().length;
 		Terrain temp[] = new Terrain[size_t];
 		World.currentWorld.save_robot = new Position[World.currentWorld.liste_robot.length];
@@ -220,13 +220,13 @@ public class World implements int_Observable {
 			World.currentWorld.liste_robot[i].store_position();
 			World.currentWorld.save_robot[i] = World.currentWorld.liste_robot[i].get_last_pos();
 		}
-		//System.out.println("j'ai fini de me sauvegarder : world");
+		System.out.println("j'ai fini de me sauvegarder : world");
 	}
 
 	public boolean isOneRobotActive(){
 		for (int i = 0; i < currentWorld.liste_robot.length; i ++){
 			if (currentWorld.liste_robot[i].get_run().size() != 0){
-				//System.out.println("True True True");
+				System.out.println("True True True");
 				return true;
 			}
 		}

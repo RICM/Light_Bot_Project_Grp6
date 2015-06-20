@@ -58,11 +58,11 @@ public class Controller implements int_Observer {
 	public void update(Object obj){
 		switch (obj.getClass().getSimpleName()){
 		case "Robot" :
-			//System.out.println("Mouvement détécté");
+			System.out.println("Mouvement détécté");
 			this.setNotificationUpdatedRobot((Robot)obj);
 			break;
 		case "Dumb_bot" :
-			//System.out.println("Mouvement détécté");
+			System.out.println("Mouvement détécté");
 			this.setNotificationUpdatedRobot((Dumb_bot)obj);
 			break;
 		case "Terrain" :
@@ -75,17 +75,17 @@ public class Controller implements int_Observer {
 			this.runnable = World.currentWorld.isOneRobotActive();
 			break;
 		case "Illuminated_Case" :
-			//System.out.println("JE SUIS ALLUME");
+			System.out.println("JE SUIS ALLUME");
 			this.setNotificationUpdateCase();
 			break;
 		case "Ordonnanceur" :
 			//this.runnable = false;
 			break;
 		case "abstr_Case" :
-			//System.out.println("Controlleur a recu notification d'une abstr_Case");
+			System.out.println("Controlleur a recu notification d'une abstr_Case");
 			this.setNotificationUpdateCase();
 		case "Event_Case" :
-			//System.out.println("Controlleur a recu notification d'une Event_Case");
+			System.out.println("Controlleur a recu notification d'une Event_Case");
 			this.setNotificationUpdateCase();
 		default:
 			break;
@@ -97,8 +97,8 @@ public class Controller implements int_Observer {
 	}
 
 	public void setNotificationUpdatedCurrentProgramList(Sequence_List seq){
-		//System.out.println(seq.toString());
-		//System.out.println(this.jeu.toString());
+		System.out.println(seq.toString());
+		System.out.println(this.jeu.toString());
 		this.jeu.updateSequenceList(seq);
 	}
 
@@ -159,17 +159,17 @@ public class Controller implements int_Observer {
 				this.getNotificationAddToOrdonnanceurList(0);
 			}
 			if(World.currentWorld.get_ordonnanceur().getNumberRobots() == 0){
-				//System.out.println("JE SUIS PASSE PAR LA");
+				System.out.println("JE SUIS PASSE PAR LA");
 				//this.jeu.getNotificationEmptyOrdo();
 			}
-			//System.out.println("contenu de run " + World.currentWorld.get_robot(0).get_run());
-			//System.out.println("statut du robot " + World.currentWorld.get_robot(0).get_activable());
-			//System.out.println("nobmre de robot dans le monde : "+World.currentWorld.get_liste_robot().length);
-			//System.out.println("nombre de robot dans l'ordo : "+World.currentWorld.get_ordonnanceur().getNumberRobots());
+			System.out.println("contenu de run " + World.currentWorld.get_robot(0).get_run());
+			System.out.println("statut du robot " + World.currentWorld.get_robot(0).get_activable());
+			System.out.println("nobmre de robot dans le monde : "+World.currentWorld.get_liste_robot().length);
+			System.out.println("nombre de robot dans l'ordo : "+World.currentWorld.get_ordonnanceur().getNumberRobots());
 			while (this.overflow<200 && this.isRunning && this.runnable && !(World.currentWorld.is_cleared())){
-				//System.out.println("Dans le while du controller");
+				System.out.println("Dans le while du controller");
 				try {
-					//System.out.println("While getNotificationRun");
+					System.out.println("While getNotificationRun");
 					World.currentWorld.exec();
 					World.currentWorld.get_ordonnanceur().increment_ind();
 					this.overflow++;
@@ -189,38 +189,38 @@ public class Controller implements int_Observer {
 				}
 				try {
 					Thread.sleep(0);
-					//System.out.println("B I : "+this.overflow);
+					System.out.println("B I : "+this.overflow);
 				}catch(Exception ex){
-					//System.out.println(ex.getMessage());
+					System.out.println(ex.getMessage());
 				}
 			}
 			this.isRunning = false;
 			World.currentWorld.get_ordonnanceur().removeRobots();
 			if (programm_vide){
 				World.currentWorld.get_ordonnanceur().removeRobots();
-				//System.out.println("NOMBRE DE ROBOT DANS ORDO A LA FIN : "+World.currentWorld.get_ordonnanceur().getNumberRobots());
-				//System.out.println("sortie de la boucle de RUN FOREST RUN");
+				System.out.println("NOMBRE DE ROBOT DANS ORDO A LA FIN : "+World.currentWorld.get_ordonnanceur().getNumberRobots());
+				System.out.println("sortie de la boucle de RUN FOREST RUN");
 				this.resetRobotAfterGame();
 				//this.getNotificationRewind();
 			}
 			if (this.overflow > 150){
 				World.currentWorld.get_ordonnanceur().removeRobots();
-				//System.out.println("NOMBRE DE ROBOT DANS ORDO A LA FIN : "+World.currentWorld.get_ordonnanceur().getNumberRobots());
-				//System.out.println("sortie de la boucle de RUN FOREST RUN");
-				//System.out.println("Boucle infinie détéctée");
+				System.out.println("NOMBRE DE ROBOT DANS ORDO A LA FIN : "+World.currentWorld.get_ordonnanceur().getNumberRobots());
+				System.out.println("sortie de la boucle de RUN FOREST RUN");
+				System.out.println("Boucle infinie détéctée");
 				this.resetRobotAfterGame();
 				this.overflow = 0;
 			}
 			if (World.currentWorld.is_cleared()){
 				World.currentWorld.get_ordonnanceur().removeRobots();
-				//System.out.println("NOMBRE DE ROBOT DANS ORDO A LA FIN : "+World.currentWorld.get_ordonnanceur().getNumberRobots());
-				//System.out.println("sortie de la boucle de RUN FOREST RUN");
+				System.out.println("NOMBRE DE ROBOT DANS ORDO A LA FIN : "+World.currentWorld.get_ordonnanceur().getNumberRobots());
+				System.out.println("sortie de la boucle de RUN FOREST RUN");
 				this.resetRobotAfterGame();
 				this.getNotificationVictory();
 			}
 		}
 		else{
-			//System.out.println("On ne peut pas relancer le robot sans redemarrer le niveau");
+			System.out.println("On ne peut pas relancer le robot sans redemarrer le niveau");
 		}
 	}
 
@@ -246,7 +246,7 @@ public class Controller implements int_Observer {
 		/**
 		 * Receive a notification from view to remove an action to the robot list
 		 */
-		//System.out.println("AU MOINS JE PASSE DANS LE CONTROLLER");
+		System.out.println("AU MOINS JE PASSE DANS LE CONTROLLER");
 		abstr_Robot rob = World.currentWorld.get_robot(this.current_robot);
 		if (!rob.getClass().getSimpleName().equals("Dumb_bot")){
 
@@ -265,25 +265,25 @@ public class Controller implements int_Observer {
 				break;
 			}
 		}else if (rob.getClass().getSimpleName().equals("Dumb_bot")){
-			//System.out.println("CURRENT PROGRAMME : "+this.current_program);
+			System.out.println("CURRENT PROGRAMME : "+this.current_program);
 			switch (this.current_program){
 			case 0 :
 				if (position < rob.get_Main().size())
 					((Dumb_bot)rob).remove_Action_User_Actions(position);
-				//System.out.println("LALA JE SUIS DANS LE CAS 1");
+				System.out.println("LALA JE SUIS DANS LE CAS 1");
 				break;
 			case 1 :
 				if (position < rob.get_P1().size())
 					((Dumb_bot)rob).get_P1().removeIndice(position);
-				//System.out.println("LALA JE SUIS DANS LE CAS 2");
+				System.out.println("LALA JE SUIS DANS LE CAS 2");
 				break;
 			case 2 :
 				if (position < rob.get_P2().size())
 					((Dumb_bot)rob).get_P2().removeIndice(position);
-				//System.out.println("LALA JE SUIS DANS LE CAS 3");
+				System.out.println("LALA JE SUIS DANS LE CAS 3");
 				break;
 			}
-			//System.out.println("P1 "+World.currentWorld.get_robot(0).get_P1());
+			System.out.println("P1 "+World.currentWorld.get_robot(0).get_P1());
 		}
 		/**
 		 * La vue aura besoin d'avoir un hashmap de boutons|actions
@@ -295,7 +295,7 @@ public class Controller implements int_Observer {
 		 * Receive a notification from view to change robot to robot[i] from current
 		 */
 		robotCurrent++;
-		//System.out.println("zev "+World.currentWorld.number_robots());
+		System.out.println("zev "+World.currentWorld.number_robots());
 		if (robotCurrent >= World.currentWorld.number_robots()){
 			robotCurrent=0;
 		}
@@ -368,7 +368,7 @@ public class Controller implements int_Observer {
 
 	public void setNotificationUpdatedRobot(abstr_Robot rob){
 		//if(rob.getCurrent_Case().isVoisine(rob.getPrevious_Case()))
-		////System.out.println("");
+		//System.out.println("");
 		this.jeu.setNotificationDrawForTime();
 	}
 
@@ -378,7 +378,7 @@ public class Controller implements int_Observer {
 
 	public int_Action getNotificationAddActionToUserList(String str, Couleur color){
 		try{
-			//System.out.println("current_program : "+ this.current_program);
+			System.out.println("current_program : "+ this.current_program);
 			switch (str){
 			case "TurnRIght" :
 				if (this.current_program == 2){
@@ -562,7 +562,7 @@ public class Controller implements int_Observer {
 		case "P1" : this.current_program = 1;break;
 		default : this.current_program = 2;break;
 		}
-		//System.out.println("switched program to : "+this.current_program);
+		System.out.println("switched program to : "+this.current_program);
 	}
 
 
@@ -570,10 +570,10 @@ public class Controller implements int_Observer {
 	public void getNotificationRewind(){
 		try {
 			World.currentWorld.rewind_status();
-			//System.out.println("Rewind : "+World.currentWorld.get_robot(0).getCurrent_Case().get_coordonnees().get_x()
-			//+" , "+World.currentWorld.get_robot(0).getCurrent_Case().get_coordonnees().get_y());
-			//System.out.println("Liste actions main : "+World.currentWorld.get_robot(0).get_Main().getListActions().toString());
-			//System.out.println(World.currentWorld.get_robot(0).get_run().toString());
+			System.out.println("Rewind : "+World.currentWorld.get_robot(0).getCurrent_Case().get_coordonnees().get_x()
+					+" , "+World.currentWorld.get_robot(0).getCurrent_Case().get_coordonnees().get_y());
+			System.out.println("Liste actions main : "+World.currentWorld.get_robot(0).get_Main().getListActions().toString());
+			System.out.println(World.currentWorld.get_robot(0).get_run().toString());
 			this.isRunning = false;
 		} catch (UnreachableCase e) {
 			this.jeu.draw_popup("D�sol�, une erreur inattendue s'est produite");
@@ -672,7 +672,7 @@ public class Controller implements int_Observer {
 			int Y2 = Ma_Case_Prev.get_coordonnees().get_y();
 			int PosX2 = Menu.getWidth()/2 +59*(Y2+X2)-taille_abs*60;
 			int PosY2 = Menu.getHeight()/2 +18*(Y2-X2)-taille_ord*18+200;
-			//System.out.println(PosY2+" "+PosY);
+			System.out.println(PosY2+" "+PosY);
 			PosX = PosX2 + ((PosX-PosX2)/10)*this.cpt;
 			PosY = PosY2 + ((PosY-PosY2)/10)*this.cpt;
 
@@ -738,7 +738,7 @@ public class Controller implements int_Observer {
 
 
 	public void setNotificationUpdatedRobotMouvement() {
-		//System.out.println("envoie de la notification");
+		System.out.println("envoie de la notification");
 		World.currentWorld.get_ordonnanceur().setReady(true);
 	}
 	public void getLevel(Controller controller, String level){

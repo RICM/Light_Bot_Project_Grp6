@@ -38,7 +38,7 @@ public abstract class abstr_Robot {
 	 */
 	public void run(){
 		this.order_exec.initFirst(this.user_actions);
-		//System.out.println( "taille du run "+this.order_exec.size() +" dans le robot"+this.order_exec);
+		System.out.println( "taille du run "+this.order_exec.size() +" dans le robot"+this.order_exec);
 
 	}
 	/**
@@ -48,7 +48,7 @@ public abstract class abstr_Robot {
 	 * @throws ActionEx
 	 */
 	public void execute() throws MouvementEx, UnreachableCase, ActionEx{
-		//System.out.println("Ich bin in execute");
+		System.out.println("Ich bin in execute");
 		this.order_exec.run(this);
 	}
 
@@ -57,7 +57,7 @@ public abstract class abstr_Robot {
 	}
 	public void add_Action_User_Actions(int_Action act) throws ActionEx{
 		boolean added = false;
-		////System.out.println("trying to add : "+act.getClass().getCanonicalName());
+		//System.out.println("trying to add : "+act.getClass().getCanonicalName());
 		String str = act.getClass().getSimpleName();
 		if (this.user_actions.size() < this.get_tailleMain()){
 			for(int i =0; i<this.allowed_actions.size(); i++){
@@ -75,13 +75,13 @@ public abstract class abstr_Robot {
 
 	public void add_Action_User_ActionsP1(int_Action act) throws ActionEx{
 		boolean added = false;
-		////System.out.println("trying to add : "+act.getClass().getCanonicalName());
+		//System.out.println("trying to add : "+act.getClass().getCanonicalName());
 		String str = act.getClass().getSimpleName();
 		if (this.P1.size() < this.get_tailleP1()){
 			for(int i =0; i<this.allowed_actions.size(); i++){
 				if(str.equals(this.allowed_actions.get_name(i))){
 					this.P1.addActionToList(act);
-					//System.out.println("Action ajoutée au robot");
+					System.out.println("Action ajoutée au robot");
 					added = true;
 					break;
 				}
@@ -93,13 +93,13 @@ public abstract class abstr_Robot {
 	}
 	public void add_Action_User_ActionsP2(int_Action act) throws ActionEx{
 		boolean added = false;
-		////System.out.println("trying to add : "+act.getClass().getCanonicalName());
+		//System.out.println("trying to add : "+act.getClass().getCanonicalName());
 		String str = act.getClass().getSimpleName();
 		if (this.P2.size() < this.get_tailleP2()){
 			for(int i =0; i<this.allowed_actions.size(); i++){
 				if(str.equals(this.allowed_actions.get_name(i))){
 					this.P2.addActionToList(act);
-					//System.out.println("Action ajoutée au robot");
+					System.out.println("Action ajoutée au robot");
 					added = true;
 					break;
 				}
@@ -126,8 +126,8 @@ public abstract class abstr_Robot {
 	}
 
 	public void printPosition(){
-		//System.out.println("position x : "+this.current_case.get_coordonnees().get_x());
-		//System.out.println("position y : "+this.current_case.get_coordonnees().get_y());
+		System.out.println("position x : "+this.current_case.get_coordonnees().get_x());
+		System.out.println("position y : "+this.current_case.get_coordonnees().get_y());
 	}
 
 	//getteurs et setteurs

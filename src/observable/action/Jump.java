@@ -62,7 +62,7 @@ public class Jump implements int_Action, int_Observable{
 		}
 
 		if (! this.isPossible(r,c_prime)){
-			//System.out.println("Sauter pour rien , c'est bien");
+			System.out.println("Sauter pour rien , c'est bien");
 			r.setVoid();
 		} else {
 			r.setCurrent_Case(c_prime);
