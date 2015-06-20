@@ -77,12 +77,16 @@ public class Ordonnanceur implements int_Observable {
 	}
 
 	//Incrémente ind_ex en verifiant que ind_ex ne dépasse pas la taille de la liste de robot.
-	private void increment_ind() {
+	public void increment_ind() {
 		this.ind_ex++;
 		if (this.ind_ex >= this.list_robot.size()){
 			this.ind_ex = 0;
 		}
 
+	}
+
+	public boolean removeRobotFromOrdo(abstr_Robot rob){
+		return this.list_robot.remove(rob);
 	}
 
 	//Si le robot d'indice ind_ex est activable, il est execute.
@@ -96,7 +100,7 @@ public class Ordonnanceur implements int_Observable {
 			this.ready = false;
 			this.list_robot.get(this.ind_ex).execute();
 		}
-		this.increment_ind();
+		//this.increment_ind();
 	}
 
 	//Execute tous les robots de la linkedlist.
