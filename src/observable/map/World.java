@@ -251,5 +251,11 @@ public class World implements int_Observable {
 		this.liste_terrain[dest.get_n()].add_case(dest.get_x(), dest.get_y(), replacement);
 	}
 
+	public void setAllRobotsActive() {
+		for (int i = 0; i<this.liste_robot.length; i++){
+			this.liste_robot[i].set_activable(true);
+		}
+	}
+
 
 }

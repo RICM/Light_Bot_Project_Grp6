@@ -136,6 +136,7 @@ public class Controller implements int_Observer {
 	 */
 	public void getNotificationRun(){
 		boolean programm_vide = false;
+		World.currentWorld.setAllRobotsActive();
 		if (this.isPaused){
 			this.setNotificationGoOn();
 		}
