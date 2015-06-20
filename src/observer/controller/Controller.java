@@ -235,6 +235,7 @@ public class Controller implements int_Observer {
 		/**
 		 * Receive a notification from view to remove an action to the robot list
 		 */
+		System.out.println("AU MOINS JE PASSE DANS LE CONTROLLER");
 		abstr_Robot rob = World.currentWorld.get_robot(this.current_robot);
 		if (!rob.getClass().getSimpleName().equals("Dumb_bot")){
 
@@ -250,6 +251,21 @@ public class Controller implements int_Observer {
 			case 2 :
 				if (position < rob.get_P2().size())
 					rob.get_P2().removeIndice(position);
+				break;
+			}
+		}else if (rob.getClass().getSimpleName().equals("Dumb_bot")){
+			switch (this.current_program){
+			case 0 :
+				if (position < rob.get_Main().size())
+					((Dumb_bot)rob).remove_Action_User_Actions(position);
+				break;
+			case 1 :
+				if (position < rob.get_P1().size())
+					((Dumb_bot)rob).remove_Action_P1(position);
+				break;
+			case 2 :
+				if (position < rob.get_P2().size())
+					((Dumb_bot)rob).get_P2().removeIndice(position);
 				break;
 			}
 			System.out.println("P1 "+World.currentWorld.get_robot(0).get_P1());
