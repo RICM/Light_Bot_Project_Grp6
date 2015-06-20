@@ -731,7 +731,9 @@ public class Controller implements int_Observer {
 	}
 
 	public void getNotificationAddToOrdonnanceurList(int robot){
-		World.currentWorld.get_ordonnanceur().addRobot(World.currentWorld.get_robot(robot));
+		if (World.currentWorld.get_ordonnanceur().size()<6){
+			World.currentWorld.get_ordonnanceur().addRobot(World.currentWorld.get_robot(robot));
+		}
 	}
 
 	public void getNotificationRemoveToOrdonnanceurList(int robot){
