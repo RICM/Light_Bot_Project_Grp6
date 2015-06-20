@@ -9,14 +9,6 @@ import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 
-import observable.action.int_Action;
-import observable.action_list.Sequence_List;
-import observable.map.Terrain;
-import observable.map.World;
-import observable.robot.Orientation.orientation;
-import observable.robot.abstr_Robot;
-import observer.controller.Controller;
-
 import org.jsfml.audio.Music;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.Sprite;
@@ -28,6 +20,13 @@ import org.jsfml.window.event.Event;
 import org.jsfml.window.event.Event.Type;
 
 import couleur.Couleur;
+import observable.action.int_Action;
+import observable.action_list.Sequence_List;
+import observable.map.Terrain;
+import observable.map.World;
+import observable.robot.Orientation.orientation;
+import observable.robot.abstr_Robot;
+import observer.controller.Controller;
 
 
 public class Jeu {
