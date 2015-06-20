@@ -151,6 +151,9 @@ public class Controller implements int_Observer {
 			World.currentWorld.prerun();
 			this.savedPrerun = true;
 			this.runnable = World.currentWorld.isOneRobotActive();
+			if(!Niveaux.getTheme().equals("D")){
+				this.getNotificationAddToOrdonnanceurList(0);
+			}
 			System.out.println("contenu de run " + World.currentWorld.get_robot(0).get_run());
 			System.out.println("statut du robot " + World.currentWorld.get_robot(0).get_activable());
 			System.out.println("nobmre de robot dans le monde : "+World.currentWorld.get_liste_robot().length);
